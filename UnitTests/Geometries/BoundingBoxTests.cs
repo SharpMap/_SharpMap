@@ -14,7 +14,8 @@ namespace UnitTests.Geometries
 			BoundingBox b2 = new BoundingBox(-20, 56, 70, 75);
 			BoundingBox bJoined = new BoundingBox(-20, 30, 70, 75);
 			Assert.AreEqual(bJoined,b1.Join(b2));
-			Assert.AreEqual(b1, b1.Join(null));
+			BoundingBox box = null;
+			Assert.AreEqual(b1, b1.Join(box));
 			Assert.AreEqual(bJoined, BoundingBox.Join(b1,b2));
 			Assert.AreEqual(b2, BoundingBox.Join(null,b2));
 			Assert.AreEqual(b1, BoundingBox.Join(b1, null));
