@@ -23,15 +23,15 @@ using System.Runtime.InteropServices;
 
 namespace SharpMap.Geometries
 {
-    /// <summary>
-    /// A Point is a 0-dimensional geometry and represents a single location in 2D coordinate space. A Point has a x coordinate
-    /// value and a y-coordinate value. The boundary of a Point is the empty set.
-    /// </summary>
-    [Serializable]
+	/// <summary>
+	/// A Point is a 0-dimensional geometry and represents a single location in 2D coordinate space. A Point has a x coordinate
+	/// value and a y-coordinate value. The boundary of a Point is the empty set.
+	/// </summary>
+	[Serializable]
 	public class Point : Geometry, IComparable<Point>
-    {
-        private double _X;
-        private double _Y;
+	{
+		private double _X;
+		private double _Y;
 		private bool _IsEmpty = false;
 		/// <summary>
 		/// Sets whether this object is empty
@@ -46,10 +46,10 @@ namespace SharpMap.Geometries
 		/// </summary>
 		/// <param name="x">X coordinate</param>
 		/// <param name="y">Y coordinate</param>
-        public Point(double x, double y)
-        {
+		public Point(double x, double y)
+		{
 			_X = x; _Y = y;
-        }
+		}
 
 		/// <summary>
 		/// Initializes a new empty Point
@@ -86,28 +86,30 @@ namespace SharpMap.Geometries
 		/// <summary>
 		/// Gets or sets the X coordinate of the point
 		/// </summary>
-        public double X
-        {
-            get { 
-				if(!_IsEmpty)
+		public double X
+		{
+			get
+			{
+				if (!_IsEmpty)
 					return _X;
 				else throw new ApplicationException("Point is empty");
 			}
-            set { _X = value; _IsEmpty=false; }
-        }
+			set { _X = value; _IsEmpty = false; }
+		}
 
 		/// <summary>
 		/// Gets or sets the Y coordinate of the point
 		/// </summary>
 		public double Y
-        {
-            get {
-				if(!_IsEmpty)
+		{
+			get
+			{
+				if (!_IsEmpty)
 					return _Y;
 				else throw new ApplicationException("Point is empty");
-				}
-            set { _Y = value; _IsEmpty=false; }
-        }
+			}
+			set { _Y = value; _IsEmpty = false; }
+		}
 		/// <summary>
 		/// Returns part of coordinate. Index 0 = X, Index 1 = Y
 		/// </summary>
@@ -117,7 +119,7 @@ namespace SharpMap.Geometries
 		{
 			get
 			{
-				if(_IsEmpty)
+				if (_IsEmpty)
 					throw new ApplicationException("Point is empty");
 				else if (index == 0)
 					return this.X;
@@ -184,9 +186,9 @@ namespace SharpMap.Geometries
 		public static Point operator *(Point m, double d)
 		{ return new Point(m.X * d, m.Y * d); }
 
-#endregion
+		#endregion
 
-        #region "Inherited methods from abstract class Geometry"
+		#region "Inherited methods from abstract class Geometry"
 
 		/// <summary>
 		/// Checks whether this instance is spatially equal to the Point 'o'
@@ -212,18 +214,18 @@ namespace SharpMap.Geometries
 		///  The inherent dimension of this Geometry object, which must be less than or equal to the coordinate dimension.
 		/// </summary>
 		public override int Dimension
-        {
-            get { return 0; }
-        }
+		{
+			get { return 0; }
+		}
 
 		/// <summary>
 		/// If true, then this Geometry represents the empty point set, Ø, for the coordinate space. 
 		/// </summary>
 		/// <returns>Returns 'true' if this Geometry is the empty geometry</returns>
 		public override bool IsEmpty()
-        {
+		{
 			return _IsEmpty;
-        }
+		}
 
 		/// <summary>
 		/// Returns 'true' if this Geometry has no anomalous geometric points, such as self
@@ -232,18 +234,18 @@ namespace SharpMap.Geometries
 		/// </summary>
 		/// <returns>true if the geometry is simple</returns>
 		public override bool IsSimple()
-        {
+		{
 			return true;
-        }
+		}
 
 		/// <summary>
 		/// The boundary of a point is the empty set.
 		/// </summary>
 		/// <returns>null</returns>
-        public override Geometry Boundary()
-        {
-            return null;
-        }
+		public override Geometry Boundary()
+		{
+			return null;
+		}
 
 		/// <summary>
 		/// Returns the distance between this geometry instance and another geometry, as
@@ -251,16 +253,25 @@ namespace SharpMap.Geometries
 		/// </summary>
 		/// <param name="geom"></param>
 		/// <returns></returns>
-        public override double Distance(Geometry geom)
-        {
+		public override double Distance(Geometry geom)
+		{
 			if (geom.GetType() == typeof(SharpMap.Geometries.Point))
 			{
 				Point p = geom as Point;
-				return Math.Sqrt(Math.Pow(this.X - p.X,2) + Math.Pow(this.Y - p.Y,2));
+				return Math.Sqrt(Math.Pow(this.X - p.X, 2) + Math.Pow(this.Y - p.Y, 2));
 			}
 			else
-	            throw new Exception("The method or operation is not implemented for this geometry type.");
-        }
+				throw new Exception("The method or operation is not implemented for this geometry type.");
+		}
+		/// <summary>
+		/// Returns the distance between this point and a <see cref="BoundingBox"/>
+		/// </summary>
+		/// <param name="box"></param>
+		/// <returns></returns>
+		public double Distance(BoundingBox box)
+		{
+			return box.Distance(this);
+		}
 
 		/// <summary>
 		/// Returns a geometry that represents all points whose distance from this Geometry
@@ -270,18 +281,18 @@ namespace SharpMap.Geometries
 		/// <param name="d">Buffer distance</param>
 		/// <returns>Buffer around geometry</returns>
 		public override Geometry Buffer(double d)
-        {
-            throw new NotImplementedException();
-        }
+		{
+			throw new NotImplementedException();
+		}
 
 		/// <summary>
 		/// Geometry—Returns a geometry that represents the convex hull of this Geometry.
 		/// </summary>
 		/// <returns>The convex hull</returns>
 		public override Geometry ConvexHull()
-        {
-            throw new NotImplementedException();
-        }
+		{
+			throw new NotImplementedException();
+		}
 
 		/// <summary>
 		/// Returns a geometry that represents the point set intersection of this Geometry
@@ -290,9 +301,9 @@ namespace SharpMap.Geometries
 		/// <param name="geom">Geometry to intersect with</param>
 		/// <returns>Returns a geometry that represents the point set intersection of this Geometry with anotherGeometry.</returns>
 		public override Geometry Intersection(Geometry geom)
-        {
-            throw new NotImplementedException();
-        }
+		{
+			throw new NotImplementedException();
+		}
 
 		/// <summary>
 		/// Returns a geometry that represents the point set union of this Geometry with anotherGeometry.
@@ -300,9 +311,9 @@ namespace SharpMap.Geometries
 		/// <param name="geom">Geometry to union with</param>
 		/// <returns>Unioned geometry</returns>
 		public override Geometry Union(Geometry geom)
-        {
-            throw new NotImplementedException();
-        }
+		{
+			throw new NotImplementedException();
+		}
 
 		/// <summary>
 		/// Returns a geometry that represents the point set difference of this Geometry with anotherGeometry.
@@ -310,9 +321,9 @@ namespace SharpMap.Geometries
 		/// <param name="geom">Geometry to compare to</param>
 		/// <returns>Geometry</returns>
 		public override Geometry Difference(Geometry geom)
-        {
-            throw new NotImplementedException();
-        }
+		{
+			throw new NotImplementedException();
+		}
 
 		/// <summary>
 		/// Returns a geometry that represents the point set symmetric difference of this Geometry with anotherGeometry.
@@ -320,9 +331,9 @@ namespace SharpMap.Geometries
 		/// <param name="geom">Geometry to compare to</param>
 		/// <returns>Geometry</returns>
 		public override Geometry SymDifference(Geometry geom)
-        {
-            throw new NotImplementedException();
-        }
+		{
+			throw new NotImplementedException();
+		}
 
 		/// <summary>
 		/// The minimum bounding box for this Geometry.
@@ -330,10 +341,42 @@ namespace SharpMap.Geometries
 		/// <returns></returns>
 		public override BoundingBox GetBoundingBox()
 		{
-			return new BoundingBox(this.X,this.Y,this.X,this.Y);
+			return new BoundingBox(this.X, this.Y, this.X, this.Y);
+		}
+		/// <summary>
+		/// Checks whether this point touches a <see cref="BoundingBox"/>
+		/// </summary>
+		/// <param name="box">box</param>
+		/// <returns>true if they touch</returns>
+		public bool Touches(BoundingBox box)
+		{
+			return box.Touches(this);
+		}
+		/// <summary>
+		/// Checks whether this point touches another <see cref="Geometry"/>
+		/// </summary>
+		/// <param name="geom">Geometry</param>
+		/// <returns>true if they touch</returns>
+		public override bool Touches(Geometry geom)
+		{
+			if (geom is Point && this.Equals(geom)) return true;
+			throw new NotImplementedException("Touches not implemented for this feature type");
+		}
+		/// <summary>
+		/// Checks whether this point intersects a <see cref="BoundingBox"/>
+		/// </summary>
+		/// <param name="box">Box</param>
+		/// <returns>True if they intersect</returns>
+		public bool Intersects(BoundingBox box)
+		{
+			return box.Contains(this);
+		}
+		public override bool Contains(Geometry geom)
+		{
+			return false;
 		}
 
-#endregion
+		#endregion
 
 		/// <summary>
 		/// This method must be overridden using 'public new [derived_data_type] Clone()'
