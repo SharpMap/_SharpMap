@@ -268,6 +268,9 @@ namespace SharpMap.Layers
 				case "SharpMap.Geometries.Point":
 					SharpMap.Rendering.VectorRenderer.DrawPoint(g, (Point)feature, style.Symbol, style.SymbolScale, style.SymbolOffset, style.SymbolRotation, map);
 					break;
+				case "SharpMap.Geometries.MultiPoint":
+					SharpMap.Rendering.VectorRenderer.DrawMultiPoint(g, (MultiPoint)feature, style.Symbol, style.SymbolScale, style.SymbolOffset, style.SymbolRotation, map);
+					break;
 				case "SharpMap.Geometries.GeometryCollection":
 					foreach(Geometries.Geometry geom in (GeometryCollection)feature)
 						RenderGeometry(g, map, geom, style);

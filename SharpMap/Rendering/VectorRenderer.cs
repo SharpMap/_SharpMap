@@ -37,7 +37,7 @@ namespace SharpMap.Rendering
 		/// <param name="map">Map reference</param>
 		public static void DrawMultiLineString(System.Drawing.Graphics g, Geometries.MultiLineString lines, System.Drawing.Pen pen, SharpMap.Map map)
 		{
-			for (int i = 0; i < lines.LineStrings.Count;i++ )
+			for (int i = 0; i < lines.LineStrings.Count; i++)
 				DrawLineString(g, lines.LineStrings[i], pen, map);
 		}
 
@@ -69,7 +69,7 @@ namespace SharpMap.Rendering
 		/// <param name="map">Map reference</param>
 		public static void DrawMultiPolygon(System.Drawing.Graphics g, Geometries.MultiPolygon pols, System.Drawing.Brush brush, System.Drawing.Pen pen, bool clip, SharpMap.Map map)
 		{
-			for (int i = 0; i < pols.Polygons.Count;i++ )
+			for (int i = 0; i < pols.Polygons.Count; i++)
 				DrawPolygon(g, pols.Polygons[i], brush, pen, clip, map);
 		}
 
@@ -103,7 +103,7 @@ namespace SharpMap.Rendering
 						gp.AddPolygon(pol.InteriorRings[i].TransformToImage(map));
 					else
 						gp.AddPolygon(clipPolygon(pol.InteriorRings[i].TransformToImage(map), map.Size.Width, map.Size.Height));
-				
+
 				// Only render inside of polygon if the brush isn't null or isn't transparent
 				if (brush != null && brush != System.Drawing.Brushes.Transparent)
 					g.FillPath(brush, gp);
@@ -136,7 +136,7 @@ namespace SharpMap.Rendering
 				g.RotateTransform(rotation);
 				g.TranslateTransform(-fontSize.Width / 2, -fontSize.Height / 2);
 				if (backcolor != null && backcolor != System.Drawing.Brushes.Transparent)
-					g.FillRectangle(backcolor, 0, 0, fontSize.Width*0.74f+1f, fontSize.Height*0.74f);
+					g.FillRectangle(backcolor, 0, 0, fontSize.Width * 0.74f + 1f, fontSize.Height * 0.74f);
 				System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
 				path.AddString(text, font.FontFamily, (int)font.Style, font.Size, new System.Drawing.Point(0, 0), null);
 				if (halo != null)
@@ -148,10 +148,10 @@ namespace SharpMap.Rendering
 			else
 			{
 				if (backcolor != null && backcolor != System.Drawing.Brushes.Transparent)
-					g.FillRectangle(backcolor, LabelPoint.X, LabelPoint.Y, fontSize.Width*0.74f+1, fontSize.Height*0.74f);
-				
+					g.FillRectangle(backcolor, LabelPoint.X, LabelPoint.Y, fontSize.Width * 0.74f + 1, fontSize.Height * 0.74f);
+
 				System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
-				
+
 				path.AddString(text, font.FontFamily, (int)font.Style, font.Size, LabelPoint, null);
 				if (halo != null)
 					g.DrawPath(halo, path);
@@ -354,6 +354,22 @@ namespace SharpMap.Rendering
 					g.DrawImage(symbol, (int)pp.X - width / 2 + offset.X * symbolscale, (int)pp.Y - height / 2 + offset.Y * symbolscale, width, height);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Renders a <see cref="MultiPoint"/> to the map.
+		/// </summary>
+		/// <param name="g">Graphics reference</param>
+		/// <param name="points">MultiPoint to render</param>
+		/// <param name="symbol">Symbol to place over point</param>
+		/// <param name="symbolscale">The amount that the symbol should be scaled. A scale of '1' equals to no scaling</param>
+		/// <param name="offset">Symbol offset af scale=1</param>
+		/// <param name="rotation">Symbol rotation in degrees</param>
+		/// <param name="map">Map reference</param>
+		public static void DrawMultiPoint(System.Drawing.Graphics g, Geometries.MultiPoint points, System.Drawing.Bitmap symbol, float symbolscale, System.Drawing.PointF offset, float rotation, SharpMap.Map map)
+		{
+			for (int i = 0; i < points.Points.Count; i++)
+				DrawPoint(g, points.Points[i], symbol, symbolscale, offset, rotation, map);
 		}
 	}
 }
