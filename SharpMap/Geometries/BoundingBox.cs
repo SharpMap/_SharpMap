@@ -52,7 +52,8 @@ namespace SharpMap.Geometries
 		/// </summary>
 		/// <param name="lowerLeft">Lower left corner</param>
 		/// <param name="upperRight">Upper right corner</param>
-		public BoundingBox(Geometries.Point lowerLeft, Geometries.Point upperRight) : this(lowerLeft.X,lowerLeft.Y,upperRight.X,upperRight.Y)
+		public BoundingBox(Geometries.Point lowerLeft, Geometries.Point upperRight)
+			: this(lowerLeft.X, lowerLeft.Y, upperRight.X, upperRight.Y)
 		{
 		}
 
@@ -130,7 +131,7 @@ namespace SharpMap.Geometries
 		{
 			get { return _Min.X; }
 		}
-	
+
 		/// <summary>
 		/// Gets the right boundary
 		/// </summary>
@@ -138,7 +139,7 @@ namespace SharpMap.Geometries
 		{
 			get { return _Max.X; }
 		}
-		
+
 		/// <summary>
 		/// Gets the top boundary
 		/// </summary>
@@ -146,7 +147,7 @@ namespace SharpMap.Geometries
 		{
 			get { return _Max.Y; }
 		}
-		
+
 		/// <summary>
 		/// Gets the bottom boundary
 		/// </summary>
@@ -218,6 +219,69 @@ namespace SharpMap.Geometries
 					 box.Min.Y > this.Max.Y ||
 					 box.Max.Y < this.Min.Y);
 		}
+		public bool Intersects(Geometry g)
+		{
+			return this.Touches(g);
+		}
+		public bool Touches(BoundingBox r)
+		{
+			for (uint cIndex = 0; cIndex < 2; cIndex++)
+			{
+				if ((Min[cIndex] > r.Min[cIndex] && Min[cIndex] < r.Min[cIndex]) ||
+						(Max[cIndex] > r.Max[cIndex] && Max[cIndex] < r.Max[cIndex]))
+					return true;
+			}
+			return false;
+		}
+		public bool Touches(Geometry s)
+		{
+			if (s is Point) return Touches(s as Point);
+			throw new NotImplementedException("Touches: Not implemented on these geometries");
+		}
+		public bool Contains(BoundingBox r)
+		{
+			for (uint cIndex = 0; cIndex < 2; cIndex++)
+				if (Min[cIndex] > r.Min[cIndex] || Max[cIndex] < r.Max[cIndex]) return false;
+
+			return true;
+		}
+		public bool Contains(Geometry s)
+		{
+			if (s is Point) return Contains(s as Point);
+			throw new NotImplementedException("Contains: Not implemented on these geometries");
+		}
+
+		public bool Touches(Point p)
+		{
+			for (uint cIndex = 0; cIndex < 2; cIndex++)
+			{
+				if ((Min[cIndex] > p[cIndex] && Min[cIndex] < p[cIndex]) ||
+						(Max[cIndex] > p[cIndex] && Max[cIndex] < p[cIndex]))
+					return true;
+			}
+			return false;
+		}
+		public double GetArea()
+		{
+			return Width * Height;
+		}
+		public double GetIntersectingArea(BoundingBox r)
+		{
+			uint cIndex;
+			for (cIndex = 0; cIndex < 2; cIndex++)
+				if (Min[cIndex] > r.Max[cIndex] || Max[cIndex] < r.Min[cIndex]) return 0.0;
+
+			double ret = 1.0;
+			double f1, f2;
+
+			for (cIndex = 0; cIndex < 2; cIndex++)
+			{
+				f1 = Math.Max(Min[cIndex], r.Min[cIndex]);
+				f2 = Math.Min(Max[cIndex], r.Max[cIndex]);
+				ret *= f2 - f1;
+			}
+			return ret;
+		}
 
 		/// <summary>
 		/// Computes the joined boundingbox of this instance and another boundingbox
@@ -229,8 +293,8 @@ namespace SharpMap.Geometries
 			if (box == null)
 				return this.Clone();
 			else
-				return new BoundingBox(Math.Min(this.Min.X , box.Min.X ), Math.Min(this.Min.Y , box.Min.Y ),
-									   Math.Max(this.Max.X , box.Max.X ), Math.Max(this.Max.Y , box.Max.Y ));
+				return new BoundingBox(Math.Min(this.Min.X, box.Min.X), Math.Min(this.Min.Y, box.Min.Y),
+									   Math.Max(this.Max.X, box.Max.X), Math.Max(this.Max.Y, box.Max.Y));
 		}
 		/// <summary>
 		/// Computes the joined boundingbox of two boundingboxes
@@ -240,14 +304,27 @@ namespace SharpMap.Geometries
 		/// <returns></returns>
 		public static BoundingBox Join(BoundingBox box1, BoundingBox box2)
 		{
-			if (box1 == null && box2==null)
+			if (box1 == null && box2 == null)
 				return null;
 			else if (box1 == null)
 				return box2.Clone();
 			else
 				return box1.Join(box2);
 		}
-
+		/// <summary>
+		/// Computes the joined <see cref="BoundingBox"/> of an array of boundingboxes.
+		/// </summary>
+		/// <param name="boxes">Boxes to join</param>
+		/// <returns>Combined BoundingBox</returns>
+		public static BoundingBox Join(BoundingBox[] boxes)
+		{
+			if (boxes == null) return null;
+			if (boxes.Length == 1) return boxes[0];
+			BoundingBox box = boxes[0].Clone();
+			for (int i = 1; i < boxes.Length; i++)
+				box = box.Join(boxes[i]);
+			return box;
+		}
 		/// <summary>
 		/// Increases the size of the boundingbox by the givent amount in all directions
 		/// </summary>
@@ -298,7 +375,7 @@ namespace SharpMap.Geometries
 		}
 
 		/// <summary> 
-		/// Computes the distance between this and another <see cref="BoundingBox"/>.
+		/// Computes the minimum distance between this and another <see cref="BoundingBox"/>.
 		/// The distance between overlapping bounding boxes is 0.  Otherwise, the
 		/// distance is the Euclidean distance between the closest points.
 		/// </summary>
@@ -306,29 +383,34 @@ namespace SharpMap.Geometries
 		/// <returns>The distance between this and another <see cref="BoundingBox"/>.</returns>
 		public virtual double Distance(BoundingBox box)
 		{
-			if (Intersects(box))
-				return 0;
+			double ret = 0.0;
+			for (uint cIndex = 0; cIndex < 2; cIndex++)
+			{
+				double x = 0.0;
 
-			double dx = 0;
-
-			if (Right < box.Left)
-				dx = box.Left - Right;
-			if (Left > box.Right)
-				dx = Left - box.Right;
-
-			double dy = 0;
-
-			if (Top < box.Bottom)
-				dy = box.Bottom - Top;
-			if (Bottom > box.Top)
-				dy = Bottom - box.Top;
-
-			if (dx == 0.0) return dy;
-			if (dy == 0.0) return dx;
-
-			return Math.Sqrt(Math.Pow(dx,2) + Math.Pow(dy,2));
+				if (box.Max[cIndex] < Min[cIndex]) x = Math.Abs(box.Max[cIndex] - Min[cIndex]);
+				else if (Max[cIndex] < box.Min[cIndex]) x = Math.Abs(box.Min[cIndex] - Max[cIndex]);
+				ret += x * x;
+			}
+			return Math.Sqrt(ret);
 		}
+		/// <summary>
+		/// Computes the minimum distance between this BoundingBox and a <see cref="Point"/>
+		/// </summary>
+		/// <param name="p"><see cref="Point"/> to calculate distance to.</param>
+		/// <returns>Minimum distance.</returns>
+		public virtual double Distance(Point p)
+		{
+			double ret = 0.0;
 
+			for (uint cIndex = 0; cIndex < 2; cIndex++)
+			{
+				if (p[cIndex] < Min[cIndex]) ret += Math.Pow(Min[cIndex] - p[cIndex], 2.0);
+				else if (p[cIndex] > Max[cIndex]) ret += Math.Pow(p[cIndex] - Max[cIndex], 2.0);
+			}
+
+			return Math.Sqrt(ret);
+		}
 
 		/// <summary>
 		/// Intersection scalar (used for weighting in building the tree) 
@@ -411,7 +493,7 @@ namespace SharpMap.Geometries
 		/// <returns>True if equal</returns>
 		public bool Equals(BoundingBox other)
 		{
-			if(other==null) return false;
+			if (other == null) return false;
 			return this.Left == other.Left && this.Right == other.Right && this.Top == other.Top && this.Bottom == other.Bottom;
 		}
 
