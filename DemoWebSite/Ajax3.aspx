@@ -1,13 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Ajax.aspx.cs" Inherits="Ajax" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Ajax3.aspx.cs" Inherits="Ajax" Title="AJAX map" %>
 <%@ Register TagPrefix="smap" Namespace="SharpMap.Web.UI.Ajax" Assembly="SharpMap.UI" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" >
-<head runat="server">
-   <title>AJAX map</title>
-</head>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
 
-<body>
-<form id="Form1" runat="server" action="Ajax.aspx">
 <h2>AJAX Map</h2>
 
 <div style="background-color: #fff; color:#000;">
@@ -22,7 +16,7 @@
 	OnClickEvent="MapClicked" OnViewChange="ViewChanged" OnViewChanging="ViewChanging" />
 </div>
  <div id="dataContents"></div> 
-</form>
+
 
 <script type="text/javascript">
 //Fired when query is selected and map is clicked
@@ -47,5 +41,5 @@ function ViewChanged(obj)
 }
 </script>
 
-</body>
-</html>
+</asp:Content>
+
