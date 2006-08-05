@@ -9,8 +9,25 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:contentplaceholder id="MainContent" runat="server">
-        </asp:contentplaceholder>
+		<table>
+			<tr>
+				<td style="width: 100px;" valign="top">
+					Examples:
+					<ul>
+						<li><a href="Simple.aspx">Simple</a></li>
+						<li><a href="Bins.aspx">Bins</a></li>
+						<li><a href="Gradient.aspx">Gradient</a></li>
+						<li><a href="PieCharts.aspx">Pie Charts</a></li>
+						<li><a href="Ajax3.aspx">AJAX</a></li>
+						<li><a href="TransformTests.aspx">Transformation test</a></li>
+					</ul>
+				</td>
+				<td style="width: 700px;">
+					<asp:contentplaceholder id="MainContent" runat="server">
+					</asp:contentplaceholder>
+				</td>
+			</tr>
+		</table>
     </div>
     </form>
 </body>
