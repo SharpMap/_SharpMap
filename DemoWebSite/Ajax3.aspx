@@ -6,9 +6,9 @@
 
 <div style="background-color: #fff; color:#000;">
    	<asp:RadioButtonList ID="rblMapTools" runat="server" RepeatDirection="Horizontal">
-		<asp:ListItem Value="0" onClick="ajaxMapObj.disableClickEvent(); ajaxMapObj.zoomAmount = 3;"  Selected="True">Zoom in</asp:ListItem>
-		<asp:ListItem Value="1" onClick="ajaxMapObj.disableClickEvent(); ajaxMapObj.zoomAmount = 0.33333;" >Zoom out</asp:ListItem>
-		<asp:ListItem Value="2" onClick="ajaxMapObj.enableClickEvent();">Query map</asp:ListItem>
+		<asp:ListItem Value="0" onClick="ctl00_MainContent_ajaxMapObj.disableClickEvent(); ctl00_MainContent_ajaxMapObj.zoomAmount = 3;"  Selected="True">Zoom in</asp:ListItem>
+		<asp:ListItem Value="1" onClick="ctl00_MainContent_ajaxMapObj.disableClickEvent(); ctl00_MainContent_ajaxMapObj.zoomAmount = 0.33333;" >Zoom out</asp:ListItem>
+		<asp:ListItem Value="2" onClick="ctl00_MainContent_ajaxMapObj.enableClickEvent();">Query map</asp:ListItem>
 	</asp:RadioButtonList>
 </div>
 <div style="background-color:#f1f1f1; border:solid 1px #000;">
