@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title>SharpMap Demo Website</title>
+    <link rel="stylesheet" type="text/css" href="~/styles.css" media="all" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -18,7 +19,7 @@
 						<li><a href="Bins.aspx">Bins</a></li>
 						<li><a href="Gradient.aspx">Gradient</a></li>
 						<li><a href="PieCharts.aspx">Pie Charts</a></li>
-						<li><a href="Ajax3.aspx">AJAX</a></li>
+						<li><a href="Ajax.aspx">AJAX</a></li>
 						<li><a href="TransformTests.aspx">Transformation test</a></li>
 					</ul>
 				</td>
