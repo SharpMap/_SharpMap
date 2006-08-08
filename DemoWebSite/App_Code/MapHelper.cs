@@ -150,20 +150,28 @@ public class MapHelper
 		map.Layers[1].Enabled = false;
 		return map;
 	}
+
+	public static SharpMap.Layers.WmsLayer GetWmsLayer()
+	{
+		string wmsUrl = "http://www2.demis.nl/mapserver/request.asp?WMTVER=1.1.1&SERVICE=WMS&REQUEST=GetCapabilities";
+		SharpMap.Layers.WmsLayer layWms = new SharpMap.Layers.WmsLayer("Demis Map", wmsUrl);
+		layWms.SpatialReferenceSystem = "EPSG:4326";
+		//layWms.WmsResource = "http://www2.demis.nl/mapserver/request.asp?WMTVER=1.1.1&REQUEST=GetMap&LAYERS=Bathymetry,Ocean features&STYLES=&FORMAT=image/png&SRS=EPSG:4326";
+		layWms.AddLayer("Bathymetry");
+		layWms.AddLayer("Ocean features");
+		layWms.ContinueOnError = false; //Skip rendering the WMS Map if the server couldn't be requested (if set to false such an event would crash the app)
+		layWms.TimeOut = 5000; //Set timeout to 5 seconds
+		layWms.SRID = 4326;
+		return layWms;
+	}
 	
 	public static SharpMap.Map InitializeWmsMap(System.Drawing.Size size)
-  {
+	{
 		HttpContext.Current.Trace.Write("Initializing Wms map...");
 				
 			//Initialize a new map of size 'imagesize'
 			SharpMap.Map map = new SharpMap.Map(size);
-			
-			SharpMap.Layers.WmsLayer layWms = new SharpMap.Layers.WmsLayer("Demis Map");
-			layWms.WmsResource = "http://www2.demis.nl/mapserver/request.asp?WMTVER=1.1.1&REQUEST=GetMap&LAYERS=Bathymetry,Ocean features&STYLES=&FORMAT=image/png&SRS=EPSG:4326";
-			layWms.ContinueOnError = true; //Skip rendering the WMS Map if the server couldn't be requested (if set to false such an event would crash the app)
-			layWms.TimeOut = 5000; //Set timeout to 5 seconds
-			layWms.SRID = 4326;				
-			
+			SharpMap.Layers.WmsLayer layWms = GetWmsLayer();
 			//Set up the countries layer
 			SharpMap.Layers.VectorLayer layCountries = new SharpMap.Layers.VectorLayer("Countries");
 			//Set the datasource to a shapefile in the App_data folder

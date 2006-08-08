@@ -1,6 +1,5 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Simple.aspx.cs" Inherits="Simple" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Simple.aspx.cs" Inherits="Simple" Title="Simple map" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
-<h2>Simple map</h2>
     <div>   
     	<asp:RadioButtonList ID="rblMapTools" runat="server" RepeatDirection="Horizontal">
             <asp:ListItem Value="0">Zoom in</asp:ListItem>

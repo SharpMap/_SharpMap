@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Gradient.aspx.cs" Inherits="Gradient" Title="Gradient theme" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
-	<h2>Gradient theming demo</h2>
 	<div>   
 		<asp:RadioButtonList ID="rblMapTools" runat="server" RepeatDirection="Horizontal">
 			<asp:ListItem Value="0">Zoom in</asp:ListItem>
