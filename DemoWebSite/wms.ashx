@@ -1,20 +1,14 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+<%@ WebHandler Language="C#" Class="wms" %>
 
-public partial class WmsPage : System.Web.UI.Page
-{
-	protected void Page_Load(object sender, EventArgs e)
-	{
+using System;
+using System.Web;
+
+public class wms : IHttpHandler {
+    
+    public void ProcessRequest (HttpContext context) {
 		//Get the path of this page
-		string url = (Request.Url.Query.Length>0?Request.Url.AbsoluteUri.Replace(Request.Url.Query,""):Request.Url.AbsoluteUri);
+		string url = (context.Request.Url.Query.Length > 0 ? 
+			context.Request.Url.AbsoluteUri.Replace(context.Request.Url.Query, "") : context.Request.Url.AbsoluteUri);
 		SharpMap.Web.Wms.Capabilities.WmsServiceDescription description =
 			new SharpMap.Web.Wms.Capabilities.WmsServiceDescription("Acme Corp. Map Server", url);
 
@@ -22,9 +16,10 @@ public partial class WmsPage : System.Web.UI.Page
 
 		// Narrative description and keywords providing additional information 
 		description.Abstract = "Map Server maintained by Acme Corporation. Contact: webmaster@wmt.acme.com. High-quality maps showing roadrunner nests and possible ambush locations.";
-		description.Keywords.Add("bird");
-		description.Keywords.Add("roadrunner");
-		description.Keywords.Add("ambush");
+		description.Keywords = new string[3];
+		description.Keywords[0] = "bird";
+		description.Keywords[1] = "roadrunner";
+		description.Keywords[2] = "ambush";
 
 		//Contact information 
 		description.ContactInformation.PersonPrimary.Person = "John Doe";
@@ -39,9 +34,16 @@ public partial class WmsPage : System.Web.UI.Page
 
 		//Call method that sets up the map
 		//We just add a dummy-size, since the wms requests will set the image-size
-		SharpMap.Map myMap = MapHelper.InitializeMap(new System.Drawing.Size(1,1));
+		SharpMap.Map myMap = MapHelper.InitializeMap(new System.Drawing.Size(1, 1));
 
 		//Parse the request and create a response
-		SharpMap.Web.Wms.WmsServer.ParseQueryString(myMap,description);
-	}
+		SharpMap.Web.Wms.WmsServer.ParseQueryString(myMap, description);
+    }
+ 
+    public bool IsReusable {
+        get {
+            return false;
+        }
+    }
+
 }
