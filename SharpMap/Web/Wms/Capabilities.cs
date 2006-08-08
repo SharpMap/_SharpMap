@@ -40,7 +40,7 @@ namespace SharpMap.Web.Wms
 			{
 				Title = title;
 				OnlineResource = onlineResource;
-				Keywords = new List<string>();
+				Keywords = null;
 				Abstract = "";
 				ContactInformation = new WmsContactInformation();
 				Fees = "";
@@ -60,7 +60,7 @@ namespace SharpMap.Web.Wms
 			/// <summary>
 			/// Optional list of keywords or keyword phrases describing the server as a whole to help catalog searching
 			/// </summary>
-			public List<string> Keywords;
+			public string[] Keywords;
 			/// <summary>
 			/// Mandatory Top-level web address of service or service provider.
 			/// </summary>
@@ -231,7 +231,7 @@ namespace SharpMap.Web.Wms
 			ServiceNode.AppendChild(CreateElement("Title", serviceDescription.Title, capabilities, false, wmsNamespaceURI)); //Add WMS Title
 			if (serviceDescription.Abstract != "") //Add WMS abstract
 				ServiceNode.AppendChild(CreateElement("Abstract", serviceDescription.Abstract, capabilities, false, wmsNamespaceURI));
-			if (serviceDescription.Keywords.Count > 0) //Add keywords
+			if (serviceDescription.Keywords.Length > 0) //Add keywords
 			{
 				XmlElement KeywordListNode = capabilities.CreateElement("KeywordList", wmsNamespaceURI);
 				foreach (string keyword in serviceDescription.Keywords)

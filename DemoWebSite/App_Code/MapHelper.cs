@@ -153,7 +153,7 @@ public class MapHelper
 
 	public static SharpMap.Layers.WmsLayer GetWmsLayer()
 	{
-		string wmsUrl = "http://www2.demis.nl/mapserver/request.asp?WMTVER=1.1.1&SERVICE=WMS&REQUEST=GetCapabilities";
+		string wmsUrl = "http://www2.demis.nl/mapserver/request.asp";
 		SharpMap.Layers.WmsLayer layWms = new SharpMap.Layers.WmsLayer("Demis Map", wmsUrl);
 		layWms.SpatialReferenceSystem = "EPSG:4326";
 		//layWms.WmsResource = "http://www2.demis.nl/mapserver/request.asp?WMTVER=1.1.1&REQUEST=GetMap&LAYERS=Bathymetry,Ocean features&STYLES=&FORMAT=image/png&SRS=EPSG:4326";
