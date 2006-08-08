@@ -2,8 +2,6 @@
 <%@ Register TagPrefix="smap" Namespace="SharpMap.Web.UI.Ajax" Assembly="SharpMap.UI" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
 
-<h2>AJAX Map</h2>
-
 <div style="background-color: #fff; color:#000;">
    	<asp:RadioButtonList ID="rblMapTools" runat="server" RepeatDirection="Horizontal">
 		<asp:ListItem Value="0" onClick="ctl00_MainContent_ajaxMapObj.disableClickEvent(); ctl00_MainContent_ajaxMapObj.zoomAmount = 3;"  Selected="True">Zoom in</asp:ListItem>
@@ -41,5 +39,16 @@ function ViewChanged(obj)
 }
 </script>
 
+<p>
+<b>Navigation:</b>
+<ul>
+	<li>Scroll-wheel: Zoom in/out</li>
+	<li>Left-click'n'drag: Pan</li>
+	<li>Left-click: Zoom in/out, query (select tool)</li>
+</ul>
+<b>Note:</b><br />
+In this demo querying it is only showed how you can catch the click-event.<br />
+Actual data-querying which would require ajax-style post-back is not implemented.
+</p>
 </asp:Content>
 

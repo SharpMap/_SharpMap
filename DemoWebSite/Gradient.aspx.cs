@@ -59,7 +59,7 @@ public partial class Gradient : System.Web.UI.Page
 		ViewState.Add("mapCenter", Center);
 		ViewState.Add("mapZoom", Zoom);
 
-		string ResponseFormat = "maphandler.aspx?MAP=Gradient&Width=[WIDTH]&Height=[HEIGHT]&Zoom=[ZOOM]&X=[X]&Y=[Y]";
+		string ResponseFormat = "maphandler.ashx?MAP=Gradient&Width=[WIDTH]&Height=[HEIGHT]&Zoom=[ZOOM]&X=[X]&Y=[Y]";
 		System.Globalization.NumberFormatInfo numberFormat_EnUS = new System.Globalization.CultureInfo("en-US", false).NumberFormat;
 		imgMap.ImageUrl = ResponseFormat.Replace("[WIDTH]", imgMap.Width.Value.ToString()).
 									  Replace("[HEIGHT]", imgMap.Height.Value.ToString()).

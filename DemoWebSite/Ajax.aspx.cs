@@ -23,6 +23,6 @@ public partial class Ajax : System.Web.UI.Page
 			ajaxMap.Map.Zoom = 360;
 
 		}
-		ajaxMap.ResponseFormat = "maphandler.aspx?MAP=SimpleWorld&Width=[WIDTH]&Height=[HEIGHT]&Zoom=[ZOOM]&X=[X]&Y=[Y]";
+		ajaxMap.ResponseFormat = "maphandler.ashx?MAP=SimpleWorld&Width=[WIDTH]&Height=[HEIGHT]&Zoom=[ZOOM]&X=[X]&Y=[Y]";
 	}
 }

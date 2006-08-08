@@ -2,7 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
 
-<h2>Transformation tests</h2>
 <div>
 	<asp:Literal ID="result" runat="server"></asp:Literal>
 </div>
