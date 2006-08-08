@@ -70,5 +70,6 @@
     <Compile Include="Geometries\PointTests.cs" />
     <Compile Include="Geometries\PolygonTests.cs" />
     <Compile Include="MapTest.cs" />
+    <Compile Include="TestWmsCapabilityParser.cs" />
   </ItemGroup>
 </Project>
