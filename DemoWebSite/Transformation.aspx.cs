@@ -31,7 +31,8 @@ public partial class Transformation : System.Web.UI.Page
 		else
 		{
 			//This is the initial view of the map. Zoom to the extents of the map:
-			myMap.ZoomToExtents();
+			myMap.Zoom = 80;
+			myMap.Center = new SharpMap.Geometries.Point(-95, 37);
 			//Create the map
 			GenerateMap();
 		}
@@ -103,8 +104,7 @@ public partial class Transformation : System.Web.UI.Page
 			myMap.Center = center;
 			myMap.Zoom = Math.Abs(right.X - left.X);
 			SharpMap.Geometries.BoundingBox envelopeGcs =GeometryTransform.TransformBox(myMap.Envelope, trans.MathTransform.Inverse());
-			litEnvelopeLatLong.Text = envelopeGcs.ToString(); // envelopeGcs.Left.ToString("#.###") + "," + envelopeGcs.Bottom.ToString("#.###") + " -> " +
-			//envelopeGcs.Right.ToString("#.###") + "," + envelopeGcs.Top.ToString("#.###") + " (Geographic coordinate system)";
+			litEnvelopeLatLong.Text = envelopeGcs.ToString();
 		}
 		GenerateMap();
 	}
@@ -119,7 +119,7 @@ public partial class Transformation : System.Web.UI.Page
 		//Set up the countries layer
 		SharpMap.Layers.VectorLayer layCountries = new SharpMap.Layers.VectorLayer("Countries");
 		//Set the datasource to a shapefile in the App_data folder
-		SharpMap.Data.Providers.ShapeFile datasource = new SharpMap.Data.Providers.ShapeFile(HttpContext.Current.Server.MapPath(@"~\App_data\countries.shp"), true);
+		SharpMap.Data.Providers.ShapeFile datasource = new SharpMap.Data.Providers.ShapeFile(HttpContext.Current.Server.MapPath(@"~\App_data\USA\states.shp"), true);
 		layCountries.DataSource = datasource;
 		datacoordsys = datasource.CoordinateSystem;
 
