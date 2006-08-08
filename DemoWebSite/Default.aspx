@@ -1,10 +1,7 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>SharpMap v0.9 RC1</title>
-</head>
-<body>
-
-<h3>SharpMap v0.9 RC1 demos</h3>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" Title="SharpMap v0.9 demo examples" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
+<div style="padding: 20px;">
+<h3>SharpMap v0.9 demos</h3>
 
 <p>
 	To make these demos run, make sure you have set IIS to run ASP.NET v2.0 on the web-application (default is v1.1 on most IIS installations)
@@ -48,8 +45,8 @@
 	<a href="wms.aspx">/wms.aspx</a><br />
 	Creates a WMS Server from a simple map<br/>
 	Note: The link above will correctly throw a WmsException. See links below for some valid requests:<br/>
-	- <a href="wms.aspx?SERVICE=WMS&REQUEST=GetCapabilities">Request capabilities</a><br/>
-	- <a href="wms.aspx?REQUEST=GetMap&Layers=Countries,Rivers,Country labels&STYLES=&CRS=EPSG:4326&BBOX=-180,-90,180,90&WIDTH=600&HEIGHT=300&FORMAT=image/png&VERSION=1.3.0">Request a map</a>
+	- <a href="wms.ashx?SERVICE=WMS&REQUEST=GetCapabilities">Request capabilities</a><br/>
+	- <a href="wms.ashx?REQUEST=GetMap&Layers=Countries,Rivers,Country labels&STYLES=&CRS=EPSG:4326&BBOX=-180,-90,180,90&WIDTH=600&HEIGHT=300&FORMAT=image/png&VERSION=1.3.0">Request a map</a>
 </p>
 
 <p>
@@ -79,6 +76,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.</p>
-
-</body></html>
+</div>
+</asp:Content>
 

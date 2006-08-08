@@ -155,11 +155,11 @@ public class MapHelper
 	{
 		string wmsUrl = "http://www2.demis.nl/mapserver/request.asp";
 		SharpMap.Layers.WmsLayer layWms = new SharpMap.Layers.WmsLayer("Demis Map", wmsUrl);
-		layWms.SpatialReferenceSystem = "EPSG:4326";
-		//layWms.WmsResource = "http://www2.demis.nl/mapserver/request.asp?WMTVER=1.1.1&REQUEST=GetMap&LAYERS=Bathymetry,Ocean features&STYLES=&FORMAT=image/png&SRS=EPSG:4326";
+		layWms.SpatialReferenceSystem = "EPSG:4326";		
 		layWms.AddLayer("Bathymetry");
 		layWms.AddLayer("Ocean features");
-		layWms.ContinueOnError = false; //Skip rendering the WMS Map if the server couldn't be requested (if set to false such an event would crash the app)
+		layWms.SetImageFormat(layWms.OutputFormats[0]);
+		layWms.ContinueOnError = true; //Skip rendering the WMS Map if the server couldn't be requested (if set to false such an event would crash the app)
 		layWms.TimeOut = 5000; //Set timeout to 5 seconds
 		layWms.SRID = 4326;
 		return layWms;
