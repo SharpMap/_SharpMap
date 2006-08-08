@@ -11,39 +11,104 @@ namespace SharpMap.Web.Wms
 		private XmlNamespaceManager nsmgr;
 
 		#region WMS Data structures
+
+		/// <summary>
+		/// Structure for holding information about a WMS Layer 
+		/// </summary>
 		public struct WmsServerLayer
 		{
-			public int ID;
-			public int ParentID;
+			/// <summary>
+			/// Layer title
+			/// </summary>
 			public string Title;
+			/// <summary>
+			/// Unique name of this layer used for requesting layer
+			/// </summary>
 			public string Name;
+			/// <summary>
+			/// Abstract
+			/// </summary>
 			public string Abstract;
+			/// <summary>
+			/// Specifies whether this layer is queryable using GetFeatureInfo requests
+			/// </summary>
 			public bool Queryable;
+			/// <summary>
+			/// Keywords
+			/// </summary>
 			public string[] Keywords;
-			public string[] Style;
+			/// <summary>
+			/// List of styles supported by layer
+			/// </summary>
+			public WmsLayerStyle[] Style;
+			/// <summary>
+			/// Coordinate Reference Systems supported by layer
+			/// </summary>
 			public string[] CRS;
+			/// <summary>
+			/// Collection of child layers
+			/// </summary>
 			public WmsServerLayer[] ChildLayers;
-			public SharpMap.Geometries.BoundingBox BoundingBox;
+			/// <summary>
+			/// Latitudal/longitudal extent of this layer
+			/// </summary>
+			public SharpMap.Geometries.BoundingBox LatLonBoundingBox;
 		}
 
+		/// <summary>
+		/// Structure for storing information about a WMS Layer Style
+		/// </summary>
 		public struct WmsLayerStyle
 		{
+			/// <summary>
+			/// Name
+			/// </summary>
 			public string Name;
+			/// <summary>
+			/// Title
+			/// </summary>
 			public string Title;
+			/// <summary>
+			/// Abstract
+			/// </summary>
 			public string Abstract;
+			/// <summary>
+			/// Legend
+			/// </summary>
 			public WmsStyleLegend LegendUrl;
+			/// <summary>
+			/// Style Sheet Url
+			/// </summary>
 			public WmsOnlineResource StyleSheetUrl;
 		}
 
+		/// <summary>
+		/// Structure for storing WMS Legend information
+		/// </summary>
 		public struct WmsStyleLegend
 		{
+			/// <summary>
+			/// Online resource for legend style 
+			/// </summary>
 			public WmsOnlineResource OnlineResource;
+			/// <summary>
+			/// Size of legend
+			/// </summary>
 			public System.Drawing.Size Size;
 		}
 
+		/// <summary>
+		/// Structure for storing info on an Online Resource
+		/// </summary>
 		public struct WmsOnlineResource
 		{
+			/// <summary>
+			/// Type of online resource (Ex. request method 'Get' or 'Post')
+			/// </summary>
 			public string Type;
+			/// <summary>
+			/// URI of online resource
+			/// </summary>
 			public string OnlineResource;
 		}
 
@@ -53,48 +118,67 @@ namespace SharpMap.Web.Wms
 
 		private Capabilities.WmsServiceDescription _ServiceDescription;
 
+		/// <summary>
+		/// Gets the service description
+		/// </summary>
 		public Capabilities.WmsServiceDescription ServiceDescription
 		{
 			get { return _ServiceDescription; }
 		}
 		private string _WmsVersion;
 
-		internal string WmsVersion
+		/// <summary>
+		/// Gets the version of the WMS server (ex. "1.3.0")
+		/// </summary>
+		public string WmsVersion
 		{
 			get { return _WmsVersion; }
 		}
 
 		private List<string> _GetMapOutputFormats;
 
-		internal List<string> GetMapOutputFormats
+		/// <summary>
+		/// Gets a list of available image mime type formats
+		/// </summary>
+		public List<string> GetMapOutputFormats
 		{
 			get { return _GetMapOutputFormats; }
 		}
 
 		private string[] _ExceptionFormats;
 
-		internal string[] ExceptionFormats
+		/// <summary>
+		/// Gets a list of available exception mime type formats
+		/// </summary>
+		public string[] ExceptionFormats
 		{
 			get { return _ExceptionFormats; }
 		}
 
 		private WmsOnlineResource[] _GetMapRequests;
 
+		/// <summary>
+		/// Gets the available GetMap request methods and Online Resource URI
+		/// </summary>
 		public WmsOnlineResource[] GetMapRequests
 		{
 			get { return _GetMapRequests; }
 		}
-	
 
 		private WmsServerLayer _Layer;
-
-		internal WmsServerLayer Layer
+		/// <summary>
+		/// Gets the hiarchial layer structure
+		/// </summary>
+		public WmsServerLayer Layer
 		{
 			get { return _Layer; }
-			set { _Layer = value; }
 		}
 		#endregion
 
+		/// <summary>
+		/// Initalizes WMS server and parses the Capabilities request
+		/// </summary>
+		/// <param name="url">URL of wms server</param>
 		public Client(string url)
 		{
 			System.Text.StringBuilder strReq = new StringBuilder(url);
@@ -177,9 +261,10 @@ namespace SharpMap.Web.Wms
 				throw (new ApplicationException("No capability tag found!"));
 		}
 
-
-		//Udtræk Name, Title, OnlineResource
-		//Evt. udtræk Abstract, Keywordlist, Contact Information, Fees, Access Constraints
+		/// <summary>
+		/// Parses service description node
+		/// </summary>
+		/// <param name="xnlServiceDescription"></param>
 		private void ParseServiceDescription(XmlNode xnlServiceDescription)
 		{
 			XmlNode node = xnlServiceDescription.SelectSingleNode("sm:Title", nsmgr);
@@ -225,7 +310,11 @@ namespace SharpMap.Web.Wms
 			node = xnlServiceDescription.SelectSingleNode("sm:ContactInformation/sm:ContactVoiceTelephone", nsmgr);
 			_ServiceDescription.ContactInformation.VoiceTelephone = (node != null ? node.InnerText : null);
 		}
-				
+			
+		/// <summary>
+		/// Parses capability node
+		/// </summary>
+		/// <param name="xnlCapability"></param>
 		private void ParseCapability(XmlNode xnlCapability)
 		{
 			XmlNode xnlRequest = xnlCapability.SelectSingleNode("sm:Request", nsmgr);
@@ -240,6 +329,10 @@ namespace SharpMap.Web.Wms
 			//XmlNode xnlException = xnlCapability.SelectSingleNode("/Exception");		
 		}
 
+		/// <summary>
+		/// Parses request node
+		/// </summary>
+		/// <param name="xmlRequestNode"></param>
 		private void ParseRequest(XmlNode xmlRequestNode)
 		{
 			XmlNode xnGetMap = xmlRequestNode.SelectSingleNode("sm:GetMap",nsmgr);
@@ -249,6 +342,10 @@ namespace SharpMap.Web.Wms
 			//XmlNode xnCapa = xmlRequestNodes.SelectSingleNode("/GetCapabilities"); <-- We don't really need this do we?			
 		}
 
+		/// <summary>
+		/// Parses GetMap request nodes
+		/// </summary>
+		/// <param name="GetMapRequestNodes"></param>
 		private void ParseGetMapRequest(XmlNode GetMapRequestNodes)
 		{
 			XmlNode xnlHttp = GetMapRequestNodes.SelectSingleNode("sm:DCPType/sm:HTTP", nsmgr);
@@ -270,7 +367,11 @@ namespace SharpMap.Web.Wms
 				_GetMapOutputFormats.Add(xnlFormats[i].InnerText);
 		}
 
-		//Iterates through the layers recursively
+		/// <summary>
+		/// Iterates through the layer nodes recursively
+		/// </summary>
+		/// <param name="xmlLayer"></param>
+		/// <returns></returns>
 		private WmsServerLayer ParseLayer(XmlNode xmlLayer)
 		{
 			WmsServerLayer layer = new WmsServerLayer();
@@ -301,9 +402,32 @@ namespace SharpMap.Web.Wms
 			XmlNodeList xnlStyle = xmlLayer.SelectNodes("sm:Style", nsmgr);
 			if (xnlStyle != null)
 			{
-				layer.Style = new string[xnlStyle.Count];
+				layer.Style = new WmsLayerStyle[xnlStyle.Count];
 				for (int i = 0; i < xnlStyle.Count; i++)
-					layer.Style[i] = xnlStyle[i].InnerText;
+				{
+					node = xnlStyle[i].SelectSingleNode("sm:Name", nsmgr);
+					layer.Style[i].Name = (node != null ? node.InnerText : null);
+					node = xnlStyle[i].SelectSingleNode("sm:Title", nsmgr);
+					layer.Style[i].Title = (node != null ? node.InnerText : null);
+					node = xnlStyle[i].SelectSingleNode("sm:Abstract", nsmgr);
+					layer.Style[i].Abstract = (node != null ? node.InnerText : null);
+					node = xnlStyle[i].SelectSingleNode("sm:LegendUrl", nsmgr);
+					if (node != null)
+					{
+						layer.Style[i].LegendUrl = new WmsStyleLegend();
+						layer.Style[i].LegendUrl.Size = new System.Drawing.Size(
+							int.Parse(node.Attributes["width"].InnerText), int.Parse(node.Attributes["height"].InnerText));
+						layer.Style[i].LegendUrl.OnlineResource.OnlineResource = node.SelectSingleNode("sm:OnlineResource",nsmgr).Attributes["xlink:href"].InnerText;
+						layer.Style[i].LegendUrl.OnlineResource.Type = node.SelectSingleNode("sm:Format", nsmgr).InnerText;
+					}
+					node = xnlStyle[i].SelectSingleNode("sm:StyleSheetURL", nsmgr);
+					if (node != null)
+					{
+						layer.Style[i].StyleSheetUrl  = new WmsOnlineResource();
+						layer.Style[i].StyleSheetUrl.OnlineResource = node.SelectSingleNode("sm:OnlineResource", nsmgr).Attributes["xlink:href"].InnerText;
+						//layer.Style[i].StyleSheetUrl.OnlineResource = node.SelectSingleNode("sm:Format", nsmgr).InnerText;
+					}
+				}
 			}
 			XmlNodeList xnlLayers = xmlLayer.SelectNodes("sm:Layer", nsmgr);
 			if (xnlLayers != null)
@@ -321,7 +445,7 @@ namespace SharpMap.Web.Wms
 					!double.TryParse(node.Attributes["maxx"].InnerText,out maxx) &&
 					!double.TryParse(node.Attributes["maxy"].InnerText,out maxy))
 						throw new ArgumentException("Invalid LatLonBoundingBox on layer '" + layer.Name + "'");
-					layer.BoundingBox = new SharpMap.Geometries.BoundingBox(minx, miny, maxx, maxy);
+					layer.LatLonBoundingBox = new SharpMap.Geometries.BoundingBox(minx, miny, maxx, maxy);
 			}
 			return layer;
 		}
