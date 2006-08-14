@@ -25,8 +25,8 @@ namespace UnitTests
 				PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 				new AxisInfo("Lat", AxisOrientationEnum.North));
 			System.Collections.Generic.List<ProjectionParameter> parameters = new System.Collections.Generic.List<ProjectionParameter>(5);
-			parameters.Add(new ProjectionParameter("longitude_of_center", -96));
-			parameters.Add(new ProjectionParameter("latitude_of_center", 23));
+			parameters.Add(new ProjectionParameter("central_meridian", -96));
+			parameters.Add(new ProjectionParameter("latitude_of_origin", 23));
 			parameters.Add(new ProjectionParameter("standard_parallel_1", 29.5));
 			parameters.Add(new ProjectionParameter("standard_parallel_2", 45.5));
 			parameters.Add(new ProjectionParameter("false_easting", 0));
