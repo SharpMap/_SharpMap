@@ -115,17 +115,17 @@ namespace SharpMap.CoordinateSystems.Projections
 			this.Name = "Albers_Conic_Equal_Area";			
 
 			//Retrieve parameters
-			ProjectionParameter longitude_of_center = GetParameter("longitude_of_center");
-			ProjectionParameter latitude_of_center = GetParameter("latitude_of_center");
+			ProjectionParameter central_meridian = GetParameter("central_meridian");
+			ProjectionParameter latitude_of_origin = GetParameter("latitude_of_origin");
 			ProjectionParameter standard_parallel_1 = GetParameter("standard_parallel_1");
 			ProjectionParameter standard_parallel_2 = GetParameter("standard_parallel_2");
 			ProjectionParameter false_easting = GetParameter("false_easting");
 			ProjectionParameter false_northing = GetParameter("false_northing");
-			//Check for missing parameters
-			if (longitude_of_center == null)
-				throw new ArgumentException("Missing projection parameter 'longitude_of_center'");
-			if (latitude_of_center == null)
-				throw new ArgumentException("Missing projection parameter 'latitude_of_center'");
+			//Check for missing parameters			
+			if (central_meridian == null)
+				throw new ArgumentException("Missing projection parameter 'central_meridian'");
+			if (latitude_of_origin == null)
+				throw new ArgumentException("Missing projection parameter 'latitude_of_origin'");
 			if (standard_parallel_1 == null)
 				throw new ArgumentException("Missing projection parameter 'standard_parallel_1'");
 			if (standard_parallel_2 == null)
@@ -135,8 +135,8 @@ namespace SharpMap.CoordinateSystems.Projections
 			if (false_northing == null)
 				throw new ArgumentException("Missing projection parameter 'false_northing'");
 
-			lon_center = Degrees2Radians(longitude_of_center.Value);
-			double lat0 = Degrees2Radians(latitude_of_center.Value);
+			lon_center = Degrees2Radians(central_meridian.Value);
+			double lat0 = Degrees2Radians(latitude_of_origin.Value);
 			double lat1 = Degrees2Radians(standard_parallel_1.Value);
 			double lat2 = Degrees2Radians(standard_parallel_2.Value);
 			this._falseEasting = Degrees2Radians(false_easting.Value);
