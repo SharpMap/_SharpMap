@@ -126,7 +126,7 @@ namespace SharpMap.Layers
 			}
 			else
 			{
-				wmsClient = new SharpMap.Web.Wms.Client(url);
+				wmsClient = new SharpMap.Web.Wms.Client(url, _Proxy);
 				if (System.Web.HttpContext.Current != null)
 					System.Web.HttpContext.Current.Cache.Insert("SharpMap_WmsClient_"+url, wmsClient, null,
 						System.Web.Caching.Cache.NoAbsoluteExpiration, cachetime);				

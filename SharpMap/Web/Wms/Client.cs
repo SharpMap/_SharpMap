@@ -180,6 +180,16 @@ namespace SharpMap.Web.Wms
 		/// </summary>
 		/// <param name="url">URL of wms server</param>
 		public Client(string url)
+			: this(url, null)
+		{
+		}
+
+		/// <summary>
+		/// Initalizes WMS server and parses the Capabilities request
+		/// </summary>
+		/// <param name="url">URL of wms server</param>
+		/// <param name="proxy">Proxy to use</param>
+		public Client(string url, System.Net.WebProxy proxy)
 		{
 			System.Text.StringBuilder strReq = new StringBuilder(url);
 			if (!url.Contains("?"))
@@ -191,7 +201,7 @@ namespace SharpMap.Web.Wms
 			if (!url.ToLower().Contains("request=getcapabilities"))
 				strReq.AppendFormat("REQUEST=GetCapabilities&");		
 
-			XmlDocument xml = GetRemoteXml(strReq.ToString());
+			XmlDocument xml = GetRemoteXml(strReq.ToString(), proxy);
 			ParseCapabilities(xml);
 		}
 
@@ -200,11 +210,12 @@ namespace SharpMap.Web.Wms
 		/// Downloads servicedescription from WMS service
 		/// </summary>
 		/// <returns>XmlDocument from Url. Null if Url is empty or inproper XmlDocument</returns>
-		private XmlDocument GetRemoteXml(string Url)
+		private XmlDocument GetRemoteXml(string Url, System.Net.WebProxy proxy)
 		{
 			try
 			{
 				System.Net.WebRequest myRequest = System.Net.WebRequest.Create(Url);
+				if (proxy != null) myRequest.Proxy = proxy;
 				System.Net.WebResponse myResponse = myRequest.GetResponse();
 				System.IO.Stream stream = myResponse.GetResponseStream();
 				XmlTextReader r = new XmlTextReader(Url, stream);
