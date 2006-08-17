@@ -380,9 +380,9 @@ namespace SharpMap.Forms
 								layer.DataSource.ExecuteIntersectionQuery(bbox, ds);
 								layer.DataSource.Close();
 								if (ds.Tables.Count > 0)
-									MapQueried(ds.Tables[0]);
+									if(MapQueried!=null) MapQueried(ds.Tables[0]);
 								else
-									MapQueried(new SharpMap.Data.FeatureDataTable());
+									if (MapQueried != null) MapQueried(new SharpMap.Data.FeatureDataTable());
 							}
 						}
 						else
