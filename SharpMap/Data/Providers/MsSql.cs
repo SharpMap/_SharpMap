@@ -365,7 +365,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT *, " + this.GeometryColumn + " AS sharpmap_tempgeometry FROM " + this.Table + " WHERE " + this.ObjectIdColumn + "='" + RowID.ToString() + "'";
 				using (SqlDataAdapter adapter = new SqlDataAdapter(strSQL, conn))
 				{
-					FeatureDataSet ds = new FeatureDataSet();
+					DataSet ds = new DataSet();
 					conn.Open();
 					adapter.Fill(ds);
 					conn.Close();
@@ -428,10 +428,6 @@ namespace SharpMap.Data.Providers
 		{
 			get { return _ConnectionString; }
 		}
-
-		#endregion
-
-		#region IProvider Members
 
 		/// <summary>
 		/// Returns all features with the view box
