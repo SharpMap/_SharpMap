@@ -25,6 +25,30 @@ namespace UnitTests
 		}
 
 		[Test]
+		public void ImageToWorld()
+		{
+			SharpMap.Map map = new SharpMap.Map(new System.Drawing.Size(1000, 500));
+			map.Zoom = 360;
+			map.Center = new SharpMap.Geometries.Point(0, 0);
+			Assert.AreEqual(new SharpMap.Geometries.Point(0, 0), map.ImageToWorld(new System.Drawing.PointF(500, 250)));
+			Assert.AreEqual(new SharpMap.Geometries.Point(-180, 90), map.ImageToWorld(new System.Drawing.PointF(0,0)));
+			Assert.AreEqual(new SharpMap.Geometries.Point(-180, -90), map.ImageToWorld(new System.Drawing.PointF(0, 500)));
+			Assert.AreEqual(new SharpMap.Geometries.Point(180, 90), map.ImageToWorld(new System.Drawing.PointF(1000, 0)));
+			Assert.AreEqual(new SharpMap.Geometries.Point(180, -90), map.ImageToWorld(new System.Drawing.PointF(1000, 500)));
+		}
+		[Test]
+		public void WorldToImage()
+		{
+			SharpMap.Map map = new SharpMap.Map(new System.Drawing.Size(1000, 500));
+			map.Zoom = 360;
+			map.Center = new SharpMap.Geometries.Point(0, 0);
+			Assert.AreEqual(new System.Drawing.PointF(500, 250), map.WorldToImage(new SharpMap.Geometries.Point(0, 0)));
+			Assert.AreEqual(new System.Drawing.PointF(0, 0), map.WorldToImage(new SharpMap.Geometries.Point(-180, 90)));
+			Assert.AreEqual(new System.Drawing.PointF(0, 500), map.WorldToImage(new SharpMap.Geometries.Point(-180, -90)));
+			Assert.AreEqual(new System.Drawing.PointF(1000, 0), map.WorldToImage(new SharpMap.Geometries.Point(180, 90)));
+			Assert.AreEqual(new System.Drawing.PointF(1000, 500), map.WorldToImage(new SharpMap.Geometries.Point(180, -90)));
+		}
+		[Test]
 		[ExpectedException(typeof(InvalidOperationException))]
 		public void GetMap_RenderEmptyMap_ThrowInvalidOperationException()
 		{
