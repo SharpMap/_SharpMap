@@ -186,10 +186,15 @@ namespace SharpMap.CoordinateSystems
 				return false;
 			GeographicCoordinateSystem gcs = obj as GeographicCoordinateSystem;
 			if (gcs.Dimension != this.Dimension) return false;
-			if (this.WGS84ConversionInfo.Count != gcs.WGS84ConversionInfo.Count) return false;
-			for (int i = 0; i < this.WGS84ConversionInfo.Count; i++)
-				if (!gcs.WGS84ConversionInfo[i].Equals(this.WGS84ConversionInfo[i]))
-					return false;
+			if (this.WGS84ConversionInfo != null && gcs.WGS84ConversionInfo == null) return false;
+			if (this.WGS84ConversionInfo == null && gcs.WGS84ConversionInfo != null) return false;
+			if (this.WGS84ConversionInfo != null && gcs.WGS84ConversionInfo != null)
+			{
+				if (this.WGS84ConversionInfo.Count != gcs.WGS84ConversionInfo.Count) return false;
+				for (int i = 0; i < this.WGS84ConversionInfo.Count; i++)
+					if (!gcs.WGS84ConversionInfo[i].Equals(this.WGS84ConversionInfo[i]))
+						return false;
+			}
 			if (this.AxisInfo.Count != gcs.AxisInfo.Count) return false;			
 			for (int i = 0; i < gcs.AxisInfo.Count; i++)
 				if (gcs.AxisInfo[i].Orientation != this.AxisInfo[i].Orientation)
