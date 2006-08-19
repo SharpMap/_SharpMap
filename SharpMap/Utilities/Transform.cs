@@ -35,13 +35,14 @@ namespace SharpMap.Utilities
 		/// <returns>Point in image coordinates</returns>
 		public static System.Drawing.PointF WorldtoMap(SharpMap.Geometries.Point p, SharpMap.Map map)
 		{
+			//if (map.MapTransform != null && !map.MapTransform.IsIdentity)
+			//	map.MapTransform.TransformPoints(new System.Drawing.PointF[] { p });
 			System.Drawing.PointF result = new System.Drawing.Point();
 			double Height = (map.Zoom * map.Size.Height) / map.Size.Width;
-			double left = map.Center.X - map.Zoom/2;
-			double top = map.Center.Y + Height/2;
-			double pxSize = map.Zoom / map.Size.Width;
-			result.X = (float)(((p.X - left) / pxSize));
-			result.Y = (float)(((top - p.Y) / pxSize));
+			double left = map.Center.X - map.Zoom*0.5;
+			double top = map.Center.Y + Height * 0.5 * map.PixelAspectRatio;
+			result.X = (float)((p.X - left) / map.PixelWidth);
+			result.Y = (float)((top - p.Y) / map.PixelHeight);
 			return result;
 		}
 
@@ -54,9 +55,17 @@ namespace SharpMap.Utilities
 		/// <returns>Point in WCS</returns>
 		public static SharpMap.Geometries.Point MapToWorld(System.Drawing.PointF p, SharpMap.Map map)
 		{
+			//if (this.MapTransform != null && !this.MapTransform.IsIdentity)
+			//{
+			//    System.Drawing.PointF[] p2 = new System.Drawing.PointF[] { p };
+			//    this.MapTransform.TransformPoints(new System.Drawing.PointF[] { p });
+			//    this.MapTransformInverted.TransformPoints(p2);
+			//    return Utilities.Transform.MapToWorld(p2[0], this);
+			//}
+			//else 
 			SharpMap.Geometries.BoundingBox env = map.Envelope;
-			return new SharpMap.Geometries.Point(env.Min.X + p.X * map.PixelSize,
-					env.Max.Y - p.Y * map.PixelSize);
+			return new SharpMap.Geometries.Point(env.Min.X + p.X * map.PixelWidth,
+					env.Max.Y - p.Y * map.PixelHeight);
 		}
 	}
 }

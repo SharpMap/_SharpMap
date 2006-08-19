@@ -86,6 +86,7 @@ namespace SharpMap
 			MapTransformInverted = new System.Drawing.Drawing2D.Matrix();
 			_Center = new SharpMap.Geometries.Point(0, 0);
 			_Zoom = 1;
+			_PixelAspectRatio = 1.0;
 		}		
 
 		/// <summary>
@@ -175,8 +176,6 @@ namespace SharpMap
 			int SRID = (Layers.Count > 0 ? Layers[0].SRID : -1); //Get the SRID of the first layer
 			for (int i = 0; i < _Layers.Count; i++)
 			{
-				//if (SRID != _Layers[i].SRID) //Check that all layers have the same SRID
-				//	throw (new ArgumentException("An attempt was made to add two layers with different SRIDs"));
 				if (_Layers[i].Enabled && _Layers[i].MaxVisible >= this.Zoom && _Layers[i].MinVisible < this.Zoom)
 					_Layers[i].Render(g, this);
 			}
@@ -240,8 +239,6 @@ namespace SharpMap
 		/// <returns>Point in image coordinates</returns>
 		public System.Drawing.PointF WorldToImage(SharpMap.Geometries.Point p)
 		{
-			//if (map.MapTransform != null && !map.MapTransform.IsIdentity)
-			//	map.MapTransform.TransformPoints(new System.Drawing.PointF[] { p });
 			return Utilities.Transform.WorldtoMap(p, this);
 		}
 		/// <summary>
@@ -252,14 +249,6 @@ namespace SharpMap
 		/// <returns>Point in world coordinates</returns>
 		public SharpMap.Geometries.Point ImageToWorld(System.Drawing.PointF p)
 		{
-			//if (this.MapTransform != null && !this.MapTransform.IsIdentity)
-			//{
-			//    System.Drawing.PointF[] p2 = new System.Drawing.PointF[] { p };
-			//    this.MapTransform.TransformPoints(new System.Drawing.PointF[] { p });
-			//    this.MapTransformInverted.TransformPoints(p2);
-			//    return Utilities.Transform.MapToWorld(p2[0], this);
-			//}
-			//else 
 			return Utilities.Transform.MapToWorld(p, this);
 		}
 
@@ -422,12 +411,44 @@ namespace SharpMap
 		}
 
 		/// <summary>
+		/// Returns the width of a pixel in world coordinate units.
+		/// </summary>
+		/// <remarks>The value returned is the same as <see cref="PixelSize"/>.</remarks>
+		public double PixelWidth
+		{
+			get { return PixelSize; }
+		}
+		/// <summary>
+		/// Returns the height of a pixel in world coordinate units.
+		/// </summary>
+		/// <remarks>The value returned is the same as <see cref="PixelSize"/> unless <see cref="PixelAspectRatio"/> is different from 1.</remarks>
+		public double PixelHeight
+		{
+			get { return PixelSize * _PixelAspectRatio; }
+		}
+		private double _PixelAspectRatio = 1.0;
+
+		/// <summary>
+		/// Gets or sets the aspect-ratio of the pixel scales. A value less than 
+		/// 1 will make the map streach upwards, and larger than 1 will make it smaller.
+		/// </summary>
+		/// <exception cref="ArgumentException">Throws an argument exception when value is 0 or less.</exception>
+		public double PixelAspectRatio
+		{
+			get { return _PixelAspectRatio; }
+			set {
+				if (_PixelAspectRatio <= 0)
+					throw new ArgumentException("Invalid Pixel Aspect Ratio");
+				_PixelAspectRatio = value; }
+		}
+	
+		/// <summary>
 		/// Height of map in world units
 		/// </summary>
 		/// <returns></returns>
 		public double MapHeight
 		{
-			get { return (this.Zoom * this.Size.Height) / this.Size.Width; }
+			get { return (this.Zoom * this.Size.Height) / this.Size.Width * this.PixelAspectRatio; }
 		}
 	
 		private System.Drawing.Size _Size;
