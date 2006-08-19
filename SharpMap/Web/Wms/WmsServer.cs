@@ -197,6 +197,7 @@ namespace SharpMap.Web.Wms
 					WmsException.ThrowWmsException("Invalid parameter BBOX");
 					return;
 				}
+				map.PixelAspectRatio = ((double)width / (double)height) / (bbox.Width / bbox.Height);
 				map.Center = bbox.GetCentroid();
 				map.Zoom = bbox.Width;
 
