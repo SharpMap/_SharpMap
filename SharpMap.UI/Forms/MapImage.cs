@@ -132,7 +132,10 @@ namespace SharpMap.Forms
 			if (_Map != null)
 			{
 				_Map.Size = this.Size;
-				this.Image = _Map.GetMap();
+				if (_Map.Layers == null || _Map.Layers.Count == 0)
+					this.Image = null;
+				else
+					this.Image = _Map.GetMap();
 				base.Refresh();
 				if (MapRefreshed != null)
 					MapRefreshed(this, null);
