@@ -470,15 +470,15 @@ namespace SharpMap.Web.Wms
 					layer.ChildLayers[i] = ParseLayer(xnlLayers[i]);
 			}
 			node = xmlLayer.SelectSingleNode("sm:LatLonBoundingBox", nsmgr);
-			if(node!=null)
+			if (node != null)
 			{
-				double minx=0; double miny=0; double maxx=0; double maxy=0;
-				if(!double.TryParse(node.Attributes["minx"].InnerText,out minx) &&
-					!double.TryParse(node.Attributes["miny"].InnerText,out miny) &&
-					!double.TryParse(node.Attributes["maxx"].InnerText,out maxx) &&
-					!double.TryParse(node.Attributes["maxy"].InnerText,out maxy))
-						throw new ArgumentException("Invalid LatLonBoundingBox on layer '" + layer.Name + "'");
-					layer.LatLonBoundingBox = new SharpMap.Geometries.BoundingBox(minx, miny, maxx, maxy);
+				double minx = 0; double miny = 0; double maxx = 0; double maxy = 0;
+				if (!double.TryParse(node.Attributes["minx"].Value, System.Globalization.NumberStyles.Any, SharpMap.Map.numberFormat_EnUS, out minx) &
+					!double.TryParse(node.Attributes["miny"].Value, System.Globalization.NumberStyles.Any, SharpMap.Map.numberFormat_EnUS, out miny) &
+					!double.TryParse(node.Attributes["maxx"].Value, System.Globalization.NumberStyles.Any, SharpMap.Map.numberFormat_EnUS, out maxx) &
+					!double.TryParse(node.Attributes["maxy"].Value, System.Globalization.NumberStyles.Any, SharpMap.Map.numberFormat_EnUS, out maxy))
+					throw new ArgumentException("Invalid LatLonBoundingBox on layer '" + layer.Name + "'");
+				layer.LatLonBoundingBox = new SharpMap.Geometries.BoundingBox(minx, miny, maxx, maxy);
 			}
 			return layer;
 		}
