@@ -179,8 +179,8 @@ public partial class Transformation : System.Web.UI.Page
 		CoordinateSystemFactory cFac = new SharpMap.CoordinateSystems.CoordinateSystemFactory();
 
 		System.Collections.Generic.List<ProjectionParameter> parameters = new System.Collections.Generic.List<ProjectionParameter>(5);
-		parameters.Add(new ProjectionParameter("longitude_of_center", -95));
-		parameters.Add(new ProjectionParameter("latitude_of_center", 50));
+		parameters.Add(new ProjectionParameter("central_meridian", -95));
+		parameters.Add(new ProjectionParameter("latitude_of_origin", 50));
 		parameters.Add(new ProjectionParameter("standard_parallel_1", 29.5));
 		parameters.Add(new ProjectionParameter("standard_parallel_2", 45.5));
 		parameters.Add(new ProjectionParameter("false_easting", 0));
