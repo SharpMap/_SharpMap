@@ -326,18 +326,37 @@ namespace SharpMap.Web.Wms
 		/// Parses capability node
 		/// </summary>
 		/// <param name="xnlCapability"></param>
-		private void ParseCapability(XmlNode xnlCapability)
+		private void ParseCapability(XmlNode xnCapability)
 		{
-			XmlNode xnlRequest = xnlCapability.SelectSingleNode("sm:Request", nsmgr);
-			if (xnlRequest == null)
+			XmlNode xnRequest = xnCapability.SelectSingleNode("sm:Request", nsmgr);
+			if (xnRequest == null)
 				throw (new System.Exception("Request parameter not specified in Service Description"));
-			ParseRequest(xnlRequest);
-			XmlNode xnlLayer = xnlCapability.SelectSingleNode("sm:Layer", nsmgr);
-			if (xnlLayer == null)
+			ParseRequest(xnRequest);
+			XmlNode xnLayer = xnCapability.SelectSingleNode("sm:Layer", nsmgr);
+			if (xnLayer == null)
 				throw (new System.Exception("No layer tag found in Service Description")); 
-			_Layer = ParseLayer(xnlLayer);
-			//TODO:
-			//XmlNode xnlException = xnlCapability.SelectSingleNode("/Exception");		
+			_Layer = ParseLayer(xnLayer);
+			
+			XmlNode xnException = xnCapability.SelectSingleNode("sm:Exception", nsmgr);
+			if (xnException != null)
+				ParseExceptions(xnException);
+		}
+
+		/// <summary>
+		/// Parses valid exceptions
+		/// </summary>
+		/// <param name="xnlExceptionNode"></param>
+		private void ParseExceptions(XmlNode xnlExceptionNode)
+		{
+			XmlNodeList xnlFormats = xnlExceptionNode.SelectNodes("sm:Format", nsmgr);
+			if (xnlFormats != null)
+			{
+				_ExceptionFormats = new string[xnlFormats.Count];
+				for (int i = 0; i < xnlFormats.Count; i++)
+				{
+					_ExceptionFormats[i] = xnlFormats[i].InnerText;
+				}
+			}
 		}
 
 		/// <summary>
@@ -349,8 +368,8 @@ namespace SharpMap.Web.Wms
 			XmlNode xnGetMap = xmlRequestNode.SelectSingleNode("sm:GetMap",nsmgr);
 			ParseGetMapRequest(xnGetMap);
 			//TODO:
-			//XmlNode xnGetFeatureInfo = xmlRequestNodes.SelectSingleNode("/GetFeatureInfo");
-			//XmlNode xnCapa = xmlRequestNodes.SelectSingleNode("/GetCapabilities"); <-- We don't really need this do we?			
+			//XmlNode xnGetFeatureInfo = xmlRequestNodes.SelectSingleNode("sm:GetFeatureInfo", nsmgr);
+			//XmlNode xnCapa = xmlRequestNodes.SelectSingleNode("sm:GetCapabilities", nsmgr); <-- We don't really need this do we?			
 		}
 
 		/// <summary>
