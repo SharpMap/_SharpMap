@@ -112,30 +112,6 @@ namespace SharpMap
 		public event LayersChangedEventHandler LayersChanged;
 
 		/// <summary>
-		/// EventHandler for event fired when a layer has been added to the Layers collections
-		/// </summary>
-		[Obsolete("Use LayerChangedEventHandler")]
-		public delegate void LayerAddedEventHandler();
-
-		/// <summary>
-		/// Event fired when the layer has been rendered
-		/// </summary>
-		[Obsolete("Use LayerChanged")]
-		public event LayerAddedEventHandler LayerAdded;
-
-		/// <summary>
-		/// EventHandler for event fired when a layer has been removed from the Layers collection
-		/// </summary>
-		[Obsolete("Use LayerChangedEventHandler")]
-		public delegate void LayerRemovedEventHandler();
-
-		/// <summary>
-		/// Event fired when the layer has been rendered
-		/// </summary>
-		[Obsolete("Use LayerChanged")]
-		public event LayerRemovedEventHandler LayerRemoved;
-
-		/// <summary>
 		/// EventHandler for event fired when the zoomlevel or the center point has been changed
 		/// </summary>
 		public delegate void MapViewChangedHandler();
@@ -315,11 +291,6 @@ namespace SharpMap
 				_Layers = value;
 				if (value != null)
 				{
-					if (iBefore < _Layers.Count) //We have more layers than before. Fire event
-						if (LayerAdded != null)
-							LayerAdded(); //Layer added. Fire event
-						else if (iBefore > _Layers.Count) //We have fewer layers than before. Fire event
-							if (LayerRemoved != null) LayerRemoved(); //Layer removed. Fire event
 					if (LayersChanged != null) //Layers changed. Fire event
 						LayersChanged();
 					if (MapViewOnChange != null)
