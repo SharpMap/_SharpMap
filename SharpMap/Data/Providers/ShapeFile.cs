@@ -621,33 +621,7 @@ namespace SharpMap.Data.Providers
 					geometries.Add(g);
 			}
 			return geometries;
-		}
-
-		/// <summary>
-		/// Returns all objects whose boundingbox intersects bbox - OBSOLETE: Use ExecuteIntersectionQuery(box) instead
-		/// </summary>
-		/// <param name="bbox"></param>
-		/// <param name="ds"></param>
-		/// <returns></returns>
-		[Obsolete("Use ExecuteIntersectionQuery(box) instead")]
-		public void GetFeaturesInView(SharpMap.Geometries.BoundingBox bbox, SharpMap.Data.FeatureDataSet ds)
-		{
-			//Use the spatial index to get a list of features whose boundingbox intersects bbox
-			List<uint> objectlist = GetObjectIDsInView(bbox);
-			SharpMap.Data.FeatureDataTable dt = dbaseFile.NewTable;
-
-			for (int i = 0; i < objectlist.Count; i++)
-			{
-
-				SharpMap.Data.FeatureDataRow fdr = dbaseFile.GetFeature(objectlist[i], dt);
-				fdr.Geometry = ReadGeometry(objectlist[i]);
-				if(fdr.Geometry!=null)
-				if (fdr.Geometry.GetBoundingBox().Intersects(bbox)) 
-					if(FilterDelegate==null || FilterDelegate(fdr))
-						dt.AddRow(fdr);
-			}
-			ds.Tables.Add(dt);
-		}
+		}			
 
 		/// <summary>
 		/// Returns all objects whose boundingbox intersects bbox.
@@ -657,8 +631,6 @@ namespace SharpMap.Data.Providers
 		/// Please note that this method doesn't guarantee that the geometries returned actually intersect 'bbox', but only
 		/// that their boundingbox intersects 'bbox'.
 		/// </para>
-		/// <para>This method is much faster than the QueryFeatures method, because intersection tests
-		/// are performed on objects simplifed by their boundingbox, and using the Spatial Index.</para>
 		/// </remarks>
 		/// <param name="bbox"></param>
 		/// <param name="ds"></param>
@@ -824,38 +796,6 @@ namespace SharpMap.Data.Providers
 			}
 			else
 				throw (new ApplicationException("Shapefile type " + _ShapeType.ToString() + " not supported"));
-		}
-
-		/// <summary>
-		/// Returns all objects within a distance of a geometry
-		/// </summary>
-		/// <param name="geom"></param>
-		/// <param name="distance"></param>
-		/// <returns></returns>
-		[Obsolete("Use ExecuteIntersectionQuery instead")]
-		public SharpMap.Data.FeatureDataTable QueryFeatures(SharpMap.Geometries.Geometry geom, double distance)
-		{
-			SharpMap.Data.FeatureDataTable dt = (SharpMap.Data.FeatureDataTable)dbaseFile.NewTable;
-			SharpMap.Geometries.BoundingBox bbox = geom.GetBoundingBox();
-			bbox.Min.X -= distance; bbox.Max.X += distance;
-			bbox.Min.Y -= distance; bbox.Max.Y += distance;
-			//Get candidates by intersecting the spatial index tree
-			List<uint> objectlist = tree.Search(bbox);
-
-			if (objectlist.Count == 0)
-				return dt;
-
-			SharpMap.Geometries.Geometry geomBuffer = geom.Buffer(distance);
-			for (int j = 0; j < objectlist.Count; j++)
-			{
-				for (uint i = (uint)dt.Rows.Count - 1; i >= 0; i--)
-				{
-					SharpMap.Data.FeatureDataRow fdr = GetFeature(objectlist[j],dt);
-					if (fdr!=null && fdr.Geometry.Intersects(geomBuffer))
-						dt.Rows.Add(fdr);
-				}
-			}
-			return dt;
 		}
 
 		/// <summary>

@@ -141,17 +141,6 @@ namespace SharpMap.Data.Providers
 		}
 
 		/// <summary>
-		/// Returns all features with the view box
-		/// </summary>
-		/// <param name="bbox">view box</param>
-		/// <param name="ds">FeatureDataSet to fill data into</param>
-		[Obsolete("Use ExecuteIntersectionQuery(box) instead")]
-		public void GetFeaturesInView(SharpMap.Geometries.BoundingBox bbox, FeatureDataSet ds)
-		{
-			ExecuteIntersectionQuery(bbox, ds);
-		}
-
-		/// <summary>
 		/// Returns geometry Object IDs whose bounding box intersects 'bbox'
 		/// </summary>
 		/// <param name="bbox"></param>
@@ -210,18 +199,6 @@ namespace SharpMap.Data.Providers
 				}				
 			}
 			return geom;
-		}
-
-		/// <summary>
-		/// Returns the data associated with all the geometries that is within 'distance' of 'geom' [NOT IMPLEMENTED]
-		/// </summary>
-		/// <param name="geom"></param>
-		/// <param name="distance"></param>
-		/// <returns></returns>
-		[Obsolete("Use ExecuteIntersectionQuery instead")]
-		public FeatureDataTable QueryFeatures(SharpMap.Geometries.Geometry geom, double distance)
-		{
-			throw new NotImplementedException("The QueryFeatures method is not implemented on the OleDbPointProvider.");
 		}
 
 		/// <summary>
