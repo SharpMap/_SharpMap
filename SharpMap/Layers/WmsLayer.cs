@@ -62,24 +62,59 @@ namespace SharpMap.Layers
 
 		private List<string> _LayerList;
 
+		/// <summary>
+		/// Gets the list of enabled layers
+		/// </summary>
 		public List<string> LayerList
 		{
 			get { return _LayerList; }
 		}
 
+		/// <summary>
+		/// Adds a layer to WMS request
+		/// </summary>
+		/// <remarks>Layer names are case sensitive.</remarks>
+		/// <param name="name">Name of layer</param>
+		/// <exception cref="System.ArgumentException">Throws an exception is an unknown layer is added</exception>
 		public void AddLayer(string name)
-		{
-			//TODO:Add check for whether the layer exists
+		{			
+			if(!LayerExists(wmsClient.Layer,name))
+				throw new ArgumentException("Cannot add WMS Layer - Unknown layername");
+			
 			_LayerList.Add(name);
 		}
+		/// <summary>
+		/// Recursive method for checking whether a layername exists
+		/// </summary>
+		/// <param name="layer"></param>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		private bool LayerExists(SharpMap.Web.Wms.Client.WmsServerLayer layer, string name)
+		{
+			if(name == layer.Name) return true;
+			foreach (SharpMap.Web.Wms.Client.WmsServerLayer childlayer in layer.ChildLayers)
+				if (LayerExists(childlayer,name)) return true;
+			return false;
+		}
+		/// <summary>
+		/// Removes a layer from the layer list
+		/// </summary>
+		/// <param name="name">Name of layer to remove</param>
 		public void RemoveLayer(string name)
 		{
 			_LayerList.Remove(name);
 		}
+		/// <summary>
+		/// Removes the layer at the specified index
+		/// </summary>
+		/// <param name="index"></param>
 		public void RemoveLayerAt(int index)
 		{
 			_LayerList.RemoveAt(index);
 		}
+		/// <summary>
+		/// Removes all layers
+		/// </summary>
 		public void RemoveAllLayers()
 		{
 			_LayerList.Clear();
@@ -87,24 +122,59 @@ namespace SharpMap.Layers
 
 		private List<string> _StylesList;
 
+		/// <summary>
+		/// Gets the list of enabled styles
+		/// </summary>
 		public List<string> StylesList
 		{
 			get { return _StylesList; }
 		}
 
+		/// <summary>
+		/// Adds a style to the style collection
+		/// </summary>
+		/// <param name="name">Name of style</param>
+		/// <exception cref="System.ArgumentException">Throws an exception is an unknown layer is added</exception>
 		public void AddStyle(string name)
 		{
-			//TODO:Add check for whether the style exists
+			if (!StyleExists(wmsClient.Layer, name))
+				throw new ArgumentException("Cannot add WMS Layer - Unknown layername");
 			_StylesList.Add(name);
 		}
+
+		/// <summary>
+		/// Recursive method for checking whether a layername exists
+		/// </summary>
+		/// <param name="layer">layer</param>
+		/// <param name="name">name of style</param>
+		/// <returns>True of style exists</returns>
+		private bool StyleExists(SharpMap.Web.Wms.Client.WmsServerLayer layer, string name)
+		{			
+			foreach(SharpMap.Web.Wms.Client.WmsLayerStyle style in layer.Style)
+				if (name == style.Name) return true;
+			foreach (SharpMap.Web.Wms.Client.WmsServerLayer childlayer in layer.ChildLayers)
+				if (StyleExists(childlayer, name)) return true;
+			return false;
+		}
+		/// <summary>
+		/// Removes a style from the collection
+		/// </summary>
+		/// <param name="name">Name of style</param>
 		public void RemoveStyle(string name)
 		{
 			_StylesList.Remove(name);
 		}
+		/// <summary>
+		/// Removes a style at specified index
+		/// </summary>
+		/// <param name="index">Index</param>
 		public void RemoveStyleAt(int index)
 		{
 			_StylesList.RemoveAt(index);
 		}
+		/// <summary>
+		/// Removes all styles from the list
+		/// </summary>
 		public void RemoveAllStyles()
 		{
 			_StylesList.Clear();
@@ -195,6 +265,9 @@ namespace SharpMap.Layers
 
 		private string _SpatialReferenceSystem;
 
+		/// <summary>
+		/// Gets or sets the spatial reference used for the WMS server request
+		/// </summary>
 		public string SpatialReferenceSystem
 		{
 			get { return _SpatialReferenceSystem; }
@@ -309,6 +382,12 @@ namespace SharpMap.Layers
 			base.Render(g, map);
 		}
 
+		/// <summary>
+		/// Gets the URL for a map request base on current settings, the image size and boundingbox
+		/// </summary>
+		/// <param name="box">Area the WMS request should cover</param>
+		/// <param name="size">Size of image</param>
+		/// <returns>URL for WMS request</returns>
 		public string GetRequestUrl(SharpMap.Geometries.BoundingBox box, System.Drawing.Size size)
 		{
 			SharpMap.Web.Wms.Client.WmsOnlineResource resource = GetPreferredMethod();			
@@ -362,7 +441,7 @@ namespace SharpMap.Layers
 		private Boolean _ContinueOnError;
 
 		/// <summary>
-		/// Specifies whether to throw an exception if the Wms request failed, or to just skip the layer
+		/// Specifies whether to throw an exception if the Wms request failed, or to just skip rendering the layer
 		/// </summary>
 		public Boolean ContinueOnError
 		{

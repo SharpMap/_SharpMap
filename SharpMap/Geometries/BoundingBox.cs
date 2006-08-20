@@ -219,10 +219,20 @@ namespace SharpMap.Geometries
 					 box.Min.Y > this.Max.Y ||
 					 box.Max.Y < this.Min.Y);
 		}
+		/// <summary>
+		/// Returns true if this <see cref="BoundingBox"/> intersects the geometry
+		/// </summary>
+		/// <param name="g">Geometry</param>
+		/// <returns>True if intersects</returns>
 		public bool Intersects(Geometry g)
 		{
 			return this.Touches(g);
 		}
+		/// <summary>
+		/// Returns true if this instance touches the <see cref="BoundingBox"/>
+		/// </summary>
+		/// <param name="r"><see cref="BoundingBox"/></param>
+		/// <returns>True it touches</returns>
 		public bool Touches(BoundingBox r)
 		{
 			for (uint cIndex = 0; cIndex < 2; cIndex++)
@@ -233,11 +243,21 @@ namespace SharpMap.Geometries
 			}
 			return false;
 		}
+		/// <summary>
+		/// Returns true if this <see cref="BoundingBox"/> touches the geometry
+		/// </summary>
+		/// <param name="s">Geometry</param>
+		/// <returns>True if touches</returns>
 		public bool Touches(Geometry s)
 		{
 			if (s is Point) return Touches(s as Point);
-			throw new NotImplementedException("Touches: Not implemented on these geometries");
+			throw new NotImplementedException("Touches: Not implemented on this geometry type");
 		}
+		/// <summary>
+		/// Returns true if this instance contains the <see cref="BoundingBox"/>
+		/// </summary>
+		/// <param name="r"><see cref="BoundingBox"/></param>
+		/// <returns>True it contains</returns>
 		public bool Contains(BoundingBox r)
 		{
 			for (uint cIndex = 0; cIndex < 2; cIndex++)
@@ -245,12 +265,22 @@ namespace SharpMap.Geometries
 
 			return true;
 		}
+		/// <summary>
+		/// Returns true if this instance contains the geometry
+		/// </summary>
+		/// <param name="s"><see cref="BoundingBox"/></param>
+		/// <returns>True it contains</returns>
 		public bool Contains(Geometry s)
 		{
 			if (s is Point) return Contains(s as Point);
 			throw new NotImplementedException("Contains: Not implemented on these geometries");
 		}
 
+		/// <summary>
+		/// Returns true if this instance touches the <see cref="Point"/>
+		/// </summary>
+		/// <param name="p">Geometry</param>
+		/// <returns>True if touches</returns>
 		public bool Touches(Point p)
 		{
 			for (uint cIndex = 0; cIndex < 2; cIndex++)
@@ -261,10 +291,19 @@ namespace SharpMap.Geometries
 			}
 			return false;
 		}
+		/// <summary>
+		/// Returns the area of the BoundingBox
+		/// </summary>
+		/// <returns>Area of box</returns>
 		public double GetArea()
 		{
 			return Width * Height;
 		}
+		/// <summary>
+		/// Gets the intersecting area between two boundingboxes
+		/// </summary>
+		/// <param name="r">BoundingBox</param>
+		/// <returns>Area</returns>
 		public double GetIntersectingArea(BoundingBox r)
 		{
 			uint cIndex;

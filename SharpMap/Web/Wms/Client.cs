@@ -5,6 +5,9 @@ using System.Xml;
 
 namespace SharpMap.Web.Wms
 {
+	/// <summary>
+	/// Class for requesting and parsing a WMS servers capabilities
+	/// </summary>
 	[Serializable]
 	public class Client
 	{
@@ -325,7 +328,7 @@ namespace SharpMap.Web.Wms
 		/// <summary>
 		/// Parses capability node
 		/// </summary>
-		/// <param name="xnlCapability"></param>
+		/// <param name="xnCapability"></param>
 		private void ParseCapability(XmlNode xnCapability)
 		{
 			XmlNode xnRequest = xnCapability.SelectSingleNode("sm:Request", nsmgr);
