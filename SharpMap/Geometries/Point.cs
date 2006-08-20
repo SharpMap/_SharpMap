@@ -371,6 +371,11 @@ namespace SharpMap.Geometries
 		{
 			return box.Contains(this);
 		}
+		/// <summary>
+		/// Returns true if this instance contains 'geom'
+		/// </summary>
+		/// <param name="geom">Geometry</param>
+		/// <returns>True if geom is contained by this instance</returns>
 		public override bool Contains(Geometry geom)
 		{
 			return false;

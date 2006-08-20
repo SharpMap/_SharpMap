@@ -29,5 +29,19 @@ namespace UnitTests
 			Assert.AreEqual("image/png", c.GetMapOutputFormats[0]);
 			Assert.AreEqual(20, c.Layer.ChildLayers.Length);
 		}
+
+		[Test]
+		public void AddLayerOK()
+		{
+			SharpMap.Layers.WmsLayer layer = new SharpMap.Layers.WmsLayer("wms", "http://wms.iter.dk/example_capabilities_1_3_0.xml");
+			layer.AddLayer("ROADS_1M");
+		}
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddLayerFail()
+		{
+			SharpMap.Layers.WmsLayer layer = new SharpMap.Layers.WmsLayer("wms", "http://wms.iter.dk/example_capabilities_1_3_0.xml");
+			layer.AddLayer("NonExistingLayer");
+		}
 	}
 }

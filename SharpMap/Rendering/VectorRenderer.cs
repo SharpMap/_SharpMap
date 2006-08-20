@@ -357,7 +357,7 @@ namespace SharpMap.Rendering
 		}
 
 		/// <summary>
-		/// Renders a <see cref="MultiPoint"/> to the map.
+		/// Renders a <see cref="SharpMap.Geometries.MultiPoint"/> to the map.
 		/// </summary>
 		/// <param name="g">Graphics reference</param>
 		/// <param name="points">MultiPoint to render</param>
