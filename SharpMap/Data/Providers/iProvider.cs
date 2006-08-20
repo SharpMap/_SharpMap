@@ -34,14 +34,6 @@ namespace SharpMap.Data.Providers
 		System.Collections.Generic.List<SharpMap.Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox);
 
 		/// <summary>
-		/// Returns all features within the <see cref="SharpMap.Geometries.BoundingBox"/>
-		/// </summary>
-		/// <param name="bbox">view box</param>
-		/// <param name="ds">FeatureDataSet to fill data into</param>
-		[Obsolete("Use ExecuteIntersectionQuery(BoundingBox,FeatureDataSet) instead")]
-			void GetFeaturesInView(SharpMap.Geometries.BoundingBox bbox, SharpMap.Data.FeatureDataSet ds);
-
-		/// <summary>
 		/// Returns all objects whose <see cref="SharpMap.Geometries.BoundingBox"/> intersects 'bbox'.
 		/// </summary>
 		/// <remarks>
@@ -58,16 +50,7 @@ namespace SharpMap.Data.Providers
 		/// <param name="oid">Object ID</param>
 		/// <returns>geometry</returns>
 		SharpMap.Geometries.Geometry GetGeometryByID(uint oid);
-
-		/// <summary>
-		/// Returns the data associated with all the geometries that are within 'distance' of 'geom' (OBSELETE - Use ExecuteIntersectionQuery)
-		/// </summary>
-		/// <param name="geom"></param>
-		/// <param name="distance"></param>
-		/// <returns></returns>
-		[Obsolete("Use ExecuteIntersectionQuery instead")]
-		SharpMap.Data.FeatureDataTable QueryFeatures(SharpMap.Geometries.Geometry geom,double distance);
-
+			
 		/// <summary>
 		/// Returns the data associated with all the geometries that are intersected by 'geom'
 		/// </summary>

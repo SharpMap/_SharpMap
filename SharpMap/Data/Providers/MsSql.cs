@@ -275,18 +275,6 @@ namespace SharpMap.Data.Providers
 		}
 
 		/// <summary>
-		/// Returns all objects within a distance of a geometry
-		/// </summary>
-		/// <param name="geom"></param>
-		/// <param name="distance"></param>
-		/// <returns></returns>
-		[Obsolete("Use ExecuteIntersectionQuery instead")]
-		public SharpMap.Data.FeatureDataTable QueryFeatures(SharpMap.Geometries.Geometry geom, double distance)
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
 		/// Returns the features that intersects with 'geom' [NOT IMPLEMENTED]
 		/// </summary>
 		/// <param name="geom"></param>
@@ -427,17 +415,6 @@ namespace SharpMap.Data.Providers
 		public string ConnectionID
 		{
 			get { return _ConnectionString; }
-		}
-
-		/// <summary>
-		/// Returns all features with the view box
-		/// </summary>
-		/// <param name="bbox">view box</param>
-		/// <param name="ds">FeatureDataSet to fill data into</param>
-		[Obsolete("Use ExecuteIntersectionQuery")]
-		public void GetFeaturesInView(SharpMap.Geometries.BoundingBox bbox, SharpMap.Data.FeatureDataSet ds)
-		{
-			ExecuteIntersectionQuery(bbox, ds);
 		}
 
 		private string GetBoxClause(SharpMap.Geometries.BoundingBox bbox)

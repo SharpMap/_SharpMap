@@ -146,16 +146,6 @@ namespace SharpMap.Data.Providers
 		}
 
 		/// <summary>
-		/// Throws an NotSupportedException. Attribute data is not supported by this datasource
-		/// </summary>
-		/// <param name="bbox"></param>
-		/// <param name="ds"></param>
-		public void GetFeaturesInView(BoundingBox bbox, FeatureDataSet ds)
-		{
-			throw new NotSupportedException("Attribute data is not supported by the GeometryProvider.");
-		}
-
-		/// <summary>
 		/// Returns all objects whose boundingbox intersects 'bbox'.
 		/// </summary>
 		/// <param name="bbox"></param>
@@ -178,19 +168,7 @@ namespace SharpMap.Data.Providers
 		{
 			return _Geometries[(int)oid];
 		}
-
-		/// <summary>
-		/// Throws an NotSupportedException. Attribute data is not supported by this datasource
-		/// </summary>
-		/// <param name="geom"></param>
-		/// <param name="distance"></param>
-		/// <returns></returns>
-		[Obsolete("Use ExecuteIntersectionQuery instead")]
-		public FeatureDataTable QueryFeatures(Geometry geom, double distance)
-		{
-			throw new NotSupportedException("Attribute data is not supported by the GeometryProvider.");
-		}
-
+				
 		/// <summary>
 		/// Throws an NotSupportedException. Attribute data is not supported by this datasource
 		/// </summary>
