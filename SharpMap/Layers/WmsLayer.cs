@@ -36,9 +36,15 @@ namespace SharpMap.Layers
 	/// The following example creates a map with a WMS layer the Demis WMS Server
 	/// <code lang="C#">
 	/// myMap = new SharpMap.Map(new System.Drawing.Size(500,250);
-	/// SharpMap.Layers.WmsLayer myLayer = new SharpMap.Layers.WmsLayer("Demis WMS");
-    /// myLayer.WmsResource = "http://www2.demis.nl/mapserver/request.asp?WMTVER=1.1.1&amp;LAYERS=Bathymetry,Countries,Topography,Hillshading,Builtup areas,Coastlines,Waterbodies,Inundated,Rivers,Streams,Railroads,Highways,Roads,Trails,Borders,Cities,Settlements,Spot elevations,Airports,Ocean features&amp;STYLES=&amp;FORMAT=image/png&amp;SRS=EPSG:4326";
-	/// myMap.Layers.Add(myLayer);
+	/// string wmsUrl = "http://www2.demis.nl/mapserver/request.asp";
+	/// SharpMap.Layers.WmsLayer myLayer = new SharpMap.Layers.WmsLayer("Demis WMS", myLayer);
+	/// myLayer.AddLayer("Bathymetry");
+	/// myLayer.AddLayer("Countries");
+	/// myLayer.AddLayer("Topography");
+	/// myLayer.AddLayer("Hillshading");
+	/// myLayer.SetImageFormat(layWms.OutputFormats[0]);
+	/// myLayer.SpatialReferenceSystem = "EPSG:4326";	
+    /// myMap.Layers.Add(myLayer);
 	/// myMap.Center = new SharpMap.Geometries.Point(0, 0);
 	/// myMap.Zoom = 360;
 	/// myMap.MaximumZoom = 360;
