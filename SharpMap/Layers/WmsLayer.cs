@@ -439,8 +439,7 @@ namespace SharpMap.Layers
 		{
 			get
 			{
-				//TODO:
-				throw new NotImplementedException();
+				return RootLayer.LatLonBoundingBox;
 			}
 		}
 
