@@ -60,11 +60,78 @@ namespace SharpMap.Layers
 		/// Initializes a new layer, and downloads and parses the service description
 		/// </summary>
 		/// <remarks>In and ASP.NET application the service description is automatically cached for 24 hours when not specified</remarks>
-		/// <param name="layername"></param>
-		/// <param name="url"></param>
-		public WmsLayer(string layername, string url) : this(layername,url,new TimeSpan(24,0,0))
+		/// <param name="layername">Layername</param>
+		/// <param name="url">Url of WMS server</param>
+		public WmsLayer(string layername, string url)
+			: this(layername, url, new TimeSpan(24, 0, 0))
 		{
 		}
+		/// <summary>
+		/// Initializes a new layer, and downloads and parses the service description
+		/// </summary>
+		/// <param name="layername">Layername</param>
+		/// <param name="url">Url of WMS server</param>
+		/// <param name="cachetime">Time for caching Service Description (ASP.NET only)</param>
+		public WmsLayer(string layername, string url, TimeSpan cachetime)
+			: this(layername, url, cachetime, null)
+		{
+		}
+		/// <summary>
+		/// Initializes a new layer, and downloads and parses the service description
+		/// </summary>
+		/// <remarks>In and ASP.NET application the service description is automatically cached for 24 hours when not specified</remarks>
+		/// <param name="layername">Layername</param>
+		/// <param name="url">Url of WMS server</param>
+		/// <param name="proxy">Proxy</param>
+		public WmsLayer(string layername, string url, System.Net.WebProxy proxy)
+			: this(layername, url, new TimeSpan(24,0,0), proxy)
+		{
+		}
+		/// <summary>
+		/// Initializes a new layer, and downloads and parses the service description
+		/// </summary>
+		/// <param name="layername">Layername</param>
+		/// <param name="url">Url of WMS server</param>
+		/// <param name="cachetime">Time for caching Service Description (ASP.NET only)</param>
+		/// <param name="proxy">Proxy</param>
+		public WmsLayer(string layername, string url, TimeSpan cachetime, System.Net.WebProxy proxy)
+		{
+			_Proxy = proxy;
+			_TimeOut = 10000;
+			this.LayerName = layername;
+			_ContinueOnError = true;
+			if (System.Web.HttpContext.Current != null && System.Web.HttpContext.Current.Cache["SharpMap_WmsClient_" + url] != null)
+			{
+				wmsClient = (SharpMap.Web.Wms.Client)System.Web.HttpContext.Current.Cache["SharpMap_WmsClient_" + url];
+			}
+			else
+			{
+				wmsClient = new SharpMap.Web.Wms.Client(url, _Proxy);
+				if (System.Web.HttpContext.Current != null)
+					System.Web.HttpContext.Current.Cache.Insert("SharpMap_WmsClient_" + url, wmsClient, null,
+						System.Web.Caching.Cache.NoAbsoluteExpiration, cachetime);
+			}
+			//Set default mimetype - We prefer compressed formats
+			if (OutputFormats.Contains("image/jpeg")) _MimeType = "image/jpeg";
+			else if (OutputFormats.Contains("image/png")) _MimeType = "image/png";
+			else if (OutputFormats.Contains("image/gif")) _MimeType = "image/gif";
+			else //None of the default formats supported - Look for the first supported output format
+			{
+				bool formatSupported = false;
+				foreach (System.Drawing.Imaging.ImageCodecInfo encoder in System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders())
+					if (OutputFormats.Contains(encoder.MimeType.ToLower()))
+					{
+						formatSupported = true;
+						_MimeType = encoder.MimeType;
+						break;
+					}
+				if (!formatSupported)
+					throw new ArgumentException("GDI+ doesn't not support any of the mimetypes supported by this WMS service");
+			}
+			_LayerList = new List<string>();
+			_StylesList = new List<string>();
+		}
+
 
 		private List<string> _LayerList;
 
@@ -185,49 +252,7 @@ namespace SharpMap.Layers
 		{
 			_StylesList.Clear();
 		}
-		/// <summary>
-		/// Initializes a new layer, and downloads and parses the service description
-		/// </summary>
-		/// <param name="layername"></param>
-		/// <param name="url">Url of service description</param>
-		/// <param name="cachetime">Time for caching Service Description (ASP.NET only)</param>
-		public WmsLayer(string layername, string url, TimeSpan cachetime)
-		{
-			_TimeOut = 10000;
-			this.LayerName = layername;
-			_ContinueOnError = true;
-			if (System.Web.HttpContext.Current != null && System.Web.HttpContext.Current.Cache["SharpMap_WmsClient_" + url] != null)
-			{
-				wmsClient = (SharpMap.Web.Wms.Client)System.Web.HttpContext.Current.Cache["SharpMap_WmsClient_" + url];
-			}
-			else
-			{
-				wmsClient = new SharpMap.Web.Wms.Client(url, _Proxy);
-				if (System.Web.HttpContext.Current != null)
-					System.Web.HttpContext.Current.Cache.Insert("SharpMap_WmsClient_"+url, wmsClient, null,
-						System.Web.Caching.Cache.NoAbsoluteExpiration, cachetime);				
-			}
-			//Set default mimetype - We prefer compressed formats
-			if (OutputFormats.Contains("image/jpeg")) _MimeType = "image/jpeg";
-			else if (OutputFormats.Contains("image/png")) _MimeType = "image/png";
-			else if (OutputFormats.Contains("image/gif")) _MimeType = "image/gif";
-			else //None of the default formats supported - Look for the first supported output format
-			{
-				bool formatSupported = false;
-				foreach (System.Drawing.Imaging.ImageCodecInfo encoder in System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders())
-					if (OutputFormats.Contains(encoder.MimeType.ToLower()))
-					{
-						formatSupported = true;
-						_MimeType = encoder.MimeType;
-						break;
-					}
-				if(!formatSupported)
-					throw new ArgumentException("GDI+ doesn't not support any of the mimetypes supported by this WMS service");
-			}
-			_LayerList = new List<string>();
-			_StylesList = new List<string>();
-		}
-
+		
 		/// <summary>
 		/// Sets the image type to use when requesting images from the WMS server
 		/// </summary>
