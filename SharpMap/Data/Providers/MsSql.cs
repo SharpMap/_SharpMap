@@ -539,8 +539,7 @@ namespace SharpMap.Data.Providers
 				foreach (uint idx in indexes)
 				{
 					//Get feature from shapefile
-					SharpMap.Data.FeatureDataRow feature = datasource.GetFeature(idx);
-					SharpMap.Geometries.BoundingBox box = feature.Geometry.GetBoundingBox();
+					SharpMap.Data.FeatureDataRow feature = datasource.GetFeature(idx);					
 					if (counter == 0)
 					{
 
@@ -569,12 +568,23 @@ namespace SharpMap.Data.Providers
 					//Set values
 					foreach (DataColumn col in feature.Table.Columns)
 						command.Parameters["@" + col.ColumnName].Value = feature[col];
-					command.Parameters["@WKB_Geometry"].Value = feature.Geometry.AsBinary(); //Add the geometry as Well-Known Binary
-					command.Parameters["@Envelope_MinX"].Value = box.Left;
-					command.Parameters["@Envelope_MinY"].Value = box.Bottom;
-					command.Parameters["@Envelope_MaxX"].Value = box.Right;
-					command.Parameters["@Envelope_MaxY"].Value = box.Top;
-
+					if (feature.Geometry != null)
+					{
+						command.Parameters["@WKB_Geometry"].Value = feature.Geometry.AsBinary(); //Add the geometry as Well-Known Binary
+						SharpMap.Geometries.BoundingBox box = feature.Geometry.GetBoundingBox();
+						command.Parameters["@Envelope_MinX"].Value = box.Left;
+						command.Parameters["@Envelope_MinY"].Value = box.Bottom;
+						command.Parameters["@Envelope_MaxX"].Value = box.Right;
+						command.Parameters["@Envelope_MaxY"].Value = box.Top;
+					}
+					else
+					{
+						command.Parameters["@WKB_Geometry"].Value = DBNull.Value;
+						command.Parameters["@Envelope_MinX"].Value = DBNull.Value;
+						command.Parameters["@Envelope_MinY"].Value = DBNull.Value;
+						command.Parameters["@Envelope_MaxX"].Value = DBNull.Value;
+						command.Parameters["@Envelope_MaxY"].Value = DBNull.Value;
+					}
 					//Insert row
 					command.ExecuteNonQuery();
 					counter++;
