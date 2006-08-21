@@ -370,7 +370,8 @@ namespace SharpMap.Data.Providers
 							foreach (System.Data.DataColumn col in ds.Tables[0].Columns)
 								if (col.ColumnName != this.GeometryColumn && col.ColumnName != "sharpmap_tempgeometry" && !col.ColumnName.StartsWith("Envelope_"))
 									fdr[col.ColumnName] = dr[col];
-							fdr.Geometry = SharpMap.Converters.WellKnownBinary.GeometryFromWKB.Parse((byte[])dr["sharpmap_tempgeometry"]);
+							if(dr["sharpmap_tempgeometry"] != DBNull.Value)
+								fdr.Geometry = SharpMap.Converters.WellKnownBinary.GeometryFromWKB.Parse((byte[])dr["sharpmap_tempgeometry"]);
 							return fdr;
 						}
 						else
@@ -459,7 +460,8 @@ namespace SharpMap.Data.Providers
 							foreach (System.Data.DataColumn col in ds2.Tables[0].Columns)
 								if (col.ColumnName != this.GeometryColumn && col.ColumnName != "sharpmap_tempgeometry" && !col.ColumnName.StartsWith("Envelope_"))
 									fdr[col.ColumnName] = dr[col];
-							fdr.Geometry = SharpMap.Converters.WellKnownBinary.GeometryFromWKB.Parse((byte[])dr["sharpmap_tempgeometry"]);
+							if (dr["sharpmap_tempgeometry"] != DBNull.Value)
+								fdr.Geometry = SharpMap.Converters.WellKnownBinary.GeometryFromWKB.Parse((byte[])dr["sharpmap_tempgeometry"]);
 							fdt.AddRow(fdr);
 						}
 						ds.Tables.Add(fdt);
