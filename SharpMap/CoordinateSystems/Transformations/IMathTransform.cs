@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems.Transformations
@@ -133,7 +134,7 @@ namespace SharpMap.CoordinateSystems.Transformations
 		/// </remarks>
 		/// <param name="points"></param>
 		/// <returns></returns>
-		List<SharpMap.Geometries.Point> TransformList(List<SharpMap.Geometries.Point> points);
+		Collection<SharpMap.Geometries.Point> TransformList(Collection<SharpMap.Geometries.Point> points);
 
 		/// <summary>
 		/// Reverses the transformation

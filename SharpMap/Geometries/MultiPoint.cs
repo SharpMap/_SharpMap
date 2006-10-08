@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Geometries
@@ -27,14 +28,14 @@ namespace SharpMap.Geometries
 	/// </summary>
 	public class MultiPoint : GeometryCollection
 	{
-		private List<Point> _Points;
+		private Collection<Point> _Points;
 
 		/// <summary>
 		/// Initializes a new MultiPoint collection
 		/// </summary>
 		public MultiPoint()
 		{
-			_Points = new System.Collections.Generic.List<Point>();
+			_Points = new Collection<Point>();
 		}
 
 		/// <summary>
@@ -50,7 +51,7 @@ namespace SharpMap.Geometries
 		/// <summary>
 		/// Gets or sets the MultiPoint collection
 		/// </summary>
-		public List<Point> Points
+		public Collection<Point> Points
 		{
 			get { return _Points; }
 			set { _Points = value; }

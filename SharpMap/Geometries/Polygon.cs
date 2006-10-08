@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Geometries
@@ -32,14 +33,14 @@ namespace SharpMap.Geometries
 	public class Polygon : Surface
 	{
 		private LinearRing _ExteriorRing;
-		private List<LinearRing> _InteriorRings;
+		private Collection<LinearRing> _InteriorRings;
 
 		/// <summary>
 		/// Instatiates a polygon based on one extorier ring and a collection of interior rings.
 		/// </summary>
 		/// <param name="exteriorRing">Exterior ring</param>
 		/// <param name="interiorRings">Interior rings</param>
-		public Polygon(LinearRing exteriorRing, List<LinearRing> interiorRings)
+		public Polygon(LinearRing exteriorRing, Collection<LinearRing> interiorRings)
 		{
 			_ExteriorRing = exteriorRing;
 			_InteriorRings = interiorRings;
@@ -49,12 +50,12 @@ namespace SharpMap.Geometries
 		/// Instatiates a polygon based on one extorier ring.
 		/// </summary>
 		/// <param name="exteriorRing">Exterior ring</param>
-		public Polygon(LinearRing exteriorRing) : this(exteriorRing, new List<LinearRing>()) { }
+		public Polygon(LinearRing exteriorRing) : this(exteriorRing, new Collection<LinearRing>()) { }
 
 		/// <summary>
 		/// Instatiates a polygon
 		/// </summary>
-		public Polygon() : this(new LinearRing(), new List<LinearRing>()) { }
+		public Polygon() : this(new LinearRing(), new Collection<LinearRing>()) { }
 
 		/// <summary>
 		/// Gets or sets the exterior ring of this Polygon
@@ -69,7 +70,7 @@ namespace SharpMap.Geometries
 		/// <summary>
 		/// Gets or sets the interior rings of this Polygon
 		/// </summary>
-		public List<LinearRing> InteriorRings
+		public Collection<LinearRing> InteriorRings
 		{
 			get { return _InteriorRings; }
 			set { _InteriorRings = value; }

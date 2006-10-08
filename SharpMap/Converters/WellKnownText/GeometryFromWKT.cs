@@ -37,6 +37,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using SharpMap.Geometries;
 
@@ -102,9 +103,9 @@ namespace SharpMap.Converters.WellKnownText
 		/// "EMPTY".</param>
 		/// <returns>The next array of Coordinates in the stream, or an empty array of "EMPTY" is the
 		/// next element returned by the stream.</returns>
-		private static List<SharpMap.Geometries.Point> GetCoordinates(WktStreamTokenizer tokenizer)
+		private static Collection<SharpMap.Geometries.Point> GetCoordinates(WktStreamTokenizer tokenizer)
 		{
-			List<SharpMap.Geometries.Point> coordinates = new List<SharpMap.Geometries.Point>();
+			Collection<SharpMap.Geometries.Point> coordinates = new Collection<SharpMap.Geometries.Point>();
 			string nextToken = GetNextEmptyOrOpener(tokenizer);
 			if (nextToken=="EMPTY")
 				return coordinates;

@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Geometries
@@ -27,19 +28,19 @@ namespace SharpMap.Geometries
 	[Serializable]
 	public class MultiLineString : MultiCurve
 	{
-		private List<LineString> _LineStrings;
+		private Collection<LineString> _LineStrings;
 		/// <summary>
 		/// Initializes an instance of a MultiLineString
 		/// </summary>
 		public MultiLineString()
 		{
-			_LineStrings = new System.Collections.Generic.List<LineString>();
+			_LineStrings = new Collection<LineString>();
 		}
 
 		/// <summary>
 		/// Collection of <see cref="LineString">LineStrings</see> in the <see cref="MultiLineString"/>
 		/// </summary>
-		public List<LineString> LineStrings
+		public Collection<LineString> LineStrings
 		{
 			get { return _LineStrings; }
 			set { _LineStrings = value; }
@@ -90,9 +91,11 @@ namespace SharpMap.Geometries
 		{
 			if (_LineStrings == null || _LineStrings.Count == 0)
 				return true;
+
 			for(int i=0;i<_LineStrings.Count;i++)
 				if(!_LineStrings[i].IsEmpty())
 					return false;
+
 			return true;
 		}
 

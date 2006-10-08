@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Geometries
@@ -38,7 +39,7 @@ namespace SharpMap.Geometries
 		/// </summary>
 		public GeometryCollection()
 		{
-			_Geometries = new List<Geometry>();
+			_Geometries = new Collection<Geometry>();
 		}
 
 		/// <summary>
@@ -56,7 +57,7 @@ namespace SharpMap.Geometries
 			return _Geometries[N];
 		}
 
-		private List<Geometry> _Geometries;
+		private Collection<Geometry> _Geometries;
 
 		/// <summary>
 		/// Returns an indexed geometry in the collection
@@ -115,7 +116,7 @@ namespace SharpMap.Geometries
 		/// <summary>
 		/// Gets or sets the GeometryCollection
 		/// </summary>
-		public virtual List<Geometry> Collection 
+		public virtual Collection<Geometry> Collection 
 		{
 			get { return _Geometries; }
 			set { _Geometries = value; }

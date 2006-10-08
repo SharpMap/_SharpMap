@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Geometries
@@ -27,20 +28,20 @@ namespace SharpMap.Geometries
 	[Serializable]
 	public class MultiPolygon : MultiSurface
 	{
-		private List<Polygon> _Polygons;
+		private Collection<Polygon> _Polygons;
 
 		/// <summary>
 		/// Instantiates a MultiPolygon
 		/// </summary>
 		public MultiPolygon()
 		{
-			_Polygons = new System.Collections.Generic.List<Polygon>();
+			_Polygons = new Collection<Polygon>();
 		}
 
 		/// <summary>
 		/// Collection of polygons in the multipolygon
 		/// </summary>
-		public List<Polygon> Polygons
+		public Collection<Polygon> Polygons
 		{
 			get { return _Polygons; }
 			set { _Polygons = value; }

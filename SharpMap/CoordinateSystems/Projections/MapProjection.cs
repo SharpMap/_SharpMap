@@ -37,6 +37,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using SharpMap.Geometries;
 using SharpMap.CoordinateSystems;
 using SharpMap.CoordinateSystems.Transformations;
@@ -260,9 +261,10 @@ namespace SharpMap.CoordinateSystems.Projections
 				return this.MetersToDegrees(cp);
 		}
 
-		public override List<SharpMap.Geometries.Point> TransformList(List<SharpMap.Geometries.Point> ord)
+		public override Collection<SharpMap.Geometries.Point> TransformList(Collection<SharpMap.Geometries.Point> ord)
 		{
-			List<SharpMap.Geometries.Point> result = new List<SharpMap.Geometries.Point>(ord.Count);
+            //Collection<SharpMap.Geometries.Point> result = new Collection<SharpMap.Geometries.Point>(ord.Count);
+            Collection<SharpMap.Geometries.Point> result = new Collection<SharpMap.Geometries.Point>();
 			for(int i=0; i<ord.Count; i++)
 			{
 				SharpMap.Geometries.Point point = ord[i];

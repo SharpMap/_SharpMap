@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Geometries
@@ -30,7 +31,7 @@ namespace SharpMap.Geometries
 		/// Initializes an instance of a LinearRing from a set of vertices
 		/// </summary>
 		/// <param name="vertices"></param>
-		public LinearRing(List<Point> vertices)
+		public LinearRing(Collection<Point> vertices)
 			: base(vertices)
 		{
 		}

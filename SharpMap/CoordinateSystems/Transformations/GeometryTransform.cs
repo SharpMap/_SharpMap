@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using SharpMap.Geometries;
 
@@ -115,7 +116,8 @@ namespace SharpMap.CoordinateSystems.Transformations
 		public static Polygon TransformPolygon(Polygon p, IMathTransform transform)
 		{
 			Polygon pOut = new Polygon(TransformLinearRing(p.ExteriorRing, transform));
-			pOut.InteriorRings = new List<LinearRing>(p.InteriorRings.Count); //Pre-inialize array size for better performance
+            //pOut.InteriorRings = new Collection<LinearRing>(p.InteriorRings.Count); //Pre-inialize array size for better performance
+            pOut.InteriorRings = new Collection<LinearRing>();
 			for (int i = 0; i < p.InteriorRings.Count; i++)
 				pOut.InteriorRings.Add(TransformLinearRing(p.InteriorRings[i], transform));
 			return pOut;
@@ -141,7 +143,8 @@ namespace SharpMap.CoordinateSystems.Transformations
 		public static MultiLineString TransformMultiLineString(MultiLineString lines, IMathTransform transform)
 		{
 			MultiLineString lOut = new MultiLineString();
-			lOut.LineStrings = new List<LineString>(lines.LineStrings.Count); //Pre-inialize array size for better performance
+            //lOut.LineStrings = new Collection<LineString>(lines.LineStrings.Count); //Pre-inialize array size for better performance
+            lOut.LineStrings = new Collection<LineString>(); //Pre-inialize array size for better performance
 			for (int i = 0; i < lines.LineStrings.Count;i++ )
 				lOut.LineStrings.Add(TransformLineString(lines[i], transform));
 			return lOut;
@@ -155,7 +158,8 @@ namespace SharpMap.CoordinateSystems.Transformations
 		public static MultiPolygon TransformMultiPolygon(MultiPolygon polys, IMathTransform transform)
 		{
 			MultiPolygon pOut = new MultiPolygon();
-			pOut.Polygons = new List<Polygon>(polys.Polygons.Count); //Pre-inialize array size for better performance
+            //pOut.Polygons = new Collection<Polygon>(polys.Polygons.Count); //Pre-inialize array size for better performance
+            pOut.Polygons = new Collection<Polygon>();
 			for (int i = 0; i < polys.NumGeometries; i++)
 				pOut.Polygons.Add(TransformPolygon(polys[i], transform));
 			return pOut;
@@ -169,7 +173,8 @@ namespace SharpMap.CoordinateSystems.Transformations
 		public static GeometryCollection TransformGeometryCollection(GeometryCollection geoms, IMathTransform transform)
 		{
 			GeometryCollection gOut = new GeometryCollection();
-			gOut.Collection = new List<Geometry>(geoms.Collection.Count); //Pre-inialize array size for better performance
+            //gOut.Collection = new Collection<Geometry>(geoms.Collection.Count); //Pre-inialize array size for better performance
+            gOut.Collection = new Collection<Geometry>(); //Pre-inialize array size for better performance
 			for (int i = 0; i < geoms.Collection.Count;i++ )
 				gOut.Collection.Add(TransformGeometry(geoms[i], transform));
 			return gOut;
