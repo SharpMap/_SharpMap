@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 using SharpMap.CoordinateSystems.Projections;
@@ -191,7 +192,8 @@ namespace SharpMap.CoordinateSystems.Transformations
 		}
 		private static IMathTransform CreateCoordinateOperation(IProjection projection, IEllipsoid ellipsoid)
 		{
-			List<ProjectionParameter> parameterList = new List<ProjectionParameter>(projection.NumParameters);
+            //Collection<ProjectionParameter> parameterList = new Collection<ProjectionParameter>(projection.NumParameters);
+            Collection<ProjectionParameter> parameterList = new Collection<ProjectionParameter>();
 			for (int i = 0; i < projection.NumParameters; i++)
 				parameterList.Add(projection.GetParameter(i));
 

@@ -37,6 +37,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using SharpMap.CoordinateSystems;
 using SharpMap.CoordinateSystems.Transformations;
 
@@ -78,7 +79,7 @@ namespace SharpMap.CoordinateSystems.Projections
 		/// Creates an instance of an TransverseMercatorProjection projection object.
 		/// </summary>
 		/// <param name="parameters">List of parameters to initialize the projection.</param>
-		public TransverseMercator(List<ProjectionParameter> parameters)
+		public TransverseMercator(Collection<ProjectionParameter> parameters)
 			: this(parameters, false)
 		{
 			
@@ -100,7 +101,7 @@ namespace SharpMap.CoordinateSystems.Projections
 		/// <item><term>false_northing</term><description></description></item>
 		/// </list>
 		/// </remarks>
-		public TransverseMercator(List<ProjectionParameter> parameters, bool inverse)
+		public TransverseMercator(Collection<ProjectionParameter> parameters, bool inverse)
 			: base(parameters, inverse)
 		{
 			this.Name = "Transverse_Mercator";

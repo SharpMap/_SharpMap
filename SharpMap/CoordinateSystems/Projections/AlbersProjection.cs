@@ -37,6 +37,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using SharpMap.Geometries;
 using SharpMap.CoordinateSystems;
 using SharpMap.CoordinateSystems.Transformations;
@@ -87,7 +88,7 @@ namespace SharpMap.CoordinateSystems.Projections
 		/// <item><term>northing_at_false_origin</term><description>The northing value assigned to the false origin.</description></item>
 		/// </list>
 		/// </remarks>
-		public AlbersProjection(List<ProjectionParameter> parameters)
+		public AlbersProjection(Collection<ProjectionParameter> parameters)
 			: this(parameters, false)
 		{
 		}
@@ -109,7 +110,7 @@ namespace SharpMap.CoordinateSystems.Projections
 		/// </remarks>
 		/// <param name="parameters">List of parameters to initialize the projection.</param>
 		/// <param name="isInverse">Indicates whether the projection forward (meters to degrees or degrees to meters).</param>
-		public AlbersProjection(List<ProjectionParameter> parameters, bool isInverse)
+		public AlbersProjection(Collection<ProjectionParameter> parameters, bool isInverse)
 			: base(parameters, isInverse)
 		{
 			this.Name = "Albers_Conic_Equal_Area";			

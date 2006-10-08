@@ -37,6 +37,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using SharpMap.CoordinateSystems;
 using SharpMap.CoordinateSystems.Transformations;
 
@@ -71,7 +72,7 @@ namespace SharpMap.CoordinateSystems.Projections
 		/// <param name="parameters">ParameterList with the required parameters.</param>
 		/// <remarks>
 		/// </remarks>
-		public Mercator(List<ProjectionParameter> parameters)
+		public Mercator(Collection<ProjectionParameter> parameters)
 			: this(parameters, false)
 		{
 		}
@@ -92,7 +93,7 @@ namespace SharpMap.CoordinateSystems.Projections
 		/// <item><term>false_northing</term><description>Since the natural origin may be at or near the centre of the projection and under normal coordinate circumstances would thus give rise to negative coordinates over parts of the mapped area, this origin is usually given false coordinates which are large enough to avoid this inconvenience. The False Northing, FN, is the northing value assigned to the ordinate.</description></item>
 		/// </list>
 		/// </remarks>
-		public Mercator(List<ProjectionParameter> parameters, bool isInverse)
+		public Mercator(Collection<ProjectionParameter> parameters, bool isInverse)
 			: base(parameters, isInverse)
 		{
 			this.Authority = "EPSG";
