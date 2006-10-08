@@ -63,7 +63,7 @@ namespace SharpMap
 		/// <summary>
 		/// Used for converting numbers to/from strings
 		/// </summary>
-		internal static System.Globalization.NumberFormatInfo numberFormat_EnUS = new System.Globalization.CultureInfo("en-US", false).NumberFormat;
+		public static System.Globalization.NumberFormatInfo numberFormat_EnUS = new System.Globalization.CultureInfo("en-US", false).NumberFormat;
 
 		/// <summary>
 		/// Initializes a new map
