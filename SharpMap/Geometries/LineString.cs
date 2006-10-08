@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Geometries
@@ -28,13 +29,13 @@ namespace SharpMap.Geometries
 	[Serializable]
 	public class LineString : Curve
 	{
-		private List<Point> _Vertices;
+		private Collection<Point> _Vertices;
 
 		/// <summary>
 		/// Initializes an instance of a LineString from a set of vertices
 		/// </summary>
 		/// <param name="vertices"></param>
-		public LineString(List<Point> vertices)
+		public LineString(Collection<Point> vertices)
 		{
 			_Vertices = vertices;
 		}
@@ -42,12 +43,12 @@ namespace SharpMap.Geometries
 		/// <summary>
 		/// Initializes an instance of a LineString
 		/// </summary>
-		public LineString() : this(new List<Point>()) { }
+		public LineString() : this(new Collection<Point>()) { }
 
 		/// <summary>
 		/// Gets or sets the collection of vertices in this Geometry
 		/// </summary>
-		public virtual List<Point> Vertices
+		public virtual Collection<Point> Vertices
 		{
 			get { return _Vertices; }
 			set { _Vertices = value; }
@@ -139,11 +140,15 @@ namespace SharpMap.Geometries
 		/// <returns>true if the geometry is simple</returns>
 		public override bool IsSimple()
 		{
-			List<Point> verts = new List<Point>(_Vertices.Count);
-			for (int i = 0; i < _Vertices.Count;i++ )
-				if (!verts.Exists(delegate(SharpMap.Geometries.Point p) { return p.Equals(_Vertices[i]);}))
-					verts.Add(_Vertices[i]);
-			return (verts.Count == this._Vertices.Count-(this.IsClosed?1:0));
+            //Collection<Point> verts = new Collection<Point>(_Vertices.Count);
+            Collection<Point> verts = new Collection<Point>();
+
+            for (int i = 0; i < _Vertices.Count; i++)
+                //if (!verts.Exists(delegate(SharpMap.Geometries.Point p) { return p.Equals(_Vertices[i]); }))
+                if (0 != verts.IndexOf(_Vertices[i]))
+                    verts.Add(_Vertices[i]);
+
+            return (verts.Count == this._Vertices.Count-(this.IsClosed?1:0));
 		}
 
 		/// <summary>

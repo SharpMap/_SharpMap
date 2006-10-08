@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems.Transformations
@@ -92,9 +93,10 @@ namespace SharpMap.CoordinateSystems.Transformations
 				return ApplyInverted(point as SharpMap.Geometries.Point3D);
 		}
 
-		public override List<SharpMap.Geometries.Point> TransformList(List<SharpMap.Geometries.Point> points)
+		public override Collection<SharpMap.Geometries.Point> TransformList(Collection<SharpMap.Geometries.Point> points)
 		{
-			List<SharpMap.Geometries.Point> pnts = new List<SharpMap.Geometries.Point>(points.Count);
+            //Collection<SharpMap.Geometries.Point> pnts = new Collection<SharpMap.Geometries.Point>(points.Count);
+            Collection<SharpMap.Geometries.Point> pnts = new Collection<SharpMap.Geometries.Point>();
 			foreach(SharpMap.Geometries.Point p in points)
 				pnts.Add(Transform(p));
 			return pnts;

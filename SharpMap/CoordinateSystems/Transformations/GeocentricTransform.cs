@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using SharpMap.Geometries;
 using SharpMap.CoordinateSystems;
@@ -198,9 +199,10 @@ namespace SharpMap.CoordinateSystems.Transformations
 				return this.MetersToDegrees(point);
 		}
 
-		public override List<SharpMap.Geometries.Point> TransformList(List<SharpMap.Geometries.Point> points)
+		public override Collection<SharpMap.Geometries.Point> TransformList(Collection<SharpMap.Geometries.Point> points)
 		{
-			List<SharpMap.Geometries.Point> result = new List<SharpMap.Geometries.Point>(points.Count);
+            //Collection<SharpMap.Geometries.Point> result = new Collection<SharpMap.Geometries.Point>(points.Count);
+            Collection<SharpMap.Geometries.Point> result = new Collection<SharpMap.Geometries.Point>();
 			for (int i = 0; i < points.Count; i++)
 			{
 				SharpMap.Geometries.Point point = points[i];

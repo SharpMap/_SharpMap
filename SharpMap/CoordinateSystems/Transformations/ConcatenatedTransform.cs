@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems.Transformations
@@ -66,9 +67,9 @@ namespace SharpMap.CoordinateSystems.Transformations
 			}
 		}
 
-		public override List<SharpMap.Geometries.Point> TransformList(List<SharpMap.Geometries.Point> points)
+		public override Collection<SharpMap.Geometries.Point> TransformList(Collection<SharpMap.Geometries.Point> points)
 		{
-			List<SharpMap.Geometries.Point> pnts = new List<SharpMap.Geometries.Point>(points);
+			Collection<SharpMap.Geometries.Point> pnts = new Collection<SharpMap.Geometries.Point>(points);
 			foreach (ICoordinateTransformation ct in _CoordinateTransformationList)
 				pnts = ct.MathTransform.TransformList(pnts);
 			return pnts;

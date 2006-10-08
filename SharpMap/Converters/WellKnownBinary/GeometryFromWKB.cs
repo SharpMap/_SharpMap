@@ -156,14 +156,24 @@ namespace SharpMap.Converters.WellKnownBinary
 		private static LineString CreateWKBLineString(BinaryReader reader, WkbByteOrder byteOrder)
 		{
 		    SharpMap.Geometries.LineString l = new SharpMap.Geometries.LineString();
-		    l.Vertices.AddRange(ReadCoordinates(reader, byteOrder));
+            //l.Vertices.AddRange(ReadCoordinates(reader, byteOrder));
+            Point[] arrPoint = ReadCoordinates(reader, byteOrder);
+            for (int i = 0; i < arrPoint.Length; i++)
+                l.Vertices.Add(arrPoint[i]);
+		    
 		    return l;
+
+            
 		}
 
 		private static LinearRing CreateWKBLinearRing(BinaryReader reader, WkbByteOrder byteOrder)
 		{
 			SharpMap.Geometries.LinearRing l = new SharpMap.Geometries.LinearRing();
-			l.Vertices.AddRange(ReadCoordinates(reader, byteOrder));
+			//l.Vertices.AddRange(ReadCoordinates(reader, byteOrder));
+            Point[] arrPoint = ReadCoordinates(reader, byteOrder);
+            for (int i = 0; i < arrPoint.Length; i++)
+                l.Vertices.Add(arrPoint[i]);
+
 			//if polygon isn't closed, add the first point to the end (this shouldn't occur for correct WKB data)
 			if (l.Vertices[0].X != l.Vertices[l.Vertices.Count - 1].X || l.Vertices[0].Y != l.Vertices[l.Vertices.Count - 1].Y)
 				l.Vertices.Add(new Point(l.Vertices[0].X, l.Vertices[0].Y));

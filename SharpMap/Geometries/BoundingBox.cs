@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Geometries
@@ -61,7 +62,7 @@ namespace SharpMap.Geometries
 		/// Initializes a new Bounding Box based on the bounds from a set of geometries
 		/// </summary>
 		/// <param name="objects">list of objects</param>
-		public BoundingBox(List<SharpMap.Geometries.Geometry> objects)
+		public BoundingBox(Collection<SharpMap.Geometries.Geometry> objects)
 		{
 			if (objects == null || objects.Count == 0)
 			{
@@ -86,7 +87,7 @@ namespace SharpMap.Geometries
 		/// Initializes a new Bounding Box based on the bounds from a set of bounding boxes
 		/// </summary>
 		/// <param name="objects">list of objects</param>
-		public BoundingBox(List<SharpMap.Geometries.BoundingBox> objects)
+		public BoundingBox(Collection<SharpMap.Geometries.BoundingBox> objects)
 		{
 			if (objects.Count == 0) { _Max = null; _Min = null; }
 			else
