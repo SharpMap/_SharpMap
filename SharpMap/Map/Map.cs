@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 
@@ -78,7 +79,7 @@ namespace SharpMap
 		public Map(System.Drawing.Size size)
 		{
 			this.Size = size;
-			this.Layers = new List<SharpMap.Layers.ILayer>();
+			this.Layers = new Collection<SharpMap.Layers.ILayer>();
 			this.BackColor = System.Drawing.Color.Transparent;
 			this._MaximumZoom = double.MaxValue;
 			this._MinimumZoom = 0;
@@ -179,7 +180,13 @@ namespace SharpMap
 		/// <returns>Layer</returns>
 		public SharpMap.Layers.ILayer GetLayerByName(string name)
 		{
-			return _Layers.Find(delegate(SharpMap.Layers.ILayer layer) { return layer.LayerName.Equals(name); });
+			//return _Layers.Find(delegate(SharpMap.Layers.ILayer layer) { return layer.LayerName.Equals(name); });
+            for (int i = 0; i < _Layers.Count; i++)
+                if (String.Equals(_Layers[i].LayerName, name, StringComparison.InvariantCultureIgnoreCase))
+                    return _Layers[i];
+
+            return null;
+
 		}
 
 		/// <summary>
@@ -276,12 +283,12 @@ namespace SharpMap
 			
 		}
 		
-		private List<SharpMap.Layers.ILayer> _Layers;
+		private Collection<SharpMap.Layers.ILayer> _Layers;
 
 		/// <summary>
 		/// A collection of layers. The first layer in the list is drawn first, the last one on top.
 		/// </summary>
-		public System.Collections.Generic.List<SharpMap.Layers.ILayer> Layers
+		public Collection<SharpMap.Layers.ILayer> Layers
 		{
 			get { return _Layers; }
 			set {
