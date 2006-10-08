@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Drawing.Imaging;
 using System.Drawing;
@@ -289,7 +290,7 @@ namespace SharpMap.Layers
 		/// <summary>
 		/// Gets the list of available formats
 		/// </summary>
-		public List<string> OutputFormats
+		public Collection<string> OutputFormats
 		{
 			get { return wmsClient.GetMapOutputFormats; }
 		}

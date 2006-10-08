@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Xml;
 
@@ -138,12 +139,12 @@ namespace SharpMap.Web.Wms
 			get { return _WmsVersion; }
 		}
 
-		private List<string> _GetMapOutputFormats;
+		private Collection<string> _GetMapOutputFormats;
 
 		/// <summary>
 		/// Gets a list of available image mime type formats
 		/// </summary>
-		public List<string> GetMapOutputFormats
+		public Collection<string> GetMapOutputFormats
 		{
 			get { return _GetMapOutputFormats; }
 		}
@@ -395,7 +396,8 @@ namespace SharpMap.Web.Wms
 				}
 			}
 			XmlNodeList xnlFormats = GetMapRequestNodes.SelectNodes("sm:Format", nsmgr);
-			_GetMapOutputFormats = new List<string>(xnlFormats.Count);
+            //_GetMapOutputFormats = new Collection<string>(xnlFormats.Count);
+            _GetMapOutputFormats = new Collection<string>();
 			for (int i = 0; i < xnlFormats.Count;i++ )
 				_GetMapOutputFormats.Add(xnlFormats[i].InnerText);
 		}
