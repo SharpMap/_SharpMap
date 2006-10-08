@@ -37,6 +37,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using SharpMap.CoordinateSystems;
 using SharpMap.CoordinateSystems.Transformations;
 
@@ -84,7 +85,7 @@ namespace SharpMap.CoordinateSystems.Projections
 		/// </list>
 		/// </remarks>
 		/// <param name="parameters">List of parameters to initialize the projection.</param>
-		public LambertConformalConic2SP(List<ProjectionParameter> parameters) : this(parameters,false)
+		public LambertConformalConic2SP(Collection<ProjectionParameter> parameters) : this(parameters,false)
 		{
 		}
 	
@@ -105,7 +106,7 @@ namespace SharpMap.CoordinateSystems.Projections
 		/// </remarks>
 		/// <param name="parameters">List of parameters to initialize the projection.</param>
 		/// <param name="isInverse">Indicates whether the projection forward (meters to degrees or degrees to meters).</param>
-		public LambertConformalConic2SP(List<ProjectionParameter> parameters, bool isInverse)
+		public LambertConformalConic2SP(Collection<ProjectionParameter> parameters, bool isInverse)
 			: base(parameters, isInverse)
 		{
 			this.Name = "Lambert_Conformal_Conic_2SP";

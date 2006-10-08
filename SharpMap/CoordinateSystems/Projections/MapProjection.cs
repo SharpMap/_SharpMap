@@ -57,16 +57,16 @@ namespace SharpMap.CoordinateSystems.Projections
 		protected double _semiMajor;
 		protected double _semiMinor;
 
-		protected List<ProjectionParameter> _Parameters;
+		protected Collection<ProjectionParameter> _Parameters;
 		protected MathTransform _inverse;
 
-		protected MapProjection(List<ProjectionParameter> parameters, bool isInverse)
+		protected MapProjection(Collection<ProjectionParameter> parameters, bool isInverse)
 			: this(parameters)
 		{
 			_isInverse = isInverse;
 		}
 
-		protected MapProjection(List<ProjectionParameter> parameters)
+		protected MapProjection(Collection<ProjectionParameter> parameters)
 		{
 			_Parameters = parameters;
 			//todo. Should really convert to the correct linear units??
@@ -98,11 +98,17 @@ namespace SharpMap.CoordinateSystems.Projections
 		/// <returns>parameter or null if not found</returns>
 		public ProjectionParameter GetParameter(string name)
 		{
-			return _Parameters.Find(delegate(ProjectionParameter par)
-					{ return par.Name.Equals(name, StringComparison.OrdinalIgnoreCase); });
+            //return _Parameters.Find(delegate(ProjectionParameter par)
+            //        { return par.Name.Equals(name, StringComparison.OrdinalIgnoreCase); });
+
+            for (int i = 0; i < _Parameters.Count; i++)
+                if (String.Equals(_Parameters[i].Name, name, StringComparison.OrdinalIgnoreCase))
+                    return _Parameters[i];
+
+            return null;
 		}
 
-		public int NumParameters
+        public int NumParameters
 		{
 			get { return this._Parameters.Count; }
 		}		
@@ -289,7 +295,14 @@ namespace SharpMap.CoordinateSystems.Projections
 				return false;
 			for (int i = 0; i < _Parameters.Count; i++)
 			{
-				ProjectionParameter param = _Parameters.Find(delegate(ProjectionParameter par) { return par.Name.Equals(proj.GetParameter(i).Name, StringComparison.OrdinalIgnoreCase); });
+                //ProjectionParameter param = _Parameters.Find(delegate(ProjectionParameter par) { return par.Name.Equals(proj.GetParameter(i).Name, StringComparison.OrdinalIgnoreCase); });
+                
+                ProjectionParameter param = null;
+                for (int j = 0; j < proj.NumParameters; j++)
+                    if (String.Equals(proj.GetParameter(j).Name, _Parameters[i].Name, StringComparison.OrdinalIgnoreCase))
+                        param = proj.GetParameter(j);
+
+
 				if (param == null)
 					return false;
 				if (param.Value != proj.GetParameter(i).Value)
