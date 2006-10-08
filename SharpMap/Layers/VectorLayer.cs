@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using SharpMap.Geometries;
 
@@ -201,7 +202,7 @@ namespace SharpMap.Layers
 			{
 				this.DataSource.Open();
 
-				List<SharpMap.Geometries.Geometry> geoms = this.DataSource.GetGeometriesInView(envelope);
+				Collection<SharpMap.Geometries.Geometry> geoms = this.DataSource.GetGeometriesInView(envelope);
 				this.DataSource.Close();
 
 				if (this.CoordinateTransformation != null)

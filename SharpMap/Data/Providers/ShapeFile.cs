@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Drawing;
 
@@ -605,14 +606,15 @@ namespace SharpMap.Data.Providers
 		/// </remarks>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public List<SharpMap.Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox)
+		public Collection<SharpMap.Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox)
 		{
 			//Use the spatial index to get a list of features whose boundingbox intersects bbox
-			List<uint> objectlist = GetObjectIDsInView(bbox);
+			Collection<uint> objectlist = GetObjectIDsInView(bbox);
 			if (objectlist.Count == 0) //no features found. Return an empty set
-				return new List<SharpMap.Geometries.Geometry>();
+				return new Collection<SharpMap.Geometries.Geometry>();
 
-			List<SharpMap.Geometries.Geometry> geometries = new List<SharpMap.Geometries.Geometry>(objectlist.Count);
+            //Collection<SharpMap.Geometries.Geometry> geometries = new Collection<SharpMap.Geometries.Geometry>(objectlist.Count);
+            Collection<SharpMap.Geometries.Geometry> geometries = new Collection<SharpMap.Geometries.Geometry>();
 
 			for (int i = 0; i < objectlist.Count; i++)
 			{
@@ -638,7 +640,7 @@ namespace SharpMap.Data.Providers
 		public void ExecuteIntersectionQuery(SharpMap.Geometries.BoundingBox bbox, SharpMap.Data.FeatureDataSet ds)
 		{
 			//Use the spatial index to get a list of features whose boundingbox intersects bbox
-			List<uint> objectlist = GetObjectIDsInView(bbox);
+			Collection<uint> objectlist = GetObjectIDsInView(bbox);
 			SharpMap.Data.FeatureDataTable dt = dbaseFile.NewTable;
 
 			for (int i = 0; i < objectlist.Count; i++)
@@ -658,7 +660,7 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public List<uint> GetObjectIDsInView(SharpMap.Geometries.BoundingBox bbox)
+		public Collection<uint> GetObjectIDsInView(SharpMap.Geometries.BoundingBox bbox)
 		{
 			if (!this.IsOpen)
 				throw (new ApplicationException("An attempt was made to read from a closed datasource"));
@@ -811,7 +813,7 @@ namespace SharpMap.Data.Providers
 			SharpMap.Data.FeatureDataTable dt = (SharpMap.Data.FeatureDataTable)dbaseFile.NewTable;
 			SharpMap.Geometries.BoundingBox bbox = geom.GetBoundingBox();
 			//Get candidates by intersecting the spatial index tree
-			List<uint> objectlist = tree.Search(bbox);
+			Collection<uint> objectlist = tree.Search(bbox);
 
 			if (objectlist.Count == 0)
 				return;
