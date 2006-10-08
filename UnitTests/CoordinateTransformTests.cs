@@ -24,7 +24,8 @@ namespace UnitTests
 			IGeographicCoordinateSystem gcs = cFac.CreateGeographicCoordinateSystem("Clarke 1866", AngularUnit.Degrees, datum,
 				PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 				new AxisInfo("Lat", AxisOrientationEnum.North));
-			System.Collections.Generic.List<ProjectionParameter> parameters = new System.Collections.Generic.List<ProjectionParameter>(5);
+            //System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>(5);
+            System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
 			parameters.Add(new ProjectionParameter("central_meridian", -96));
 			parameters.Add(new ProjectionParameter("latitude_of_origin", 23));
 			parameters.Add(new ProjectionParameter("standard_parallel_1", 29.5));
@@ -56,7 +57,8 @@ namespace UnitTests
 			IGeographicCoordinateSystem gcs = cFac.CreateGeographicCoordinateSystem("Bessel 1840", AngularUnit.Degrees, datum,
 				PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 				new AxisInfo("Lat", AxisOrientationEnum.North));
-			System.Collections.Generic.List<ProjectionParameter> parameters = new System.Collections.Generic.List<ProjectionParameter>(5);
+            //System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>(5);
+            System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
 			parameters.Add(new ProjectionParameter("latitude_of_origin", 0));
 			parameters.Add(new ProjectionParameter("central_meridian", 110));
 			parameters.Add(new ProjectionParameter("scale_factor", 0.997));
@@ -87,7 +89,8 @@ namespace UnitTests
 			IGeographicCoordinateSystem gcs = cFac.CreateGeographicCoordinateSystem("Krassowski 1940", AngularUnit.Degrees, datum,
 				PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 				new AxisInfo("Lat", AxisOrientationEnum.North));
-			System.Collections.Generic.List<ProjectionParameter> parameters = new System.Collections.Generic.List<ProjectionParameter>(5);
+            //System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>(5);
+            System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
 			parameters.Add(new ProjectionParameter("latitude_of_origin", 42));
 			parameters.Add(new ProjectionParameter("central_meridian", 51));
 			parameters.Add(new ProjectionParameter("false_easting", 0));
@@ -117,7 +120,8 @@ namespace UnitTests
 			IGeographicCoordinateSystem gcs = cFac.CreateGeographicCoordinateSystem("Airy 1830", AngularUnit.Degrees, datum,
 				PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 				new AxisInfo("Lat", AxisOrientationEnum.North));
-			System.Collections.Generic.List<ProjectionParameter> parameters = new System.Collections.Generic.List<ProjectionParameter>(5);
+            //System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>(5);
+            System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
 			parameters.Add(new ProjectionParameter("latitude_of_origin", 49));
 			parameters.Add(new ProjectionParameter("central_meridian", -2));
 			parameters.Add(new ProjectionParameter("scale_factor", 0.9996012717));
@@ -148,7 +152,8 @@ namespace UnitTests
 			IGeographicCoordinateSystem gcs = cFac.CreateGeographicCoordinateSystem("Clarke 1866", AngularUnit.Degrees, datum,
 				PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 				new AxisInfo("Lat", AxisOrientationEnum.North));
-			System.Collections.Generic.List<ProjectionParameter> parameters = new System.Collections.Generic.List<ProjectionParameter>(5);
+            //System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>(5);
+            System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
 			parameters.Add(new ProjectionParameter("latitude_of_origin", 27.833333333));
 			parameters.Add(new ProjectionParameter("central_meridian", -99));
 			parameters.Add(new ProjectionParameter("standard_parallel_1", 28.3833333333));
@@ -213,7 +218,8 @@ namespace UnitTests
 			IGeocentricCoordinateSystem gcenCsED50 = cFac.CreateGeocentricCoordinateSystem("ED50 Geocentric", ed50, LinearUnit.Metre, PrimeMeridian.Greenwich);
 
 			//Define projections
-			System.Collections.Generic.List<ProjectionParameter> parameters = new System.Collections.Generic.List<ProjectionParameter>(5);
+            //System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>(5);
+            System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
 			parameters.Add(new ProjectionParameter("latitude_of_origin", 0));
 			parameters.Add(new ProjectionParameter("central_meridian", 9));
 			parameters.Add(new ProjectionParameter("scale_factor", 0.9996));

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 using NUnit.Framework;
@@ -245,7 +246,7 @@ namespace UnitTests
 
 		private SharpMap.Data.Providers.IProvider CreateDatasource()
 		{
-			List<SharpMap.Geometries.Geometry> geoms = new List<SharpMap.Geometries.Geometry>();
+			Collection<SharpMap.Geometries.Geometry> geoms = new Collection<SharpMap.Geometries.Geometry>();
 			geoms.Add(SharpMap.Geometries.Geometry.GeomFromText("POINT EMPTY"));
 			geoms.Add(SharpMap.Geometries.Geometry.GeomFromText("GEOMETRYCOLLECTION (POINT (10 10), POINT (30 30), LINESTRING (15 15, 20 20))"));
 			geoms.Add(SharpMap.Geometries.Geometry.GeomFromText("MULTIPOLYGON (((0 0, 10 0, 10 10, 0 10, 0 0)), ((5 5, 7 5, 7 7, 5 7, 5 5)))"));
