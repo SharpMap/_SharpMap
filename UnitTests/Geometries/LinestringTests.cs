@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using NUnit.Framework;
 using SharpMap.Geometries;
 
@@ -18,7 +19,7 @@ namespace UnitTests.Geometries
 			Assert.IsFalse(l.Equals(null));
 			Assert.IsTrue(l.Equals(new LineString()));
 
-			List<Point> vertices = new List<Point>();
+			Collection<Point> vertices = new Collection<Point>();
 			vertices.Add(new Point(54, 23));
 			vertices.Add(new Point(93, 12));
 			vertices.Add(new Point(104, 32));
