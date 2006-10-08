@@ -129,17 +129,17 @@ namespace SharpMap.Layers
 				if (!formatSupported)
 					throw new ArgumentException("GDI+ doesn't not support any of the mimetypes supported by this WMS service");
 			}
-			_LayerList = new List<string>();
-			_StylesList = new List<string>();
+			_LayerList = new Collection<string>();
+			_StylesList = new Collection<string>();
 		}
 
 
-		private List<string> _LayerList;
+		private Collection<string> _LayerList;
 
 		/// <summary>
 		/// Gets the list of enabled layers
 		/// </summary>
-		public List<string> LayerList
+		public Collection<string> LayerList
 		{
 			get { return _LayerList; }
 		}
@@ -194,12 +194,12 @@ namespace SharpMap.Layers
 			_LayerList.Clear();
 		}
 
-		private List<string> _StylesList;
+		private Collection<string> _StylesList;
 
 		/// <summary>
 		/// Gets the list of enabled styles
 		/// </summary>
-		public List<string> StylesList
+		public Collection<string> StylesList
 		{
 			get { return _StylesList; }
 		}

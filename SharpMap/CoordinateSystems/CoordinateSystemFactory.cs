@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems
@@ -88,7 +89,7 @@ namespace SharpMap.CoordinateSystems
 		/// <param name="toBaseWkt"></param>
 		/// <param name="arAxes"></param>
 		/// <returns>Fitted coordinate system</returns>
-		public IFittedCoordinateSystem CreateFittedCoordinateSystem(string name, ICoordinateSystem baseCoordinateSystem, string toBaseWkt, List<AxisInfo> arAxes)
+		public IFittedCoordinateSystem CreateFittedCoordinateSystem(string name, ICoordinateSystem baseCoordinateSystem, string toBaseWkt, Collection<AxisInfo> arAxes)
 		{
 			throw new NotImplementedException();
 		}
@@ -107,7 +108,7 @@ namespace SharpMap.CoordinateSystems
 		/// <param name="unit">Units</param>
 		/// <param name="axes">Axis info</param>
 		/// <returns>Local coordinate system</returns>
-		public ILocalCoordinateSystem CreateLocalCoordinateSystem(string name, ILocalDatum datum, IUnit unit, List<AxisInfo> axes)
+		public ILocalCoordinateSystem CreateLocalCoordinateSystem(string name, ILocalDatum datum, IUnit unit, Collection<AxisInfo> axes)
 		{
 			throw new Exception("The method or operation is not implemented.");
 		}
@@ -163,7 +164,8 @@ namespace SharpMap.CoordinateSystems
 				throw new ArgumentException("Projection was null");
 			if (linearUnit == null)
 				throw new ArgumentException("Linear unit was null");
-			List<AxisInfo> info = new List<AxisInfo>(2);
+            //Collection<AxisInfo> info = new Collection<AxisInfo>(2);
+            Collection<AxisInfo> info = new Collection<AxisInfo>();
 			info.Add(axis0);
 			info.Add(axis1);
 			return new ProjectedCoordinateSystem(null, gcs, linearUnit, projection, info, name, String.Empty, -1, String.Empty, String.Empty, String.Empty);
@@ -176,7 +178,7 @@ namespace SharpMap.CoordinateSystems
 		/// <param name="wktProjectionClass">Projection class</param>
 		/// <param name="parameters">Projection parameters</param>
 		/// <returns>Projection</returns>
-		public IProjection CreateProjection(string name, string wktProjectionClass, List<ProjectionParameter> parameters)
+		public IProjection CreateProjection(string name, string wktProjectionClass, Collection<ProjectionParameter> parameters)
 		{
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentException("Invalid name");
@@ -237,7 +239,8 @@ namespace SharpMap.CoordinateSystems
 		{
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentException("Invalid name");
-			List<AxisInfo> info = new List<AxisInfo>(2);
+            //Collection<AxisInfo> info = new Collection<AxisInfo>(2);
+            Collection<AxisInfo> info = new Collection<AxisInfo>();
 			info.Add(axis0);
 			info.Add(axis1);			
 			return new GeographicCoordinateSystem(angularUnit, datum, primeMeridian,info, name, String.Empty, -1, String.Empty, String.Empty, String.Empty);
@@ -292,7 +295,8 @@ namespace SharpMap.CoordinateSystems
 		{
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentException("Invalid name");
-			List<AxisInfo> info = new List<AxisInfo>(3);
+            //Collection<AxisInfo> info = new Collection<AxisInfo>(3);
+            Collection<AxisInfo> info = new Collection<AxisInfo>();
 			
 			info.Add(new AxisInfo("X", AxisOrientationEnum.Other));
 			info.Add(new AxisInfo("Y", AxisOrientationEnum.Other));

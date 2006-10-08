@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems
@@ -41,7 +42,7 @@ namespace SharpMap.CoordinateSystems
 		/// <param name="abbreviation">Abbreviation</param>
 		/// <param name="remarks">Provider-supplied remarks</param>
 		internal ProjectedCoordinateSystem(IHorizontalDatum datum, IGeographicCoordinateSystem geographicCoordinateSystem,
-			ILinearUnit linearUnit, IProjection projection, List<AxisInfo> axisInfo,
+			ILinearUnit linearUnit, IProjection projection, Collection<AxisInfo> axisInfo,
 			string name, string authority, long code, string alias,
 			string remarks, string abbreviation)
 			: base(datum, axisInfo, name, authority, code, alias, abbreviation, remarks)

@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems
@@ -26,7 +27,7 @@ namespace SharpMap.CoordinateSystems
 	/// </summary>
 	public class GeocentricCoordinateSystem : CoordinateSystem, IGeocentricCoordinateSystem
 	{
-		internal GeocentricCoordinateSystem(IHorizontalDatum datum, ILinearUnit linearUnit, IPrimeMeridian primeMeridian, List<AxisInfo> axisinfo,
+		internal GeocentricCoordinateSystem(IHorizontalDatum datum, ILinearUnit linearUnit, IPrimeMeridian primeMeridian, Collection<AxisInfo> axisinfo,
 			string name, string authority, long code, string alias, 
 			string remarks, string abbreviation)
 			: base(name, authority, code, alias, abbreviation, remarks)

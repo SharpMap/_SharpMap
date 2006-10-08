@@ -90,7 +90,7 @@ namespace SharpMap.CoordinateSystems.Transformations
 		/// </remarks>
 		/// <param name="points"></param>
 		/// <returns></returns>
-		List<double> GetCodomainConvexHull(List<double> points);
+		Collection<double> GetCodomainConvexHull(Collection<double> points);
 		/// <summary>
 		/// Gets flags classifying domain points within a convex hull.
 		/// </summary>
@@ -104,7 +104,7 @@ namespace SharpMap.CoordinateSystems.Transformations
 		/// </remarks>
 		/// <param name="points"></param>
 		/// <returns></returns>
-		DomainFlags GetDomainFlags(List<double> points);
+		DomainFlags GetDomainFlags(Collection<double> points);
 		/// <summary>
 		/// Creates the inverse transform of this object.
 		/// </summary>
