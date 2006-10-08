@@ -218,8 +218,21 @@ namespace SharpMap.Web.Wms
 						layer.Enabled = false;
                     foreach (string layer in layers)
                     {
-                        SharpMap.Layers.ILayer lay = map.Layers.Find(delegate(SharpMap.Layers.ILayer findlay) { return findlay.LayerName == layer; });
-						if (lay == null)
+
+                        //SharpMap.Layers.ILayer lay = map.Layers.Find(delegate(SharpMap.Layers.ILayer findlay) { return findlay.LayerName == layer; });
+                        SharpMap.Layers.ILayer lay = null;
+                        for (int i = 0; i < map.Layers.Count; i++)
+                            if (String.Equals(map.Layers[i].LayerName, layer, StringComparison.InvariantCultureIgnoreCase))
+                                 lay = map.Layers[i];
+
+                        
+
+
+                        
+
+                        
+                        
+                        if (lay == null)
 						{
 							WmsException.ThrowWmsException(WmsException.WmsExceptionCode.LayerNotDefined, "Unknown layer '" + layer + "'");
 							return;

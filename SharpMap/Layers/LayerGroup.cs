@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Layers
@@ -38,15 +39,15 @@ namespace SharpMap.Layers
 		public LayerGroup(string layername)
 		{
 			this.LayerName = layername;
-			_Layers = new List<Layer>();
+			_Layers = new Collection<Layer>();
 		}
 
-		private List<Layer> _Layers;
+		private Collection<Layer> _Layers;
 
 		/// <summary>
 		/// Sublayers in the group
 		/// </summary>
-		public List<Layer> Layers
+		public Collection<Layer> Layers
 		{
 			get { return _Layers; }
 			set { _Layers = value; }
@@ -59,7 +60,13 @@ namespace SharpMap.Layers
 		/// <returns>Layer</returns>
 		public SharpMap.Layers.Layer GetLayerByName(string name)
 		{
-			return _Layers.Find( delegate(SharpMap.Layers.Layer layer) { return layer.LayerName.Equals(name); });
+            //return _Layers.Find( delegate(SharpMap.Layers.Layer layer) { return layer.LayerName.Equals(name); });
+
+            for (int i = 0; i < _Layers.Count; i++)
+                if (String.Equals(_Layers[i].LayerName, name, StringComparison.InvariantCultureIgnoreCase))
+                    return _Layers[i];
+            
+            return null;
 		}
 
 		/// <summary>
