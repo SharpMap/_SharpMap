@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Data.Providers
@@ -31,7 +32,7 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns>Features within the specified <see cref="SharpMap.Geometries.BoundingBox"/></returns>
-		System.Collections.Generic.List<SharpMap.Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox);
+        System.Collections.ObjectModel.Collection<SharpMap.Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox);
 
 		/// <summary>
 		/// Returns all objects whose <see cref="SharpMap.Geometries.BoundingBox"/> intersects 'bbox'.
@@ -42,7 +43,7 @@ namespace SharpMap.Data.Providers
 		/// </remarks>
 		/// <param name="bbox">Box that objects should intersect</param>
 		/// <returns></returns>
-		System.Collections.Generic.List<uint> GetObjectIDsInView(SharpMap.Geometries.BoundingBox bbox);
+        System.Collections.ObjectModel.Collection<uint> GetObjectIDsInView(SharpMap.Geometries.BoundingBox bbox);
 
 		/// <summary>
 		/// Returns the geometry corresponding to the Object ID

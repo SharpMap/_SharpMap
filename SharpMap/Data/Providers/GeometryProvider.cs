@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using SharpMap.Geometries;
 using SharpMap.Data;
@@ -57,12 +58,12 @@ namespace SharpMap.Data.Providers
 	/// </remarks>
 	public class GeometryProvider : SharpMap.Data.Providers.IProvider, IDisposable
 	{
-		private List<Geometry> _Geometries;
+		private Collection<Geometry> _Geometries;
 
 		/// <summary>
 		/// Gets or sets the geometries this datasource contains
 		/// </summary>
-		public List<Geometry> Geometries
+		public Collection<Geometry> Geometries
 		{
 			get { return _Geometries; }
 			set { _Geometries = value; }
@@ -74,7 +75,7 @@ namespace SharpMap.Data.Providers
 		/// Initializes a new instance of the <see cref="GeometryProvider"/>
 		/// </summary>
 		/// <param name="geometries">Set of geometries that this datasource should contain</param>
-		public GeometryProvider(List<Geometry> geometries)
+		public GeometryProvider(Collection<Geometry> geometries)
 		{
 			_Geometries = geometries;
 		}
@@ -85,7 +86,7 @@ namespace SharpMap.Data.Providers
 		/// <param name="feature">Feature to be in this datasource</param>
 		public GeometryProvider(FeatureDataRow feature)
 		{
-			_Geometries = new List<Geometry>();
+			_Geometries = new Collection<Geometry>();
 			_Geometries.Add(feature.Geometry);
 		}
 
@@ -95,7 +96,7 @@ namespace SharpMap.Data.Providers
 		/// <param name="features">Features to be included in this datasource</param>
 		public GeometryProvider(FeatureDataTable features)
 		{
-			_Geometries = new List<Geometry>();
+			_Geometries = new Collection<Geometry>();
 			for (int i = 0; i < features.Count;i++ )
 				_Geometries.Add(features[i].Geometry);
 		}
@@ -106,7 +107,7 @@ namespace SharpMap.Data.Providers
 		/// <param name="geometry">Geometry to be in this datasource</param>
 		public GeometryProvider(Geometry geometry)
 		{
-			_Geometries = new List<Geometry>();
+			_Geometries = new Collection<Geometry>();
 			_Geometries.Add(geometry);
 		}
 
@@ -135,9 +136,9 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public List<Geometry> GetGeometriesInView(BoundingBox bbox)
+		public Collection<Geometry> GetGeometriesInView(BoundingBox bbox)
 		{
-			List<Geometry> list = new List<Geometry>();
+			Collection<Geometry> list = new Collection<Geometry>();
 			for (int i = 0; i < _Geometries.Count; i++)
 				if(!_Geometries[i].IsEmpty())
 				if (_Geometries[i].GetBoundingBox().Intersects(bbox))
@@ -150,9 +151,9 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public List<uint> GetObjectIDsInView(BoundingBox bbox)
+		public Collection<uint> GetObjectIDsInView(BoundingBox bbox)
 		{
-			List<uint> list = new List<uint>();
+			Collection<uint> list = new Collection<uint>();
 			for (int i = 0; i < _Geometries.Count; i++)
 				if(_Geometries[i].GetBoundingBox().Intersects(bbox))
 					list.Add((uint)i);

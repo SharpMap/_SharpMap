@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Utilities.SpatialIndexing
@@ -339,9 +340,9 @@ namespace SharpMap.Utilities.SpatialIndexing
 		/// Searches the tree and looks for intersections with the boundingbox 'bbox'
 		/// </summary>
 		/// <param name="box">Boundingbox to intersect with</param>
-		public List<uint> Search(SharpMap.Geometries.BoundingBox box)
+		public Collection<uint> Search(SharpMap.Geometries.BoundingBox box)
 		{
-			List<uint> objectlist = new List<uint>();
+			Collection<uint> objectlist = new Collection<uint>();
 			IntersectTreeRecursive(box, this, ref objectlist);
 			return objectlist;
 		}
@@ -352,7 +353,7 @@ namespace SharpMap.Utilities.SpatialIndexing
 		/// <param name="box">Boundingbox to intersect with</param>
 		/// <param name="node">Node to search from</param>
 		/// <param name="list">List of found intersections</param>
-		private void IntersectTreeRecursive(SharpMap.Geometries.BoundingBox box, QuadTree node, ref List<uint> list)
+		private void IntersectTreeRecursive(SharpMap.Geometries.BoundingBox box, QuadTree node, ref Collection<uint> list)
 		{
 			if (node.IsLeaf) //Leaf has been reached
 			{

@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Data.SqlClient;
 
@@ -199,9 +200,9 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public List<Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox)
+		public Collection<Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox)
 		{
-			List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
+			Collection<Geometries.Geometry> features = new Collection<SharpMap.Geometries.Geometry>();
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT ST.AsBinary(" + this.BuildGeometryExpression() + ") ";
@@ -263,9 +264,9 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public List<uint> GetObjectIDsInView(SharpMap.Geometries.BoundingBox bbox)
+		public Collection<uint> GetObjectIDsInView(SharpMap.Geometries.BoundingBox bbox)
 		{
-			List<uint> objectlist = new List<uint>();
+			Collection<uint> objectlist = new Collection<uint>();
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT * FROM ST.FilterQuery('" + this.Table + "', '" + this.GeometryColumn + "', " + this.BuildEnvelope(bbox) + ")";
@@ -302,7 +303,7 @@ namespace SharpMap.Data.Providers
 		[Obsolete("Use ExecuteIntersectionQuery instead")]
 		public SharpMap.Data.FeatureDataTable QueryFeatures(SharpMap.Geometries.Geometry geom, double distance)
 		{
-			List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
+			//List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
 				string strGeom = "ST.GeomFromText('" + geom.AsText() + "', " + this.SRID.ToString() + ")";

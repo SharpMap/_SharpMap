@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Data.OleDb;
 
@@ -111,9 +112,9 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public List<SharpMap.Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox)
+		public Collection<SharpMap.Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox)
 		{
-			List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
+			Collection<Geometries.Geometry> features = new Collection<SharpMap.Geometries.Geometry>();
 			using(System.Data.OleDb.OleDbConnection conn = new OleDbConnection(_ConnectionString))
 			{
 				string strSQL = "Select " + this.XColumn + ", " + this.YColumn + " FROM " + this.Table + " WHERE ";
@@ -145,9 +146,9 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public List<uint> GetObjectIDsInView(SharpMap.Geometries.BoundingBox bbox)
+		public Collection<uint> GetObjectIDsInView(SharpMap.Geometries.BoundingBox bbox)
 		{
-			List<uint> objectlist = new List<uint>();
+			Collection<uint> objectlist = new Collection<uint>();
 			using (System.Data.OleDb.OleDbConnection conn = new OleDbConnection(_ConnectionString))
 			{
 				string strSQL = "Select " + this.ObjectIdColumn + " FROM " + this.Table + " WHERE ";
@@ -230,7 +231,7 @@ namespace SharpMap.Data.Providers
 		/// <param name="ds">FeatureDataSet to fill data into</param>
 		public void ExecuteIntersectionQuery(SharpMap.Geometries.BoundingBox bbox, FeatureDataSet ds)
 		{
-			List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
+			//List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
 			using (System.Data.OleDb.OleDbConnection conn = new OleDbConnection(_ConnectionString))
 			{
 				string strSQL = "Select * FROM " + this.Table + " WHERE ";

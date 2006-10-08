@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
@@ -175,9 +176,9 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public List<Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox)
+		public Collection<Geometries.Geometry> GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox)
 		{
-			List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
+			Collection<Geometries.Geometry> features = new Collection<SharpMap.Geometries.Geometry>();
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
 				string BoxIntersect = GetBoxClause(bbox);
@@ -241,9 +242,9 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public List<uint> GetObjectIDsInView(SharpMap.Geometries.BoundingBox bbox)
+		public Collection<uint> GetObjectIDsInView(SharpMap.Geometries.BoundingBox bbox)
 		{
-			List<uint> objectlist = new List<uint>();
+			Collection<uint> objectlist = new Collection<uint>();
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT " + this.ObjectIdColumn + " ";
@@ -432,7 +433,7 @@ namespace SharpMap.Data.Providers
 		/// <param name="ds">FeatureDataSet to fill data into</param>
 		public void ExecuteIntersectionQuery(SharpMap.Geometries.BoundingBox bbox, SharpMap.Data.FeatureDataSet ds)
 		{
-			List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
+			//List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT *, " + this.GeometryColumn + " AS sharpmap_tempgeometry ";
@@ -536,7 +537,7 @@ namespace SharpMap.Data.Providers
 				command.CommandText = sql + ");";
 				command.ExecuteNonQuery();
 				counter++;
-				List<uint> indexes = datasource.GetObjectIDsInView(datasource.GetExtents());
+				Collection<uint> indexes = datasource.GetObjectIDsInView(datasource.GetExtents());
 				//Select all indexes in shapefile, loop through each feature and insert them one-by-one
 				foreach (uint idx in indexes)
 				{
