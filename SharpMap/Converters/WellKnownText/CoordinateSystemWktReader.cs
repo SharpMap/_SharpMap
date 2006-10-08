@@ -38,6 +38,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using SharpMap.CoordinateSystems;
 
 namespace SharpMap.Converters.WellKnownText
@@ -351,7 +352,7 @@ namespace SharpMap.Converters.WellKnownText
 			tokenizer.ReadToken("]");//]
 			tokenizer.ReadToken(",");//,
 			tokenizer.ReadToken("PARAMETER");
-			List<ProjectionParameter> paramList = new List<ProjectionParameter>();
+			Collection<ProjectionParameter> paramList = new Collection<ProjectionParameter>();
 			while (tokenizer.GetStringValue() == "PARAMETER")
 			{
 				tokenizer.ReadToken("[");
@@ -410,7 +411,8 @@ namespace SharpMap.Converters.WellKnownText
 			string authority = String.Empty;
 			long authorityCode = -1;
 			tokenizer.NextToken();
-			List<AxisInfo> axes = new List<AxisInfo>(2);
+            //Collection<AxisInfo> axes = new Collection<AxisInfo>(2);
+            Collection<AxisInfo> axes = new Collection<AxisInfo>();
 			if (tokenizer.GetStringValue() == ",")
 			{
 				tokenizer.NextToken();
@@ -466,7 +468,8 @@ namespace SharpMap.Converters.WellKnownText
 			string authority = String.Empty;
 			long authorityCode = -1;
 			tokenizer.NextToken();
-			List<AxisInfo> info = new List<AxisInfo>(2);
+            //Collection<AxisInfo> info = new Collection<AxisInfo>(2);
+            Collection<AxisInfo> info = new Collection<AxisInfo>();
 			if (tokenizer.GetStringValue() == ",")
 			{
 				tokenizer.NextToken();

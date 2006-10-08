@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems
@@ -42,7 +43,7 @@ namespace SharpMap.CoordinateSystems
 		/// <summary>
 		/// Gets or sets the parameters set for this projection.
 		/// </summary>
-		List<Parameter> Parameters { get; set; }
+		Collection<Parameter> Parameters { get; set; }
 		/// <summary>
 		/// Gets the parameter by its name
 		/// </summary>

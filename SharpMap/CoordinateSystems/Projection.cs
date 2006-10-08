@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems
@@ -31,7 +32,7 @@ namespace SharpMap.CoordinateSystems
 	/// </summary>
 	public class Projection : Info, IProjection
 	{
-		internal Projection(string className, List<ProjectionParameter> parameters,
+		internal Projection(string className, Collection<ProjectionParameter> parameters,
 			string name, string authority, long code, string alias, 
 			string remarks, string abbreviation)
 			: base(name, authority, code, alias, abbreviation, remarks)
@@ -53,12 +54,12 @@ namespace SharpMap.CoordinateSystems
 			get { return _Parameters.Count; }
 		}
 
-		private List<ProjectionParameter> _Parameters;
+		private Collection<ProjectionParameter> _Parameters;
 
 		/// <summary>
 		/// Gets or sets the parameters of the projection
 		/// </summary>
-		internal List<ProjectionParameter> Parameters
+		internal Collection<ProjectionParameter> Parameters
 		{
 			get { return _Parameters; }
 			set { _Parameters = value; }
@@ -82,11 +83,17 @@ namespace SharpMap.CoordinateSystems
 		/// <returns>parameter or null if not found</returns>
 		public ProjectionParameter GetParameter(string name)
 		{
-			return _Parameters.Find(delegate(ProjectionParameter par)
-					{ return par.Name.Equals(name, StringComparison.OrdinalIgnoreCase); });
+            //return _Parameters.Find(delegate(ProjectionParameter par)
+            //        { return par.Name.Equals(name, StringComparison.OrdinalIgnoreCase); });
+
+            for (int i = 0; i < _Parameters.Count; i++)
+                if (String.Equals(_Parameters[i].Name, name, StringComparison.OrdinalIgnoreCase))
+                    return _Parameters[i];
+
+            return null;
 		}
-				
-		private string _ClassName;
+
+        private string _ClassName;
 
 		/// <summary>
 		/// Gets the projection classification name (e.g. "Transverse_Mercator").
@@ -145,8 +152,17 @@ namespace SharpMap.CoordinateSystems
 				return false;
 			for (int i = 0; i < _Parameters.Count; i++)
 			{
-				ProjectionParameter param = _Parameters.Find(delegate(ProjectionParameter par) { return par.Name.Equals(proj.GetParameter(i).Name, StringComparison.OrdinalIgnoreCase); });
-				if (param == null)
+                //ProjectionParameter param = _Parameters.Find(delegate(ProjectionParameter par) { return par.Name.Equals(proj.GetParameter(i).Name, StringComparison.OrdinalIgnoreCase); });
+
+                ProjectionParameter param = null;
+
+                for (int j = 0; j < proj.Parameters.Count; j++)
+                    if (String.Equals(proj.Parameters[j].Name, _Parameters[i].Name, StringComparison.OrdinalIgnoreCase))
+                        param = _Parameters[i];
+
+
+                
+                if (param == null)
 					return false;
 				if (param.Value != proj.GetParameter(i).Value)
 					return false;

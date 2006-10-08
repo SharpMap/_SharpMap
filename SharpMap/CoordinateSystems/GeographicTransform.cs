@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems
@@ -74,7 +75,7 @@ namespace SharpMap.CoordinateSystems
 		/// </summary>
 		/// <param name="points">On input points in the source geographic coordinate system</param>
 		/// <returns>Output points in the target geographic coordinate system</returns>
-		public List<SharpMap.Geometries.Point> Forward(List<SharpMap.Geometries.Point> points)
+		public Collection<SharpMap.Geometries.Point> Forward(Collection<SharpMap.Geometries.Point> points)
 		{
 			throw new NotImplementedException();
 			/*
@@ -93,7 +94,7 @@ namespace SharpMap.CoordinateSystems
 		/// </summary>
 		/// <param name="points">Input points in the target geographic coordinate system,</param>
 		/// <returns>Output points in the source geographic coordinate system</returns>
-		public List<SharpMap.Geometries.Point> Inverse(List<SharpMap.Geometries.Point> points)
+		public Collection<SharpMap.Geometries.Point> Inverse(Collection<SharpMap.Geometries.Point> points)
 		{
 			throw new NotImplementedException();
 		}

@@ -110,7 +110,7 @@ namespace SharpMap.CoordinateSystems.Transformations
 		/// </remarks>
 		/// <param name="points"></param>
 		/// <returns></returns>
-		public virtual List<double> GetCodomainConvexHull(List<double> points)
+		public virtual Collection<double> GetCodomainConvexHull(Collection<double> points)
 		{
 			throw new NotImplementedException();
 		}
@@ -128,7 +128,7 @@ namespace SharpMap.CoordinateSystems.Transformations
 		/// </remarks>
 		/// <param name="points"></param>
 		/// <returns></returns>
-		public virtual DomainFlags GetDomainFlags(List<double> points)
+		public virtual DomainFlags GetDomainFlags(Collection<double> points)
 		{
 			throw new NotImplementedException();
 		}

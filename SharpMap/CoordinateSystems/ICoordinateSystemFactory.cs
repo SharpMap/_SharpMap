@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems
@@ -72,7 +73,7 @@ namespace SharpMap.CoordinateSystems
 		/// <param name="toBaseWkt"></param>
 		/// <param name="arAxes"></param>
 		/// <returns>Fitted coordinate system</returns>
-		IFittedCoordinateSystem CreateFittedCoordinateSystem(string name, ICoordinateSystem baseCoordinateSystem, string toBaseWkt, List<AxisInfo> arAxes);
+		IFittedCoordinateSystem CreateFittedCoordinateSystem(string name, ICoordinateSystem baseCoordinateSystem, string toBaseWkt, Collection<AxisInfo> arAxes);
 
 		/// <summary>
 		/// Creates an <see cref="IEllipsoid"/> from an major radius, and inverse flattening.
@@ -144,7 +145,7 @@ namespace SharpMap.CoordinateSystems
 		/// <param name="unit">Units</param>
 		/// <param name="axes">Axis info</param>
 		/// <returns>Local coordinate system</returns>
-		ILocalCoordinateSystem CreateLocalCoordinateSystem(string name, ILocalDatum datum, IUnit unit, List<AxisInfo> axes);
+		ILocalCoordinateSystem CreateLocalCoordinateSystem(string name, ILocalDatum datum, IUnit unit, Collection<AxisInfo> axes);
 
 		/// <summary>
 		/// Creates a <see cref="ILocalDatum"/>.
@@ -182,7 +183,7 @@ namespace SharpMap.CoordinateSystems
 		/// <param name="wktProjectionClass">Projection class</param>
 		/// <param name="Parameters">Projection parameters</param>
 		/// <returns>Projection</returns>
-		IProjection CreateProjection(string name, string wktProjectionClass, List<ProjectionParameter> Parameters);
+		IProjection CreateProjection(string name, string wktProjectionClass, Collection<ProjectionParameter> Parameters);
 
 		/// <summary>
 		/// Creates a <see cref="IVerticalCoordinateSystem"/> from a <see cref="IVerticalDatum">datum</see> and <see cref="ILinearUnit">linear units</see>.

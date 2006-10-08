@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems
@@ -69,8 +70,8 @@ namespace SharpMap.CoordinateSystems
 		/// </summary>
 		public abstract IUnit GetUnits(int dimension);
 
-		private List<AxisInfo> _AxisInfo;
-		internal List<AxisInfo> AxisInfo
+		private Collection<AxisInfo> _AxisInfo;
+		internal Collection<AxisInfo> AxisInfo
 		{
 			get { return _AxisInfo; }
 			set { _AxisInfo = value; }

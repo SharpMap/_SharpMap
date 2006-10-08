@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.CoordinateSystems
@@ -46,7 +47,7 @@ namespace SharpMap.CoordinateSystems
 		/// <param name="alias">Alias</param>
 		/// <param name="abbreviation">Abbreviation</param>
 		/// <param name="remarks">Provider-supplied remarks</param>
-		internal GeographicCoordinateSystem(IAngularUnit angularUnit, IHorizontalDatum horizontalDatum, IPrimeMeridian primeMeridian, List<AxisInfo> axisInfo, string name, string authority, long authorityCode, string alias, string abbreviation, string remarks)
+		internal GeographicCoordinateSystem(IAngularUnit angularUnit, IHorizontalDatum horizontalDatum, IPrimeMeridian primeMeridian, Collection<AxisInfo> axisInfo, string name, string authority, long authorityCode, string alias, string abbreviation, string remarks)
 			:
 			base(horizontalDatum, axisInfo, name, authority, authorityCode, alias, abbreviation, remarks)
 		{
@@ -62,7 +63,8 @@ namespace SharpMap.CoordinateSystems
 		public static GeographicCoordinateSystem WGS84
 		{
 			get {
-				List<AxisInfo> axes = new List<AxisInfo>(2);
+                //Collection<AxisInfo> axes = new Collection<AxisInfo>(2);
+                Collection<AxisInfo> axes = new Collection<AxisInfo>();
 				axes.Add(new AxisInfo("Lon", AxisOrientationEnum.East));
 				axes.Add(new AxisInfo("Lat", AxisOrientationEnum.North));
 				return new GeographicCoordinateSystem(SharpMap.CoordinateSystems.AngularUnit.Degrees,
