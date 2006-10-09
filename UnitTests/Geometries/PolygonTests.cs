@@ -22,9 +22,15 @@ namespace UnitTests.Geometries
 			ring.Vertices.Add(new Point(10, 10));
 			ring.Vertices.Add(new Point(20, 10));
 			ring.Vertices.Add(new Point(20, 20));
+            Assert.IsFalse(ring.IsCCW());
 			ring.Vertices.Add(new Point(10, 20));
-			ring.Vertices.Add(ring.Vertices[0].Clone());
+            ring.Vertices.Add(ring.Vertices[0].Clone());
+            Assert.IsTrue(ring.IsPointWithin(new Point(15, 15)));
+            Assert.AreNotSame(ring.Clone(), ring);
 			p.ExteriorRing = ring;
+            
+            
+
 			Assert.AreEqual(100, p.Area);
 			LinearRing ring2 = new LinearRing();
 			ring2.Vertices.Add(new Point(11, 11));

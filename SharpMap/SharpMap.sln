@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.UI", "..\SharpMap.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "..\UnitTests\UnitTests.csproj", "{0C76DD99-AC5D-47C0-B76F-CE70092A9AC7}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "C:\...\DemoWebSite\", "..\DemoWebSite", "{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "E:\SharpMap_CodePlex\DemoWebSite\", "..\DemoWebSite", "{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}"
 	ProjectSection(WebsiteProperties) = preProject
 		SccProjectName = "SAK"
 		SccAuxPath = "SAK"
@@ -33,9 +33,11 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "C:\...\DemoWebSite\", "..\D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap_WmsClient", "..\SharpMap_WmsClient\SharpMap_WmsClient.csproj", "{237E93E2-C026-4140-9966-258A3CB32CE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.Extensions", "..\SharpMap.Extensions\SharpMap.Extensions.csproj", "{A4140C12-53F5-438C-8D24-9E48C504FECF}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -52,6 +54,9 @@ Global
 		SccProjectUniqueName4 = ..\\UnitTests\\UnitTests.csproj
 		SccProjectName4 = ../UnitTests
 		SccLocalPath4 = ..\\UnitTests
+		SccProjectUniqueName5 = ..\\SharpMap.Extensions\\SharpMap.Extensions.csproj
+		SccProjectName5 = ../SharpMap.Extensions
+		SccLocalPath5 = ..\\SharpMap.Extensions
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -112,6 +117,16 @@ Global
 		{237E93E2-C026-4140-9966-258A3CB32CE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{237E93E2-C026-4140-9966-258A3CB32CE9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{237E93E2-C026-4140-9966-258A3CB32CE9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Release|.NET.ActiveCfg = Release|Any CPU
+		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
