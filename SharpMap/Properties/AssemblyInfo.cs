@@ -23,7 +23,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SharpMap Engine")]
-[assembly: AssemblyDescription("SharpMap v0.9 RC1")]
+[assembly: AssemblyDescription("SharpMap v0.9")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("iter.dk")]
 [assembly: AssemblyProduct("SharpMap Engine")]
