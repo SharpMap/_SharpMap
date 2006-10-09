@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SharpMap.Utilities
@@ -29,18 +30,21 @@ namespace SharpMap.Utilities
 		/// <summary>
 		/// Returns a list of available data providers in this assembly
 		/// </summary>
-		public static List<Type> GetProviders()
+		public static Collection<Type> GetProviders()
 		{
-			List<Type> ProviderList = new List<Type>();
-			System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly();
-			foreach (Type t in asm.GetTypes())
-			{
-				Type[] Interfaces = t.FindInterfaces(new System.Reflection.TypeFilter(MyInterfaceFilter), "SharpMap.Providers.IProvider");
-				
-				if (Interfaces.Length > 0)
-					ProviderList.Add(t);
-			}
-			return ProviderList;
+			Collection<Type> ProviderList = new Collection<Type>();
+
+            // Ask the current AppDomain for a list of all
+            // loaded assemblies.
+            AppDomain ad = AppDomain.CurrentDomain;
+            System.Reflection.Assembly[] loadedAssemblies = ad.GetAssemblies();
+
+            foreach (System.Reflection.Assembly asm in loadedAssemblies)
+                foreach (Type t in asm.GetTypes())
+                    if ((t.IsClass) && (t.GetInterface("SharpMap.Data.Providers.IProvider") != null))
+                        ProviderList.Add(t);
+
+            return ProviderList;
 		}
 
 		/// <summary>

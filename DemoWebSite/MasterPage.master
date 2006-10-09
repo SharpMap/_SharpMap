@@ -33,6 +33,8 @@
 						<h2>Transformation</h2>
 						<a href="Transformation.aspx">On-the-fly transformation</a>
 						<a href="TransformTests.aspx">Transformation Test</a>
+						<h2>Utilities</h2>
+						<a href="Provider.aspx">List of available data providers</a>						
 						
 					</div></div>
 				</td>
