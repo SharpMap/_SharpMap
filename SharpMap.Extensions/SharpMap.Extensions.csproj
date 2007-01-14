@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="gdal_ogr_csharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Dokumente und Einstellungen\Christian\Desktop\Npgsql1.0RC3-bin-ms2.0\Npgsql1.0RC3\Npgsql\bin\ms2.0\Mono.Security.dll</HintPath>
@@ -48,6 +49,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Dokumente und Einstellungen\Christian\Desktop\Dependencies\Oracle.DataAccess.dll</HintPath>
     </Reference>
+    <Reference Include="PostgreSql.Data.PostgreSqlClient, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Dokumente und Einstellungen\Christian\Desktop\Dependencies\PostGIS2\PostgreSql.Data.PostgreSqlClient.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Data\Providers\NtsGeometryConverter.cs" />
     <Compile Include="Data\Providers\NtsProvider.cs" />
+    <Compile Include="Data\Providers\OgrProvider.cs" />
     <Compile Include="Data\Providers\Oracle.cs" />
     <Compile Include="Data\Providers\PostGIS.cs" />
     <Compile Include="Data\Providers\PostGIS2.cs" />

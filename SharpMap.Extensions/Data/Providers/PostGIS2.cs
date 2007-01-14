@@ -49,7 +49,7 @@ namespace SharpMap.Data.Providers
 		/// <param name="ConnectionStr">Connectionstring</param>
 		/// <param name="tablename">Name of data table</param>
 		/// <param name="geometryColumnName">Name of geometry column</param>
-		/// /// <param name="OID_ColumnName">Name of column with unique identifier</param>
+		/// <param name="OID_ColumnName">Name of column with unique identifier</param>
 		public PostGIS2(string ConnectionStr, string tablename, string geometryColumnName, string OID_ColumnName)
 		{
 			this.ConnectionString = ConnectionStr;
