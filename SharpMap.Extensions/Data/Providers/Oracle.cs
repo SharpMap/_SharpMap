@@ -215,7 +215,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT g." + this.GeometryColumn +".Get_WKB() ";
 				strSQL += " FROM " + this.Table + " g WHERE ";
 
-				if (_defintionQuery!=null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += this.DefinitionQuery + " AND ";
 
 				strSQL += strBbox;
@@ -285,7 +285,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT g." + this.ObjectIdColumn + " ";
 				strSQL += "FROM " + this.Table + " g WHERE ";
 
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += this.DefinitionQuery + " AND ";
 
 				strSQL += strBbox;                
@@ -358,7 +358,7 @@ namespace SharpMap.Data.Providers
 
                 string strSQL = "SELECT g.* , g." + this.GeometryColumn + ").Get_WKB() As sharpmap_tempgeometry FROM " + this.Table + " g WHERE ";
 
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += this.DefinitionQuery + " AND ";
 
                 strSQL += strGeom;
@@ -414,7 +414,7 @@ namespace SharpMap.Data.Providers
 
                 string strSQL = "SELECT g.* , g." + this.GeometryColumn + ").Get_WKB() As sharpmap_tempgeometry FROM " + this.Table + " g WHERE ";
 
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += this.DefinitionQuery + " AND ";
 
 				strSQL += strGeom;
@@ -473,7 +473,7 @@ namespace SharpMap.Data.Providers
 			using (OracleConnection conn = new OracleConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT COUNT(*) FROM " + this.Table;
-				if (_defintionQuery!=null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 				using (OracleCommand command = new OracleCommand(strSQL, conn))
 				{
@@ -616,7 +616,7 @@ namespace SharpMap.Data.Providers
             using (OracleConnection conn = new OracleConnection(_ConnectionString))
 			{
                 string strSQL = "SELECT SDO_AGGR_MBR(g." + this.GeometryColumn + ").Get_WKT() FROM " + this.Table + " g ";
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
                 using (OracleCommand command = new OracleCommand(strSQL, conn))
 				{
@@ -718,7 +718,7 @@ namespace SharpMap.Data.Providers
                 string strSQL = "SELECT g.*, g." + this.GeometryColumn + ".Get_WKB() AS sharpmap_tempgeometry ";
 				strSQL += "FROM " + this.Table + " g WHERE ";
 
-				if (_defintionQuery!=null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += this.DefinitionQuery + " AND ";
 
 				strSQL += strBbox;

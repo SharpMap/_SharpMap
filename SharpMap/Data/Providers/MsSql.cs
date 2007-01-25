@@ -186,7 +186,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT " + this.GeometryColumn + " AS Geom ";
 				strSQL += "FROM " + this.Table + " WHERE ";
 				strSQL += BoxIntersect;
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += " AND " + this.DefinitionQuery;
 
 				using (SqlCommand command = new SqlCommand(strSQL, conn))
@@ -252,7 +252,7 @@ namespace SharpMap.Data.Providers
 
 				strSQL += GetBoxClause(bbox);
 
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += " AND " + this.DefinitionQuery + " AND ";
 
 				using (SqlCommand command = new SqlCommand(strSQL, conn))
@@ -295,7 +295,7 @@ namespace SharpMap.Data.Providers
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT COUNT(*) FROM " + this.Table;
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 				using (SqlCommand command = new SqlCommand(strSQL, conn))
 				{
@@ -395,7 +395,7 @@ namespace SharpMap.Data.Providers
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT Min(Envelope_MinX) AS MinX, Min(Envelope_MinY) AS MinY, Max(Envelope_MaxX) AS MaxX, Max(Envelope_MaxY) AS MaxY FROM " + this.Table;
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 				using (SqlCommand command = new SqlCommand(strSQL, conn))
 				{
@@ -440,7 +440,7 @@ namespace SharpMap.Data.Providers
 				strSQL += "FROM " + this.Table + " WHERE ";
 				strSQL += GetBoxClause(bbox);
 
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += " AND " + this.DefinitionQuery;
 
 				using (SqlDataAdapter adapter = new SqlDataAdapter(strSQL, conn))

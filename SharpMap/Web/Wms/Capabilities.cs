@@ -229,7 +229,7 @@ namespace SharpMap.Web.Wms
 			XmlElement ServiceNode = capabilities.CreateElement("Service", wmsNamespaceURI);
 			ServiceNode.AppendChild(CreateElement("Name", "WMS", capabilities, false, wmsNamespaceURI));
 			ServiceNode.AppendChild(CreateElement("Title", serviceDescription.Title, capabilities, false, wmsNamespaceURI)); //Add WMS Title
-			if (serviceDescription.Abstract != "") //Add WMS abstract
+			if (!String.IsNullOrEmpty(serviceDescription.Abstract)) //Add WMS abstract
 				ServiceNode.AppendChild(CreateElement("Abstract", serviceDescription.Abstract, capabilities, false, wmsNamespaceURI));
 			if (serviceDescription.Keywords.Length > 0) //Add keywords
 			{

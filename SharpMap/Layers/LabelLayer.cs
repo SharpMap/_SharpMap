@@ -279,7 +279,7 @@ namespace SharpMap.Layers
 						style = this.Style;
 
 					float rotation = 0;
-					if (this.RotationColumn != null && this.RotationColumn != "")
+					if (!String.IsNullOrEmpty(this.RotationColumn))
 						float.TryParse(feature[this.RotationColumn].ToString(), System.Globalization.NumberStyles.Any,SharpMap.Map.numberFormat_EnUS, out rotation);
 
 					string text;

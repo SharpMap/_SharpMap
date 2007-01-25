@@ -118,7 +118,7 @@ namespace SharpMap.Data.Providers
 			using(System.Data.OleDb.OleDbConnection conn = new OleDbConnection(_ConnectionString))
 			{
 				string strSQL = "Select " + this.XColumn + ", " + this.YColumn + " FROM " + this.Table + " WHERE ";
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += _defintionQuery + " AND ";
 				//Limit to the points within the boundingbox
 				strSQL += this.XColumn + " BETWEEN " + bbox.Left.ToString(SharpMap.Map.numberFormat_EnUS) + " AND " + bbox.Right.ToString(SharpMap.Map.numberFormat_EnUS) + " AND " +
@@ -152,7 +152,7 @@ namespace SharpMap.Data.Providers
 			using (System.Data.OleDb.OleDbConnection conn = new OleDbConnection(_ConnectionString))
 			{
 				string strSQL = "Select " + this.ObjectIdColumn + " FROM " + this.Table + " WHERE ";
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += _defintionQuery + " AND ";
 				//Limit to the points within the boundingbox
 				strSQL += this.XColumn + " BETWEEN " + bbox.Left.ToString(SharpMap.Map.numberFormat_EnUS) + " AND " + bbox.Right.ToString(SharpMap.Map.numberFormat_EnUS) + " AND " + this.YColumn +
@@ -235,7 +235,7 @@ namespace SharpMap.Data.Providers
 			using (System.Data.OleDb.OleDbConnection conn = new OleDbConnection(_ConnectionString))
 			{
 				string strSQL = "Select * FROM " + this.Table + " WHERE ";
-				if (_defintionQuery != null && _defintionQuery != "") //If a definition query has been specified, add this as a filter on the query
+				if (!String.IsNullOrEmpty(_defintionQuery)) //If a definition query has been specified, add this as a filter on the query
 					strSQL += _defintionQuery + " AND ";
 				//Limit to the points within the boundingbox
 				strSQL += this.XColumn + " BETWEEN " + bbox.Left.ToString(SharpMap.Map.numberFormat_EnUS) + " AND " + bbox.Right.ToString(SharpMap.Map.numberFormat_EnUS) + " AND " + this.YColumn +
@@ -277,7 +277,7 @@ namespace SharpMap.Data.Providers
 			using (System.Data.OleDb.OleDbConnection conn = new OleDbConnection(_ConnectionString))
 			{
 				string strSQL = "Select Count(*) FROM " + this.Table;
-				if (_defintionQuery != null && _defintionQuery != "") //If a definition query has been specified, add this as a filter on the query
+				if (!String.IsNullOrEmpty(_defintionQuery)) //If a definition query has been specified, add this as a filter on the query
 					strSQL += " WHERE " + _defintionQuery;
 
 				using (System.Data.OleDb.OleDbCommand command = new OleDbCommand(strSQL, conn))
@@ -353,7 +353,7 @@ namespace SharpMap.Data.Providers
 			{
 				string strSQL = "Select Min(" + this.XColumn + ") as MinX, Min(" + this.YColumn + ") As MinY, " +
 									   "Max(" + this.XColumn + ") As MaxX, Max(" + this.YColumn + ") As MaxY FROM " + this.Table;
-				if (_defintionQuery != null && _defintionQuery != "") //If a definition query has been specified, add this as a filter on the query
+				if (!String.IsNullOrEmpty(_defintionQuery)) //If a definition query has been specified, add this as a filter on the query
 					strSQL += " WHERE " + _defintionQuery;
 
 				using (System.Data.OleDb.OleDbCommand command = new OleDbCommand(strSQL, conn))
