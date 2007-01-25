@@ -208,7 +208,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT ST.AsBinary(" + this.BuildGeometryExpression() + ") ";
 				strSQL += "FROM ST.FilterQuery" + this.BuildSpatialQuerySuffix() + "(" + this.BuildEnvelope(bbox) + ")";
 
-				if (_definitionQuery != null && _definitionQuery != "")
+				if (!String.IsNullOrEmpty(_definitionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 
 				using (SqlCommand command = new SqlCommand(strSQL, conn))
@@ -271,7 +271,7 @@ namespace SharpMap.Data.Providers
 			{
 				string strSQL = "SELECT * FROM ST.FilterQuery('" + this.Table + "', '" + this.GeometryColumn + "', " + this.BuildEnvelope(bbox) + ")";
 
-				if (_definitionQuery != null && _definitionQuery != "")
+				if (!String.IsNullOrEmpty(_definitionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 
 				using (SqlCommand command = new SqlCommand(strSQL, conn))
@@ -311,7 +311,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT *, ST.AsBinary(" + this.BuildGeometryExpression() + ") As sharpmap_tempgeometry ";
 				strSQL += "FROM ST.IsWithinDistanceQuery" + this.BuildSpatialQuerySuffix() + "(" + strGeom + ", " + distance.ToString(Map.numberFormat_EnUS) + ")";
 
-				if (_definitionQuery != null && _definitionQuery != "")
+				if (!String.IsNullOrEmpty(_definitionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 
 				using (SqlDataAdapter adapter = new SqlDataAdapter(strSQL, conn))
@@ -358,7 +358,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT *, ST.AsBinary(" + this.BuildGeometryExpression() + ") As sharpmap_tempgeometry ";
 				strSQL += "FROM ST.RelateQuery" + this.BuildSpatialQuerySuffix() + "(" + strGeom + ", 'intersects')";
 
-				if (_definitionQuery != null && _definitionQuery != "")
+				if (!String.IsNullOrEmpty(_definitionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 
 				using (SqlDataAdapter adapter = new SqlDataAdapter(strSQL, conn))
@@ -416,7 +416,7 @@ namespace SharpMap.Data.Providers
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT COUNT(*) FROM " + this.Table;
-				if (_definitionQuery!=null && _definitionQuery != "")
+				if (!String.IsNullOrEmpty(_definitionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 				using (SqlCommand command = new SqlCommand(strSQL, conn))
 				{
@@ -613,7 +613,7 @@ namespace SharpMap.Data.Providers
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT ST.AsBinary(ST.EnvelopeAggregate(" + this.BuildGeometryExpression() + ")) FROM " + this.Table;
-				if (_definitionQuery != null && _definitionQuery != "")
+				if (!String.IsNullOrEmpty(_definitionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 				using (SqlCommand command = new SqlCommand(strSQL, conn))
 				{
@@ -664,7 +664,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT *, ST.AsBinary(" + this.BuildGeometryExpression() + ") AS sharpmap_tempgeometry ";
 				strSQL += "FROM ST.FilterQuery" + this.BuildSpatialQuerySuffix() + "(" + this.BuildEnvelope(bbox) + ")";
 
-				if (_definitionQuery != null && _definitionQuery != "")
+				if (!String.IsNullOrEmpty(_definitionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 
 				using (SqlDataAdapter adapter = new SqlDataAdapter(strSQL, conn))

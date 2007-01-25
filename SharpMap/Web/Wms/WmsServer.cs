@@ -202,7 +202,7 @@ namespace SharpMap.Web.Wms
 				map.Zoom = bbox.Width;
 
 				//Set layers on/off
-				if (context.Request.Params["LAYERS"] != "") //If LAYERS is empty, use default layer on/off settings
+				if (!String.IsNullOrEmpty(context.Request.Params["LAYERS"])) //If LAYERS is empty, use default layer on/off settings
 				{
 					string[] layers = context.Request.Params["LAYERS"].Split(new char[] { ',' });
 					if(description.LayerLimit>0)

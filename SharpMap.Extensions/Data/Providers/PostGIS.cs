@@ -192,7 +192,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT AsBinary(" + this.GeometryColumn + ") AS Geom ";
 				strSQL += "FROM " + this.Table + " WHERE ";
 
-				if (_defintionQuery!=null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery!=null))
 					strSQL += this.DefinitionQuery + " AND ";
 
 				strSQL += this.GeometryColumn + " && " + strBbox;
@@ -266,7 +266,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT " + this.ObjectIdColumn + " ";
 				strSQL += "FROM " + this.Table + " WHERE ";
 
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += this.DefinitionQuery + " AND ";
 
 				strSQL += this.GeometryColumn + " && " + strBbox;
@@ -309,7 +309,7 @@ namespace SharpMap.Data.Providers
 
 				string strSQL = "SELECT * , AsBinary(" + this.GeometryColumn + ") As sharpmap_tempgeometry FROM " + this.Table + " WHERE ";
 
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += this.DefinitionQuery + " AND ";
 
 				strSQL += this.GeometryColumn + " && " + "buffer(" + strGeom + "," + distance.ToString(Map.numberFormat_EnUS) + ")";
@@ -359,7 +359,7 @@ namespace SharpMap.Data.Providers
 
 				string strSQL = "SELECT * , AsBinary(" + this.GeometryColumn + ") As sharpmap_tempgeometry FROM " + this.Table + " WHERE ";
 
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += this.DefinitionQuery + " AND ";
 
 				strSQL += this.GeometryColumn + " && " + strGeom + " AND distance(" + this.GeometryColumn + ", " + strGeom + ")<0";
@@ -418,7 +418,7 @@ namespace SharpMap.Data.Providers
 			using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT COUNT(*) FROM " + this.Table;
-				if (_defintionQuery!=null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 				using (Npgsql.NpgsqlCommand command = new Npgsql.NpgsqlCommand(strSQL, conn))
 				{
@@ -612,7 +612,7 @@ namespace SharpMap.Data.Providers
 			using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(_ConnectionString))
 			{
 				string strSQL = "SELECT EXTENT(" + this.GeometryColumn + ") FROM " + this.Table;
-				if (_defintionQuery != null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += " WHERE " + this.DefinitionQuery;
 				using (Npgsql.NpgsqlCommand command = new Npgsql.NpgsqlCommand(strSQL, conn))
 				{
@@ -681,7 +681,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT *, AsBinary(" + this.GeometryColumn + ") AS sharpmap_tempgeometry ";
 				strSQL += "FROM " + this.Table + " WHERE ";
 
-				if (_defintionQuery!=null && _defintionQuery != "")
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += this.DefinitionQuery + " AND ";
 
 				strSQL += this.GeometryColumn + " && " + strBbox;

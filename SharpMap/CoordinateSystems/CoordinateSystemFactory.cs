@@ -138,7 +138,7 @@ namespace SharpMap.CoordinateSystems
 		/// <returns>Ellipsoid</returns>
 		public IEllipsoid CreateFlattenedSphere(string name, double semiMajorAxis, double inverseFlattening, ILinearUnit linearUnit)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (String.IsNullOrEmpty(name))
 				throw new ArgumentException("Invalid name");
 			
 			return new Ellipsoid(semiMajorAxis, -1, inverseFlattening, true, linearUnit, name, String.Empty, -1, String.Empty, String.Empty, String.Empty);
@@ -156,7 +156,7 @@ namespace SharpMap.CoordinateSystems
 		/// <returns>Projected coordinate system</returns>
 		public IProjectedCoordinateSystem CreateProjectedCoordinateSystem(string name, IGeographicCoordinateSystem gcs, IProjection projection, ILinearUnit linearUnit, AxisInfo axis0, AxisInfo axis1)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (String.IsNullOrEmpty(name))
 				throw new ArgumentException("Invalid name");
 			if (gcs == null)
 				throw new ArgumentException("Geographic coordinate system was null");
@@ -180,7 +180,7 @@ namespace SharpMap.CoordinateSystems
 		/// <returns>Projection</returns>
 		public IProjection CreateProjection(string name, string wktProjectionClass, Collection<ProjectionParameter> parameters)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (String.IsNullOrEmpty(name))
 				throw new ArgumentException("Invalid name");
 			if(parameters==null || parameters.Count==0)
 				throw new ArgumentException("Invalid projection parameters");
@@ -203,7 +203,7 @@ namespace SharpMap.CoordinateSystems
 		/// <returns>Horizontal datum</returns>
 		public IHorizontalDatum CreateHorizontalDatum(string name, DatumType datumType, IEllipsoid ellipsoid, Wgs84ConversionInfo toWgs84)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (String.IsNullOrEmpty(name))
 				throw new ArgumentException("Invalid name");
 			if (ellipsoid == null)
 				throw new ArgumentException("Ellipsoid was null");
@@ -220,7 +220,7 @@ namespace SharpMap.CoordinateSystems
 		/// <returns>Prime meridian</returns>
 		public IPrimeMeridian CreatePrimeMeridian(string name, IAngularUnit angularUnit, double longitude)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (String.IsNullOrEmpty(name))
 				throw new ArgumentException("Invalid name");
 			return new PrimeMeridian(longitude, angularUnit, name, String.Empty, -1, String.Empty, String.Empty, String.Empty);
 		}
@@ -237,7 +237,7 @@ namespace SharpMap.CoordinateSystems
 		/// <returns>Geographic coordinate system</returns>
 		public IGeographicCoordinateSystem CreateGeographicCoordinateSystem(string name, IAngularUnit angularUnit, IHorizontalDatum datum, IPrimeMeridian primeMeridian, AxisInfo axis0, AxisInfo axis1)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (String.IsNullOrEmpty(name))
 				throw new ArgumentException("Invalid name");
             //Collection<AxisInfo> info = new Collection<AxisInfo>(2);
             Collection<AxisInfo> info = new Collection<AxisInfo>();
@@ -293,7 +293,7 @@ namespace SharpMap.CoordinateSystems
 		/// <returns>Geocentric Coordinate System</returns>
 		public IGeocentricCoordinateSystem CreateGeocentricCoordinateSystem(string name, IHorizontalDatum datum, ILinearUnit linearUnit, IPrimeMeridian primeMeridian)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (String.IsNullOrEmpty(name))
 				throw new ArgumentException("Invalid name");
             //Collection<AxisInfo> info = new Collection<AxisInfo>(3);
             Collection<AxisInfo> info = new Collection<AxisInfo>();
