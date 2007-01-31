@@ -612,9 +612,7 @@ namespace SharpMap.Data.Providers
 		{
 			using (SqlConnection conn = new SqlConnection(_ConnectionString))
 			{
-				string strSQL = "SELECT ST.AsBinary(ST.EnvelopeAggregate(" + this.BuildGeometryExpression() + ")) FROM " + this.Table;
-				if (!String.IsNullOrEmpty(_definitionQuery))
-					strSQL += " WHERE " + this.DefinitionQuery;
+				string strSQL = string.Format("SELECT ST.AsBinary(ST.EnvelopeQueryWhere({0},{1},{2}))", this.Table, this.GeometryColumn, this.DefinitionQuery);
 				using (SqlCommand command = new SqlCommand(strSQL, conn))
 				{
 					conn.Open();
