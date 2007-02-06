@@ -63,6 +63,17 @@ namespace SharpMap.Layers
  
         }
 
+        /// <summary>
+        /// initialize a Gdal based raster layer
+        /// </summary>
+        /// <param name="strLayerName">Name of layer</param>
+        /// <param name="imageFilename">location of image</param>
+        /// <param name="srid">sets the SRID of the data set</param>
+        public GdalRasterLayer(string strLayerName, string imageFilename, int srid):this(strLayerName, imageFilename)
+        {
+            this.SRID = srid;
+        }
+
 
         #region ILayer Members
 
@@ -91,6 +102,16 @@ namespace SharpMap.Layers
         public override SharpMap.Geometries.BoundingBox Envelope
         {
             get { return _Envelope; }
+        }
+
+        private int _SRID = -1;
+        /// <summary>
+        /// The spatial reference ID (CRS)
+        /// </summary>
+        public override int SRID
+        {
+            get { return _SRID; }
+            set { _SRID = value; }
         }
 
         #endregion
