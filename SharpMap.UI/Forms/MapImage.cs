@@ -80,6 +80,7 @@ namespace SharpMap.Forms
 		/// <summary>
 		/// Map reference
 		/// </summary>
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public SharpMap.Map Map
 		{
 			get { return _Map; }
