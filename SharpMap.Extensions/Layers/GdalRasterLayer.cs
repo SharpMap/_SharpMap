@@ -48,10 +48,7 @@ namespace SharpMap.Layers
             GDAL.gdal.AllRegister();
             try
             {
-//                _GdalDataset = new GdalDataset(_Filename);
-//                imagesize = _GdalDataset.ImageSize;
-//                _Envelope = this.GetExtent();
-				_GdalDataset = GDAL.gdal.Open(_Filename, 1);
+				_GdalDataset = GDAL.gdal.Open(_Filename, GDAL.gdalconst.GA_ReadOnly);
 				imagesize = new Size(_GdalDataset.RasterXSize, _GdalDataset.RasterYSize);
                 
 				_Envelope = this.GetExtent();
@@ -231,10 +228,8 @@ namespace SharpMap.Layers
                             byte[] buffer = new byte[size.Width * size.Height];
                             GDAL.Band band = dataset.GetRasterBand(i);
 
-                            band.ReadRaster(x1, y1, x1width, y1height, buffer, size.Width, size.Height, (int)GT.HorizontalPixelResolution, (int)GT.VerticalPixelResolution);
-                            
-                            //band.RasterIO(RWFlag.Read, x1, y1, x1width, y1height, buffer, size.Width, size.Height);
-                            //band.RasterIO(RWFlag.Read, 0, 0, dataset.XSize, dataset.YSize, buffer, size.Width, size.Height);
+                            //band.ReadRaster(x1, y1, x1width, y1height, buffer, size.Width, size.Height, (int)GT.HorizontalPixelResolution, (int)GT.VerticalPixelResolution);
+                            band.ReadRaster(x1, y1, x1width, y1height, buffer, size.Width, size.Height, 0, 0);
 
                             int p_indx = 0;
                             int ch = 0;
