@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -25,8 +26,10 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
+using SharpMap.Geometries;
 using SharpMap.Layers;
 using SharpMap.Forms;
+using SharpMap.Data.Providers;
 
 using DemoWinForm.Properties;
 
