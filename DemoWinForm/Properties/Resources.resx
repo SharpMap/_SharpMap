@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+	// Copyright 2007 - Rory Plaire (codekaizen@gmail.com)
+	//
+	// This file is part of SharpMap.
+	// SharpMap is free software; you can redistribute it and/or modify
+	// it under the terms of the GNU Lesser General Public License as published by
+	// the Free Software Foundation; either version 2 of the License, or
+	// (at your option) any later version.
+	// 
+	// SharpMap is distributed in the hope that it will be useful,
+	// but WITHOUT ANY WARRANTY; without even the implied warranty of
+	// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	// GNU Lesser General Public License for more details.
+
+	// You should have received a copy of the GNU Lesser General Public License
+	// along with SharpMap; if not, write to the Free Software
+	// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+    -->
+<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+	<xsd:element name="root" msdata:IsDataSet="true">
+		<xsd:complexType>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:element name="metadata">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="value" type="xsd:string" minOccurs="0" />
+						</xsd:sequence>
+						<xsd:attribute name="name" use="required" type="xsd:string" />
+						<xsd:attribute name="type" type="xsd:string" />
+						<xsd:attribute name="mimetype" type="xsd:string" />
+						<xsd:attribute ref="xml:space" />
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="assembly">
+					<xsd:complexType>
+						<xsd:attribute name="alias" type="xsd:string" />
+						<xsd:attribute name="name" type="xsd:string" />
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="data">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+						</xsd:sequence>
+						<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+						<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+						<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						<xsd:attribute ref="xml:space" />
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="resheader">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+						</xsd:sequence>
+						<xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ZoomOut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Zoom Out.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pan" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pan.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RemoveTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RemoveTable.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ZoomToExtents" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ZoomToExtents.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ZoomIn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Zoom In.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AddTableHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AddTableHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="query" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\query.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="polygon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\polygon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Raster" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Raster.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+</root>
