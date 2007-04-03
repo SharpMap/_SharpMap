@@ -25,9 +25,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("DemoWinForm")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("DigitalCommons LLC")]
+[assembly: AssemblyCompany("codekaizen")]
 [assembly: AssemblyProduct("DemoWinForm")]
-[assembly: AssemblyCopyright("Copyright © DigitalCommons LLC 2007")]
+[assembly: AssemblyCopyright("Copyright © Rory Plaire 2007")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
