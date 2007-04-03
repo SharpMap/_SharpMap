@@ -34,6 +34,8 @@ namespace SharpMap.Forms
 	[DesignTimeVisible(true)]
 	public class MapImage : System.Windows.Forms.PictureBox
 	{
+		private bool _isCtrlPressed = false;
+
 		/// <summary>
 		/// Map tools enumeration
 		/// </summary>
@@ -76,6 +78,30 @@ namespace SharpMap.Forms
 			this.DoubleBuffered = true;
 		}
 
+		private double _wheelZoomMagnitude = 2;
+
+		[Description("The amount which a single movement of the mouse wheel zooms by.")]
+		[DefaultValue(2)]
+		[Category("Behavior")]
+		public double WheelZoomMagnitude
+		{
+			get { return _wheelZoomMagnitude; }
+			set { _wheelZoomMagnitude = value; }
+		}
+
+		private double _fineZoomFactor = 10;
+
+		[Description("The amount which the WheelZoomMagnitude is divided by " + 
+			"when the Control key is pressed. A number greater than 1 decreases " +
+			"the zoom, and less than 1 increases it. A negative number reverses it.")]
+		[DefaultValue(10)]
+		[Category("Behavior")]
+		public double FineZoomFactor
+		{
+			get { return _fineZoomFactor; }
+			set { _fineZoomFactor = value; }
+		}
+
 		private SharpMap.Map _Map;
 
 		/// <summary>
@@ -103,7 +129,7 @@ namespace SharpMap.Forms
 			get { return _queryLayerIndex; }
 			set { _queryLayerIndex = value; }
 		}
-	
+
 
 		private SharpMap.Forms.MapImage.Tools _Activetool;
 
@@ -113,19 +139,20 @@ namespace SharpMap.Forms
 		public SharpMap.Forms.MapImage.Tools ActiveTool
 		{
 			get { return _Activetool; }
-			set { 
-					bool fireevent=(value!=_Activetool);
-					_Activetool = value;
-					if (value == Tools.Pan)
-						this.Cursor = Cursors.Hand;
-					else
-						this.Cursor = Cursors.Cross;
-					if(fireevent)
-						if(ActiveToolChanged!=null)
-							ActiveToolChanged(value);
-				}
+			set
+			{
+				bool fireevent = (value != _Activetool);
+				_Activetool = value;
+				if (value == Tools.Pan)
+					this.Cursor = Cursors.Hand;
+				else
+					this.Cursor = Cursors.Cross;
+				if (fireevent)
+					if (ActiveToolChanged != null)
+						ActiveToolChanged(value);
+			}
 		}
-	
+
 		/// <summary>
 		/// Refreshes the map
 		/// </summary>
@@ -219,6 +246,33 @@ namespace SharpMap.Forms
 		public event ActiveToolChangedHandler ActiveToolChanged;
 		#endregion
 
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			_isCtrlPressed = e.Control;
+			System.Diagnostics.Debug.WriteLine(String.Format("Ctrl: {0}", _isCtrlPressed));
+
+			base.OnKeyDown(e);
+		}
+
+		protected override void OnKeyUp(KeyEventArgs e)
+		{
+			_isCtrlPressed = e.Control;
+			System.Diagnostics.Debug.WriteLine(String.Format("Ctrl: {0}", _isCtrlPressed));
+
+			base.OnKeyUp(e);
+		}
+
+		protected override void OnMouseHover(EventArgs e)
+		{
+			if (!Focused)
+			{
+				bool isFocused = Focus();
+				System.Diagnostics.Debug.WriteLine(isFocused);
+			}
+
+			base.OnMouseHover(e);
+		}
+
 		private System.Drawing.Point mousedrag;
 		private System.Drawing.Image mousedragImg;
 		private bool mousedragging = false;
@@ -227,10 +281,14 @@ namespace SharpMap.Forms
 		{
 			if (_Map != null)
 			{
-				double scale = 0.5 * e.Delta;
-				_Map.Zoom *= 1 / scale;
+				double scale = ((double)e.Delta / 120.0);
+				double scaleBase = 1 + (_wheelZoomMagnitude / (10 * ((double)(_isCtrlPressed ? _fineZoomFactor : 1))));
+				
+				_Map.Zoom *= Math.Pow(scaleBase, scale); 
+
 				if (MapZoomChanged != null)
 					MapZoomChanged(_Map.Zoom);
+
 				Refresh();
 			}
 		}
@@ -240,7 +298,7 @@ namespace SharpMap.Forms
 			if (_Map != null)
 			{
 				if (e.Button == MouseButtons.Left) //dragging
-				mousedrag = e.Location;
+					mousedrag = e.Location;
 				if (MouseDown != null)
 					MouseDown(this._Map.ImageToWorld(new System.Drawing.Point(e.X, e.Y)), e);
 			}
@@ -257,9 +315,9 @@ namespace SharpMap.Forms
 				if (MouseMove != null)
 					MouseMove(p, e);
 
-				if (e.Location != mousedrag && !mousedragging && e.Button == MouseButtons.Left)
+				if (Image != null && e.Location != mousedrag && !mousedragging && e.Button == MouseButtons.Left)
 				{
-					mousedragImg = (Image)this.Image.Clone();
+					mousedragImg = this.Image.Clone() as Image;
 					mousedragging = true;
 				}
 
@@ -385,9 +443,9 @@ namespace SharpMap.Forms
 								layer.DataSource.ExecuteIntersectionQuery(bbox, ds);
 								layer.DataSource.Close();
 								if (ds.Tables.Count > 0)
-									if(MapQueried!=null) MapQueried(ds.Tables[0]);
-								else
-									if (MapQueried != null) MapQueried(new SharpMap.Data.FeatureDataTable());
+									if (MapQueried != null) MapQueried(ds.Tables[0]);
+									else
+										if (MapQueried != null) MapQueried(new SharpMap.Data.FeatureDataTable());
 							}
 						}
 						else
