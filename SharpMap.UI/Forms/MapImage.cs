@@ -31,6 +31,7 @@ namespace SharpMap.Forms
 	/// <remarks>
 	/// The MapImage control adds basic functionality to a Windows Form, such as dynamic pan, zoom and data query.
 	/// </remarks>
+	[DesignTimeVisible(true)]
 	public class MapImage : System.Windows.Forms.PictureBox
 	{
 		/// <summary>

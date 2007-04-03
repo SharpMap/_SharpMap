@@ -2,12 +2,24 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap", "SharpMap.csproj", "{C83777FC-AABB-47D9-911F-D76255D4D541}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.UI", "..\SharpMap.UI\SharpMap.UI.csproj", "{DD1CC1DB-4BF9-4C88-A100-733D84795F3A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "..\UnitTests\UnitTests.csproj", "{0C76DD99-AC5D-47C0-B76F-CE70092A9AC7}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "E:\SharpMap_CodePlex\DemoWebSite\", "..\DemoWebSite", "{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "C:\...\DemoWebSite\", "..\DemoWebSite", "{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}"
 	ProjectSection(WebsiteProperties) = preProject
 		SccProjectName = "SAK"
 		SccAuxPath = "SAK"
@@ -31,32 +43,43 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "E:\SharpMap_CodePlex\DemoWe
 		VWDPort = "3046"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap_WmsClient", "..\SharpMap_WmsClient\SharpMap_WmsClient.csproj", "{237E93E2-C026-4140-9966-258A3CB32CE9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.Extensions", "..\SharpMap.Extensions\SharpMap.Extensions.csproj", "{A4140C12-53F5-438C-8D24-9E48C504FECF}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoWinForm", "..\DemoWinForm\DemoWinForm.csproj", "{73A45373-6307-4D39-9FE9-E8803F95FAB6}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
-		SccWebProject1 = true
-		SccProjectUniqueName1 = ..\\DemoWebSite
-		SccProjectName1 = ../DemoWebSite
-		SccLocalPath1 = ..\\DemoWebSite
-		SccProjectEnlistmentChoice1 = 2
-		SccProjectUniqueName2 = ..\\SharpMap.UI\\SharpMap.UI.csproj
-		SccProjectName2 = ../SharpMap.UI
-		SccLocalPath2 = ..\\SharpMap.UI
-		SccProjectUniqueName3 = SharpMap.csproj
-		SccLocalPath3 = .
-		SccProjectUniqueName4 = ..\\UnitTests\\UnitTests.csproj
-		SccProjectName4 = ../UnitTests
-		SccLocalPath4 = ..\\UnitTests
-		SccProjectUniqueName5 = ..\\SharpMap.Extensions\\SharpMap.Extensions.csproj
-		SccProjectName5 = ../SharpMap.Extensions
-		SccLocalPath5 = ..\\SharpMap.Extensions
+		SccProjectUniqueName1 = ..\\SharpMap.UI\\SharpMap.UI.csproj
+		SccProjectName1 = ../SharpMap.UI
+		SccLocalPath1 = ..\\SharpMap.UI
+		SccProjectUniqueName2 = SharpMap.csproj
+		SccLocalPath2 = .
+		SccProjectUniqueName3 = ..\\UnitTests\\UnitTests.csproj
+		SccProjectName3 = ../UnitTests
+		SccLocalPath3 = ..\\UnitTests
+		SccProjectUniqueName4 = ..\\SharpMap.Extensions\\SharpMap.Extensions.csproj
+		SccProjectName4 = ../SharpMap.Extensions
+		SccLocalPath4 = ..\\SharpMap.Extensions
+		SccWebProject5 = true
+		SccProjectUniqueName5 = ..\\DemoWebSite
+		SccProjectName5 = ../DemoWebSite
+		SccLocalPath5 = ..\\DemoWebSite
+		SccProjectEnlistmentChoice5 = 2
+		SccProjectUniqueName6 = ..\\DemoWinForm\\DemoWinForm.csproj
+		SccProjectName6 = ../DemoWinForm
+		SccLocalPath6 = ..\\DemoWinForm
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -107,16 +130,6 @@ Global
 		{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}.Release|Any CPU.ActiveCfg = Debug|.NET
 		{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
 		{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}.Release|Mixed Platforms.Build.0 = Debug|.NET
-		{237E93E2-C026-4140-9966-258A3CB32CE9}.Debug|.NET.ActiveCfg = Debug|Any CPU
-		{237E93E2-C026-4140-9966-258A3CB32CE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{237E93E2-C026-4140-9966-258A3CB32CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{237E93E2-C026-4140-9966-258A3CB32CE9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{237E93E2-C026-4140-9966-258A3CB32CE9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{237E93E2-C026-4140-9966-258A3CB32CE9}.Release|.NET.ActiveCfg = Release|Any CPU
-		{237E93E2-C026-4140-9966-258A3CB32CE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{237E93E2-C026-4140-9966-258A3CB32CE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{237E93E2-C026-4140-9966-258A3CB32CE9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{237E93E2-C026-4140-9966-258A3CB32CE9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Debug|.NET.ActiveCfg = Debug|Any CPU
 		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -127,6 +140,16 @@ Global
 		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A4140C12-53F5-438C-8D24-9E48C504FECF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{73A45373-6307-4D39-9FE9-E8803F95FAB6}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{73A45373-6307-4D39-9FE9-E8803F95FAB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73A45373-6307-4D39-9FE9-E8803F95FAB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73A45373-6307-4D39-9FE9-E8803F95FAB6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{73A45373-6307-4D39-9FE9-E8803F95FAB6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{73A45373-6307-4D39-9FE9-E8803F95FAB6}.Release|.NET.ActiveCfg = Release|Any CPU
+		{73A45373-6307-4D39-9FE9-E8803F95FAB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73A45373-6307-4D39-9FE9-E8803F95FAB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73A45373-6307-4D39-9FE9-E8803F95FAB6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{73A45373-6307-4D39-9FE9-E8803F95FAB6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
