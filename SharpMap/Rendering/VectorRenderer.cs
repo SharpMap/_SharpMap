@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing.Drawing2D;
 
 namespace SharpMap.Rendering
 {
@@ -326,13 +327,19 @@ namespace SharpMap.Rendering
 				return;
 			if (symbol == null) //We have no point style - Use a default symbol
 				symbol = defaultsymbol;
+			
 			System.Drawing.PointF pp = SharpMap.Utilities.Transform.WorldtoMap(point, map);
-
-			if (rotation != 0 && rotation != float.NaN)
+			
+			Matrix startingTransform = g.Transform;
+			
+			if (rotation != 0 && !Single.IsNaN(rotation))
 			{
-				g.TranslateTransform(pp.X, pp.Y);
-				g.RotateTransform(rotation);
-				g.TranslateTransform(-symbol.Width / 2, -symbol.Height / 2);
+				System.Drawing.PointF rotationCenter = System.Drawing.PointF.Add(pp, new System.Drawing.SizeF(symbol.Width / 2, symbol.Height / 2));
+				Matrix transform = new Matrix();
+				transform.RotateAt(rotation, rotationCenter);
+
+				g.Transform = transform;
+
 				if (symbolscale == 1f)
 					g.DrawImageUnscaled(symbol, (int)(pp.X - symbol.Width / 2 + offset.X), (int)(pp.Y - symbol.Height / 2 + offset.Y));
 				else
@@ -341,7 +348,8 @@ namespace SharpMap.Rendering
 					float height = symbol.Height * symbolscale;
 					g.DrawImage(symbol, (int)pp.X - width / 2 + offset.X * symbolscale, (int)pp.Y - height / 2 + offset.Y * symbolscale, width, height);
 				}
-				g.Transform = map.MapTransform;
+
+				g.Transform = startingTransform;
 			}
 			else
 			{
