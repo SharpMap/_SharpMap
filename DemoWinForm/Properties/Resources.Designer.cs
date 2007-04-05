@@ -67,9 +67,58 @@ namespace DemoWinForm.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Chat {
+            get {
+                object obj = ResourceManager.GetObject("Chat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DATABASE {
+            get {
+                object obj = ResourceManager.GetObject("DATABASE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap EditTableHS {
+            get {
+                object obj = ResourceManager.GetObject("EditTableHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Flag {
+            get {
+                object obj = ResourceManager.GetObject("Flag", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Home {
+            get {
+                object obj = ResourceManager.GetObject("Home", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap NewRandomGeometry {
+            get {
+                object obj = ResourceManager.GetObject("NewRandomGeometry", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap pan {
             get {
                 object obj = ResourceManager.GetObject("pan", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap PIE_DIAGRAM {
+            get {
+                object obj = ResourceManager.GetObject("PIE_DIAGRAM", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -98,6 +147,20 @@ namespace DemoWinForm.Properties {
         internal static System.Drawing.Bitmap RemoveTable {
             get {
                 object obj = ResourceManager.GetObject("RemoveTable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Women {
+            get {
+                object obj = ResourceManager.GetObject("Women", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Women_1 {
+            get {
+                object obj = ResourceManager.GetObject("Women_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

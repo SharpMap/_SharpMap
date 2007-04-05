@@ -46,12 +46,12 @@ namespace DemoWinForm
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.MainStatusStrip = new System.Windows.Forms.StatusStrip();
@@ -65,33 +65,35 @@ namespace DemoWinForm
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.FeaturesDataGridView = new System.Windows.Forms.DataGridView();
 			this.MainToolStrip = new System.Windows.Forms.ToolStrip();
-			this.NewToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.OpenToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.SaveToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.PrintToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-			this.CutToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.CopyToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.PasteToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.AddLayerToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.RemoveLayerToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.ZoomToExtentsToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.ZoomOutModeToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.ZoomInModeToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.PanToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.QueryModeToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.splitContainer4 = new System.Windows.Forms.SplitContainer();
 			this.LayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.MoveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MoveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+			this.LayerContextMenuSeparator = new System.Windows.Forms.ToolStripSeparator();
 			this.AddLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.RemoveLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.AddLayerDialog = new System.Windows.Forms.OpenFileDialog();
 			this.MainMapImage = new SharpMap.Forms.MapImage();
+			this.NewToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.AddNewRandomGeometryLayer = new System.Windows.Forms.ToolStripButton();
+			this.OpenToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.SaveToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.PrintToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.CutToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.CopyToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.PasteToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.AddLayerToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.RemoveLayerToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.ZoomToExtentsToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.ZoomOutModeToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.ZoomInModeToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.PanToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.QueryModeToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -171,42 +173,43 @@ namespace DemoWinForm
 			// 
 			this.LayersDataGridView.AllowUserToAddRows = false;
 			this.LayersDataGridView.AllowUserToDeleteRows = false;
-			dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.LayersDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.LayersDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
 			this.LayersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.LayersDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.EnabledColumn,
             this.LayerTypeColumn,
             this.LayerNameColumn,
             this.LayerPropertiesColumn});
-			dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.LayersDataGridView.DefaultCellStyle = dataGridViewCellStyle14;
+			this.LayersDataGridView.ContextMenuStrip = this.LayerContextMenu;
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.LayersDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
 			this.LayersDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.LayersDataGridView.GridColor = System.Drawing.SystemColors.ControlLightLight;
 			this.LayersDataGridView.Location = new System.Drawing.Point(0, 0);
 			this.LayersDataGridView.MultiSelect = false;
 			this.LayersDataGridView.Name = "LayersDataGridView";
 			this.LayersDataGridView.ReadOnly = true;
-			dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.LayersDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
+			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.LayersDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
 			this.LayersDataGridView.RowHeadersVisible = false;
 			this.LayersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.LayersDataGridView.Size = new System.Drawing.Size(187, 452);
@@ -270,34 +273,34 @@ namespace DemoWinForm
 			// 
 			this.FeaturesDataGridView.AllowUserToAddRows = false;
 			this.FeaturesDataGridView.AllowUserToDeleteRows = false;
-			dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.FeaturesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.FeaturesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.FeaturesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.FeaturesDataGridView.DefaultCellStyle = dataGridViewCellStyle17;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.FeaturesDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
 			this.FeaturesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.FeaturesDataGridView.Location = new System.Drawing.Point(0, 0);
 			this.FeaturesDataGridView.Name = "FeaturesDataGridView";
-			dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.FeaturesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.FeaturesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.FeaturesDataGridView.Size = new System.Drawing.Size(495, 171);
 			this.FeaturesDataGridView.TabIndex = 0;
 			// 
@@ -306,6 +309,8 @@ namespace DemoWinForm
 			this.MainToolStrip.Dock = System.Windows.Forms.DockStyle.None;
 			this.MainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewToolStripButton,
+            this.AddNewRandomGeometryLayer,
+            this.toolStripSeparator4,
             this.OpenToolStripButton,
             this.SaveToolStripButton,
             this.PrintToolStripButton,
@@ -325,8 +330,108 @@ namespace DemoWinForm
             this.toolStripSeparator2});
 			this.MainToolStrip.Location = new System.Drawing.Point(3, 0);
 			this.MainToolStrip.Name = "MainToolStrip";
-			this.MainToolStrip.Size = new System.Drawing.Size(358, 25);
+			this.MainToolStrip.Size = new System.Drawing.Size(418, 25);
 			this.MainToolStrip.TabIndex = 0;
+			// 
+			// toolStripSeparator
+			// 
+			this.toolStripSeparator.Name = "toolStripSeparator";
+			this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// splitContainer4
+			// 
+			this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer4.Name = "splitContainer4";
+			this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			this.splitContainer4.Size = new System.Drawing.Size(481, 358);
+			this.splitContainer4.SplitterDistance = 220;
+			this.splitContainer4.TabIndex = 0;
+			// 
+			// LayerContextMenu
+			// 
+			this.LayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MoveUpToolStripMenuItem,
+            this.MoveDownToolStripMenuItem,
+            this.LayerContextMenuSeparator,
+            this.AddLayerToolStripMenuItem,
+            this.RemoveLayerToolStripMenuItem});
+			this.LayerContextMenu.Name = "LayerContextMenu";
+			this.LayerContextMenu.Size = new System.Drawing.Size(155, 98);
+			// 
+			// MoveUpToolStripMenuItem
+			// 
+			this.MoveUpToolStripMenuItem.Name = "MoveUpToolStripMenuItem";
+			this.MoveUpToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+			this.MoveUpToolStripMenuItem.Text = "Move &Up";
+			this.MoveUpToolStripMenuItem.Visible = false;
+			this.MoveUpToolStripMenuItem.Click += new System.EventHandler(this.MoveUpToolStripMenuItem_Click);
+			// 
+			// MoveDownToolStripMenuItem
+			// 
+			this.MoveDownToolStripMenuItem.Name = "MoveDownToolStripMenuItem";
+			this.MoveDownToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+			this.MoveDownToolStripMenuItem.Text = "Move &Down";
+			this.MoveDownToolStripMenuItem.Visible = false;
+			this.MoveDownToolStripMenuItem.Click += new System.EventHandler(this.MoveDownToolStripMenuItem_Click);
+			// 
+			// LayerContextMenuSeparator
+			// 
+			this.LayerContextMenuSeparator.Name = "LayerContextMenuSeparator";
+			this.LayerContextMenuSeparator.Size = new System.Drawing.Size(151, 6);
+			this.LayerContextMenuSeparator.Visible = false;
+			// 
+			// AddLayerToolStripMenuItem
+			// 
+			this.AddLayerToolStripMenuItem.Name = "AddLayerToolStripMenuItem";
+			this.AddLayerToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+			this.AddLayerToolStripMenuItem.Text = "&Add Layer";
+			this.AddLayerToolStripMenuItem.Click += new System.EventHandler(this.AddLayerToolStripMenuItem_Click);
+			// 
+			// RemoveLayerToolStripMenuItem
+			// 
+			this.RemoveLayerToolStripMenuItem.Name = "RemoveLayerToolStripMenuItem";
+			this.RemoveLayerToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+			this.RemoveLayerToolStripMenuItem.Text = "&Remove Layer";
+			this.RemoveLayerToolStripMenuItem.Click += new System.EventHandler(this.RemoveLayerToolStripMenuItem_Click);
+			// 
+			// AddLayerDialog
+			// 
+			this.AddLayerDialog.Filter = "Shapefiles|*.shp|All files|*.*";
+			this.AddLayerDialog.InitialDirectory = ".";
+			this.AddLayerDialog.Multiselect = true;
+			this.AddLayerDialog.RestoreDirectory = true;
+			this.AddLayerDialog.Title = "Choose Layer Data";
+			// 
+			// MainMapImage
+			// 
+			this.MainMapImage.ActiveTool = SharpMap.Forms.MapImage.Tools.None;
+			this.MainMapImage.Cursor = System.Windows.Forms.Cursors.Cross;
+			this.MainMapImage.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.MainMapImage.FineZoomFactor = 10;
+			this.MainMapImage.Location = new System.Drawing.Point(0, 0);
+			this.MainMapImage.Name = "MainMapImage";
+			this.MainMapImage.QueryLayerIndex = 0;
+			this.MainMapImage.Size = new System.Drawing.Size(495, 277);
+			this.MainMapImage.TabIndex = 0;
+			this.MainMapImage.TabStop = false;
+			this.MainMapImage.WheelZoomMagnitude = 2;
+			this.MainMapImage.MouseMove += new SharpMap.Forms.MapImage.MouseEventHandler(this.MainMapImage_MouseMove);
 			// 
 			// NewToolStripButton
 			// 
@@ -336,6 +441,16 @@ namespace DemoWinForm
 			this.NewToolStripButton.Name = "NewToolStripButton";
 			this.NewToolStripButton.Size = new System.Drawing.Size(23, 22);
 			this.NewToolStripButton.Text = "&New";
+			// 
+			// AddNewRandomGeometryLayer
+			// 
+			this.AddNewRandomGeometryLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.AddNewRandomGeometryLayer.Image = global::DemoWinForm.Properties.Resources.NewRandomGeometry;
+			this.AddNewRandomGeometryLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.AddNewRandomGeometryLayer.Name = "AddNewRandomGeometryLayer";
+			this.AddNewRandomGeometryLayer.Size = new System.Drawing.Size(23, 22);
+			this.AddNewRandomGeometryLayer.Text = "toolStripButton1";
+			this.AddNewRandomGeometryLayer.Click += new System.EventHandler(this.AddNewRandomGeometryLayer_Click);
 			// 
 			// OpenToolStripButton
 			// 
@@ -364,11 +479,6 @@ namespace DemoWinForm
 			this.PrintToolStripButton.Size = new System.Drawing.Size(23, 22);
 			this.PrintToolStripButton.Text = "&Print";
 			// 
-			// toolStripSeparator
-			// 
-			this.toolStripSeparator.Name = "toolStripSeparator";
-			this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
-			// 
 			// CutToolStripButton
 			// 
 			this.CutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -396,11 +506,6 @@ namespace DemoWinForm
 			this.PasteToolStripButton.Size = new System.Drawing.Size(23, 22);
 			this.PasteToolStripButton.Text = "&Paste";
 			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
 			// AddLayerToolStripButton
 			// 
 			this.AddLayerToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -420,11 +525,6 @@ namespace DemoWinForm
 			this.RemoveLayerToolStripButton.Size = new System.Drawing.Size(23, 22);
 			this.RemoveLayerToolStripButton.Text = "Remove Layer";
 			this.RemoveLayerToolStripButton.Click += new System.EventHandler(this.RemoveLayerToolStripButton_Click);
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
 			// 
 			// ZoomToExtentsToolStripButton
 			// 
@@ -476,85 +576,10 @@ namespace DemoWinForm
 			this.QueryModeToolStripButton.Text = "Query";
 			this.QueryModeToolStripButton.Click += new System.EventHandler(this.QueryModeToolStripButton_Click);
 			// 
-			// toolStripSeparator2
+			// toolStripSeparator4
 			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-			// 
-			// splitContainer4
-			// 
-			this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer4.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer4.Name = "splitContainer4";
-			this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			this.splitContainer4.Size = new System.Drawing.Size(481, 358);
-			this.splitContainer4.SplitterDistance = 220;
-			this.splitContainer4.TabIndex = 0;
-			// 
-			// LayerContextMenu
-			// 
-			this.LayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MoveUpToolStripMenuItem,
-            this.MoveDownToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.AddLayerToolStripMenuItem,
-            this.RemoveLayerToolStripMenuItem});
-			this.LayerContextMenu.Name = "LayerContextMenu";
-			this.LayerContextMenu.Size = new System.Drawing.Size(155, 98);
-			// 
-			// MoveUpToolStripMenuItem
-			// 
-			this.MoveUpToolStripMenuItem.Name = "MoveUpToolStripMenuItem";
-			this.MoveUpToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-			this.MoveUpToolStripMenuItem.Text = "Move &Up";
-			this.MoveUpToolStripMenuItem.Click += new System.EventHandler(this.MoveUpToolStripMenuItem_Click);
-			// 
-			// MoveDownToolStripMenuItem
-			// 
-			this.MoveDownToolStripMenuItem.Name = "MoveDownToolStripMenuItem";
-			this.MoveDownToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-			this.MoveDownToolStripMenuItem.Text = "Move &Down";
-			this.MoveDownToolStripMenuItem.Click += new System.EventHandler(this.MoveDownToolStripMenuItem_Click);
-			// 
-			// toolStripMenuItem2
-			// 
-			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(151, 6);
-			// 
-			// AddLayerToolStripMenuItem
-			// 
-			this.AddLayerToolStripMenuItem.Name = "AddLayerToolStripMenuItem";
-			this.AddLayerToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-			this.AddLayerToolStripMenuItem.Text = "&Add Layer";
-			this.AddLayerToolStripMenuItem.Click += new System.EventHandler(this.AddLayerToolStripMenuItem_Click);
-			// 
-			// RemoveLayerToolStripMenuItem
-			// 
-			this.RemoveLayerToolStripMenuItem.Name = "RemoveLayerToolStripMenuItem";
-			this.RemoveLayerToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-			this.RemoveLayerToolStripMenuItem.Text = "&Remove Layer";
-			this.RemoveLayerToolStripMenuItem.Click += new System.EventHandler(this.RemoveLayerToolStripMenuItem_Click);
-			// 
-			// AddLayerDialog
-			// 
-			this.AddLayerDialog.Filter = "Shapefiles|*.shp|All files|*.*";
-			this.AddLayerDialog.Multiselect = true;
-			this.AddLayerDialog.RestoreDirectory = true;
-			this.AddLayerDialog.Title = "Choose Layer Data";
-			// 
-			// MainMapImage
-			// 
-			this.MainMapImage.ActiveTool = SharpMap.Forms.MapImage.Tools.None;
-			this.MainMapImage.Cursor = System.Windows.Forms.Cursors.Cross;
-			this.MainMapImage.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.MainMapImage.FineZoomFactor = 10;
-			this.MainMapImage.Location = new System.Drawing.Point(0, 0);
-			this.MainMapImage.Name = "MainMapImage";
-			this.MainMapImage.QueryLayerIndex = 0;
-			this.MainMapImage.Size = new System.Drawing.Size(495, 277);
-			this.MainMapImage.TabIndex = 0;
-			this.MainMapImage.TabStop = false;
-			this.MainMapImage.WheelZoomMagnitude = 2;
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
 			// 
 			// MainForm
 			// 
@@ -625,12 +650,14 @@ namespace DemoWinForm
 		private System.Windows.Forms.ContextMenuStrip LayerContextMenu;
 		private System.Windows.Forms.ToolStripMenuItem MoveUpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem MoveDownToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+		private System.Windows.Forms.ToolStripSeparator LayerContextMenuSeparator;
 		private System.Windows.Forms.ToolStripMenuItem AddLayerToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem RemoveLayerToolStripMenuItem;
 		private System.Windows.Forms.OpenFileDialog AddLayerDialog;
 		private System.Windows.Forms.ToolStripButton ZoomOutModeToolStripButton;
 		private System.Windows.Forms.ToolStripButton PanToolStripButton;
+		private System.Windows.Forms.ToolStripButton AddNewRandomGeometryLayer;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 	}
 }
 
