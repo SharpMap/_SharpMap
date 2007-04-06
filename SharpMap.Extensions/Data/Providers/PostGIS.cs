@@ -192,7 +192,7 @@ namespace SharpMap.Data.Providers
 				string strSQL = "SELECT AsBinary(" + this.GeometryColumn + ") AS Geom ";
 				strSQL += "FROM " + this.Table + " WHERE ";
 
-				if (!String.IsNullOrEmpty(_defintionQuery!=null))
+				if (!String.IsNullOrEmpty(_defintionQuery))
 					strSQL += this.DefinitionQuery + " AND ";
 
 				strSQL += this.GeometryColumn + " && " + strBbox;
