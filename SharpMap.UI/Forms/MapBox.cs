@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SharpMap.Forms
 {
     /// <summary>
-    /// MapControl Class - MapControl control for Windows forms
+    /// MapBox Class - MapBox control for Windows forms
     /// </summary>
     /// <remarks>
     /// The ExtendedMapImage control adds more than basic functionality to a Windows Form, such as dynamic pan, widow zoom and data query.
