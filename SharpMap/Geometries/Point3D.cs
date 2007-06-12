@@ -59,6 +59,28 @@ namespace SharpMap.Geometries
 		/// </summary>
 		public Point3D() : this(0, 0, 0) { this.SetIsEmpty = true; }
 		
+        /// <summary>
+        /// Create a new point by a douuble[] array
+        /// </summary>
+        /// <param name="point"></param>
+        public Point3D(double[] point)
+            : base(point[0], point[1])
+        {
+            if (point.Length != 3)
+                throw new Exception("Only 3 dimensions are supported for points");
+
+            this._Z = point[2];
+        }
+
+        /// <summary>
+        /// exports a point into a 3-dimensional double array
+        /// </summary>
+        /// <returns></returns>
+        public new double[] ToDoubleArray()
+        {
+            return new double[3] { this.X, this.Y, this.Z };
+        }
+
 		/// <summary>
 		/// Gets or sets the Z coordinate of the point
 		/// </summary>

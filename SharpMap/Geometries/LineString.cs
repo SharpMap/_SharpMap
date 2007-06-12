@@ -45,6 +45,20 @@ namespace SharpMap.Geometries
 		/// </summary>
 		public LineString() : this(new Collection<Point>()) { }
 
+        /// <summary>
+        /// Initializes an instance of a LineString
+        /// </summary>
+        /// <param name="points"></param>
+        public LineString(List<double[]> points)
+        {
+            Collection<Point> vertices = new Collection<Point>();
+
+            foreach (double[] point in points)
+                vertices.Add(new Point(point));
+
+            _Vertices = vertices;
+        }		
+
 		/// <summary>
 		/// Gets or sets the collection of vertices in this Geometry
 		/// </summary>

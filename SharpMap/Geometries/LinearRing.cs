@@ -43,6 +43,15 @@ namespace SharpMap.Geometries
 		{
 		}
 
+        /// <summary>
+        /// Initializes an instance of a LinearRing
+        /// </summary>
+        /// <param name="points"></param>
+        public LinearRing(List<double[]> points)
+            : base(points)
+        {
+        }	
+
 		#region ICloneable Members
 
 		/// <summary>

@@ -56,6 +56,28 @@ namespace SharpMap.Geometries
 		/// </summary>
 		public Point() : this(0, 0) { _IsEmpty = true; }
 
+        /// <summary>
+        /// Create a new point by a douuble[] array
+        /// </summary>
+        /// <param name="point"></param>
+        public Point(double[] point)
+        {
+            if (point.Length != 2)
+                throw new Exception("Only 2 dimensions are supported for points");
+
+            this._X = point[0];
+            this._Y = point[1];
+        }
+
+        /// <summary>
+        /// exports a point into a 2-dimensional double array
+        /// </summary>
+        /// <returns></returns>
+        public double[] ToDoubleArray()
+        {
+            return new double[2] { this._X, this._Y };
+        }
+
 		/// <summary>
 		/// Returns a point based on degrees, minutes and seconds notation.
 		/// For western or southern coordinates, add minus '-' in front of all longitude and/or latitude values

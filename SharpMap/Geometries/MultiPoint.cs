@@ -38,6 +38,16 @@ namespace SharpMap.Geometries
 			_Points = new Collection<Point>();
 		}
 
+        /// <summary>
+        /// Initializes a new MultiPoint collection
+        /// </summary>		
+        public MultiPoint(List<double[]> points)
+        {
+            _Points = new Collection<Point>();
+            foreach (double[] point in points)
+                _Points.Add(new Point(point[0], point[1]));
+        }	
+
 		/// <summary>
 		/// Gets the n'th point in the MultiPoint collection
 		/// </summary>
