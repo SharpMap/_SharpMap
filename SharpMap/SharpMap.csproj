@@ -91,6 +91,7 @@
     <Compile Include="Layers\iLayer.cs" />
     <Compile Include="Layers\LabelLayer.cs" />
     <Compile Include="Layers\Layer.cs" />
+    <Compile Include="Layers\LayerCollection.cs" />
     <Compile Include="Layers\LayerGroup.cs" />
     <Compile Include="Layers\VectorLayer.cs" />
     <Compile Include="Layers\WmsLayer.cs" />
