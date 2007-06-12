@@ -63,9 +63,7 @@
   <ItemGroup>
     <Compile Include="Converters\WKB\WKBTests.cs" />
     <Compile Include="Converters\WKT\WktGeometryTests.cs" />
-    <Compile Include="CoordinateTransformTests.cs" />
     <Compile Include="Geometries\BoundingBoxTests.cs" />
-    <Compile Include="Converters\WKT\WKTCoordSysParserTests.cs" />
     <Compile Include="Geometries\LinestringTests.cs" />
     <Compile Include="Geometries\MultiLinestringsTests.cs" />
     <Compile Include="Geometries\PointTests.cs" />
