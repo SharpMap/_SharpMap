@@ -69,6 +69,20 @@ namespace UnitTests
 			Assert.IsNotNull(layer);
 			Assert.AreEqual("Layer 2", layer.LayerName);
 		}
+
+        [Test]
+        public void GetLayerByName_Indexer()
+        {
+            SharpMap.Map map = new SharpMap.Map();
+            map.Layers.Add(new SharpMap.Layers.VectorLayer("Layer 1"));
+            map.Layers.Add(new SharpMap.Layers.VectorLayer("Layer 3"));
+            map.Layers.Add(new SharpMap.Layers.VectorLayer("Layer 2"));
+
+            SharpMap.Layers.ILayer layer = map.Layers["Layer 2"];
+            Assert.IsNotNull(layer);
+            Assert.AreEqual("Layer 2", layer.LayerName);
+        }
+
 		[Test]
 		public void FindLayer_ReturnEnumerable()
 		{
@@ -76,7 +90,7 @@ namespace UnitTests
 			map.Layers.Add(new SharpMap.Layers.VectorLayer("Layer 1"));
 			map.Layers.Add(new SharpMap.Layers.VectorLayer("Layer 3"));
 			map.Layers.Add(new SharpMap.Layers.VectorLayer("Layer 2"));
-			map.Layers.Add(new SharpMap.Layers.VectorLayer("Layer 3"));
+			map.Layers.Add(new SharpMap.Layers.VectorLayer("Layer 4"));
 
 			int count = 0;
 			foreach (SharpMap.Layers.ILayer lay in map.FindLayer("Layer 3"))
@@ -84,7 +98,7 @@ namespace UnitTests
 				Assert.AreEqual("Layer 3", lay.LayerName);
 				count++;
 			}
-			Assert.AreEqual(2, count);
+			Assert.AreEqual(1, count);
 		}
 
 		[Test]

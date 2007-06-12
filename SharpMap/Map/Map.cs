@@ -79,7 +79,7 @@ namespace SharpMap
 		public Map(System.Drawing.Size size)
 		{
 			this.Size = size;
-			this.Layers = new Collection<SharpMap.Layers.ILayer>();
+            this.Layers = new SharpMap.Layers.LayerCollection();
 			this.BackColor = System.Drawing.Color.Transparent;
 			this._MaximumZoom = double.MaxValue;
 			this._MinimumZoom = 0;
@@ -282,13 +282,13 @@ namespace SharpMap
 			}
 			
 		}
-		
-		private Collection<SharpMap.Layers.ILayer> _Layers;
+
+        private SharpMap.Layers.LayerCollection _Layers;
 
 		/// <summary>
 		/// A collection of layers. The first layer in the list is drawn first, the last one on top.
 		/// </summary>
-		public Collection<SharpMap.Layers.ILayer> Layers
+        public SharpMap.Layers.LayerCollection Layers
 		{
 			get { return _Layers; }
 			set {

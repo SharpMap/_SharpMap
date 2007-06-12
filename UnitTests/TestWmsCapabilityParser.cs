@@ -23,7 +23,7 @@ namespace UnitTests
 		public void TestDemisv111()
 		{
 			SharpMap.Web.Wms.Client c = new SharpMap.Web.Wms.Client("http://www2.demis.nl/mapserver/request.asp");
-			Assert.AreEqual("World Map", c.ServiceDescription.Title);
+			Assert.AreEqual("Demis World Map", c.ServiceDescription.Title);
 			Assert.AreEqual("1.1.1", c.WmsVersion);
 			Assert.AreEqual("http://www2.demis.nl/wms/wms.asp?wms=WorldMap&", c.GetMapRequests[0].OnlineResource);
 			Assert.AreEqual("image/png", c.GetMapOutputFormats[0]);
