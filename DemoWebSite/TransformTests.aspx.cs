@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Configuration;
 using System.Collections;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -35,7 +36,7 @@ public partial class TransformTests : System.Web.UI.Page
 		IGeographicCoordinateSystem gcs = cFac.CreateGeographicCoordinateSystem("Bessel 1840", AngularUnit.Degrees, datum,
 			PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 			new AxisInfo("Lat", AxisOrientationEnum.North));
-        System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
+        List<ProjectionParameter> parameters = new List<ProjectionParameter>();
 		parameters.Add(new ProjectionParameter("latitude_of_origin", 0));
 		parameters.Add(new ProjectionParameter("central_meridian", 110));
 		parameters.Add(new ProjectionParameter("scale_factor", 0.997));
@@ -48,8 +49,8 @@ public partial class TransformTests : System.Web.UI.Page
 		ICoordinateTransformation trans = new CoordinateTransformationFactory().CreateFromCoordinateSystems(gcs, coordsys);
 
 		SharpMap.Geometries.Point pGeo = new SharpMap.Geometries.Point(120, -3);
-		SharpMap.Geometries.Point pUtm = trans.MathTransform.Transform(pGeo);
-		SharpMap.Geometries.Point pGeo2 = trans.MathTransform.Inverse().Transform(pUtm);
+		SharpMap.Geometries.Point pUtm = new Point(trans.MathTransform.Transform(pGeo.ToDoubleArray()));
+		SharpMap.Geometries.Point pGeo2 = new Point(trans.MathTransform.Inverse().Transform(pUtm.ToDoubleArray()));
 
 		result.Text += PrintResultTable(gcs, coordsys, pGeo, pUtm, new Point(5009726.58, 569150.82), pGeo2, "Mercator_1SP test");
 	}
@@ -64,7 +65,7 @@ public partial class TransformTests : System.Web.UI.Page
 		IGeographicCoordinateSystem gcs = cFac.CreateGeographicCoordinateSystem("Krassowski 1940", AngularUnit.Degrees, datum, 
 			PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 			new AxisInfo("Lat", AxisOrientationEnum.North));
-        System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
+        List<ProjectionParameter> parameters = new List<ProjectionParameter>();
 		parameters.Add(new ProjectionParameter("latitude_of_origin", 42));
 		parameters.Add(new ProjectionParameter("central_meridian", 51));
 		parameters.Add(new ProjectionParameter("false_easting", 0));
@@ -76,8 +77,8 @@ public partial class TransformTests : System.Web.UI.Page
 		ICoordinateTransformation trans = new CoordinateTransformationFactory().CreateFromCoordinateSystems(gcs, coordsys);
 
 		SharpMap.Geometries.Point pGeo = new SharpMap.Geometries.Point(53,53);
-		SharpMap.Geometries.Point pUtm = trans.MathTransform.Transform(pGeo);
-		SharpMap.Geometries.Point pGeo2 = trans.MathTransform.Inverse().Transform(pUtm);
+		SharpMap.Geometries.Point pUtm = new Point(trans.MathTransform.Transform(pGeo.ToDoubleArray()));
+        SharpMap.Geometries.Point pGeo2 = new Point(trans.MathTransform.Inverse().Transform(pUtm.ToDoubleArray()));
 
 		result.Text += PrintResultTable(gcs, coordsys, pGeo, pUtm, new Point(165704.29, 5171848.07), pGeo2, "Mercator_2SP test");
 	}
@@ -92,8 +93,7 @@ public partial class TransformTests : System.Web.UI.Page
 		IGeographicCoordinateSystem gcs = cFac.CreateGeographicCoordinateSystem("Airy 1830", AngularUnit.Degrees, datum,
 			PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 			new AxisInfo("Lat", AxisOrientationEnum.North));
-        //System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>(5);
-        System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
+        List<ProjectionParameter> parameters = new List<ProjectionParameter>();
 		parameters.Add(new ProjectionParameter("latitude_of_origin", 49));
 		parameters.Add(new ProjectionParameter("central_meridian", -2));
 		parameters.Add(new ProjectionParameter("scale_factor", 0.9996012717));
@@ -106,8 +106,8 @@ public partial class TransformTests : System.Web.UI.Page
 		ICoordinateTransformation trans = new CoordinateTransformationFactory().CreateFromCoordinateSystems(gcs, coordsys);
 
 		SharpMap.Geometries.Point pGeo = new SharpMap.Geometries.Point(0.5, 50.5);
-		SharpMap.Geometries.Point pUtm = trans.MathTransform.Transform(pGeo);
-		SharpMap.Geometries.Point pGeo2 = trans.MathTransform.Inverse().Transform(pUtm);
+		SharpMap.Geometries.Point pUtm = new Point(trans.MathTransform.Transform(pGeo.ToDoubleArray()));
+		SharpMap.Geometries.Point pGeo2 = new Point(trans.MathTransform.Inverse().Transform(pUtm.ToDoubleArray()));
 
 		result.Text += PrintResultTable(gcs, coordsys, pGeo, pUtm, new Point(577274.99, 69740.50), pGeo2, "Transverse Mercator test");
 	}
@@ -121,8 +121,7 @@ public partial class TransformTests : System.Web.UI.Page
 		IGeographicCoordinateSystem gcs = cFac.CreateGeographicCoordinateSystem("Clarke 1866", AngularUnit.Degrees, datum,
 			PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 			new AxisInfo("Lat", AxisOrientationEnum.North));
-        //System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>(5);
-        System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
+        List<ProjectionParameter> parameters = new List<ProjectionParameter>();
 		parameters.Add(new ProjectionParameter("latitude_of_origin", 27.833333333));
 		parameters.Add(new ProjectionParameter("central_meridian", -99));
 		parameters.Add(new ProjectionParameter("standard_parallel_1", 28.3833333333));
@@ -136,8 +135,8 @@ public partial class TransformTests : System.Web.UI.Page
 		ICoordinateTransformation trans = new CoordinateTransformationFactory().CreateFromCoordinateSystems(gcs, coordsys);
 
 		SharpMap.Geometries.Point pGeo = new SharpMap.Geometries.Point(-96, 28.5);
-		SharpMap.Geometries.Point pUtm = trans.MathTransform.Transform(pGeo);
-		SharpMap.Geometries.Point pGeo2 = trans.MathTransform.Inverse().Transform(pUtm);
+		SharpMap.Geometries.Point pUtm = new Point(trans.MathTransform.Transform(pGeo.ToDoubleArray()));
+        SharpMap.Geometries.Point pGeo2 = new Point(trans.MathTransform.Inverse().Transform(pUtm.ToDoubleArray()));
 
 		result.Text += PrintResultTable(gcs, coordsys, pGeo, pUtm, new Point(2963503.91, 254759.80), pGeo2, "Lambert Conic Conformal 2SP test");
 	}
@@ -152,7 +151,7 @@ public partial class TransformTests : System.Web.UI.Page
 		IGeographicCoordinateSystem gcs = cFac.CreateGeographicCoordinateSystem("Clarke 1866", AngularUnit.Degrees, datum,
 			PrimeMeridian.Greenwich, new AxisInfo("Lon", AxisOrientationEnum.East),
 			new AxisInfo("Lat", AxisOrientationEnum.North));
-        System.Collections.ObjectModel.Collection<ProjectionParameter> parameters = new System.Collections.ObjectModel.Collection<ProjectionParameter>();
+        List<ProjectionParameter> parameters = new List<ProjectionParameter>();
 		parameters.Add(new ProjectionParameter("central_meridian", -96));
 		parameters.Add(new ProjectionParameter("latitude_of_origin", 23));
 		parameters.Add(new ProjectionParameter("standard_parallel_1", 29.5));
@@ -166,8 +165,8 @@ public partial class TransformTests : System.Web.UI.Page
 		ICoordinateTransformation trans = new CoordinateTransformationFactory().CreateFromCoordinateSystems(gcs, coordsys);
 
 		SharpMap.Geometries.Point pGeo = new SharpMap.Geometries.Point(-75,35);
-		SharpMap.Geometries.Point pUtm = trans.MathTransform.Transform(pGeo);
-		SharpMap.Geometries.Point pGeo2 = trans.MathTransform.Inverse().Transform(pUtm);
+		SharpMap.Geometries.Point pUtm = new Point(trans.MathTransform.Transform(pGeo.ToDoubleArray()));
+		SharpMap.Geometries.Point pGeo2 = new Point(trans.MathTransform.Inverse().Transform(pUtm.ToDoubleArray()));
 
 		result.Text += PrintResultTable(gcs, coordsys, pGeo, pUtm, new Point(1885472.7,1535925), pGeo2, "Albers Conical Equal Area test");
 	}
@@ -183,8 +182,8 @@ public partial class TransformTests : System.Web.UI.Page
 		ICoordinateTransformation trans = new CoordinateTransformationFactory().CreateFromCoordinateSystems(gcs, geoccs);
 
 		SharpMap.Geometries.Point3D pGeo = new SharpMap.Geometries.Point3D(2.12955, 53.80939444, 73);
-		SharpMap.Geometries.Point3D pGc = trans.MathTransform.Transform(pGeo) as SharpMap.Geometries.Point3D;
-		SharpMap.Geometries.Point3D pGeo2 = trans.MathTransform.Inverse().Transform(pGc) as SharpMap.Geometries.Point3D;
+        SharpMap.Geometries.Point3D pGc = new Point3D(trans.MathTransform.Transform(pGeo.ToDoubleArray()));
+		SharpMap.Geometries.Point3D pGeo2 = new Point3D(trans.MathTransform.Inverse().Transform(pGc.ToDoubleArray()));
 
 		result.Text += PrintResultTable(gcs, geoccs, pGeo, pGc, new Point3D(3771793.97, 140253.34, 5124304.35), pGeo2, "Geocentric test");
 		
