@@ -853,9 +853,7 @@ namespace SharpMap.Data.Providers
 				{
 					FeatureDataRow fdr = GetFeature(objectlist[j],dt);
 					if (fdr.Geometry != null)
-			            //if (fdr.Geometry.EnvelopeInternal.Intersects(bbox))
                         if (fdr.Geometry.Intersects(geom))
-                            //replace above line with this:  if(fdr.Geometry.Intersects(bbox))  when relation model is complete
 							if (FilterDelegate == null || FilterDelegate(fdr))
 								dt.AddRow(fdr);
 				}

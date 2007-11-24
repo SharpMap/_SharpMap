@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using GeoAPI.Geometries;
-using NTS = GisSharpBlog.NetTopologySuite;
 
 namespace SharpMap
 {
@@ -79,9 +78,6 @@ namespace SharpMap
 		/// <param name="size">Size of map in pixels</param>
 		public Map(System.Drawing.Size size)
 		{
-            IEnvelope env1 = new NTS.Geometries.Envelope(0, 10, 0, 10);
-            NTS.Geometries.Envelope env2 = new NTS.Geometries.Envelope(0, 10, 0, 10);
-
 			this.Size = size;
             this.Layers = new SharpMap.Layers.LayerCollection();
 			this.BackColor = System.Drawing.Color.Transparent;
