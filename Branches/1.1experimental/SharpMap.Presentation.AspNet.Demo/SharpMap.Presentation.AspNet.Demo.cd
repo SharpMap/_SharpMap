@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SharpMap.Presentation.AspNet.Demo.DemoCachingWebMap" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAQQAAAAAAAAAAACAAAAAAAAAABA=</HashCode>
+      <FileName>DemoCachingWebMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Presentation.AspNet.Demo.DemoMapHandler" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DemoMapHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Presentation.AspNet.Demo.RandomStyle" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAACAAAAgAAEAAIAAAAAAAAAAAAAAAQIQAQAAAA=</HashCode>
+      <FileName>RandomStyle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Presentation.AspNet.Demo.ShapeFileProvider" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ShapeFileProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
