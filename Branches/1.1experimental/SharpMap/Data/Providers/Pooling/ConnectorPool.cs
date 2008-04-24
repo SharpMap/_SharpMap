@@ -19,9 +19,7 @@
 // The following is only proof-of-concept. A final implementation should be based
 // on "src\Npgsql\NpgsqlConnectorPool.cs"
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SharpMap.Data.Providers.Pooling
 {

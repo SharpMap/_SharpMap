@@ -36,7 +36,7 @@
  */
 
 #region Using
-using System;
+
 #endregion
 
 namespace SharpMap.Converters.WellKnownText

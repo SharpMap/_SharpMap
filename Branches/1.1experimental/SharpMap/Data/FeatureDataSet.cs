@@ -17,8 +17,8 @@
 
 using System;
 using System.Data;
-using System.Xml;
 using System.Runtime.Serialization;
+using System.Xml;
 
 namespace SharpMap.Data
 {

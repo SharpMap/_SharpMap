@@ -1,14 +1,12 @@
 ﻿using System.Configuration;
 using System.Web;
+using SharpMap.Data;
+using SharpMap.Data.Providers;
 using SharpMap.Layers;
 using SharpMap.Presentation.AspNet.Impl;
-using SharpMap.Styles;
-using SharpMap.Renderer;
-using System;
-using SharpMap.Data.Providers;
-using SharpMap.Rendering.Thematics;
-using SharpMap.Data;
 using SharpMap.Presentation.AspNet.IoC;
+using SharpMap.Renderer;
+using SharpMap.Rendering.Thematics;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using SharpMap;
 using SharpMap.Data.Providers;
-using SharpMap.Utilities.Wfs;
+using SharpMap.Geometries;
 using SharpMap.Layers;
 using SharpMap.Styles;
-using SharpMap.Geometries;
+using SharpMap.Utilities.Wfs;
 
 namespace WinFormSamples.Samples
 {

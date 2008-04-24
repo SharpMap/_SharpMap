@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SharpMap.Data.Providers;
+﻿using SharpMap.Data.Providers;
 
 namespace SharpMap.Layers
 {

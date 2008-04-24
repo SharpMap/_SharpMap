@@ -18,15 +18,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
-using SharpMap.Geometries;
-using System.IO;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
 using System.Collections.ObjectModel;
-using SharpMap.Web.Wms.Tiling;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Text;
+using SharpMap.Geometries;
 using SharpMap.Web.Wms;
+using SharpMap.Web.Wms.Tiling;
 
 namespace SharpMap.Layers
 {

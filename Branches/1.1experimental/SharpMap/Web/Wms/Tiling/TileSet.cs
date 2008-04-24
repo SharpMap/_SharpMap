@@ -18,8 +18,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SharpMap.Geometries;
 using System.Xml;
+using SharpMap.Geometries;
 
 namespace SharpMap.Web.Wms.Tiling
 {

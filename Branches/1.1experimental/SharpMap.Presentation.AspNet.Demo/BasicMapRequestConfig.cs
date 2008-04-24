@@ -1,4 +1,5 @@
-﻿/*
+﻿using System.Drawing;
+/*
  *  The attached / following is free software © 2008 Newgrove Consultants Limited, 
  *  www.newgrove.com; you can redistribute it and/or modify it under the terms 
  *  of the current GNU Lesser General Public License (LGPL) as published by and 
@@ -11,11 +12,7 @@
  *  Author: John Diss 2008
  * 
  */
-using System;
-using System.Collections.Generic;
-using System.Text;
 using SharpMap.Geometries;
-using System.Drawing;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {

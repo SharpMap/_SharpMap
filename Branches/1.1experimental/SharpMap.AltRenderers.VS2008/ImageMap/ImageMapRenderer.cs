@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using SharpMap.Renderer;
-using System.Xml;
-using System.Web;
-using SharpMap.Layers;
-using SharpMap.Renderers.ImageMap.Impl;
-using SharpMap.Utilities;
-using SharpMap.Styles;
-using SharpMap.Data;
-using SharpMap.Geometries;
-using SharpMap.Data.Providers;
 using System.IO;
+using System.Web;
+using System.Xml;
+using SharpMap.Data;
+using SharpMap.Data.Providers;
+using SharpMap.Geometries;
+using SharpMap.Layers;
+using SharpMap.Renderer;
+using SharpMap.Renderers.ImageMap.Impl;
+using SharpMap.Styles;
 
 namespace SharpMap.Renderers.ImageMap
 {

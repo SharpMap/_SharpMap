@@ -11,18 +11,8 @@
  *  Author: John Diss 2008
  * 
  */
-using System.Configuration;
 using System.Web;
-using SharpMap.Layers;
 using SharpMap.Presentation.AspNet.Impl;
-using SharpMap.Styles;
-using SharpMap.Renderer;
-using System;
-using SharpMap.Data.Providers;
-using SharpMap.Rendering.Thematics;
-using SharpMap.Data;
-using SharpMap.Presentation.AspNet.IoC;
-using System.Drawing;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {

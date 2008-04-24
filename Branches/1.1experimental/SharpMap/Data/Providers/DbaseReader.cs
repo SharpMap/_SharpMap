@@ -19,10 +19,8 @@
 // Good stuff on DBase format: http://www.clicketyclick.dk/databases/xbase/format/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using System.Data;
+using System.IO;
 
 namespace SharpMap.Data.Providers
 {

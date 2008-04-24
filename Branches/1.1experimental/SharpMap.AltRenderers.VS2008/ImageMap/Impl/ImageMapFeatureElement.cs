@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace SharpMap.Renderers.ImageMap.Impl
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
-    using System.Drawing;
-    using System.Drawing.Drawing2D;
     using System.Xml;
     using SharpMap.Geometries;
     using SharpMap.Styles;

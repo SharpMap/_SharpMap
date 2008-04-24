@@ -17,15 +17,10 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime;
-using System.Text;
-
+using PostgreSql.Data.PgTypes;
 // more info at http://sf.net/projects/pgsqlclient
 using PostgreSql.Data.PostgreSqlClient;
-using PostgreSql.Data.PgTypes;
 
 namespace SharpMap.Data.Providers
 {

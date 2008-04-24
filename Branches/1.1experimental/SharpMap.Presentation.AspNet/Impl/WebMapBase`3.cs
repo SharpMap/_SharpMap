@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Web;
-using SharpMap.Renderer;
 using System.IO;
+using System.Web;
 using SharpMap.Layers;
+using SharpMap.Renderer;
 
 namespace SharpMap.Presentation.AspNet.Impl
 {
