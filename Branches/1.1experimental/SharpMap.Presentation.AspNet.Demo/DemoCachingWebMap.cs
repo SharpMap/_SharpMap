@@ -21,47 +21,23 @@ using System;
 using SharpMap.Data.Providers;
 using SharpMap.Rendering.Thematics;
 using SharpMap.Data;
+using SharpMap.Presentation.AspNet.IoC;
+using System.Drawing;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {
-    public class DemoCachingWebMap<TOutput>
-        : CachingWebMapBase<BasicMapRequestConfig, TOutput, AspNetCache<BasicMapRequestConfig, TOutput>>
+    public class DemoCachingWebMap
+        : DemoWebMap
     {
-        public DemoCachingWebMap(HttpContext context)
-            : base(context)
-        { }
+        public DemoCachingWebMap(HttpContext c)
+            : base(c) { }
 
-        public override void LoadLayers()
+
+        protected override IMapCacheProvider CreateCacheProvider()
         {
-            VectorLayer l = new VectorLayer(
-                    "layer1",
-                    new ShapeFile(Context.Server.MapPath(ConfigurationManager.AppSettings["shpfilePath"])));
-
-
-            l.Theme = new CustomTheme(
-                new CustomTheme.GetStyleMethod(
-                    delegate(FeatureDataRow fdr)
-                    {
-                        return RandomStyle.RandomVectorStyleNoSymbols();
-                    }
-                ));
-            Map.Layers.Add(l);
+            return new AspNetCacheProvider();
+            //return Container.Instance.Resolve<IMapCacheProvider<Image>>();
         }
 
-        protected override AspNetCache<BasicMapRequestConfig, TOutput> CreateCacheProvider()
-        {
-            return new AspNetCache<BasicMapRequestConfig, TOutput>(Context);
-        }
-
-        protected override IMapRequestConfigFactory<BasicMapRequestConfig> CreateConfigFactory()
-        {
-            return new BasicMapConfigFactory();
-        }
-
-
-        protected override IMapRenderer<TOutput> CreateMapRenderer()
-        {
-            return IoC.Container.Resolve<IMapRenderer<TOutput>>();
-        }
     }
 }

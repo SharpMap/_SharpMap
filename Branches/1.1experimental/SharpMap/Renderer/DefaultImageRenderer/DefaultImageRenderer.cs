@@ -6,6 +6,8 @@ using SharpMap.Layers;
 using System.Reflection;
 using System.Reflection.Emit;
 using SharpMap.Renderer.DefaultImage;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace SharpMap.Renderer
 {
@@ -26,6 +28,74 @@ namespace SharpMap.Renderer
         {
             void RenderLayer(TLayerType layer, Map map, Graphics g);
         }
+
+        private static ImageCodecInfo _defaultCodec;
+        private static ImageCodecInfo GetDefaultCodec()
+        {
+            if (_defaultCodec == null)
+            {
+                foreach (ImageCodecInfo i in ImageCodecInfo.GetImageEncoders())
+                {
+                    if (i.MimeType == "image/png")
+                    {
+                        _defaultCodec = i;
+                        break;
+                    }
+                }
+            }
+            return _defaultCodec;
+        }
+
+
+
+        private ImageCodecInfo _imageCodecInfo;
+        public ImageCodecInfo ImageCodec
+        {
+            get
+            {
+                if (_imageCodecInfo == null)
+                    _imageCodecInfo = GetDefaultCodec();
+
+                return _imageCodecInfo;
+            }
+            set
+            {
+                _imageCodecInfo = value;
+            }
+        }
+
+        public ImageFormat ImageFormat
+        {
+            get
+            {
+                return new ImageFormat(_imageCodecInfo.FormatID);
+            }
+            set
+            {
+                foreach (ImageCodecInfo i in ImageCodecInfo.GetImageEncoders())
+                {
+                    if (i.FormatID == value.Guid)
+                    {
+                        _imageCodecInfo = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private EncoderParameters _encoderParams;
+        public EncoderParameters EncoderParams
+        {
+            get
+            {
+                return _encoderParams;
+            }
+            set
+            {
+                _encoderParams = value;
+            }
+        }
+
 
         public event EventHandler RenderDone;
         public event EventHandler<LayerRenderedEventArgs> LayerRendered;
@@ -165,9 +235,17 @@ namespace SharpMap.Renderer
         #region IMapRenderer Members
 
 
-        object IMapRenderer.Render(Map map)
+        Stream IMapRenderer.Render(Map map, out string mimeType)
         {
-            return this.Render(map);
+
+            mimeType = ImageCodec.MimeType;
+
+            MemoryStream ms = new MemoryStream();
+            Image im = this.Render(map);
+            //im.Save(ms, ImageFormat.Png);
+            im.Save(ms, ImageCodec, EncoderParams);
+            ms.Position = 0;
+            return ms;
         }
 
         #endregion

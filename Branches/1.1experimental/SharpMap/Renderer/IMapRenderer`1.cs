@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace SharpMap.Renderer
 {
@@ -8,7 +9,7 @@ namespace SharpMap.Renderer
     {
         event EventHandler RenderDone;
         event EventHandler<LayerRenderedEventArgs> LayerRendered;
-        object Render(Map map);
+        Stream Render(Map map, out string mimeType);
     }
 
     public interface IMapRenderer<TOutputFormat> : IMapRenderer
