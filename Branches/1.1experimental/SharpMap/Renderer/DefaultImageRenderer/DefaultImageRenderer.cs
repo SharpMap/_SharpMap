@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using SharpMap.Layers;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
+using SharpMap.Layers;
 using SharpMap.Renderer.DefaultImage;
-using System.IO;
-using System.Drawing.Imaging;
 
 namespace SharpMap.Renderer
 {

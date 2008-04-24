@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SharpMap.Layers;
-using SharpMap.Web.Wms;
-using System.Net;
-using System.IO;
-using System.Drawing;
-using SharpMap.Rendering.Exceptions;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Net;
+using SharpMap.Layers;
+using SharpMap.Rendering.Exceptions;
+using SharpMap.Web.Wms;
 
 namespace SharpMap.Renderer.DefaultImage
 {

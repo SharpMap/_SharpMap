@@ -4,12 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Xml;
-using SharpMap.Geometries;
 using SharpMap.Data;
-using SharpMap.Utilities.Wfs;
-using SharpMap.Data.Providers;
+using SharpMap.Geometries;
 
 namespace SharpMap.Utilities.Wfs
 {

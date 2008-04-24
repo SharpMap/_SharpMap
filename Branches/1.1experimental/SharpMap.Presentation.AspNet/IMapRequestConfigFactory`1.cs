@@ -11,9 +11,6 @@
  *  Author: John Diss 2008
  * 
  */
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Web;
 
 namespace SharpMap.Presentation.AspNet

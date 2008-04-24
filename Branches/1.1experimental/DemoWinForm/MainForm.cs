@@ -18,21 +18,15 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
-
-using GeoPoint = SharpMap.Geometries.Point;
+using DemoWinForm.Properties;
+using SharpMap.Data.Providers;
+using SharpMap.Forms;
 using SharpMap.Geometries;
 using SharpMap.Layers;
-using SharpMap.Forms;
-using SharpMap.Data.Providers;
-
-using DemoWinForm.Properties;
+using GeoPoint = SharpMap.Geometries.Point;
 
 namespace DemoWinForm
 {

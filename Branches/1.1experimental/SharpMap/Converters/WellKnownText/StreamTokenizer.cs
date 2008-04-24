@@ -39,7 +39,7 @@
 using System;
 using System.IO;
 using System.Text;
-using SharpMap.Converters.WellKnownText;
+
 #endregion
 
 // http://java.sun.com/j2se/1.4/docs/api/java/io/StreamTokenizer.html

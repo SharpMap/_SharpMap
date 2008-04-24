@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using SharpMap.Layers;
 using System.Drawing;
+using System.Globalization;
 using SharpMap.CoordinateSystems.Transformations;
 using SharpMap.Data;
+using SharpMap.Geometries;
+using SharpMap.Layers;
 using SharpMap.Rendering;
 using SharpMap.Styles;
-using SharpMap.Geometries;
-using System.Globalization;
 
 namespace SharpMap.Renderer.DefaultImage
 {

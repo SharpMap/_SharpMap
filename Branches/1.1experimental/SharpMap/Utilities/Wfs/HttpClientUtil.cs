@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Specialized;
-using System.Net;
 using System.IO;
+using System.Net;
 
 namespace SharpMap.Utilities.Wfs
 {

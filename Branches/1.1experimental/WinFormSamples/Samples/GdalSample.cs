@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using SharpMap;
-using System.IO;
 using System.Drawing;
+using System.IO;
+using SharpMap;
 
 namespace WinFormSamples.Samples
 {

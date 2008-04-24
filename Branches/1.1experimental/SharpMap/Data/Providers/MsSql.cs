@@ -16,14 +16,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Data.SqlClient;
 using System.Data;
-using SharpMap.Data;
-using SharpMap.Data.Providers;
-using SharpMap.Converters.WellKnownBinary;
+using System.Data.SqlClient;
 
 namespace SharpMap.Data.Providers
 {

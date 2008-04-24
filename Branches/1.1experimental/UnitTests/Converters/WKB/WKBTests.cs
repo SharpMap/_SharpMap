@@ -1,9 +1,8 @@
-using System;
+using System.IO;
 using NUnit.Framework;
-using SharpMap.Geometries;
 using SharpMap.Converters.WellKnownBinary;
 using SharpMap.Converters.WellKnownText;
-using System.IO;
+using SharpMap.Geometries;
 
 namespace UnitTests.Converters.WKB
 {

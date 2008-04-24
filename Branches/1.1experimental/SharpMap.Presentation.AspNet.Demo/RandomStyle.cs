@@ -16,13 +16,10 @@
  */
 
 using System;
-using System.Data;
-using System.Configuration;
-using System.Web;
-using SharpMap.Styles;
 using System.Collections.Generic;
-using System.IO;
 using System.Drawing;
+using System.IO;
+using SharpMap.Styles;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {

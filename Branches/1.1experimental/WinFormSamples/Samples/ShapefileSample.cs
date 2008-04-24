@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Drawing;
-using System.Web;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace WinFormSamples.Samples

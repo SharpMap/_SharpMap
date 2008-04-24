@@ -12,11 +12,8 @@
  * 
  */
 using System;
-using System.Collections.Generic;
-using System.Text;
-using SharpMap.Geometries;
 using System.Drawing;
-using SharpMap.Renderer;
+using SharpMap.Geometries;
 
 namespace SharpMap.Presentation.AspNet
 {

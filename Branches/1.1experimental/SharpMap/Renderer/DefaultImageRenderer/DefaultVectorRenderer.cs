@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SharpMap.Layers;
-using SharpMap.Geometries;
+using System.Collections.ObjectModel;
 using SharpMap.CoordinateSystems.Transformations;
 using SharpMap.Data;
-using System.Collections.ObjectModel;
+using SharpMap.Geometries;
+using SharpMap.Layers;
 
 namespace SharpMap.Renderer.DefaultImage
 {

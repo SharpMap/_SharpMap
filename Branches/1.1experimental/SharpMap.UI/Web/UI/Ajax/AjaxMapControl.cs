@@ -16,14 +16,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using System.ComponentModel.Design;
 
 namespace SharpMap.Web.UI.Ajax
 {

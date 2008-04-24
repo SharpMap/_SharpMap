@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Web;
-using System.IO;
-using SharpMap.Renderer;
 using System.Drawing;
 using System.Drawing.Imaging;
-using SharpMap.Presentation.AspNet.IoC;
+using System.IO;
 using System.Threading;
 using SharpMap.Presentation.AspNet.Impl;
+using SharpMap.Presentation.AspNet.IoC;
+using SharpMap.Renderer;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {

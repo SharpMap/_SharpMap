@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using SharpMap.Layers;
-using SharpMap.Web.Wms.Tiling;
-using SharpMap.Geometries;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using SharpMap.Geometries;
+using SharpMap.Layers;
+using SharpMap.Web.Wms.Tiling;
 
 namespace SharpMap.Renderer.DefaultImage
 {
