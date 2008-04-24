@@ -23,15 +23,13 @@ using System.Web;
 
 namespace SharpMap.Presentation.AspNet.Impl
 {
-    public abstract class MapHandlerBase<TWebMap, TOutput, TMapRequestConfig>
-        : IMapHandler<TWebMap, TOutput, TMapRequestConfig>, IHttpHandler
-        where TWebMap : class, IWebMap<TMapRequestConfig, TOutput>
-        where TMapRequestConfig : IMapRequestConfig
+    public abstract class MapHandlerBase
+        : IHttpHandler
     {
         #region IMapHandler<TWebMapRenderer,TMapRequestConfig,TMapRenderWrapper,TMapRenderObject> Members
 
-        private TWebMap _webmap;
-        public TWebMap WebMap
+        private IWebMap _webmap;
+        public IWebMap WebMap
         {
             get
             {
@@ -46,7 +44,7 @@ namespace SharpMap.Presentation.AspNet.Impl
                 _webmap = CreateWebMap();
         }
 
-        public abstract TWebMap CreateWebMap();
+        public abstract IWebMap CreateWebMap();
 
         private HttpContext _context;
         public HttpContext Context
@@ -57,30 +55,30 @@ namespace SharpMap.Presentation.AspNet.Impl
             }
         }
 
-        public virtual void ProcessRequest(System.Web.HttpContext context)
+        public virtual void ProcessRequest(HttpContext context)
         {
             _context = context;
 
             context.Response.Clear();
             string mime;
-            using (TWebMap myRenderer = WebMap)
-            {
-                using (Stream s = myRenderer.Render(out mime))
-                {
-                    context.Response.ContentType = mime;
 
-                    s.Position = 0;
-                    using (BinaryReader br = new BinaryReader(s))
+            using (Stream s = this.WebMap.Render(out mime))
+            {
+                context.Response.ContentType = mime;
+
+                s.Position = 0;
+                using (BinaryReader br = new BinaryReader(s))
+                {
+                    using (Stream outStream = context.Response.OutputStream)
                     {
-                        using (Stream outStream = context.Response.OutputStream)
-                        {
-                            outStream.Write(br.ReadBytes((int)s.Length), 0, (int)s.Length);
-                        }
+                        outStream.Write(br.ReadBytes((int)s.Length), 0, (int)s.Length);
                     }
                 }
             }
+
             _webmap = null;
             _context = null;
+            context.Response.End();
         }
 
         #endregion

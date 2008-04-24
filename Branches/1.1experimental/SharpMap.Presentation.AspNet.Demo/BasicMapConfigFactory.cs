@@ -54,13 +54,27 @@ namespace SharpMap.Presentation.AspNet.Demo
                 config.OutputSize = new Size(400, 400);
 
 
-            ///ensure that the differences in the string diverges quickly by reversing it.
+            //ensure that the differences in the string diverges quickly by reversing it.
             char[] arr = context.Request.Url.PathAndQuery.ToLower().ToCharArray();
             Array.Reverse(arr);
             config.CacheKey = new string(arr);
 
+            config.MimeType = "image/png";
+
+            //config.CacheKey = context.Request.Url.ToString().ToLower();
+
             return config;
 
+        }
+
+        #endregion
+
+
+        #region IMapRequestConfigFactory Members
+
+        IMapRequestConfig IMapRequestConfigFactory.CreateConfig(HttpContext context)
+        {
+            return this.CreateConfig(context);
         }
 
         #endregion

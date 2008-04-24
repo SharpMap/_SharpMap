@@ -11,16 +11,12 @@ using System.Drawing.Imaging;
 namespace SharpMap.Presentation.AspNet.Demo
 {
     public class DemoMapHandler
-        : MapHandlerBase<DemoWebMap<Image>, Image, BasicMapRequestConfig>
+        : MapHandlerBase
     {
-        static DemoMapHandler()
-        {
-            IoCConfiguration.Ensure();
-        }
 
-        public override DemoWebMap<Image> CreateWebMap()
+        public override IWebMap CreateWebMap()
         {
-            return new DemoWebMap<Image>(Context);
+            return new DemoWebMap(Context);
         }
     }
 }

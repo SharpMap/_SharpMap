@@ -8,21 +8,27 @@ using System;
 using SharpMap.Data.Providers;
 using SharpMap.Rendering.Thematics;
 using SharpMap.Data;
+using SharpMap.Presentation.AspNet.IoC;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {
-    public class DemoWebMap<TOutput>
-        : WebMapBase<BasicMapRequestConfig, TOutput>
+    public class DemoWebMap
+        : WebMapBase
     {
 
-        protected override IMapRenderer<TOutput> CreateMapRenderer()
+        protected override IMapRenderer CreateMapRenderer()
         {
-            return IoC.Container.Resolve<IMapRenderer<TOutput>>();
+            return Container.Instance.Resolve<IMapRenderer>();
         }
 
-        protected override IMapRequestConfigFactory<BasicMapRequestConfig> CreateConfigFactory()
+        protected override IMapRequestConfigFactory CreateConfigFactory()
         {
-            return new BasicMapConfigFactory();
+            return Container.Instance.Resolve<IMapRequestConfigFactory>();
+        }
+
+        protected override IMapCacheProvider CreateCacheProvider()
+        {
+            return Container.Instance.Resolve<IMapCacheProvider>();
         }
 
         public override void LoadLayers()
@@ -45,6 +51,8 @@ namespace SharpMap.Presentation.AspNet.Demo
         public DemoWebMap(HttpContext context)
             : base(context)
         { }
+
+
 
     }
 }

@@ -11,6 +11,7 @@ using SharpMap.Styles;
 using SharpMap.Data;
 using SharpMap.Geometries;
 using SharpMap.Data.Providers;
+using System.IO;
 
 namespace SharpMap.Renderers.ImageMap
 {
@@ -224,9 +225,12 @@ namespace SharpMap.Renderers.ImageMap
         #region IMapRenderer Members
 
 
-        object IMapRenderer.Render(Map map)
+        Stream IMapRenderer.Render(Map map, out string mimeType)
         {
-            return this.Render(map);
+            mimeType = "text/xml";
+            MemoryStream ms = new MemoryStream();
+            this.Render(map).Save(ms);
+            return ms;
         }
 
         #endregion

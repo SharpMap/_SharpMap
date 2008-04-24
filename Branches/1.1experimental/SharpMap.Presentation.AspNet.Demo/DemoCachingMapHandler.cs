@@ -8,17 +8,12 @@ using System.Drawing;
 namespace SharpMap.Presentation.AspNet.Demo
 {
     public class DemoCachingMapHandler
-        : MapHandlerBase<DemoCachingWebMap<Image>, Image, BasicMapRequestConfig>
+        : DemoMapHandler
     {
-        static DemoCachingMapHandler()
-        {
-            IoCConfiguration.Ensure();
 
-        }
-
-        public override DemoCachingWebMap<Image> CreateWebMap()
+        public override IWebMap CreateWebMap()
         {
-            return new DemoCachingWebMap<Image>(Context);
+            return new DemoCachingWebMap(Context);
         }
     }
 }

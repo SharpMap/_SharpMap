@@ -21,6 +21,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using SharpMap.Rendering;
 using SharpMap.Renderer;
+using System.IO;
 
 
 namespace SharpMap
@@ -153,6 +154,17 @@ namespace SharpMap
         public TRenderFormat Render<TRenderFormat>(IMapRenderer<TRenderFormat> renderer)
         {
             return renderer.Render(this);
+        }
+
+        public Stream Render(IMapRenderer renderer)
+        {
+            string s;
+            return Render(renderer, out s);
+        }
+
+        public Stream Render(IMapRenderer renderer, out string mimeType)
+        {
+            return renderer.Render(this, out mimeType);
         }
 
         /// <summary>

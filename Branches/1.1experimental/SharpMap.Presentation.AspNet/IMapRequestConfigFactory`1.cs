@@ -18,6 +18,13 @@ using System.Web;
 
 namespace SharpMap.Presentation.AspNet
 {
+
+    public interface IMapRequestConfigFactory
+    {
+        IMapRequestConfig CreateConfig(HttpContext context);
+    }
+
+
     /// <summary>
     /// A factory to create concrete instances of TMapRequestConfig from the state of the Web application.
     /// Implementations may use the Url, Session, Databases etc to actually construct the Config.
@@ -27,6 +34,7 @@ namespace SharpMap.Presentation.AspNet
     /// </summary>
     /// <typeparam name="TMapRequestConfig">The type of configuration object this factory instance builds</typeparam>
     public interface IMapRequestConfigFactory<TMapRequestConfig>
+        : IMapRequestConfigFactory
         where TMapRequestConfig : IMapRequestConfig
     {
         /// <summary>
@@ -34,6 +42,6 @@ namespace SharpMap.Presentation.AspNet
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        TMapRequestConfig CreateConfig(HttpContext context);
+        new TMapRequestConfig CreateConfig(HttpContext context);
     }
 }

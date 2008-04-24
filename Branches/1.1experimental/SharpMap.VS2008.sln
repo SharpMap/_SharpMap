@@ -71,6 +71,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.Presentation.AspNe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.Presentation.AspNet.Demo", "SharpMap.Presentation.AspNet.Demo\SharpMap.Presentation.AspNet.Demo.csproj", "{62E2FE54-8B03-4CC8-B348-DBB1C9D1E6F7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unity", "Unity", "{4917A007-E124-4B77-8A3A-5199FE6C8BA2}"
+	ProjectSection(SolutionItems) = preProject
+		ExternalReferences\Unity\Microsoft.Practices.ObjectBuilder2.dll = ExternalReferences\Unity\Microsoft.Practices.ObjectBuilder2.dll
+		ExternalReferences\Unity\Microsoft.Practices.ObjectBuilder2.pdb = ExternalReferences\Unity\Microsoft.Practices.ObjectBuilder2.pdb
+		ExternalReferences\Unity\Microsoft.Practices.ObjectBuilder2.xml = ExternalReferences\Unity\Microsoft.Practices.ObjectBuilder2.xml
+		ExternalReferences\Unity\Microsoft.Practices.Unity.dll = ExternalReferences\Unity\Microsoft.Practices.Unity.dll
+		ExternalReferences\Unity\Microsoft.Practices.Unity.pdb = ExternalReferences\Unity\Microsoft.Practices.Unity.pdb
+		ExternalReferences\Unity\Microsoft.Practices.Unity.xml = ExternalReferences\Unity\Microsoft.Practices.Unity.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 11
@@ -106,6 +116,7 @@ Global
 		SccLocalPath9 = WinFormSamples
 		SccWebProject10 = true
 		SccProjectUniqueName10 = DemoWebSite
+		SccProjectName10 = DemoWebSite
 		SccLocalPath10 = .
 		SccProjectFilePathRelativizedFromConnection10 = DemoWebSite\\
 		SccProjectEnlistmentChoice10 = 2
@@ -223,5 +234,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3BB63704-345C-400C-9146-0AD46859D76D} = {1EDFEF14-016A-4660-9C65-2F933B6D61F9}
 		{AFA0024B-50B7-4CA3-84DC-EC0CA7109492} = {3BB63704-345C-400C-9146-0AD46859D76D}
+		{4917A007-E124-4B77-8A3A-5199FE6C8BA2} = {3BB63704-345C-400C-9146-0AD46859D76D}
 	EndGlobalSection
 EndGlobal

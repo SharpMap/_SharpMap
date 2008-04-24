@@ -3,31 +3,60 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using SharpMap.Renderer;
-using SharpMap.Layers;
 using System.IO;
-using SharpMap.Geometries;
+using SharpMap.Layers;
 
 namespace SharpMap.Presentation.AspNet.Impl
 {
-    public abstract class WebMapBase<TMapRequestConfig, TOutput>
-         : IWebMap<TMapRequestConfig, TOutput>
-         where TMapRequestConfig : IMapRequestConfig
+    public abstract class WebMapBase
+        : IWebMap
     {
+
         public WebMapBase(HttpContext context)
+            : base()
         {
-            this._context = context;
+            _context = context;
         }
+
+
+
+        IMapCacheProvider _cacheProvider;
+        public IMapCacheProvider CacheProvider
+        {
+            get
+            {
+                EnsureCacheProvider();
+                return _cacheProvider;
+            }
+            set
+            {
+                _cacheProvider = value;
+            }
+        }
+
+        private void EnsureCacheProvider()
+        {
+            if (_cacheProvider == null)
+                _cacheProvider = CreateCacheProvider();
+        }
+
+        protected abstract IMapCacheProvider CreateCacheProvider();
+
 
         #region IWebMap<TMapRequestConfig,TOutput> Members
 
-        private IMapRenderer<TOutput> _renderer;
-        public IMapRenderer<TOutput> MapRenderer
+        private IMapRenderer _renderer;
+        public IMapRenderer MapRenderer
         {
             get
             {
                 if (_renderer == null)
                     _renderer = CreateMapRenderer();
                 return _renderer;
+            }
+            set
+            {
+                _renderer = value;
             }
         }
 
@@ -84,21 +113,6 @@ namespace SharpMap.Presentation.AspNet.Impl
                 this.LayersLoaded(this, EventArgs.Empty);
         }
 
-        public event EventHandler BeforeConfigureMapView;
-        protected void RaiseBeforeConfigureMapView()
-        {
-            if (this.BeforeConfigureMapView != null)
-                this.BeforeConfigureMapView(this, EventArgs.Empty);
-        }
-        public event EventHandler MapViewConfigDone;
-        protected void RaiseMapViewConfigDone()
-        {
-            if (this.MapViewConfigDone != null)
-            {
-                this.MapViewConfigDone(this, EventArgs.Empty);
-            }
-        }
-
         public event EventHandler BeforeLoadMapState;
         protected void RaiseBeforeLoadMapState()
         {
@@ -145,13 +159,13 @@ namespace SharpMap.Presentation.AspNet.Impl
         /// Create the RenderWrapper here
         /// </summary>
         /// <returns></returns>
-        protected abstract IMapRenderer<TOutput> CreateMapRenderer();
+        protected abstract IMapRenderer CreateMapRenderer();
 
         /// <summary>
         /// Create a config factory here
         /// </summary>
         /// <returns></returns>
-        protected abstract IMapRequestConfigFactory<TMapRequestConfig> CreateConfigFactory();
+        protected abstract IMapRequestConfigFactory CreateConfigFactory();
 
 
         /// <summary>
@@ -209,9 +223,7 @@ namespace SharpMap.Presentation.AspNet.Impl
 
 
 
-        private IMapRenderer<TOutput> _renderWrapper;
-
-
+        private IMapRenderer _renderWrapper;
         private void EnsureRenderWrapper()
         {
             if (_renderWrapper == null)
@@ -221,8 +233,8 @@ namespace SharpMap.Presentation.AspNet.Impl
         }
 
 
-        TMapRequestConfig _config;
-        public TMapRequestConfig MapRequestConfig
+        IMapRequestConfig _config;
+        public IMapRequestConfig MapRequestConfig
         {
             get
             {
@@ -241,8 +253,9 @@ namespace SharpMap.Presentation.AspNet.Impl
                 RaiseMapRequestConfigCreated();
             }
         }
-        IMapRequestConfigFactory<TMapRequestConfig> _configFactory;
-        public IMapRequestConfigFactory<TMapRequestConfig> ConfigFactory
+
+        IMapRequestConfigFactory _configFactory;
+        public IMapRequestConfigFactory ConfigFactory
         {
             get
             {
@@ -301,57 +314,98 @@ namespace SharpMap.Presentation.AspNet.Impl
 
 
 
-        public virtual Stream Render(out string mimeType)
+        //public virtual Stream Render(out string mimeType)
+        //{
+
+        //    RaiseBeforeInitializeMap();
+        //    InitMap();
+        //    RaiseMapInitialized();
+
+        //    RaiseBeforeLoadLayers();
+
+        //    LoadLayers();
+        //    RaiseLayersLoaded();
+        //    Map.Center = new Point(0, 0);
+
+        //    RaiseBeforeConfigureMapView();
+        //    ConfigureMapView();
+        //    RaiseMapViewConfigDone();
+
+
+        //    RaiseBeforeLoadMapState();
+        //    LoadMapState();
+        //    RaiseMapStateLoaded();
+
+        //    RaiseBeforeMapRender();
+        //    Stream s = null;
+        //    s = StreamBuilder(Map.Render(MapRenderer));
+        //    try
+        //    {
+        //        RaiseMapRenderDone();
+        //        mimeType = MapRequestConfig.MimeType;
+        //        return s;
+        //    }
+        //    catch
+        //    {
+        //        if (s != null)
+        //            s.Close();
+        //        throw;
+        //    }
+
+        //}
+
+
+
+
+        public Stream Render(out string mimeType)
         {
 
-            RaiseBeforeInitializeMap();
-            InitMap();
-            RaiseMapInitialized();
-
-            RaiseBeforeLoadLayers();
-
-            LoadLayers();
-            RaiseLayersLoaded();
-            Map.Center = new Point(0, 0);
-
-            RaiseBeforeConfigureMapView();
-            ConfigureMapView();
-            RaiseMapViewConfigDone();
-
-
-            RaiseBeforeLoadMapState();
-            LoadMapState();
-            RaiseMapStateLoaded();
-
-            RaiseBeforeMapRender();
-            Stream s = null;
-            s = StreamBuilder(Map.Render(MapRenderer));
-            try
+            if (CacheProvider.ExistsInCache(MapRequestConfig))
             {
-                RaiseMapRenderDone();
                 mimeType = MapRequestConfig.MimeType;
+                Stream s = CacheProvider.RetrieveStream(MapRequestConfig);
+                s.Position = 0;
                 return s;
             }
-            catch
+            else
             {
-                if (s != null)
-                    s.Close();
-                throw;
+                RaiseBeforeInitializeMap();
+                InitMap();
+                RaiseMapInitialized();
+
+                RaiseBeforeLoadLayers();
+                LoadLayers();
+                RaiseLayersLoaded();
+
+                ConfigureMapView();
+
+                RaiseBeforeLoadMapState();
+                LoadMapState();
+                RaiseMapStateLoaded();
+
+                RaiseBeforeMapRender();
+
+                Stream s = Map.Render((IMapRenderer)MapRenderer, out mimeType);
+
+                try
+                {
+                    s.Position = 0;
+                    CacheProvider.SaveToCache(MapRequestConfig, s);
+                    RaiseMapRenderDone();
+                    s.Position = 0;
+                    return s;
+                }
+                catch
+                {
+                    if (s != null)
+                        s.Close();
+
+                    CacheProvider.RemoveFromCache(MapRequestConfig);
+                    throw;
+                }
+
             }
 
         }
-
-
-        #region IWebMap<TMapRequestConfig,TOutput> Members
-
-        public Func<TOutput, Stream> StreamBuilder
-        {
-            get
-            {
-                return IoC.Container.ResolveObject<Func<TOutput, Stream>>();
-            }
-        }
-
-        #endregion
     }
 }

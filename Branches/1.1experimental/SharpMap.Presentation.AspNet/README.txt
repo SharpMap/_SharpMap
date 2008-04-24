@@ -13,5 +13,6 @@
  */
 
 AspNet rendering layer for SharpMap v2 project http://www.codeplex.com/SharpMap 
+reworked for SharpMap v1.x
 
 John Diss (http://www.newgrove.com)
