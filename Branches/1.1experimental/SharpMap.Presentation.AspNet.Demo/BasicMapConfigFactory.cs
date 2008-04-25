@@ -55,7 +55,7 @@ namespace SharpMap.Presentation.AspNet.Demo
             Array.Reverse(arr);
             config.CacheKey = new string(arr);
 
-            config.MimeType = "image/png";
+            config.MimeType = context.Request["mimeType"] ?? "image/png";
 
             //config.CacheKey = context.Request.Url.ToString().ToLower();
 

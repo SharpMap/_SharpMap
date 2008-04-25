@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMapRendererConfig.cs" />
     <Compile Include="Impl\AsyncMapHandlerBase.cs" />
     <Compile Include="Impl\NoCacheProvider.cs" />
     <Compile Include="Impl\ThreadingUtility.cs" />

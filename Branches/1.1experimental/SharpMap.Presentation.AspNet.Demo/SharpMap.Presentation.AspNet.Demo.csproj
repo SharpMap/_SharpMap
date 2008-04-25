@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="BasicMapConfigFactory.cs" />
     <Compile Include="BasicMapRequestConfig.cs" />
+    <Compile Include="DefaultImageRendererConfig.cs" />
     <Compile Include="DemoCachingMapHandler.cs" />
     <Compile Include="DemoMapHandler.cs" />
     <Compile Include="DemoWebMap.cs" />
