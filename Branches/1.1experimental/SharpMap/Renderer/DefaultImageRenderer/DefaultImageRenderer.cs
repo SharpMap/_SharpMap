@@ -1,4 +1,21 @@
-﻿using System;
+﻿
+/*
+ *	This file is part of SharpMap
+ *  SharpMap is free software © 2008 Newgrove Consultants Limited, 
+ *  http://www.newgrove.com; you can redistribute it and/or modify it under the terms 
+ *  of the current GNU Lesser General Public License (LGPL) as published by and 
+ *  available from the Free Software Foundation, Inc., 
+ *  59 Temple Place, Suite 330, Boston, MA 02111-1307 USA: http://fsf.org/    
+ *  This program is distributed without any warranty; 
+ *  without even the implied warranty of merchantability or fitness for purpose.  
+ *  See the GNU Lesser General Public License for the full details. 
+ *  
+ *  Author: John Diss 2008
+ * 
+ *  portions based on earlier work
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -7,8 +24,6 @@ using System.Reflection;
 using System.Reflection.Emit;
 using SharpMap.Layers;
 using SharpMap.Renderer.DefaultImage;
-using System.IO;
-using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Threading;
 
@@ -17,20 +32,7 @@ namespace SharpMap.Renderer
     public class DefaultImageRenderer
         : IMapRenderer<Image>, IAsyncMapRenderer<Image>
     {
-        /// <remarks>Implementors should provide a default constructor</remarks> 
-        public interface ILayerRenderer
-        {
-            void RenderLayer(ILayer layer, Map map, Graphics g);
-        }
 
-
-        /// <remarks>Implementors should provide a default constructor</remarks> 
-        public interface ILayerRenderer<TLayerType>
-            : ILayerRenderer
-            where TLayerType : ILayer
-        {
-            void RenderLayer(TLayerType layer, Map map, Graphics g);
-        }
 
         private static ImageCodecInfo _defaultCodec;
         private static ImageCodecInfo GetDefaultCodec()
@@ -117,7 +119,7 @@ namespace SharpMap.Renderer
 
         #region IMapRenderer<Image> Members
 
-        public Image Render(Map map)
+        public Image Render(Map map, out string mimeType)
         {
             Debug.WriteLine(string.Format("Render Thread is {0}", Thread.CurrentThread.ManagedThreadId));
 
@@ -142,7 +144,7 @@ namespace SharpMap.Renderer
 
                 OnRenderDone();
             }
-
+            mimeType = "image/bitmap";
             return img;
         }
 
@@ -151,12 +153,12 @@ namespace SharpMap.Renderer
             Debug.WriteLine(string.Format("Render Thread is {0}", Thread.CurrentThread.ManagedThreadId));
 
 
-            mimeType = ImageCodec.MimeType;
 
             MemoryStream ms = new MemoryStream();
-            Image im = this.Render(map);
-            //im.Save(ms, ImageFormat.Png);
+            Image im = this.Render(map, out mimeType);
             im.Save(ms, ImageCodec, EncoderParams);
+            mimeType = ImageCodec.MimeType;
+
             ms.Position = 0;
             return ms;
         }
@@ -172,8 +174,9 @@ namespace SharpMap.Renderer
             InternalAsyncRenderDelegate<Image> dlgt = new InternalAsyncRenderDelegate<Image>(
                 delegate(Map m, AsyncRenderCallbackDelegate<Image> call)
                 {
-                    Image im = this.Render(map);
-                    callback(im, this.ImageCodec.MimeType);
+                    string mime;
+                    Image im = this.Render(map, out mime);
+                    callback(im, mime);
 
                 });
             return dlgt.BeginInvoke(map, callback, null, null);
@@ -202,8 +205,6 @@ namespace SharpMap.Renderer
         #endregion
 
 
-        private delegate void InternalAsyncRenderDelegate(Map map, AsyncRenderCallbackDelegate callback);
-        private delegate void InternalAsyncRenderDelegate<TRenderFormat>(Map map, AsyncRenderCallbackDelegate<TRenderFormat> callback);
 
         private void RenderLayer(ILayer lyr, Map m, Graphics g)
         {
@@ -225,10 +226,28 @@ namespace SharpMap.Renderer
         }
 
 
+        /// <remarks>Implementors should provide a default constructor</remarks> 
+        public interface ILayerRenderer
+        {
+            void RenderLayer(ILayer layer, Map map, Graphics g);
+        }
+
+
+        /// <remarks>Implementors should provide a default constructor</remarks> 
+        public interface ILayerRenderer<TLayerType>
+            : ILayerRenderer
+            where TLayerType : ILayer
+        {
+            void RenderLayer(TLayerType layer, Map map, Graphics g);
+        }
+
         /// <summary>
         /// Poor mans IoC Container - renderers are stored against the Layer type that they serve. 
         /// This is a static object so only needs to be configured at app start up.
         /// In future this may need to be looked at as some inplementations may require changing a given renderer on a render by render basis.
+        /// 
+        /// Also: It may make more sense to introduce a dependency on another project rather than recreate it here! 
+        /// possibly Unity which is being referenced by some 'higher level' sharpmap projects?
         /// </summary>
         public static class LayerRendererTypeMap
         {

@@ -173,6 +173,11 @@ namespace SharpMap.Forms
 
         private IAsyncMapRenderer<Image> _renderer = new DefaultImageRenderer();
 
+        // <summary>
+        // just testing the async render wrapper.. use the above line normally
+        // </summary>
+        //private IAsyncMapRenderer<Image> _renderer = new AsyncRenderWrapper<Image>((IMapRenderer<Image>)(new DefaultImageRenderer()));
+
         /// <summary>
         /// Refreshes the map asyncronously
         /// </summary>
@@ -185,7 +190,7 @@ namespace SharpMap.Forms
                     InternalRefresh(null, string.Empty);
                 else
                 {
-                    Debug.WriteLine(string.Format("UIThread is {0}", Thread.CurrentThread.Name));
+                    Debug.WriteLine(string.Format("UIThread is {0}", Thread.CurrentThread.ManagedThreadId));
                     _renderer.RenderAsync(_Map, new AsyncRenderCallbackDelegate<Image>(InternalRefresh));
                 }
             }
