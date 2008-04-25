@@ -8,7 +8,7 @@ namespace SharpMap.Presentation.AspNet.Demo
         protected void Application_Start(object sender, EventArgs e)
         {
             ///Configure Unity
-            IoCConfiguration.Ensure();
+            IoCConfiguration.Configure();
         }
 
         protected void Session_Start(object sender, EventArgs e)

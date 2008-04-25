@@ -17,15 +17,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Threading;
 using SharpMap.Layers;
 using SharpMap.Renderer.DefaultImage;
-using System.Diagnostics;
-using System.Threading;
 
 namespace SharpMap.Renderer
 {
