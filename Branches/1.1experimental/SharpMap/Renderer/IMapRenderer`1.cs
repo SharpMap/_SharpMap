@@ -12,6 +12,6 @@ namespace SharpMap.Renderer
 
     public interface IMapRenderer<TOutputFormat> : IMapRenderer
     {
-        new TOutputFormat Render(Map map);
+        TOutputFormat Render(Map map);
     }
 }

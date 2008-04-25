@@ -7,11 +7,15 @@ using System.Reflection;
 using System.Reflection.Emit;
 using SharpMap.Layers;
 using SharpMap.Renderer.DefaultImage;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Diagnostics;
+using System.Threading;
 
 namespace SharpMap.Renderer
 {
     public class DefaultImageRenderer
-        : IMapRenderer<Image>
+        : IMapRenderer<Image>, IAsyncMapRenderer<Image>
     {
         /// <remarks>Implementors should provide a default constructor</remarks> 
         public interface ILayerRenderer
@@ -115,6 +119,8 @@ namespace SharpMap.Renderer
 
         public Image Render(Map map)
         {
+            Debug.WriteLine(string.Format("Render Thread is {0}", Thread.CurrentThread.ManagedThreadId));
+
             if (map.Layers == null || map.Layers.Count == 0)
                 throw new InvalidOperationException("No layers to render");
 
@@ -139,6 +145,65 @@ namespace SharpMap.Renderer
 
             return img;
         }
+
+        Stream IMapRenderer.Render(Map map, out string mimeType)
+        {
+            Debug.WriteLine(string.Format("Render Thread is {0}", Thread.CurrentThread.ManagedThreadId));
+
+
+            mimeType = ImageCodec.MimeType;
+
+            MemoryStream ms = new MemoryStream();
+            Image im = this.Render(map);
+            //im.Save(ms, ImageFormat.Png);
+            im.Save(ms, ImageCodec, EncoderParams);
+            ms.Position = 0;
+            return ms;
+        }
+
+        #endregion
+
+        #region IAsyncMapRenderer<Image> Members
+
+        public IAsyncResult RenderAsync(Map map, AsyncRenderCallbackDelegate<Image> callback)
+        {
+            Debug.WriteLine(string.Format("Calling Thread is {0}", Thread.CurrentThread.ManagedThreadId));
+
+            InternalAsyncRenderDelegate<Image> dlgt = new InternalAsyncRenderDelegate<Image>(
+                delegate(Map m, AsyncRenderCallbackDelegate<Image> call)
+                {
+                    Image im = this.Render(map);
+                    callback(im, this.ImageCodec.MimeType);
+
+                });
+            return dlgt.BeginInvoke(map, callback, null, null);
+        }
+
+        #endregion
+
+        #region IAsyncMapRenderer Members
+
+        public IAsyncResult RenderAsync(Map map, AsyncRenderCallbackDelegate callback)
+        {
+            Debug.WriteLine(string.Format("Calling Thread is {0}", Thread.CurrentThread.ManagedThreadId));
+
+            InternalAsyncRenderDelegate dlgt = new InternalAsyncRenderDelegate(
+                delegate(Map m, AsyncRenderCallbackDelegate call)
+                {
+                    string mime;
+                    Stream s = ((IMapRenderer)this).Render(map, out mime);
+                    callback(s, mime);
+
+                });
+            return dlgt.BeginInvoke(map, callback, null, null);
+
+        }
+
+        #endregion
+
+
+        private delegate void InternalAsyncRenderDelegate(Map map, AsyncRenderCallbackDelegate callback);
+        private delegate void InternalAsyncRenderDelegate<TRenderFormat>(Map map, AsyncRenderCallbackDelegate<TRenderFormat> callback);
 
         private void RenderLayer(ILayer lyr, Map m, Graphics g)
         {
@@ -227,26 +292,5 @@ namespace SharpMap.Renderer
                 return (LayerRendererFactory)dm.CreateDelegate(typeof(LayerRendererFactory), null);
             }
         }
-
-
-        #endregion
-
-        #region IMapRenderer Members
-
-
-        Stream IMapRenderer.Render(Map map, out string mimeType)
-        {
-
-            mimeType = ImageCodec.MimeType;
-
-            MemoryStream ms = new MemoryStream();
-            Image im = this.Render(map);
-            //im.Save(ms, ImageFormat.Png);
-            im.Save(ms, ImageCodec, EncoderParams);
-            ms.Position = 0;
-            return ms;
-        }
-
-        #endregion
     }
 }

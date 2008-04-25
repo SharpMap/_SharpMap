@@ -23,9 +23,7 @@ namespace SharpMap.Presentation.AspNet.Impl
     public abstract class MapHandlerBase
         : IHttpHandler
     {
-        #region IMapHandler<TWebMapRenderer,TMapRequestConfig,TMapRenderWrapper,TMapRenderObject> Members
-
-        private IWebMap _webmap;
+       private IWebMap _webmap;
         public IWebMap WebMap
         {
             get
@@ -62,7 +60,7 @@ namespace SharpMap.Presentation.AspNet.Impl
             using (Stream s = this.WebMap.Render(out mime))
             {
                 context.Response.ContentType = mime;
-
+                SetCacheability(context.Response);
                 s.Position = 0;
                 using (BinaryReader br = new BinaryReader(s))
                 {
@@ -78,7 +76,15 @@ namespace SharpMap.Presentation.AspNet.Impl
             context.Response.End();
         }
 
-        #endregion
+        /// <summary>
+        /// override this method to control the cacheability headers and caching at the web/proxy server level.
+        /// </summary>
+        /// <param name="response"></param>
+        /// <remarks>Default leaves the cacheability unchanged</remarks> 
+        public virtual void SetCacheability(HttpResponse response)
+        {
+
+        }
 
         #region IHttpHandler Members
 
