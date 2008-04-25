@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using SharpMap.Renderer;
 using System.Web;
+using SharpMap.Renderer;
 
 namespace SharpMap.Presentation.AspNet
 {

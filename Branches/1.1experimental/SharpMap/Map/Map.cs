@@ -17,9 +17,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using SharpMap.Renderer;
 using System.Drawing;
+using SharpMap.Renderer;
 
 
 namespace SharpMap

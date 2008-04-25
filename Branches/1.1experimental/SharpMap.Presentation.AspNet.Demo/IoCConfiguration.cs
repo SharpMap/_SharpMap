@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Threading;
+﻿using System.Drawing;
 using SharpMap.Presentation.AspNet.Impl;
 using SharpMap.Presentation.AspNet.IoC;
 using SharpMap.Renderer;
@@ -14,7 +10,7 @@ namespace SharpMap.Presentation.AspNet.Demo
         /// <summary>
         /// Call to ensure the IocContainer has been configured.
         /// </summary>
-        public static void Ensure()
+        public static void Configure()
         { }
 
         static IoCConfiguration()

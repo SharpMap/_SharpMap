@@ -15,11 +15,11 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Web;
 using SharpMap.Layers;
 using SharpMap.Renderer;
-using System.Diagnostics;
 
 namespace SharpMap.Presentation.AspNet.Impl
 {

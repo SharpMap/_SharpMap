@@ -17,11 +17,11 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using SharpMap.Renderer;
-using System.Diagnostics;
-using System.Threading;
 
 namespace SharpMap.Forms
 {

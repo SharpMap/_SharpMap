@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Web;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using System.Diagnostics;
+using System.Web;
 
 namespace SharpMap.Presentation.AspNet.Impl
 {
