@@ -3,7 +3,7 @@
 namespace SharpMap.Presentation.AspNet.Demo
 {
     public class DemoMapHandler
-        : MapHandlerBase
+        : AsyncMapHandlerBase
     {
 
         public override IWebMap CreateWebMap()

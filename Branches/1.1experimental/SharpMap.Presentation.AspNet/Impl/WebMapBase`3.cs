@@ -207,6 +207,7 @@ namespace SharpMap.Presentation.AspNet.Impl
         /// <summary>
         /// Use this method to load user state into the map. Or leave empty if not required.
         /// </summary>
+        /// <remarks>This was put in for v2 to allow such things as setting selections etc. Perhaps it should be removed from this version?</remarks> 
         public virtual void LoadMapState()
         {
 
@@ -298,11 +299,15 @@ namespace SharpMap.Presentation.AspNet.Impl
 
 
         HttpContext _context;
-        protected HttpContext Context
+        public HttpContext Context
         {
             get
             {
                 return _context ?? HttpContext.Current;
+            }
+            set
+            {
+                _context = value;
             }
         }
 
@@ -367,7 +372,9 @@ namespace SharpMap.Presentation.AspNet.Impl
 
                 Stream s = MapRenderer.Render(Map, out mimeType);
 
-                Debug.Assert(mimeType == MapRequestConfig.MimeType); //at least check that the expected mimeType matches actual mime type
+                Debug.Assert(
+                    mimeType == MapRequestConfig.MimeType,
+                    "Actual MimeType matches expected MimeType");
 
                 try
                 {

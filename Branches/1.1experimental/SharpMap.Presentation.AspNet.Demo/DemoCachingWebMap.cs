@@ -17,7 +17,7 @@ using SharpMap.Presentation.AspNet.Impl;
 namespace SharpMap.Presentation.AspNet.Demo
 {
     public class DemoCachingWebMap
-        : DemoWebMap
+        : DemoWebMap //perhaps we should just inherit from WebMapBase and implement LoadLayers.
     {
         public DemoCachingWebMap(HttpContext c)
             : base(c) { }
@@ -26,8 +26,6 @@ namespace SharpMap.Presentation.AspNet.Demo
         protected override IMapCacheProvider CreateCacheProvider()
         {
             return new AspNetCacheProvider();
-            //return Container.Instance.Resolve<IMapCacheProvider<Image>>();
         }
-
     }
 }
