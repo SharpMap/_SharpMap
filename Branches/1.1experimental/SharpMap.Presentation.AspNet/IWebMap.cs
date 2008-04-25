@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using SharpMap.Renderer;
+using System.Web;
 
 namespace SharpMap.Presentation.AspNet
 {
@@ -18,6 +19,8 @@ namespace SharpMap.Presentation.AspNet
         event EventHandler MapStateLoaded;
         event EventHandler BeforeMapRender;
         event EventHandler MapRenderDone;
+
+        HttpContext Context { get; set; }
 
         //Func<TOutput, Stream> StreamBuilder { get; }
 

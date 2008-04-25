@@ -24,21 +24,6 @@ namespace SharpMap.Presentation.AspNet.Demo
             Container.Instance.RegisterType<IMapCacheProvider, NoCacheProvider>();
             Container.Instance.RegisterType<IMapCacheProvider<Image>, AspNetCacheProvider<Image>>();
             Container.Instance.RegisterType<IMapRequestConfigFactory, BasicMapConfigFactory>();
-
-
-#warning Unity causes a SynchronizationLockException on start up - only with the dev web server - iis is ok. Appears to work after. keep track of unity releases!
-            try
-            {
-                Container.Instance.RegisterInstance<Func<Image, Stream>>(
-                    delegate(Image im)
-                    {
-                        MemoryStream ms = new MemoryStream();
-                        im.Save(ms, ImageFormat.Png);
-                        return ms;
-                    });
-            }
-            catch (SynchronizationLockException ex) { }
-            { }
         }
     }
 }

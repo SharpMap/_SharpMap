@@ -23,7 +23,7 @@ namespace SharpMap.Presentation.AspNet.Impl
     public abstract class MapHandlerBase
         : IHttpHandler
     {
-       private IWebMap _webmap;
+        private IWebMap _webmap;
         public IWebMap WebMap
         {
             get
@@ -42,6 +42,9 @@ namespace SharpMap.Presentation.AspNet.Impl
         public abstract IWebMap CreateWebMap();
 
         private HttpContext _context;
+        /// <summary>
+        /// This is primarily here to allow subclasses to access the current HttpContext
+        /// </summary>
         public HttpContext Context
         {
             get
@@ -73,14 +76,13 @@ namespace SharpMap.Presentation.AspNet.Impl
 
             _webmap = null;
             _context = null;
-            context.Response.End();
         }
 
         /// <summary>
         /// override this method to control the cacheability headers and caching at the web/proxy server level.
         /// </summary>
         /// <param name="response"></param>
-        /// <remarks>Default leaves the cacheability unchanged</remarks> 
+        /// <remarks>By default nothing is set</remarks> 
         public virtual void SetCacheability(HttpResponse response)
         {
 
@@ -88,7 +90,7 @@ namespace SharpMap.Presentation.AspNet.Impl
 
         #region IHttpHandler Members
 
-        public bool IsReusable
+        public virtual bool IsReusable
         {
             get { return true; }
         }
