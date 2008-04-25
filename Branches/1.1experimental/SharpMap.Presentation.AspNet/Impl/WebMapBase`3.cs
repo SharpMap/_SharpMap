@@ -1,10 +1,24 @@
-﻿using System;
+﻿
+/*
+ *	This file is part of SharpMap
+ *  SharpMap is free software © 2008 Newgrove Consultants Limited, 
+ *  http://www.newgrove.com; you can redistribute it and/or modify it under the terms 
+ *  of the current GNU Lesser General Public License (LGPL) as published by and 
+ *  available from the Free Software Foundation, Inc., 
+ *  59 Temple Place, Suite 330, Boston, MA 02111-1307 USA: http://fsf.org/    
+ *  This program is distributed without any warranty; 
+ *  without even the implied warranty of merchantability or fitness for purpose.  
+ *  See the GNU Lesser General Public License for the full details. 
+ *  
+ *  Author: John Diss 2008
+ * 
+ */
+
+using System;
 using System.IO;
 using System.Web;
 using SharpMap.Layers;
 using SharpMap.Renderer;
-using System.IO;
-using SharpMap.Layers;
 using System.Diagnostics;
 
 namespace SharpMap.Presentation.AspNet.Impl
@@ -177,9 +191,17 @@ namespace SharpMap.Presentation.AspNet.Impl
         /// <summary>
         /// this method will configure the map view by calling ConfigureMap on the MapRequestConfig
         /// </summary>
-        public virtual void ConfigureMapView()
+        public virtual void ConfigureMap()
         {
             MapRequestConfig.ConfigureMap(this.Map);
+        }
+
+        /// <summary>
+        /// override this method to configure your renderer.
+        /// </summary>
+        public virtual void ConfigureRenderer()
+        {
+
         }
 
         /// <summary>
@@ -312,52 +334,6 @@ namespace SharpMap.Presentation.AspNet.Impl
 
         #endregion
 
-
-
-
-        //public virtual Stream Render(out string mimeType)
-        //{
-
-        //    RaiseBeforeInitializeMap();
-        //    InitMap();
-        //    RaiseMapInitialized();
-
-        //    RaiseBeforeLoadLayers();
-
-        //    LoadLayers();
-        //    RaiseLayersLoaded();
-        //    Map.Center = new Point(0, 0);
-
-        //    RaiseBeforeConfigureMapView();
-        //    ConfigureMapView();
-        //    RaiseMapViewConfigDone();
-
-
-        //    RaiseBeforeLoadMapState();
-        //    LoadMapState();
-        //    RaiseMapStateLoaded();
-
-        //    RaiseBeforeMapRender();
-        //    Stream s = null;
-        //    s = StreamBuilder(Map.Render(MapRenderer));
-        //    try
-        //    {
-        //        RaiseMapRenderDone();
-        //        mimeType = MapRequestConfig.MimeType;
-        //        return s;
-        //    }
-        //    catch
-        //    {
-        //        if (s != null)
-        //            s.Close();
-        //        throw;
-        //    }
-
-        //}
-
-
-
-
         public Stream Render(out string mimeType)
         {
 
@@ -379,15 +355,17 @@ namespace SharpMap.Presentation.AspNet.Impl
                 LoadLayers();
                 RaiseLayersLoaded();
 
-                ConfigureMapView();
+                ConfigureMap();
 
                 RaiseBeforeLoadMapState();
                 LoadMapState();
                 RaiseMapStateLoaded();
 
+                ConfigureRenderer();
+
                 RaiseBeforeMapRender();
 
-                Stream s = Map.Render(MapRenderer, out mimeType);
+                Stream s = MapRenderer.Render(Map, out mimeType);
 
                 Debug.Assert(mimeType == MapRequestConfig.MimeType); //at least check that the expected mimeType matches actual mime type
 

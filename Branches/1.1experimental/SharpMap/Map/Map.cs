@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using SharpMap.Renderer;
+using System.Drawing;
 
 
 namespace SharpMap
@@ -139,41 +140,50 @@ namespace SharpMap
 
         #region Methods
 
+
+        private IMapRenderer<Image> _defaultRenderer = new DefaultImageRenderer();
         /// <summary>
         /// Renders the map to an image
         /// </summary>
         /// <returns></returns>
+        /// <remarks>Not sure if we should remove it all together?</remarks>
         public System.Drawing.Image GetMap()
         {
-            return Render(new DefaultImageRenderer());
-        }
-
-        public TRenderFormat Render<TRenderFormat>(IMapRenderer<TRenderFormat> renderer)
-        {
-            return renderer.Render(this);
-        }
-
-        public IAsyncResult RenderAsync(IAsyncMapRenderer renderer, AsyncRenderCallbackDelegate callback)
-        {
-            return renderer.RenderAsync(this, callback);
-        }
-
-        public IAsyncResult RenderAsync<TRenderFormat>(IAsyncMapRenderer<TRenderFormat> renderer, AsyncRenderCallbackDelegate callback)
-        {
-            return renderer.RenderAsync(this, callback);
-        }
-
-        public Stream Render(IMapRenderer renderer)
-        {
             string s;
-            return Render(renderer, out s);
+            return _defaultRenderer.Render(this, out s);
         }
 
-        public Stream Render(IMapRenderer renderer, out string mimeType)
-        {
-            return renderer.Render(this, out mimeType);
-        }
+        /* 
+            ////decided to remove the following - call render on the actual renderer instead
+          
+          
+        //public TRenderFormat Render<TRenderFormat>(IMapRenderer<TRenderFormat> renderer)
+        //{
+        //    string mime;
+        //    return renderer.Render(this, out mime);
+        //}
 
+        //public IAsyncResult RenderAsync(IAsyncMapRenderer renderer, AsyncRenderCallbackDelegate callback)
+        //{
+        //    return renderer.RenderAsync(this, callback);
+        //}
+
+        //public IAsyncResult RenderAsync<TRenderFormat>(IAsyncMapRenderer<TRenderFormat> renderer, AsyncRenderCallbackDelegate callback)
+        //{
+        //    return renderer.RenderAsync(this, callback);
+        //}
+
+        //public Stream Render(IMapRenderer renderer)
+        //{
+        //    string s;
+        //    return Render(renderer, out s);
+        //}
+
+        //public Stream Render(IMapRenderer renderer, out string mimeType)
+        //{
+        //    return renderer.Render(this, out mimeType);
+        //}
+        */
         /// <summary>
         /// Returns an enumerable for all layers containing the search parameter in the LayerName property
         /// </summary>

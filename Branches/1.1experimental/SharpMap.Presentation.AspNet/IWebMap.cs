@@ -37,13 +37,18 @@ namespace SharpMap.Presentation.AspNet
         /// <summary>
         /// default implementation should call MapRequestConfiguration.ConfigureMap(this.Map);
         /// </summary>
-        void ConfigureMapView();
+        void ConfigureMap();
 
         /// <summary>
         /// Hook used to configure map state e.g feature selections particular to the context user.
         /// called after ConfigureMap
         /// </summary>
         void LoadMapState();
+
+        /// <summary>
+        /// Hook used to configure renderer e.g set compression settings, output format etc
+        /// </summary>
+        void ConfigureRenderer();
 
         /// <summary>
         /// The Map instance
