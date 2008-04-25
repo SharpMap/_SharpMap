@@ -3,6 +3,9 @@ using System.IO;
 using System.Web;
 using SharpMap.Layers;
 using SharpMap.Renderer;
+using System.IO;
+using SharpMap.Layers;
+using System.Diagnostics;
 
 namespace SharpMap.Presentation.AspNet.Impl
 {
@@ -360,6 +363,7 @@ namespace SharpMap.Presentation.AspNet.Impl
 
             if (CacheProvider.ExistsInCache(MapRequestConfig))
             {
+                ///todo: think of a less hacky solution to mime type here!
                 mimeType = MapRequestConfig.MimeType;
                 Stream s = CacheProvider.RetrieveStream(MapRequestConfig);
                 s.Position = 0;
@@ -383,7 +387,9 @@ namespace SharpMap.Presentation.AspNet.Impl
 
                 RaiseBeforeMapRender();
 
-                Stream s = Map.Render((IMapRenderer)MapRenderer, out mimeType);
+                Stream s = Map.Render(MapRenderer, out mimeType);
+
+                Debug.Assert(mimeType == MapRequestConfig.MimeType); //at least check that the expected mimeType matches actual mime type
 
                 try
                 {

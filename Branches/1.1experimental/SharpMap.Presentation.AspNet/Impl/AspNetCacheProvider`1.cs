@@ -63,7 +63,7 @@ namespace SharpMap.Presentation.AspNet.Impl
     public class AspNetCacheProvider<TOutput>
         : AspNetCacheProvider, IMapCacheProvider<TOutput>
     {
-      
+
         public AspNetCacheProvider()
             : base()
         {
@@ -71,7 +71,10 @@ namespace SharpMap.Presentation.AspNet.Impl
 
         public void SaveToCache(IMapRequestConfig config, TOutput data)
         {
-            SaveToCache(config, Container.Instance.Resolve<Func<TOutput, Stream>>()(data));
+            using (Stream s = Container.Instance.Resolve<Func<TOutput, Stream>>()(data))
+            {
+                SaveToCache(config, s);
+            }
         }
 
 

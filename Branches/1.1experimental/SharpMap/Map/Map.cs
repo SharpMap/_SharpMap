@@ -153,6 +153,16 @@ namespace SharpMap
             return renderer.Render(this);
         }
 
+        public IAsyncResult RenderAsync(IAsyncMapRenderer renderer, AsyncRenderCallbackDelegate callback)
+        {
+            return renderer.RenderAsync(this, callback);
+        }
+
+        public IAsyncResult RenderAsync<TRenderFormat>(IAsyncMapRenderer<TRenderFormat> renderer, AsyncRenderCallbackDelegate callback)
+        {
+            return renderer.RenderAsync(this, callback);
+        }
+
         public Stream Render(IMapRenderer renderer)
         {
             string s;
