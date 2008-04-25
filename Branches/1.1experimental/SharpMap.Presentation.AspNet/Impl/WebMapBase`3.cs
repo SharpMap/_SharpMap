@@ -20,6 +20,7 @@ using System.IO;
 using System.Web;
 using SharpMap.Layers;
 using SharpMap.Renderer;
+using SharpMap.Presentation.AspNet.IoC;
 
 namespace SharpMap.Presentation.AspNet.Impl
 {
@@ -201,7 +202,9 @@ namespace SharpMap.Presentation.AspNet.Impl
         /// </summary>
         public virtual void ConfigureRenderer()
         {
-
+            IMapRendererConfig config = Container.Instance.Resolve<IMapRendererConfig>();
+            if (config != null)
+                config.ConfigureRenderer(MapRequestConfig, MapRenderer);
         }
 
         /// <summary>
@@ -372,16 +375,17 @@ namespace SharpMap.Presentation.AspNet.Impl
 
                 Stream s = MapRenderer.Render(Map, out mimeType);
 
-                Debug.Assert(
-                    mimeType == MapRequestConfig.MimeType,
-                    "Actual MimeType matches expected MimeType");
-
                 try
                 {
-                    s.Position = 0;
-                    CacheProvider.SaveToCache(MapRequestConfig, s);
+                    if (string.Compare(mimeType, MapRequestConfig.MimeType, true) == 0)
+                    {
+                        ///don't cache it if there is a mime type mismatch.
+                        ///perhaps we should raise an exception?
+                        s.Position = 0;
+                        CacheProvider.SaveToCache(MapRequestConfig, s);
+                        s.Position = 0;
+                    }
                     RaiseMapRenderDone();
-                    s.Position = 0;
                     return s;
                 }
                 catch

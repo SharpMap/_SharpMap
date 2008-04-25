@@ -2,6 +2,8 @@
 using SharpMap.Presentation.AspNet.Impl;
 using SharpMap.Presentation.AspNet.IoC;
 using SharpMap.Renderer;
+using System.IO;
+using System;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {
@@ -20,6 +22,16 @@ namespace SharpMap.Presentation.AspNet.Demo
             Container.Instance.RegisterType<IMapCacheProvider, NoCacheProvider>();
             Container.Instance.RegisterType<IMapCacheProvider<Image>, AspNetCacheProvider<Image>>();
             Container.Instance.RegisterType<IMapRequestConfigFactory, BasicMapConfigFactory>();
+            Container.Instance.RegisterType<IMapRendererConfig, DefaultImageRendererConfig>();
+
+            Container.Instance.RegisterInstance<Func<Stream, Image>>(
+                new Func<Stream, Image>(
+                    delegate(Stream s)
+                    {
+                        return new Bitmap(s);
+                    }
+                )
+            );
         }
     }
 }

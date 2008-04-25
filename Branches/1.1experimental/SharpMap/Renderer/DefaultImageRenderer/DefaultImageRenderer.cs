@@ -39,18 +39,23 @@ namespace SharpMap.Renderer
         {
             if (_defaultCodec == null)
             {
-                foreach (ImageCodecInfo i in ImageCodecInfo.GetImageEncoders())
-                {
-                    if (i.MimeType == "image/png")
-                    {
-                        _defaultCodec = i;
-                        break;
-                    }
-                }
+                _defaultCodec = FindCodec("image/png");
             }
             return _defaultCodec;
         }
 
+        public static ImageCodecInfo FindCodec(string mimeType)
+        {
+            foreach (ImageCodecInfo i in ImageCodecInfo.GetImageEncoders())
+            {
+                if (i.MimeType == mimeType)
+                {
+                    return i;
+                }
+            }
+
+            return null;
+        }
 
 
         private ImageCodecInfo _imageCodecInfo;

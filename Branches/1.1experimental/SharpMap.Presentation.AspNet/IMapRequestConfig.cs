@@ -28,9 +28,9 @@ namespace SharpMap.Presentation.AspNet
         /// </summary>
         String CacheKey { get; set; }
         /// <summary>
-        /// The value to be written to the HttpHeader ContentType 
+        /// The expected value to be written to the HttpHeader ContentType. 
         /// </summary>
-        string MimeType { get; set; }
+        string MimeType { get; }
         BoundingBox RealWorldBounds { get; set; }
         Size OutputSize { get; set; }
 
@@ -40,7 +40,7 @@ namespace SharpMap.Presentation.AspNet
         /// <param name="map"></param>
         void ConfigureMap(Map map);
 
-       // IMapRenderer CreateMapRenderer();
+        // IMapRenderer CreateMapRenderer();
 
     }
 }
