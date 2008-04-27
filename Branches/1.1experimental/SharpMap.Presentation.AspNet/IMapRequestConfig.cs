@@ -15,6 +15,7 @@
 using System;
 using System.Drawing;
 using SharpMap.Geometries;
+using System.Web;
 
 namespace SharpMap.Presentation.AspNet
 {
@@ -40,6 +41,8 @@ namespace SharpMap.Presentation.AspNet
         /// </summary>
         /// <param name="map"></param>
         void ConfigureMap(Map map);
+
+        HttpContext Context { get; set; }
 
         // IMapRenderer CreateMapRenderer();
 

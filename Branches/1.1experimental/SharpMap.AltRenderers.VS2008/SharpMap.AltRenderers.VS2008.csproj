@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeoJson\GeoJsonRenderer.cs" />
     <Compile Include="ImageMap\ImageMapRenderer.cs" />
     <Compile Include="ImageMap\Impl\ImageMapCoordList.cs" />
     <Compile Include="ImageMap\Impl\ImageMapFeatureElement.cs" />

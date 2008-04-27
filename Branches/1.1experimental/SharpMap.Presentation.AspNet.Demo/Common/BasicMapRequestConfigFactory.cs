@@ -18,7 +18,7 @@ using System.Web;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {
-    public class BasicMapConfigFactory
+    public class BasicMapRequestConfigFactory
         : IMapRequestConfigFactory<BasicMapRequestConfig>
     {
         #region IMapRequestConfigFactory<BasicMapRequestConfig> Members
@@ -27,6 +27,7 @@ namespace SharpMap.Presentation.AspNet.Demo
         {
 
             BasicMapRequestConfig config = new BasicMapRequestConfig();
+            config.Context = context;
 
             string soutputsize = context.Request.QueryString["outputsize"];
 

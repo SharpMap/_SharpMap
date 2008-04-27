@@ -20,6 +20,10 @@ using SharpMap.Presentation.AspNet.Impl;
 using SharpMap.Presentation.AspNet.IoC;
 using SharpMap.Presentation.AspNet.WmsServer;
 using SharpMap.Renderer;
+using SharpMap.Renderers.ImageMap;
+using SharpMap.Presentation.AspNet.Demo.ImageMap;
+using SharpMap.Renderers.GeoJson;
+using SharpMap.Presentation.AspNet.Demo.GeoJson;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {
@@ -27,6 +31,7 @@ namespace SharpMap.Presentation.AspNet.Demo
     {
         /// <summary>
         /// Call to ensure the IocContainer has been configured.
+        /// No user code is actually run but it ensures that the static constructor has been called.
         /// </summary>
         public static void Configure()
         { }
@@ -38,9 +43,11 @@ namespace SharpMap.Presentation.AspNet.Demo
         /// </summary>
         static IoCConfiguration()
         {
-            ConfigureCommon(); 
-            ConfigureCachingDemo(); 
+            ConfigureCommon();
+            ConfigureCachingDemo();
             ConfigureWmsServerDemo();
+            ConfigureImageMapDemo();
+            ConfigureGeoJsonDemo();
 
             Container.Instance.RegisterInstance<Func<Stream, Image>>(
                 new Func<Stream, Image>(
@@ -52,12 +59,25 @@ namespace SharpMap.Presentation.AspNet.Demo
             );
         }
 
+        private static void ConfigureGeoJsonDemo()
+        {
+            Container.Instance.RegisterType<IMapRenderer, GeoJsonRenderer>("geoJsonRenderer");
+            Container.Instance.RegisterType<IMapRendererConfig, DemoGeoJsonRendererConfig>("geoJsonRendererConfig");
+            Container.Instance.RegisterType<IMapRequestConfigFactory, DemoGeoJsonConfigFactory>("geoJsonDemoConfigFactory");
+        }
+
         static void ConfigureCommon()
         {
             Container.Instance.RegisterType<IMapRenderer, DefaultImageRenderer>();
             Container.Instance.RegisterType<IMapCacheProvider, NoCacheProvider>();
-            Container.Instance.RegisterType<IMapRequestConfigFactory, BasicMapConfigFactory>();
+            Container.Instance.RegisterType<IMapRequestConfigFactory, BasicMapRequestConfigFactory>();
             Container.Instance.RegisterType<IMapRendererConfig, DefaultImageRendererConfig>();
+        }
+
+        static void ConfigureImageMapDemo()
+        {
+            Container.Instance.RegisterType<IMapRenderer, ImageMapRenderer>("imageMapRenderer");
+            Container.Instance.RegisterType<IMapRendererConfig, DemoImageMapRendererConfig>("imageMapRendererConfig");
         }
 
 

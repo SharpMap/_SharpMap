@@ -13,7 +13,7 @@
  *  Author: John Diss 2008
  * 
  */
-                
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,11 +34,16 @@ namespace SharpMap.Renderers.ImageMap
     {
         public ImageMapRenderer() { }
 
-        private HttpContext Context
+        private HttpContext _context;
+        public HttpContext Context
         {
             get
             {
-                return HttpContext.Current;
+                return _context;
+            }
+            set
+            {
+                _context = value;
             }
         }
 

@@ -14,12 +14,21 @@
  */
 using System.Drawing;
 using SharpMap.Geometries;
+using System.Web;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {
     public class BasicMapRequestConfig
         : IMapRequestConfig
     {
+        HttpContext _context;
+
+        public HttpContext Context
+        {
+            get { return _context; }
+            set { _context = value; }
+        }
+
         #region IMapRequestConfig Members
 
         string _cacheKey;
