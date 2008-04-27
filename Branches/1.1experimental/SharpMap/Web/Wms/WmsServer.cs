@@ -240,8 +240,6 @@ namespace SharpMap.Web.Wms
                     }
                 }
 
-                ///we shouldnt do this here.
-
                 //Render map
                 System.Drawing.Image img = map.GetMap();
 
@@ -275,7 +273,7 @@ namespace SharpMap.Web.Wms
         /// </summary>
         /// <param name="strBBOX">string representation of a boundingbox</param>
         /// <returns>Boundingbox or null if invalid parameter</returns>
-        private static SharpMap.Geometries.BoundingBox ParseBBOX(string strBBOX)
+        public static SharpMap.Geometries.BoundingBox ParseBBOX(string strBBOX)
         {
             string[] strVals = strBBOX.Split(new char[] { ',' });
             if (strVals.Length != 4)

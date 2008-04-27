@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" Class="SharpMap.Presentation.AspNet.Demo.DemoCachingMapHandler" %>
+﻿<%@ WebHandler Language="C#" Class="SharpMap.Presentation.AspNet.Demo.Caching.DemoCachingMapHandler" %>

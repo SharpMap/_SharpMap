@@ -55,21 +55,29 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicMapConfigFactory.cs" />
-    <Compile Include="BasicMapRequestConfig.cs" />
-    <Compile Include="DefaultImageRendererConfig.cs" />
-    <Compile Include="DemoCachingMapHandler.cs" />
-    <Compile Include="DemoMapHandler.cs" />
-    <Compile Include="DemoWebMap.cs" />
+    <Compile Include="Common\BasicMapConfigFactory.cs" />
+    <Compile Include="Common\BasicMapRequestConfig.cs" />
+    <Compile Include="Common\DefaultImageRendererConfig.cs" />
+    <Compile Include="Caching\DemoCachingMapHandler.cs" />
+    <Compile Include="Common\DemoMapSetupUtility.cs" />
+    <Compile Include="NoCache\DemoMapHandler.cs" />
+    <Compile Include="NoCache\DemoWebMap.cs" />
+    <Compile Include="Wms\DemoWmsConfigFactory.cs" />
+    <Compile Include="Wms\DemoWmsHandler.cs" />
+    <Compile Include="Wms\DemoWmsWebMap.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IoCConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomStyle.cs" />
-    <Compile Include="DemoCachingWebMap.cs" />
+    <Compile Include="Caching\DemoCachingWebMap.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharpMap.Presentation.AspNet.WmsServer\SharpMap.Presentation.AspNet.WmsServer.csproj">
+      <Project>{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}</Project>
+      <Name>SharpMap.Presentation.AspNet.WmsServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpMap.Presentation.AspNet\SharpMap.Presentation.AspNet.csproj">
       <Project>{1677C565-FA87-419F-B925-02A5CAA97E8D}</Project>
       <Name>SharpMap.Presentation.AspNet</Name>
@@ -82,45 +90,43 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Maps\Map.ashx" />
-    <Content Include="Shapefiles\icon.png" />
-    <None Include="Shapefiles\cities.DBF" />
-    <None Include="Shapefiles\cities.prj" />
-    <None Include="Shapefiles\cities.SHP" />
-    <None Include="Shapefiles\cities.shp.sidx" />
-    <None Include="Shapefiles\cities.SHX" />
-    <None Include="Shapefiles\countries.dbf" />
-    <None Include="Shapefiles\countries.prj" />
-    <None Include="Shapefiles\countries.shp" />
-    <None Include="Shapefiles\countries.shp.sidx" />
-    <None Include="Shapefiles\countries.shx" />
-    <None Include="Shapefiles\rivers.dbf" />
-    <None Include="Shapefiles\rivers.prj" />
-    <None Include="Shapefiles\rivers.shp" />
-    <None Include="Shapefiles\rivers.shp.sidx" />
-    <None Include="Shapefiles\rivers.shx" />
-    <None Include="Shapefiles\USA\latlong.dbf" />
-    <None Include="Shapefiles\USA\latlong.prj" />
-    <None Include="Shapefiles\USA\latlong.shp" />
-    <None Include="Shapefiles\USA\latlong.shp.sidx" />
-    <None Include="Shapefiles\USA\latlong.shx" />
-    <None Include="Shapefiles\USA\states.dbf" />
-    <None Include="Shapefiles\USA\states.prj" />
-    <None Include="Shapefiles\USA\states.shp" />
-    <None Include="Shapefiles\USA\states.shp.sidx" />
-    <None Include="Shapefiles\USA\states.shx" />
+    <Content Include="App_Data\Shapefiles\icon.png" />
+    <Content Include="Maps\wms.ashx" />
+    <None Include="App_Data\Shapefiles\cities.DBF" />
+    <None Include="App_Data\Shapefiles\cities.prj" />
+    <None Include="App_Data\Shapefiles\cities.SHP" />
+    <None Include="App_Data\Shapefiles\cities.shp.sidx" />
+    <None Include="App_Data\Shapefiles\cities.SHX" />
+    <None Include="App_Data\Shapefiles\countries.dbf" />
+    <None Include="App_Data\Shapefiles\countries.prj" />
+    <None Include="App_Data\Shapefiles\countries.shp" />
+    <None Include="App_Data\Shapefiles\countries.shp.sidx" />
+    <None Include="App_Data\Shapefiles\countries.shx" />
+    <None Include="App_Data\Shapefiles\rivers.dbf" />
+    <None Include="App_Data\Shapefiles\rivers.prj" />
+    <None Include="App_Data\Shapefiles\rivers.shp" />
+    <None Include="App_Data\Shapefiles\rivers.shp.sidx" />
+    <None Include="App_Data\Shapefiles\rivers.shx" />
+    <None Include="App_Data\Shapefiles\USA\latlong.dbf" />
+    <None Include="App_Data\Shapefiles\USA\latlong.prj" />
+    <None Include="App_Data\Shapefiles\USA\latlong.shp" />
+    <None Include="App_Data\Shapefiles\USA\latlong.shp.sidx" />
+    <None Include="App_Data\Shapefiles\USA\latlong.shx" />
+    <None Include="App_Data\Shapefiles\USA\states.dbf" />
+    <None Include="App_Data\Shapefiles\USA\states.prj" />
+    <None Include="App_Data\Shapefiles\USA\states.shp" />
+    <None Include="App_Data\Shapefiles\USA\states.shp.sidx" />
+    <None Include="App_Data\Shapefiles\USA\states.shx" />
     <None Include="SharpMap.Presentation.AspNet.Demo.cd" />
     <None Include="Maps\CachingMap.ashx" />
-    <None Include="Shapefiles\BCROADS.DBF" />
-    <None Include="Shapefiles\BCROADS.prj" />
-    <None Include="Shapefiles\BCROADS.SBN" />
-    <None Include="Shapefiles\BCROADS.SBX" />
-    <None Include="Shapefiles\BCROADS.SHP" />
-    <None Include="Shapefiles\BCROADS.SHX" />
-    <None Include="Shapefiles\BCROADSWithoutDbf.SHP" />
-    <None Include="Shapefiles\BCROADSWithoutDbf.SHX" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
+    <None Include="App_Data\Shapefiles\BCROADS.DBF" />
+    <None Include="App_Data\Shapefiles\BCROADS.prj" />
+    <None Include="App_Data\Shapefiles\BCROADS.SBN" />
+    <None Include="App_Data\Shapefiles\BCROADS.SBX" />
+    <None Include="App_Data\Shapefiles\BCROADS.SHP" />
+    <None Include="App_Data\Shapefiles\BCROADS.SHX" />
+    <None Include="App_Data\Shapefiles\BCROADSWithoutDbf.SHP" />
+    <None Include="App_Data\Shapefiles\BCROADSWithoutDbf.SHX" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

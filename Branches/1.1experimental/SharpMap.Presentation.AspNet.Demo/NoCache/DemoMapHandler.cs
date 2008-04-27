@@ -12,26 +12,17 @@
  *  Author: John Diss 2008
  * 
  */
-using System;
-using SharpMap.Layers;
+using SharpMap.Presentation.AspNet.Impl;
 
-namespace SharpMap.Presentation.AspNet
+namespace SharpMap.Presentation.AspNet.Demo.NoCache
 {
-    public class LayerLoadedEventArgs
-        : EventArgs
+    public class DemoMapHandler
+        : AsyncMapHandlerBase
     {
-        private ILayer _layer;
-        public ILayer Layer
-        {
-            get
-            {
-                return _layer;
-            }
-        }
 
-        public LayerLoadedEventArgs(ILayer lyr)
+        public override IWebMap CreateWebMap()
         {
-            _layer = lyr;
+            return new DemoWebMap(Context);
         }
     }
 }
