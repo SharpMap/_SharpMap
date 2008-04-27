@@ -45,21 +45,25 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
-    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\BasicMapConfigFactory.cs" />
+    <Compile Include="Common\BasicMapRequestConfigFactory.cs" />
     <Compile Include="Common\BasicMapRequestConfig.cs" />
     <Compile Include="Common\DefaultImageRendererConfig.cs" />
     <Compile Include="Caching\DemoCachingMapHandler.cs" />
     <Compile Include="Common\DemoMapSetupUtility.cs" />
+    <Compile Include="GeoJson\DemoGeoJsonConfigFactory.cs" />
+    <Compile Include="GeoJson\DemoGeoJsonHandler.cs" />
+    <Compile Include="GeoJson\DemoGeoJsonRendererConfig.cs" />
+    <Compile Include="GeoJson\DemoGeoJsonWebMap.cs" />
+    <Compile Include="ImageMap\DemoImageMapHandler.cs" />
+    <Compile Include="ImageMap\DemoImageMapRendererConfig.cs" />
+    <Compile Include="ImageMap\DemoImageWebMap.cs" />
     <Compile Include="NoCache\DemoMapHandler.cs" />
     <Compile Include="NoCache\DemoWebMap.cs" />
     <Compile Include="Wms\DemoWmsConfigFactory.cs" />
@@ -74,6 +78,10 @@
     <Compile Include="Caching\DemoCachingWebMap.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharpMap.AltRenderers.VS2008\SharpMap.AltRenderers.VS2008.csproj">
+      <Project>{55CE5EBC-0721-418D-A28F-8594B87EDEE3}</Project>
+      <Name>SharpMap.AltRenderers.VS2008</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpMap.Presentation.AspNet.WmsServer\SharpMap.Presentation.AspNet.WmsServer.csproj">
       <Project>{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}</Project>
       <Name>SharpMap.Presentation.AspNet.WmsServer</Name>
@@ -117,6 +125,8 @@
     <None Include="App_Data\Shapefiles\USA\states.shp" />
     <None Include="App_Data\Shapefiles\USA\states.shp.sidx" />
     <None Include="App_Data\Shapefiles\USA\states.shx" />
+    <Content Include="Maps\ImageMap.ashx" />
+    <Content Include="Maps\GeoJson.ashx" />
     <None Include="SharpMap.Presentation.AspNet.Demo.cd" />
     <None Include="Maps\CachingMap.ashx" />
     <None Include="App_Data\Shapefiles\BCROADS.DBF" />
