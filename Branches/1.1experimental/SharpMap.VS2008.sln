@@ -81,9 +81,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unity", "Unity", "{4917A007
 		ExternalReferences\Unity\Microsoft.Practices.Unity.xml = ExternalReferences\Unity\Microsoft.Practices.Unity.xml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.Presentation.AspNet.WmsServer", "SharpMap.Presentation.AspNet.WmsServer\SharpMap.Presentation.AspNet.WmsServer.csproj", "{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 11
+		SccNumberOfProjects = 12
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -120,6 +122,9 @@ Global
 		SccLocalPath10 = .
 		SccProjectFilePathRelativizedFromConnection10 = DemoWebSite\\
 		SccProjectEnlistmentChoice10 = 2
+		SccProjectUniqueName11 = SharpMap.Presentation.AspNet.WmsServer\\SharpMap.Presentation.AspNet.WmsServer.csproj
+		SccProjectName11 = SharpMap.Presentation.AspNet.WmsServer
+		SccLocalPath11 = SharpMap.Presentation.AspNet.WmsServer
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -227,6 +232,16 @@ Global
 		{62E2FE54-8B03-4CC8-B348-DBB1C9D1E6F7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{62E2FE54-8B03-4CC8-B348-DBB1C9D1E6F7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{62E2FE54-8B03-4CC8-B348-DBB1C9D1E6F7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}.Release|.NET.ActiveCfg = Release|Any CPU
+		{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{952DAB9D-38D8-45E6-A089-84AB5A3D8A62}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,6 @@
-﻿
-/*
+﻿/*
  *	This file is part of SharpMap
- *  SharpMap is free software © 2008 Newgrove Consultants Limited, 
+ *  SharpMap is free software. This file © 2008 Newgrove Consultants Limited, 
  *  http://www.newgrove.com; you can redistribute it and/or modify it under the terms 
  *  of the current GNU Lesser General Public License (LGPL) as published by and 
  *  available from the Free Software Foundation, Inc., 
@@ -46,7 +45,7 @@ namespace SharpMap.Renderer
 
         #region IAsyncMapRenderer Members
 
-        public IAsyncResult RenderAsync(Map map, AsyncRenderCallbackDelegate callback)
+        public IAsyncResult Render(Map map, AsyncRenderCallbackDelegate callback)
         {
             Debug.WriteLine(string.Format("Calling Thread is {0}", Thread.CurrentThread.ManagedThreadId));
             InternalAsyncRenderDelegate dlgt = new InternalAsyncRenderDelegate(
@@ -84,7 +83,7 @@ namespace SharpMap.Renderer
 
         #region IAsyncMapRenderer<TRenderFormat> Members
 
-        public IAsyncResult RenderAsync(Map map, AsyncRenderCallbackDelegate<TRenderFormat> callback)
+        public IAsyncResult Render(Map map, AsyncRenderCallbackDelegate<TRenderFormat> callback)
         {
             Debug.WriteLine(string.Format("Calling Thread is {0}", Thread.CurrentThread.ManagedThreadId));
             InternalAsyncRenderDelegate<TRenderFormat> dlgt = new InternalAsyncRenderDelegate<TRenderFormat>(

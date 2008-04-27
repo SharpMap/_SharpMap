@@ -191,7 +191,7 @@ namespace SharpMap.Forms
                 else
                 {
                     Debug.WriteLine(string.Format("UIThread is {0}", Thread.CurrentThread.ManagedThreadId));
-                    _renderer.RenderAsync(_Map, new AsyncRenderCallbackDelegate<Image>(InternalRefresh));
+                    _renderer.Render(_Map, new AsyncRenderCallbackDelegate<Image>(InternalRefresh));
                 }
             }
         }

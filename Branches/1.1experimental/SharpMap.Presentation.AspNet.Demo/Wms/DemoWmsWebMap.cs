@@ -12,26 +12,20 @@
  *  Author: John Diss 2008
  * 
  */
-using System;
-using SharpMap.Layers;
+using System.Web;
+using SharpMap.Presentation.AspNet.WmsServer;
 
-namespace SharpMap.Presentation.AspNet
+namespace SharpMap.Presentation.AspNet.Demo.Wms
 {
-    public class LayerLoadedEventArgs
-        : EventArgs
+    public class DemoWmsWebMap
+        : WmsWebMapBase
     {
-        private ILayer _layer;
-        public ILayer Layer
-        {
-            get
-            {
-                return _layer;
-            }
-        }
+        public DemoWmsWebMap(HttpContext context)
+            : base(context) { }
 
-        public LayerLoadedEventArgs(ILayer lyr)
+        public override void LoadLayers()
         {
-            _layer = lyr;
+            DemoMapSetupUtility.SetupMap(Context, this.Map);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿/*
- *  The attached / following is free software © 2008 Newgrove Consultants Limited, 
+ *  The attached / following is part of SharpMap.Presentation.AspNet
+ *  SharpMap.Presentation.AspNet is free software © 2008 Newgrove Consultants Limited, 
  *  www.newgrove.com; you can redistribute it and/or modify it under the terms 
  *  of the current GNU Lesser General Public License (LGPL) as published by and 
  *  available from the Free Software Foundation, Inc., 
@@ -11,21 +12,16 @@
  *  Author: John Diss 2008
  * 
  */
-using System.Web;
 using SharpMap.Presentation.AspNet.Impl;
-
-namespace SharpMap.Presentation.AspNet.Demo
+namespace SharpMap.Presentation.AspNet.Demo.Caching
 {
-    public class DemoCachingWebMap
-        : DemoWebMap //perhaps we should just inherit from WebMapBase and implement LoadLayers.
+    public class DemoCachingMapHandler
+        : AsyncMapHandlerBase
     {
-        public DemoCachingWebMap(HttpContext c)
-            : base(c) { }
 
-
-        protected override IMapCacheProvider CreateCacheProvider()
+        public override IWebMap CreateWebMap()
         {
-            return new AspNetCacheProvider();
+            return new DemoCachingWebMap(Context);
         }
     }
 }
