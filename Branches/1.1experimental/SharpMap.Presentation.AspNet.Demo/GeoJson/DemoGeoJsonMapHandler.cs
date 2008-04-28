@@ -2,7 +2,7 @@
 
 namespace SharpMap.Presentation.AspNet.Demo.GeoJson
 {
-    public class DemoGeoJsonHandler
+    public class DemoGeoJsonMapHandler
         : AsyncMapHandlerBase
     {
         public override IWebMap CreateWebMap()

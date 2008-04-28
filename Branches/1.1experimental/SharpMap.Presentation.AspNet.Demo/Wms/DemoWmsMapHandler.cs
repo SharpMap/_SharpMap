@@ -16,7 +16,7 @@ using SharpMap.Presentation.AspNet.Impl;
 
 namespace SharpMap.Presentation.AspNet.Demo.Wms
 {
-    public class DemoWmsHandler : AsyncMapHandlerBase
+    public class DemoWmsMapHandler : AsyncMapHandlerBase
     {
         public override IWebMap CreateWebMap()
         {

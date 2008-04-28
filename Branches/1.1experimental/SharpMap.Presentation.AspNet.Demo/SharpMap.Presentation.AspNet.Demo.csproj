@@ -57,8 +57,8 @@
     <Compile Include="Common\DefaultImageRendererConfig.cs" />
     <Compile Include="Caching\DemoCachingMapHandler.cs" />
     <Compile Include="Common\DemoMapSetupUtility.cs" />
-    <Compile Include="GeoJson\DemoGeoJsonConfigFactory.cs" />
-    <Compile Include="GeoJson\DemoGeoJsonHandler.cs" />
+    <Compile Include="GeoJson\DemoGeoJsonMapConfigFactory.cs" />
+    <Compile Include="GeoJson\DemoGeoJsonMapHandler.cs" />
     <Compile Include="GeoJson\DemoGeoJsonRendererConfig.cs" />
     <Compile Include="GeoJson\DemoGeoJsonWebMap.cs" />
     <Compile Include="ImageMap\DemoImageMapHandler.cs" />
@@ -66,8 +66,8 @@
     <Compile Include="ImageMap\DemoImageWebMap.cs" />
     <Compile Include="NoCache\DemoMapHandler.cs" />
     <Compile Include="NoCache\DemoWebMap.cs" />
-    <Compile Include="Wms\DemoWmsConfigFactory.cs" />
-    <Compile Include="Wms\DemoWmsHandler.cs" />
+    <Compile Include="Wms\DemoWmsMapConfigFactory.cs" />
+    <Compile Include="Wms\DemoWmsMapHandler.cs" />
     <Compile Include="Wms\DemoWmsWebMap.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

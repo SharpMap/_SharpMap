@@ -17,7 +17,7 @@ using SharpMap.Web.Wms;
 
 namespace SharpMap.Presentation.AspNet.Demo.Wms
 {
-    public class DemoWmsConfigFactory
+    public class DemoWmsMapConfigFactory
         : WmsConfigFactoryBase
     {
 
