@@ -11,6 +11,10 @@ namespace SharpMap.Presentation.AspNet.Demo.GeoJson
             BasicMapRequestConfig config = new BasicMapRequestConfig();
             config.Context = context;
             config.MimeType = "application/json";
+
+            if (context.Request["BBOX"] != null)
+                config.RealWorldBounds = SharpMap.Web.Wms.WmsServer.ParseBBOX(context.Request["BBOX"]);
+
             return config;
         }
 
