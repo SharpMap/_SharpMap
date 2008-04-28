@@ -2,7 +2,8 @@
 
 namespace SharpMap.Presentation.AspNet.Demo.GeoJson
 {
-    public class DemoGeoJsonConfigFactory : IMapRequestConfigFactory<BasicMapRequestConfig>
+    public class DemoGeoJsonMapConfigFactory
+        : IMapRequestConfigFactory<BasicMapRequestConfig>
     {
         #region IMapRequestConfigFactory<BasicMapRequestConfig> Members
 

@@ -63,7 +63,7 @@ namespace SharpMap.Presentation.AspNet.Demo
         {
             Container.Instance.RegisterType<IMapRenderer, GeoJsonRenderer>("geoJsonRenderer");
             Container.Instance.RegisterType<IMapRendererConfig, DemoGeoJsonRendererConfig>("geoJsonRendererConfig");
-            Container.Instance.RegisterType<IMapRequestConfigFactory, DemoGeoJsonConfigFactory>("geoJsonDemoConfigFactory");
+            Container.Instance.RegisterType<IMapRequestConfigFactory, DemoGeoJsonMapConfigFactory>("geoJsonDemoConfigFactory");
         }
 
         static void ConfigureCommon()
@@ -91,7 +91,7 @@ namespace SharpMap.Presentation.AspNet.Demo
         {
             Container.Instance.RegisterType<IMapCacheProvider, NoCacheProvider>("wmsServerCacheProvider");
             Container.Instance.RegisterType<IMapRenderer, WmsRenderer>("wmsServerRenderer");
-            Container.Instance.RegisterType<IMapRequestConfigFactory, DemoWmsConfigFactory>("wmsServerConfigFactory");
+            Container.Instance.RegisterType<IMapRequestConfigFactory, DemoWmsMapConfigFactory>("wmsServerConfigFactory");
             Container.Instance.RegisterType<IMapRendererConfig, WmsRendererConfig>("wmsRendererConfig");
         }
     }
