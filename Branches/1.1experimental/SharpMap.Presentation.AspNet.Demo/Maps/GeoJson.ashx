@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" Class="SharpMap.Presentation.AspNet.Demo.GeoJson.DemoGeoJsonHandler" %>
+﻿<%@ WebHandler Language="C#" Class="SharpMap.Presentation.AspNet.Demo.GeoJson.DemoGeoJsonMapHandler" %>

@@ -24,10 +24,15 @@ namespace SharpMap.Presentation.AspNet.Demo
 {
     public static class DemoMapSetupUtility
     {
+        /// <summary>
+        /// little util wich just adds one layer to the map and assigns it a random theme.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="m"></param>
         public static void SetupMap(HttpContext context, Map m)
         {
             VectorLayer l = new VectorLayer(
-                   "layer1",
+                   "Countries",
                    new ShapeFile(context.Server.MapPath(ConfigurationManager.AppSettings["shpfilePath"])));
 
             l.Style = RandomStyle.RandomVectorStyleNoSymbols();
