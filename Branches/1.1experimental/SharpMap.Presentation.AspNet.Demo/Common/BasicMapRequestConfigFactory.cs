@@ -51,6 +51,9 @@ namespace SharpMap.Presentation.AspNet.Demo
             if (useDefaultSize)
                 config.OutputSize = new Size(400, 400);
 
+            if (context.Request["BBOX"] != null)
+                config.RealWorldBounds = SharpMap.Web.Wms.WmsServer.ParseBBOX(context.Request["BBOX"]);
+
 
             //ensure that the differences in the string diverges quickly by reversing it.
             char[] arr = context.Request.Url.PathAndQuery.ToLower().ToCharArray();
