@@ -1,0 +1,1242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SharpMap.Converters.WellKnownBinary.GeometryFromWKB" Collapsed="true">
+    <Position X="37.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCgAgAACAAIAAAAAAAIgAAAAAAIAAAAAAAQBAAAAAA=</HashCode>
+      <FileName>Converters\WellKnownBinary\GeometryFromWKB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Converters.WellKnownBinary.GeometryToWKB" Collapsed="true">
+    <Position X="28.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAhAAAAIAAABAgAABAQAAAABAIAAACAAAkAAAA=</HashCode>
+      <FileName>Converters\WellKnownBinary\GeometryToWKB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Converters.WellKnownText.GeometryFromWKT" Collapsed="true">
+    <Position X="39" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQgAQAAAAAAAAoAAAgAAEAQAAAAAACAgAkRAAAAAAA=</HashCode>
+      <FileName>Converters\WellKnownText\GeometryFromWKT.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Converters.WellKnownText.GeometryToWKT" Collapsed="true">
+    <Position X="30.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgACECIAQiAAAAAAACAAAAAAUAMAgAAAEIAAA=</HashCode>
+      <FileName>Converters\WellKnownText\GeometryToWKT.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Converters.WellKnownText.SpatialReference" Collapsed="true">
+    <Position X="26.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\WellKnownText\SpatialReference.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Converters.WellKnownText.WktStreamTokenizer" Collapsed="true">
+    <Position X="19.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAQAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\WellKnownText\WKTStreamTokenizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Converters.WellKnownText.IO.StreamTokenizer" Collapsed="true">
+    <Position X="19.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAMAAAAAAAAgAACAAABIIAAAAgAAAAEAAIEAAIAAAAQ=</HashCode>
+      <FileName>Converters\WellKnownText\StreamTokenizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.CoordinateSystems.Transformations.GeometryTransform" Collapsed="true">
+    <Position X="32" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAQAAAACAAAAAAAAACAEAAAIAAgACgAAg=</HashCode>
+      <FileName>CoordinateSystems\Transformations\GeometryTransform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Data.FeatureDataSet" Collapsed="true">
+    <Position X="30.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAQIAAAAAQAAAAAAAQBAAEAAAAAEABBA=</HashCode>
+      <FileName>Data\FeatureDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Data.FeatureDataTable" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACQBAAAASAAABAADAAAAASAAAAACAEAlIAAEAEAADA=</HashCode>
+      <FileName>Data\FeatureDataSet.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Data.FeatureTableCollection" Collapsed="true">
+    <Position X="33.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\FeatureDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Data.FeatureDataRow" Collapsed="true">
+    <Position X="26.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAgAA=</HashCode>
+      <FileName>Data\FeatureDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Data.FeatureDataRowChangeEventArgs" Collapsed="true">
+    <Position X="28.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAIAAAAAAAAAAAgAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Data\FeatureDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Data.Providers.DbaseReader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAIACBEAICCAIQUAEAAAgAQYgASAABAABIAABgCAAAA=</HashCode>
+      <FileName>Data\Providers\DbaseReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.GeometryFeatureProvider" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAICAAAACAAIAAgAAAAAIKAIAgACAAAAAAAIACgAAA=</HashCode>
+      <FileName>Data\Providers\GeometryFeatureProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.GeometryProvider" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAICAAAQCAAIAAgAAAAAIKAIAgACAAAAAAAAACkAAA=</HashCode>
+      <FileName>Data\Providers\GeometryProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.MsSql" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAIkDAAAACBAaAAgAAAAQIKAIAgkCggAACBAAAigAAA=</HashCode>
+      <FileName>Data\Providers\MsSql.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.MsSqlSpatial" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="39" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAK0KAAAACBBaAAiQCAAQIKAIAggCwAAACAACAugIAA=</HashCode>
+      <FileName>Data\Providers\MsSqlSpatial.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.OleDbPoint" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAIsCAAAACBMYAAgAAAAQIKAIAggCggAACAAAACgAAA=</HashCode>
+      <FileName>Data\Providers\OleDbPoint.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.ShapeFile" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="39" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oCIICABAAiAgYJAggQABAMKAoAoBGSTAEIAQgQCgRAA=</HashCode>
+      <FileName>Data\Providers\ShapeFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.WFS" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IFAECCQAUCAQIIBoAEIAB4KAIAgADQAAAECAhECgAhA=</HashCode>
+      <FileName>Data\Providers\WFSClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.Pooling.Connector" Collapsed="true">
+    <Position X="26.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAQAAAACAAEIAAAAAAAAACAAAAAAAEAEIAACDAAAAA=</HashCode>
+      <FileName>Data\Providers\Pooling\Connector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Data.Providers.Pooling.ConnectorPool" Collapsed="true">
+    <Position X="28.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAABAAAAAAgAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Data\Providers\Pooling\ConnectorPool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.BoundingBox" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAJBBAAABgEkAAQAFAAIAAogIBACASAEAAQgPA=</HashCode>
+      <FileName>Geometries\BoundingBox.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Geometries.Curve" Collapsed="true">
+    <Position X="13" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAQAAAAAAAAABAAAAAQEAAAAAgAAAAAAg=</HashCode>
+      <FileName>Geometries\Curve.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.Geometry" Collapsed="true">
+    <Position X="18.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EARAAhAEAIBABACEgAAAAABgYABAQYDAEAAAAQARTJA=</HashCode>
+      <FileName>Geometries\Geometry.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Geometries.GeometryCollection" Collapsed="true">
+    <Position X="19.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACBAAAAEQIAIRBAAiAAAAABgQAAAQIBAAAAAAQAAxBA=</HashCode>
+      <FileName>Geometries\GeometryCollection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Geometries.LinearRing" Collapsed="true">
+    <Position X="13" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAQAgABA=</HashCode>
+      <FileName>Geometries\LinearRing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.LineString" Collapsed="true">
+    <Position X="13" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EABAAAgMAIAAxAAAgAAAAABgQAAAAIBAEBAgAQAARBg=</HashCode>
+      <FileName>Geometries\LineString.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.MultiCurve" Collapsed="true">
+    <Position X="17.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAABAAAAAQEAAAAAAAAAAgAA=</HashCode>
+      <FileName>Geometries\MultiCurve.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.MultiLineString" Collapsed="true">
+    <Position X="17.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAEAIAIBBAACAAAAABgQAAAAGBAAAAEAQAAxBA=</HashCode>
+      <FileName>Geometries\MultiLineString.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.MultiPoint" Collapsed="true">
+    <Position X="19.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAEAIAIhBAACAAAAABgQAAAQABAgAAAAQAAxBA=</HashCode>
+      <FileName>Geometries\MultiPoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.MultiPolygon" Collapsed="true">
+    <Position X="22" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAEAIAIBJAACABAAABgQAAAAABBAAAAAQAAxBA=</HashCode>
+      <FileName>Geometries\MultiPolygon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.MultiSurface" Collapsed="true">
+    <Position X="22" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAABAAAAAAAAAQAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Geometries\MultiSurface.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.Point" Collapsed="true">
+    <Position X="15.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EABAIAAEIIAABAQA+AEAAABgYAQAQIBEAAAAAQAQZJA=</HashCode>
+      <FileName>Geometries\Point.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Geometries.Point3D" Collapsed="true">
+    <Position X="15.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAQA6AkAAAAAAAQAAIBAAAAAAAAAABE=</HashCode>
+      <FileName>Geometries\Point3D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.Polygon" Collapsed="true">
+    <Position X="24.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EABAAAAEIIAABIAAggBAAARgQAEEAIBAAAAAAQCARBA=</HashCode>
+      <FileName>Geometries\Polygon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.SpatialRelations" Collapsed="true">
+    <Position X="28.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAgAAAAAAAIABAAAAAAAAAAAARCIA=</HashCode>
+      <FileName>Geometries\SpatialRelations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Geometries.Surface" Collapsed="true">
+    <Position X="24.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAABAAAAAAAAAQAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Geometries\Surface.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Layers.DuplicateLayerException" Collapsed="true">
+    <Position X="39" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAgAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Layers\DuplicateLayerException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Layers.LabelLayer" Collapsed="true">
+    <Position X="0.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AECgAAAAACAgCiCUAQBQAQAAoIgBAAAABAAAAAIUBBE=</HashCode>
+      <FileName>Layers\LabelLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.Layer" Collapsed="true">
+    <Position X="5.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACIAAAAAAAAAICUCAAAACEKAAgAABAAEAAAAAAAABA=</HashCode>
+      <FileName>Layers\Layer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.LayerCollection" Collapsed="true">
+    <Position X="28.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIEAEAAAAAAAAAACAIABAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Layers\LayerCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Layers.LayerGroup" Collapsed="true">
+    <Position X="3" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAACAAAAAAAACEAAAAAAEAAAAAAAAABA=</HashCode>
+      <FileName>Layers\LayerGroup.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.TiledWmsLayer" Collapsed="true">
+    <Position X="5.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ADAAIQAACEAQAYKUAEAAAgIAAAAEADAYQABBAAAAABg=</HashCode>
+      <FileName>Layers\TiledWmsLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.VectorLayer" Collapsed="true">
+    <Position X="7.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AECgAAAAACAgAgCQEABAACAAoAgAAAAABAAAAAAAABA=</HashCode>
+      <FileName>Layers\VectorLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.WmsLayer" Collapsed="true">
+    <Position X="9.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IhgAEQAAGEBZIIKBAEBAAgkCAAAEAAhY0ABAAAAAAFA=</HashCode>
+      <FileName>Layers\WmsLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Map" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABIAiAiABCAQgICIMAACQguCEQAAAgEMAABAAAQJEAI=</HashCode>
+      <FileName>Map\Map.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Renderer.AsyncRenderWrapper" Collapsed="true">
+    <Position X="6.5" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAABAgAAAAAAA=</HashCode>
+      <FileName>Renderer\AsyncRenderWrapper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Renderer.AsyncRenderWrapper&lt;TRenderFormat&gt;" Collapsed="true">
+    <Position X="6.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAgAAAAAAA=</HashCode>
+      <FileName>Renderer\AsyncRenderWrapper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Renderer.DefaultGdiRasterRenderer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Renderer\DefaultImageRenderer\DefaultGdiRasterRenderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Renderer.DefaultImageRenderer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAoAAEAAEQAAAAABAAAAAAgAAAABBEQABAQAAA=</HashCode>
+      <FileName>Renderer\DefaultImageRenderer\DefaultImageRenderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Renderer.LayerRenderedEventArgs" Collapsed="true">
+    <Position X="30.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Renderer\LayerRenderedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Renderer.DefaultImage.DefaultLabelRenderer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAACAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Renderer\DefaultImageRenderer\DefaultLabelRenderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Renderer.DefaultImage.DefaultVectorRenderer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Renderer\DefaultImageRenderer\DefaultVectorRenderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Rendering.LabelBox" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="39" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABACCAAQAAAAQAEAAABAIAAgACACAAAAAAIA=</HashCode>
+      <FileName>Rendering\Label.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Label" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAACAAAAAAwAIQEAQAAAAAAAAIAAAAANABACAACAAI=</HashCode>
+      <FileName>Rendering\Label.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Rendering.LabelCollisionDetection" Collapsed="true">
+    <Position X="26.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\LabelCollisionDetection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.VectorRenderer" Collapsed="true">
+    <Position X="39" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABIAAIAIAAAAAAAQAAIACAAQAAAAAAAIAAQAAAAADAI=</HashCode>
+      <FileName>Rendering\VectorRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Exceptions.RenderException" Collapsed="true">
+    <Position X="37.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\RenderExceptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.ColorBlend" Collapsed="true">
+    <Position X="39" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAgIAgEAAAAggAAAAAAAAAgAAASAQIAAgBAgCAA=</HashCode>
+      <FileName>Rendering\Thematics\ColorBlend.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.CustomTheme" Collapsed="true">
+    <Position X="16.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAQAABAAAAAAAAAAAAAAAAAQAAAAAAAAIA=</HashCode>
+      <FileName>Rendering\Thematics\CustomTheme.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.CustomTheme&lt;TStyle&gt;" Collapsed="true">
+    <Position X="16.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Rendering\Thematics\CustomTheme.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.GradientThemeBase&lt;TStyle&gt;" Collapsed="true">
+    <Position X="11.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAAAAAAABEBgAAAEABAAABACAAAAAFIEABAAQAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\GradientThemeBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.GradientThemeGdiBase&lt;TStyle&gt;" Collapsed="true">
+    <Position X="11.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAACAAAAAAAABAAAQAAAAAAAAAAIgAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\GradientThemeGdiBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.GradientThemeILabelStyle" Collapsed="true">
+    <Position X="10.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAggAACAA=</HashCode>
+      <FileName>Rendering\Thematics\GradientThemeILabelStyle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.GradientThemeIVectorStyle" Collapsed="true">
+    <Position X="12.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\GradientThemeIVectorStyle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Styles.LabelStyle" Collapsed="true">
+    <Position X="0.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEwAgQFgAAAAFgAAAAAEAAAAAAAAAAAAIABADgAI=</HashCode>
+      <FileName>Styles\LabelStyle.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Styles.Style" Collapsed="true">
+    <Position X="1.75" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAABAIAACAAAAAAKAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Styles\Style.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Styles.VectorStyle" Collapsed="true">
+    <Position X="2.75" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AggAAAAAAgAAACgAAYAAAABAAAAAGAYBAAAABAABCAA=</HashCode>
+      <FileName>Styles\VectorStyle.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Algorithms" Collapsed="true">
+    <Position X="26.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Algorithms.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.LeastSquaresTransform" Collapsed="true">
+    <Position X="32" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAIAAAIAgAAEAQAAAAAAAAAABAAAAAAAAQECgA=</HashCode>
+      <FileName>Utilities\LeastSquaresTransform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.MapHelper" Collapsed="true">
+    <Position X="35.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Utilities\MapHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Providers" Collapsed="true">
+    <Position X="33.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Utilities\Providers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Surrogates" Collapsed="true">
+    <Position X="30.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Surrogates.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Transform" Collapsed="true">
+    <Position X="37.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Utilities\Transform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Version" Collapsed="true">
+    <Position X="26.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Version.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Indexing.Node&lt;T, U&gt;" Collapsed="true">
+    <Position X="26.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAACBAgAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Indexing\BinaryTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Indexing.BinaryTree&lt;T, U&gt;" Collapsed="true">
+    <Position X="30.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAKABAACAQAAAAAAgAAgAAAAQAAIAAgAAAAAAAAAgCA=</HashCode>
+      <FileName>Utilities\Indexing\BinaryTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.SpatialIndexing.QuadTree" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAEAYAKAAAIAAAEAAEAggAAIAAAAkIAAAAAwkAAA=</HashCode>
+      <FileName>Utilities\Indexing\SpatialIndexing.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.WfsFeatureTypeInfo" Collapsed="true">
+    <Position X="30.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAIQEAAEAAAAQAAAAEAIgQKIAgCEAAAAEAAAAAAgoA=</HashCode>
+      <FileName>Utilities\Wfs\FeatureTypeInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.GeometryFactory" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AFAEgAAAADAkASAIBQAAAAEAgEIAIQAABEASAAAAAgE=</HashCode>
+      <FileName>Utilities\Wfs\GeometryFactories.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PointFactory" Collapsed="true">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\GeometryFactories.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.LineStringFactory" Collapsed="true">
+    <Position X="10" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\GeometryFactories.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PolygonFactory" Collapsed="true">
+    <Position X="12.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\GeometryFactories.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.MultiPointFactory" Collapsed="true">
+    <Position X="14.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\GeometryFactories.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.MultiLineStringFactory" Collapsed="true">
+    <Position X="1" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\GeometryFactories.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.MultiPolygonFactory" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\GeometryFactories.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.UnspecifiedGeometryFactory_WFS1_0_0_GML2" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAEAAAIAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\GeometryFactories.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.HttpClientUtil" Collapsed="true">
+    <Position X="33.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAACIAABBAAAAAAAAAAAAAACAAAAKIAAAACAGAA=</HashCode>
+      <FileName>Utilities\Wfs\HttpClientUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.OGCFilterCollection" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAABAAAAAAIIAAAACAAAAAAAAAAAAAQBAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.OGCFilterBase" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PropertyIsEqualToFilter_FE1_1_0" Collapsed="true">
+    <Position X="12.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PropertyIsNotEqualToFilter_FE1_1_0" Collapsed="true">
+    <Position X="14.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PropertyIsLessThanFilter_FE1_1_0" Collapsed="true">
+    <Position X="17" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PropertyIsGreaterThanFilter_FE1_1_0" Collapsed="true">
+    <Position X="19.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PropertyIsLessThanOrEqualToFilter_FE1_1_0" Collapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PropertyIsGreaterThanOrEqualToFilter_FE1_1_0" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PropertyIsBetweenFilter_FE1_1_0" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PropertyIsLikeFilter_FE1_1_0" Collapsed="true">
+    <Position X="8" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.FeatureIdFilter_FE1_1_0" Collapsed="true">
+    <Position X="10.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.PathNode" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AJAAAAAAAAAAAAAAMAAAAAAgIAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\PathNode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.AlternativePathNodesCollection" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\PathNode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.WFS_1_0_0_TextResources" Collapsed="true">
+    <Position X="15.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAIAAAAAgAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\WFS_1_0_0_TextResources.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.WFS_1_1_0_TextResources" Collapsed="true">
+    <Position X="17.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAIAAAAAgAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\WFS_1_1_0_TextResources.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.WFS_XPathTextResourcesBase" Collapsed="true">
+    <Position X="16.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IIAAAgAQBUEACgIRQABlEAZCIAAABACWgIAADQEiAEA=</HashCode>
+      <FileName>Utilities\Wfs\WFS_XPathTextResourcesBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.WFS_1_0_0_XPathTextResources" Collapsed="true">
+    <Position X="15.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAUAAADAAQCgAAEEAAAAAAABAAQAAAAAACAEAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\WFS1_0_0_XPathTextResources.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.WFS_1_1_0_XPathTextResources" Collapsed="true">
+    <Position X="17.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAUAAADAAQCgAAEEAAAAAAABAAQAAAAAACAEAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\WFS1_1_0_XPathTextResources.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.XPathQueryManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAASEMoAECAABAAEAgAAAAQAAIAAAIAAAAABAABAAFI=</HashCode>
+      <FileName>Utilities\Wfs\XPathQueryManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.XPathQueryManager_CompiledExpressionsDecorator" Collapsed="true">
+    <Position X="13.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiEAAAAAAABAAAAAAAAAAAAAAAgAAAAAAAAAAAAFA=</HashCode>
+      <FileName>Utilities\Wfs\XPathQueryManager_CompiledExpressionsDecorator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Utilities.Wfs.XPathQueryManager_Decorator" Collapsed="true">
+    <Position X="13.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACEAoAEAAABAAAAgAAEAQAAAAAAAAAAAABAAAAAFI=</HashCode>
+      <FileName>Utilities\Wfs\XPathQueryManager_DecoratorBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Web.Caching" Collapsed="true">
+    <Position X="33.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Web\Cache.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Web.HttpHandler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Web\HttpHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Web.Wms.Capabilities" Collapsed="true">
+    <Position X="35.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAogAAAAAAAAACQAgIAAQAAAEAggAABAACQE=</HashCode>
+      <FileName>Web\Wms\Capabilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Web.Wms.Client" Collapsed="true">
+    <Position X="37.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAACMAAAARCAAAAAABAAABCACAIIgFAABAIAAgEgM=</HashCode>
+      <FileName>Web\Wms\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Web.Wms.WmsException" Collapsed="true">
+    <Position X="32" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Web\Wms\WmsException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Web.Wms.WmsServer" Collapsed="true">
+    <Position X="33.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAwAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Web\Wms\WmsServer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Web.Wms.Tiling.TileCacheFileStorage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CQAAAAAAAAAQAAAAAAAAAAAAQAAAAAAAgAAAAAEAAAA=</HashCode>
+      <FileName>Web\Wms\Tiling\TileCacheFileStorage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Web.Wms.Tiling.TileExtents" Collapsed="true">
+    <Position X="33.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAIAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Web\Wms\Tiling\TileExtents.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Web.Wms.Tiling.TileSet" Collapsed="true">
+    <Position X="35.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABEAABABAAQUEQAAJCEQAACgEAgAkBAIABAAAAAA=</HashCode>
+      <FileName>Web\Wms\Tiling\TileSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="SharpMap.Utilities.SpatialIndexing.Heuristic" Collapsed="true">
+    <Position X="26.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAEAAAAAAAAAAACAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Indexing\SpatialIndexing.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="SharpMap.Data.Providers.IProvider" Collapsed="true">
+    <Position X="30.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAACAAAAAAAIAAgAAAAAIKAIAgACAAAAAAAAACgAAA=</HashCode>
+      <FileName>Data\Providers\iProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Geometries.IGeometry" Collapsed="true">
+    <Position X="13.5" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAhAEAIBABACEgAAAAABgYABAQADAEAAAAQARTIA=</HashCode>
+      <FileName>Geometries\IGeometry.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Geometries.IGeometryCollection" Collapsed="true">
+    <Position X="13.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Geometries\IGeometryCollection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Geometries.ISpatialReference" Collapsed="true">
+    <Position X="32" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometries\ISpatialReference.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.IDataLayer" Collapsed="true">
+    <Position X="4" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\IDataLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.IGdiRasterLayer" Collapsed="true">
+    <Position X="1.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\IGdiRasterLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.ILabelLayer" Collapsed="true">
+    <Position X="4" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAACAEAAAAAAAAAIABAAAAAAAAAAIABAE=</HashCode>
+      <FileName>Layers\ILabelLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.ILayer" Collapsed="true">
+    <Position X="3" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAICACAAAAAAIAAgAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\iLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.IRasterLayer" Collapsed="true">
+    <Position X="1.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\IRasterLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.ITransformableLayer" Collapsed="true">
+    <Position X="7" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\ITransformableLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.IVectorLayer" Collapsed="true">
+    <Position X="4" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\IVectorLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Renderer.IAsyncMapRenderer" Collapsed="true">
+    <Position X="3.5" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Renderer\IAsyncMapRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Renderer.IAsyncMapRenderer&lt;TOutput&gt;" Collapsed="true">
+    <Position X="3.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Renderer\IAsyncMapRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Renderer.IMapRenderer" Collapsed="true">
+    <Position X="0.5" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAABAAABAAAAA=</HashCode>
+      <FileName>Renderer\IMapRenderer`1.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Renderer.IMapRenderer&lt;TOutputFormat&gt;" Collapsed="true">
+    <Position X="0.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Renderer\IMapRenderer`1.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.Thematics.IGradientTheme&lt;TStyle&gt;" Collapsed="true">
+    <Position X="10.5" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAAAAAAABAAAAAAEABAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\IGradientTheme.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.Thematics.IGradientThemeGdi&lt;TStyle&gt;" Collapsed="true">
+    <Position X="10.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\IGradientThemeGdi.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.Thematics.ITheme" Collapsed="true">
+    <Position X="10.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\ITheme.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.Thematics.ITheme&lt;TStyle&gt;" Collapsed="true">
+    <Position X="10.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\ITheme.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.Thematics.IThemeable" Collapsed="true">
+    <Position X="7" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\IThemeable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.Thematics.IThemeable&lt;TStyle&gt;" Collapsed="true">
+    <Position X="7" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\IThemeable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Styles.ILabelStyle" Collapsed="true">
+    <Position X="7.75" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAgQBAAAAAAgAAAAAAAAAAAAAAAAAAIAAADgAA=</HashCode>
+      <FileName>Styles\ILabelStyle.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Styles.IStyle" Collapsed="true">
+    <Position X="6.75" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAACAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Styles\IStyle.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Styles.IStyleable" Collapsed="true">
+    <Position X="9.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Styles\IStyleable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Styles.IStyleable&lt;TStyle&gt;" Collapsed="true">
+    <Position X="9.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Styles\IStyleable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Styles.IVectorStyle" Collapsed="true">
+    <Position X="5.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAQAAAAAAAAAAGAABAAAABAABCAA=</HashCode>
+      <FileName>Styles\IVectorStyle.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Utilities.Wfs.IWFS_TextResources" Collapsed="true">
+    <Position X="35.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgBAAIAgCgMFQAIgEAZAoAQAAACWACAQAQEgAEA=</HashCode>
+      <FileName>Utilities\Wfs\IWFS_TextResources.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Utilities.Wfs.IXPathQueryManager" Collapsed="true">
+    <Position X="37.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACEAoAEAAABAAAAgAAAAQAAAAAAAAAAAABAAAAAFI=</HashCode>
+      <FileName>Utilities\Wfs\IXPathQueryManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Utilities.Wfs.IFilter" Collapsed="true">
+    <Position X="26.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\OGCFilter_FE1_1_0.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Utilities.Wfs.IPathNode" Collapsed="true">
+    <Position X="28.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Wfs\PathNode.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Web.Wms.Tiling.ITileCache" Collapsed="true">
+    <Position X="33.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Web\Wms\Tiling\ITileCache.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="SharpMap.Converters.WellKnownBinary.WkbByteOrder" Collapsed="true">
+    <Position X="33.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\WellKnownBinary\WKBByteOrder.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.Converters.WellKnownBinary.WKBGeometryType" Collapsed="true">
+    <Position X="35.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgEAABACAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAIQAA=</HashCode>
+      <FileName>Converters\WellKnownBinary\WKBGeometryType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.Converters.WellKnownText.TokenType" Collapsed="true">
+    <Position X="32" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAEAAAAAABAAAAAAAAQAAAAAACAA=</HashCode>
+      <FileName>Converters\WellKnownText\TokenType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.Data.Providers.ShapeType" Collapsed="true">
+    <Position X="30.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAACAAAAAAAEhAAAAAAAAAABAAAACAAAAAIAAAACACA=</HashCode>
+      <FileName>Data\Providers\ShapeFile.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.Geometries.GeometryType2" Collapsed="true">
+    <Position X="26.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAgAAAgAQAAAAEACAAAAAAgAABAAACgSA=</HashCode>
+      <FileName>Geometries\GeometryType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.Utilities.Wfs.GeometryTypeEnum" Collapsed="true">
+    <Position X="28.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAAAAAACAACACAAAAAAABAAABAAAAQAAAAIAAAAAFA=</HashCode>
+      <FileName>Utilities\Wfs\FeatureTypeInfo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="SharpMap.Data.FeatureDataRowChangeEventHandler" Collapsed="true">
+    <Position X="32" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Data\FeatureDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SharpMap.Renderer.AsyncRenderCallbackDelegate" Collapsed="true">
+    <Position X="30.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Renderer\AsyncRenderCallbackDelegate.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SharpMap.Renderer.AsyncRenderCallbackDelegate&lt;TOutput&gt;" Collapsed="true">
+    <Position X="28.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Renderer\AsyncRenderCallbackDelegate.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SharpMap.Renderer.InternalAsyncRenderDelegate" Collapsed="true">
+    <Position X="30.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Renderer\AsyncRenderCallbackDelegate.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SharpMap.Renderer.InternalAsyncRenderDelegate&lt;TRenderFormat&gt;" Collapsed="true">
+    <Position X="28.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Renderer\AsyncRenderCallbackDelegate.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SharpMap.Rendering.Thematics.GetStyleMethod" Collapsed="true">
+    <Position X="39" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\CustomTheme.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SharpMap.Rendering.Thematics.GetStyleMethod&lt;TStyle&gt;" Collapsed="true">
+    <Position X="26.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\CustomTheme.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="System.Func&lt;TResult&gt;" Collapsed="true">
+    <Position X="37.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Support\System.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="System.Func&lt;TArg0, TResult&gt;" Collapsed="true">
+    <Position X="33.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Support\System.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="System.Func&lt;TArg0, TArg1, TResult&gt;" Collapsed="true">
+    <Position X="35.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Support\System.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="System.Action&lt;TArg0, TArg1&gt;" Collapsed="true">
+    <Position X="26.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Support\System.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
