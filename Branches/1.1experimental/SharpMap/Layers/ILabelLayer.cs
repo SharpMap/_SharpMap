@@ -5,7 +5,10 @@ using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
 namespace SharpMap.Layers
 {
-    public interface ILabelLayer : IDataLayer, IStyleable<ILabelStyle>, IThemeable<ILabelStyle>
+    public interface ILabelLayer
+        : IDataLayer,
+        IStyleable<ILabelStyle>,
+        IThemeable<ILabelStyle>
     {
         string LabelColumn { get; set; }
         LabelCollisionDetection.LabelFilterMethod LabelFilter { get; set; }

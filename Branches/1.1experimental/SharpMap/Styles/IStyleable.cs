@@ -6,7 +6,8 @@ namespace SharpMap.Styles
         IStyle Style { get; set; }
     }
 
-    public interface IStyleable<TStyle> : IStyleable where TStyle : IStyle
+    public interface IStyleable<TStyle>
+        : IStyleable where TStyle : IStyle
     {
         new TStyle Style { get; set; }
     }
