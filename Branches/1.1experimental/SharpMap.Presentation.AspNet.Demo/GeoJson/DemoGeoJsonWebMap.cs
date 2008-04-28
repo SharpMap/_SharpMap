@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Web;
+﻿using System.Web;
 using SharpMap.Presentation.AspNet.Impl;
 using SharpMap.Presentation.AspNet.IoC;
 using SharpMap.Renderer;

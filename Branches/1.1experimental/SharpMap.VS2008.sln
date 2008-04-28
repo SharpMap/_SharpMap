@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExternalReferences", "Exter
 		ExternalReferences\nunit.framework.dll = ExternalReferences\nunit.framework.dll
 		ExternalReferences\nunit.framework.xml = ExternalReferences\nunit.framework.xml
 		ExternalReferences\ProjNET.dll = ExternalReferences\ProjNET.dll
-		ExternalReferences\ProjNET.XML = ExternalReferences\ProjNET.XML
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References4SharpMap.Extensions", "References4SharpMap.Extensions", "{AFA0024B-50B7-4CA3-84DC-EC0CA7109492}"
@@ -169,6 +168,7 @@ Global
 		{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}.Debug|.NET.Build.0 = Debug|.NET
 		{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}.Debug|Any CPU.ActiveCfg = Debug|.NET
 		{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}.Debug|Mixed Platforms.ActiveCfg = Debug|.NET
+		{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}.Debug|Mixed Platforms.Build.0 = Debug|.NET
 		{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}.Release|.NET.ActiveCfg = Debug|.NET
 		{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}.Release|.NET.Build.0 = Debug|.NET
 		{32ECD993-CB5A-4AD9-8C8F-45C73A088C13}.Release|Any CPU.ActiveCfg = Debug|.NET

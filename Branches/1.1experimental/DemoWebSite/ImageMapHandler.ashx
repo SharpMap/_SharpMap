@@ -52,7 +52,7 @@ public class ImageMapHandler : IHttpHandler
 
         ImageMapRenderer imr = new ImageMapRenderer();
         imr.ImageMapStyle = new ImageMapStyle(0, 1000, true);
-        
+
         imr.ImageMapStyle.Line.BufferWidth = 3;
         imr.ImageMapStyle.Line.Enabled = true;
         imr.ImageMapStyle.Line.MaxVisible = 1000;
@@ -64,9 +64,9 @@ public class ImageMapHandler : IHttpHandler
 
         imr.ImageMapStyle.Polygon.Enabled = true;
         imr.ImageMapStyle.Polygon.MaxVisible = 1000;
-        imr.ImageMapStyle.Polygon.MinVisible = 0;      
-        
-             
+        imr.ImageMapStyle.Polygon.MinVisible = 0;
+
+
 
         imr.AttributeProviders.Add(
             "id",
@@ -77,10 +77,11 @@ public class ImageMapHandler : IHttpHandler
                 }
                     ));
 
-        XmlDocument doc = map.Render(imr);
+        string mimeType;
+        XmlDocument doc = imr.Render(map, out mimeType);
 
         context.Response.Clear();
-        context.Response.ContentType = "text/xml";
+        context.Response.ContentType = mimeType;
         context.Response.Write(doc.DocumentElement.OuterXml);
 
     }

@@ -15,15 +15,15 @@
 using System;
 using System.Drawing;
 using System.IO;
+using SharpMap.Presentation.AspNet.Demo.GeoJson;
+using SharpMap.Presentation.AspNet.Demo.ImageMap;
 using SharpMap.Presentation.AspNet.Demo.Wms;
 using SharpMap.Presentation.AspNet.Impl;
 using SharpMap.Presentation.AspNet.IoC;
 using SharpMap.Presentation.AspNet.WmsServer;
 using SharpMap.Renderer;
-using SharpMap.Renderers.ImageMap;
-using SharpMap.Presentation.AspNet.Demo.ImageMap;
 using SharpMap.Renderers.GeoJson;
-using SharpMap.Presentation.AspNet.Demo.GeoJson;
+using SharpMap.Renderers.ImageMap;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {

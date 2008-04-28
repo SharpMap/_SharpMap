@@ -14,8 +14,8 @@
  */
 using System;
 using System.Drawing;
-using SharpMap.Geometries;
 using System.Web;
+using SharpMap.Geometries;
 
 namespace SharpMap.Presentation.AspNet
 {

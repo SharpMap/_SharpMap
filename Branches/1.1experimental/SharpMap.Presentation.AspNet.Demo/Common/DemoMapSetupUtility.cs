@@ -18,6 +18,7 @@ using SharpMap.Data;
 using SharpMap.Data.Providers;
 using SharpMap.Layers;
 using SharpMap.Rendering.Thematics;
+using SharpMap.Styles;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {
@@ -30,8 +31,8 @@ namespace SharpMap.Presentation.AspNet.Demo
                    new ShapeFile(context.Server.MapPath(ConfigurationManager.AppSettings["shpfilePath"])));
 
             l.Style = RandomStyle.RandomVectorStyleNoSymbols();
-            l.Theme = new CustomTheme(
-                new CustomTheme.GetStyleMethod(
+            l.Theme = new CustomTheme<IVectorStyle>(
+                new GetStyleMethod<IVectorStyle>(
                     delegate(FeatureDataRow fdr)
                     {
                         return RandomStyle.RandomVectorStyleNoSymbols();

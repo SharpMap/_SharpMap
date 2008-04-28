@@ -20,20 +20,21 @@ using SharpMap.CoordinateSystems.Transformations;
 using SharpMap.Data;
 using SharpMap.Geometries;
 using SharpMap.Layers;
+using SharpMap.Styles;
 
 namespace SharpMap.Renderer.DefaultImage
 {
     internal class DefaultVectorRenderer
-        : DefaultImageRenderer.ILayerRenderer<VectorLayer>
+        : DefaultImageRenderer.ILayerRenderer<IVectorLayer>
     {
         #region RenderingHelper<VectorLayer> Members
 
         public void RenderLayer(ILayer layer, Map map, System.Drawing.Graphics g)
         {
-            RenderLayer((VectorLayer)layer, map, g);
+            RenderLayer((IVectorLayer)layer, map, g);
         }
 
-        public void RenderLayer(VectorLayer layer, Map map, System.Drawing.Graphics g)
+        public void RenderLayer(IVectorLayer layer, Map map, System.Drawing.Graphics g)
         {
             if (map.Center == null)
                 throw (new ApplicationException("Cannot render map. View center not specified"));
@@ -75,13 +76,13 @@ namespace SharpMap.Renderer.DefaultImage
                         //Draw background of all line-outlines first
                         if (feature.Geometry is SharpMap.Geometries.LineString)
                         {
-                            SharpMap.Styles.VectorStyle outlinestyle1 = layer.Theme.GetStyle(feature) as SharpMap.Styles.VectorStyle;
+                            IVectorStyle outlinestyle1 = layer.Theme.GetStyle(feature);
                             if (outlinestyle1.Enabled && outlinestyle1.EnableOutline)
                                 SharpMap.Rendering.VectorRenderer.DrawLineString(g, feature.Geometry as LineString, outlinestyle1.Outline, map);
                         }
                         else if (feature.Geometry is SharpMap.Geometries.MultiLineString)
                         {
-                            SharpMap.Styles.VectorStyle outlinestyle2 = layer.Theme.GetStyle(feature) as SharpMap.Styles.VectorStyle;
+                            IVectorStyle outlinestyle2 = layer.Theme.GetStyle(feature);
                             if (outlinestyle2.Enabled && outlinestyle2.EnableOutline)
                                 SharpMap.Rendering.VectorRenderer.DrawMultiLineString(g, feature.Geometry as MultiLineString, outlinestyle2.Outline, map);
                         }
@@ -91,7 +92,8 @@ namespace SharpMap.Renderer.DefaultImage
                 for (int i = 0; i < features.Count; i++)
                 {
                     SharpMap.Data.FeatureDataRow feature = features[i];
-                    SharpMap.Styles.VectorStyle style = layer.Theme.GetStyle(feature) as SharpMap.Styles.VectorStyle;
+                    IVectorStyle style = layer.Theme.GetStyle(feature);
+                    style = style; ///use the defult style if there wasnt one returned
                     RenderGeometry(g, map, layer.ClippingEnabled, feature.Geometry, style);
                 }
             }
@@ -141,7 +143,7 @@ namespace SharpMap.Renderer.DefaultImage
             //base.Render(g, map);
         }
 
-        private void RenderGeometry(System.Drawing.Graphics g, Map map, bool clipLayer, Geometry feature, SharpMap.Styles.VectorStyle style)
+        private void RenderGeometry(System.Drawing.Graphics g, Map map, bool clipLayer, Geometry feature, IVectorStyle style)
         {
             switch (feature.GetType().FullName)
             {

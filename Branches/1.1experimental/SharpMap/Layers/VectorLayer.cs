@@ -17,6 +17,8 @@
 
 using System;
 using SharpMap.Geometries;
+using SharpMap.Rendering.Thematics;
+using SharpMap.Styles;
 
 namespace SharpMap.Layers
 {
@@ -42,7 +44,7 @@ namespace SharpMap.Layers
     /// System.Drawing.Image mapImage = myMap.GetMap();
     /// </code>
     /// </example>
-    public class VectorLayer : Layer, IDataLayer, IDisposable
+    public class VectorLayer : Layer, IDisposable, IVectorLayer
     {
 
         /// <summary>
@@ -66,12 +68,12 @@ namespace SharpMap.Layers
             _DataSource = dataSource;
         }
 
-        private SharpMap.Rendering.Thematics.ITheme _theme;
+        private ITheme<IVectorStyle> _theme;
 
         /// <summary>
         /// Gets or sets thematic settings for the layer. Set to null to ignore thematics
         /// </summary>
-        public SharpMap.Rendering.Thematics.ITheme Theme
+        public ITheme<IVectorStyle> Theme
         {
             get { return _theme; }
             set { _theme = value; }
@@ -118,12 +120,12 @@ namespace SharpMap.Layers
             set { _DataSource = value; }
         }
 
-        private Styles.VectorStyle _Style;
+        private IVectorStyle _Style;
 
         /// <summary>
         /// Gets or sets the rendering style of the vector layer.
         /// </summary>
-        public Styles.VectorStyle Style
+        public IVectorStyle Style
         {
             get { return _Style; }
             set { _Style = value; }
@@ -136,7 +138,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
- #if BackwardsCompat
+#if BackwardsCompat
         [Obsolete("use appropriate renderer instead", false)]
         public override void Render(System.Drawing.Graphics g, Map map)
         {
@@ -347,6 +349,39 @@ namespace SharpMap.Layers
         {
             if (DataSource is IDisposable)
                 ((IDisposable)DataSource).Dispose();
+        }
+
+        #endregion
+
+        #region IStyleable Members
+
+        IStyle IStyleable.Style
+        {
+            get
+            {
+                return this.Style;
+            }
+            set
+            {
+                this.Style = (IVectorStyle)value;
+            }
+        }
+
+        #endregion
+
+
+        #region IThemeable Members
+
+        ITheme IThemeable.Theme
+        {
+            get
+            {
+                return this.Theme;
+            }
+            set
+            {
+                this.Theme = (ITheme<IVectorStyle>)value;
+            }
         }
 
         #endregion
