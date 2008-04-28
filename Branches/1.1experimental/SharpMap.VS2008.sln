@@ -55,7 +55,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "DemoWebSite", "DemoWebSite"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "50037"
+		VWDPort = "50642"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.Extensions.VS2008", "SharpMap.Extensions\SharpMap.Extensions.VS2008.csproj", "{A4140C12-53F5-438C-8D24-9E48C504FECF}"
