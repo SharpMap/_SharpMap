@@ -57,6 +57,20 @@
     <Compile Include="Common\DefaultImageRendererConfig.cs" />
     <Compile Include="Caching\DemoCachingMapHandler.cs" />
     <Compile Include="Common\DemoMapSetupUtility.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DemoMaster.Master.cs">
+      <DependentUpon>DemoMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DemoMaster.Master.designer.cs">
+      <DependentUpon>DemoMaster.Master</DependentUpon>
+    </Compile>
     <Compile Include="GeoJson\DemoGeoJsonMapConfigFactory.cs" />
     <Compile Include="GeoJson\DemoGeoJsonMapHandler.cs" />
     <Compile Include="GeoJson\DemoGeoJsonRendererConfig.cs" />
@@ -96,6 +110,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Maps\Map.ashx" />
     <Content Include="App_Data\Shapefiles\icon.png" />
@@ -127,6 +142,7 @@
     <None Include="App_Data\Shapefiles\USA\states.shx" />
     <Content Include="Maps\ImageMap.ashx" />
     <Content Include="Maps\GeoJson.ashx" />
+    <Content Include="DemoMaster.Master" />
     <None Include="SharpMap.Presentation.AspNet.Demo.cd" />
     <None Include="Maps\CachingMap.ashx" />
     <None Include="App_Data\Shapefiles\BCROADS.DBF" />
