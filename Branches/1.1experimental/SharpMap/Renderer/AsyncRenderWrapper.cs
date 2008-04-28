@@ -53,7 +53,7 @@ namespace SharpMap.Renderer
                 {
                     string mime;
                     Stream s = ((IMapRenderer)this).Render(map, out mime);
-                    callback(s, mime);
+                    call(s, mime);
 
                 });
             return dlgt.BeginInvoke(map, callback, null, null);
@@ -91,7 +91,7 @@ namespace SharpMap.Renderer
                 {
                     string mime;
                     TRenderFormat output = ActualRenderer.Render(map, out mime);
-                    callback(output, mime);
+                    call(output, mime);
 
                 });
             return dlgt.BeginInvoke(map, callback, null, null);

@@ -99,8 +99,10 @@
     <Compile Include="Geometries\Surface.cs" />
     <Compile Include="Layers\DuplicateLayerException.cs" />
     <Compile Include="Layers\IDataLayer.cs" />
+    <Compile Include="Layers\IGdiRasterLayer.cs" />
     <Compile Include="Layers\ILabelLayer.cs" />
     <Compile Include="Layers\iLayer.cs" />
+    <Compile Include="Layers\IRasterLayer.cs" />
     <Compile Include="Layers\ITransformableLayer.cs" />
     <Compile Include="Layers\IVectorLayer.cs" />
     <Compile Include="Layers\LabelLayer.cs" />
@@ -114,10 +116,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer\AsyncRenderCallbackDelegate.cs" />
     <Compile Include="Renderer\AsyncRenderWrapper.cs" />
+    <Compile Include="Renderer\DefaultImageRenderer\DefaultGdiRasterRenderer.cs" />
     <Compile Include="Renderer\DefaultImageRenderer\DefaultImageRenderer.cs" />
     <Compile Include="Renderer\DefaultImageRenderer\DefaultLabelRenderer.cs" />
-    <Compile Include="Renderer\DefaultImageRenderer\DefaultTiledWmsRenderer.cs" />
-    <Compile Include="Renderer\DefaultImageRenderer\DefaultWmsLayerRenderer.cs" />
     <Compile Include="Renderer\IAsyncMapRenderer.cs" />
     <Compile Include="Renderer\LayerRenderedEventArgs.cs" />
     <Compile Include="Renderer\DefaultImageRenderer\DefaultVectorRenderer.cs" />

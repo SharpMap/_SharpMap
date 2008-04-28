@@ -19,6 +19,13 @@ using System;
 using System.Collections.ObjectModel;
 using System.Drawing.Imaging;
 using System.Text;
+using SharpMap.Geometries;
+using System.Drawing;
+using SharpMap.Web.Wms;
+using System.Net;
+using System.IO;
+using SharpMap.Rendering.Exceptions;
+using System.Diagnostics;
 
 namespace SharpMap.Layers
 {
@@ -50,7 +57,7 @@ namespace SharpMap.Layers
     /// myMap.MinimumZoom = 0.1;
     /// </code>
     /// </example>
-    public class WmsLayer : SharpMap.Layers.Layer
+    public class WmsLayer : SharpMap.Layers.Layer, IGdiRasterLayer
     {
         private SharpMap.Web.Wms.Client wmsClient;
         private string _MimeType = "";
@@ -361,7 +368,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
- #if BackwardsCompat
+#if BackwardsCompat
         [Obsolete("use appropriate renderer instead", false)]
         public override void Render(System.Drawing.Graphics g, Map map)
         {
@@ -547,6 +554,61 @@ namespace SharpMap.Layers
         public override object Clone()
         {
             throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IRasterLayer Members
+
+        public void DrawToGraphics(Map m, BoundingBox e, Graphics g)
+        {
+
+            Client.WmsOnlineResource resource = this.GetPreferredMethod();
+            Uri myUri = new Uri(this.GetRequestUrl(m.Envelope, m.Size));
+            WebRequest myWebRequest = WebRequest.Create(myUri);
+            myWebRequest.Method = resource.Type;
+            myWebRequest.Timeout = this.TimeOut;
+            if (this.Credentials != null)
+                myWebRequest.Credentials = this.Credentials;
+            else
+                myWebRequest.Credentials = CredentialCache.DefaultCredentials;
+
+            if (this.Proxy != null)
+                myWebRequest.Proxy = this.Proxy;
+
+            try
+            {
+                HttpWebResponse myWebResponse = (HttpWebResponse)myWebRequest.GetResponse();
+                Stream dataStream = myWebResponse.GetResponseStream();
+
+                if (myWebResponse.ContentType.StartsWith("image"))
+                {
+                    Image img = Image.FromStream(myWebResponse.GetResponseStream());
+                    if (this.ImageAttributes != null)
+                        g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0,
+                           img.Width, img.Height, GraphicsUnit.Pixel, this.ImageAttributes);
+                    else
+                        g.DrawImageUnscaled(img, 0, 0, m.Size.Width, m.Size.Height);
+                }
+                dataStream.Close();
+                myWebResponse.Close();
+            }
+            catch (WebException webEx)
+            {
+                if (!this.ContinueOnError)
+                    throw (new RenderException("There was a problem connecting to the WMS server when rendering layer '" + this.LayerName + "'", webEx));
+                else
+                    //Write out a trace warning instead of throwing an error to help debugging WMS problems
+                    Trace.Write("There was a problem connecting to the WMS server when rendering layer '" + this.LayerName + "': " + webEx.Message);
+            }
+            catch (Exception ex)
+            {
+                if (!this.ContinueOnError)
+                    throw (new RenderException("There was a problem rendering layer '" + this.LayerName + "'", ex));
+                else
+                    //Write out a trace warning instead of throwing an error to help debugging WMS problems
+                    Trace.Write("There was a problem connecting to the WMS server when rendering layer '" + this.LayerName + "': " + ex.Message);
+            }
         }
 
         #endregion

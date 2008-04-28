@@ -25,7 +25,7 @@ namespace SharpMap.Presentation.AspNet.Demo
     public static class DemoMapSetupUtility
     {
         /// <summary>
-        /// little util wich just adds one layer to the map and assigns it a random theme.
+        /// little util wich just adds one vector layer to the map and assigns it a random theme.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="m"></param>

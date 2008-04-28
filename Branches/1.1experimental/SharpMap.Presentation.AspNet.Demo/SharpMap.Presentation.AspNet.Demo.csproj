@@ -99,7 +99,7 @@
     <Content Include="Global.asax" />
     <Content Include="Maps\Map.ashx" />
     <Content Include="App_Data\Shapefiles\icon.png" />
-    <Content Include="Maps\wms.ashx" />
+    <Content Include="Maps\Wms.ashx" />
     <None Include="App_Data\Shapefiles\cities.DBF" />
     <None Include="App_Data\Shapefiles\cities.prj" />
     <None Include="App_Data\Shapefiles\cities.SHP" />

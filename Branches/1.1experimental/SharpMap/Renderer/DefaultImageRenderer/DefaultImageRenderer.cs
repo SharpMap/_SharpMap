@@ -263,11 +263,9 @@ namespace SharpMap.Renderer
             {
                 _layerRendererTypeMap = new Dictionary<Type, Delegate>();
                 //add some default renderers
-                RegisterLayerRenderer<VectorLayer>(typeof(DefaultVectorRenderer));
-                RegisterLayerRenderer<LabelLayer>(typeof(DefaultLabelRenderer));
-                RegisterLayerRenderer<WmsLayer>(typeof(DefaultWmsRenderer));
-                RegisterLayerRenderer<TiledWmsLayer>(typeof(DefaultTiledWmsRenderer));
-
+                RegisterLayerRenderer<IVectorLayer>(typeof(DefaultVectorRenderer));
+                RegisterLayerRenderer<ILabelLayer>(typeof(DefaultLabelRenderer));
+                RegisterLayerRenderer<IGdiRasterLayer>(typeof(DefaultGdiRasterRenderer));
             }
             /// <summary>
             /// registers <paramref name="helper"/> as the renderer for <typeparamref name="TLayer"/>
@@ -294,7 +292,37 @@ namespace SharpMap.Renderer
             public static DefaultImageRenderer.ILayerRenderer GetRenderer(Type t)
             {
                 if (!_layerRendererTypeMap.ContainsKey(t))
-                    throw new InvalidOperationException(string.Format("No renderer is configured for layer type {0}", t));
+                {
+                    foreach (Type t2 in t.GetInterfaces())
+                    {
+                        if (_layerRendererTypeMap.ContainsKey(t2))
+                        {
+                            lock (_layerRendererTypeMap)
+                                _layerRendererTypeMap.Add(t, _layerRendererTypeMap[t2]);
+                            break;
+                        }
+                    }
+                    if (!_layerRendererTypeMap.ContainsKey(t) && t.BaseType != null)
+                    {
+                        Type t3 = t.BaseType;
+                        while (t3 != null)
+                        {
+                            if (_layerRendererTypeMap.ContainsKey(t3))
+                            {
+                                lock (_layerRendererTypeMap)
+                                    _layerRendererTypeMap.Add(t, _layerRendererTypeMap[t3]);
+                                break;
+                            }
+                            else
+                            {
+                                t3 = t3.BaseType;
+                            }
+                        }
+                    }
+                    if (!_layerRendererTypeMap.ContainsKey(t))
+                        throw new InvalidOperationException(string.Format("No renderer is configured for layer type {0}", t));
+                }
+
 
                 return ((LayerRendererFactory)_layerRendererTypeMap[t])();
             }
