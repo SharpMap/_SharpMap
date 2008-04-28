@@ -16,6 +16,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
+using SharpMap.Rendering.Thematics;
+using SharpMap.Styles;
 
 namespace SharpMap.Layers
 {
@@ -39,7 +41,7 @@ namespace SharpMap.Layers
     /// layLabel.Style.HorizontalAlignment = SharpMap.Styles.LabelStyle.HorizontalAlignmentEnum.Center;
     /// </code>
     /// </example>
-    public class LabelLayer : Layer, IDataLayer, IDisposable
+    public class LabelLayer : Layer, IDisposable, ILabelLayer
     {
         /// <summary>
         /// Labelling behaviour for Multipart geometry collections
@@ -146,23 +148,23 @@ namespace SharpMap.Layers
             set { _DataSource = value; }
         }
 
-        private SharpMap.Styles.LabelStyle _Style;
+        private ILabelStyle _Style;
 
         /// <summary>
         /// Gets or sets the rendering style of the label layer.
         /// </summary>
-        public SharpMap.Styles.LabelStyle Style
+        public ILabelStyle Style
         {
             get { return _Style; }
             set { _Style = value; }
         }
 
-        private SharpMap.Rendering.Thematics.ITheme _theme;
+        private ITheme<ILabelStyle> _theme;
 
         /// <summary>
         /// Gets or sets thematic settings for the layer. Set to null to ignore thematics
         /// </summary>
-        public SharpMap.Rendering.Thematics.ITheme Theme
+        public ITheme<ILabelStyle> Theme
         {
             get { return _theme; }
             set { _theme = value; }
@@ -497,6 +499,38 @@ namespace SharpMap.Layers
         {
             if (DataSource is IDisposable)
                 ((IDisposable)DataSource).Dispose();
+        }
+
+        #endregion
+
+        #region IStyleable Members
+
+        IStyle IStyleable.Style
+        {
+            get
+            {
+                return this.Style;
+            }
+            set
+            {
+                this.Style = (ILabelStyle)value;
+            }
+        }
+
+        #endregion
+
+        #region IThemeable Members
+
+        ITheme IThemeable.Theme
+        {
+            get
+            {
+                return this.Theme;
+            }
+            set
+            {
+                this.Theme = (ITheme<ILabelStyle>)value;
+            }
         }
 
         #endregion

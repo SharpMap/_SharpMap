@@ -21,7 +21,7 @@ namespace SharpMap.Styles
 	/// <summary>
 	/// Defines a style used for rendering labels
 	/// </summary>
-	public class LabelStyle : Style
+	public class LabelStyle : Style, SharpMap.Styles.ILabelStyle
 	{
 		/// <summary>
 		/// Initializes a new LabelStyle

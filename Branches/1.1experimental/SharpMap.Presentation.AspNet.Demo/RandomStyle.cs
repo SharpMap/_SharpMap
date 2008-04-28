@@ -43,7 +43,7 @@ namespace SharpMap.Presentation.AspNet.Demo
         /// 
         /// </summary>
         /// <returns></returns>
-        public static VectorStyle RandomVectorStyleNoSymbols()
+        public static IVectorStyle RandomVectorStyleNoSymbols()
         {
             VectorStyle vs = new VectorStyle();
 
@@ -61,9 +61,9 @@ namespace SharpMap.Presentation.AspNet.Demo
         /// returns a random VectorStyle with symbols.
         /// </summary>
         /// <returns></returns>
-        public VectorStyle RandomVectorStyle()
+        public IVectorStyle RandomVectorStyle()
         {
-            VectorStyle vs = RandomStyle.RandomVectorStyleNoSymbols();
+            IVectorStyle vs = RandomStyle.RandomVectorStyleNoSymbols();
             vs.Symbol = RandomSymbol();
             return vs;
         }

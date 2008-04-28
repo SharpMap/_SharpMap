@@ -74,9 +74,9 @@ namespace SharpMap.Renderer.DefaultImage
                     if (layer.CoordinateTransformation != null)
                         features[i].Geometry = GeometryTransform.TransformGeometry(features[i].Geometry, layer.CoordinateTransformation.MathTransform);
 
-                    LabelStyle style = null;
+                    ILabelStyle style = null;
                     if (layer.Theme != null) //If thematics is enabled, lets override the style
-                        style = layer.Theme.GetStyle(feature) as LabelStyle;
+                        style = layer.Theme.GetStyle(feature);
                     else
                         style = layer.Style;
 
@@ -176,7 +176,7 @@ namespace SharpMap.Renderer.DefaultImage
             //base.Render(g, map);
         }
 
-        private Label CreateLabel(LabelLayer layer, Geometry feature, string text, float rotation, LabelStyle style, Map map, Graphics g)
+        private Label CreateLabel(ILabelLayer layer, Geometry feature, string text, float rotation, ILabelStyle style, Map map, Graphics g)
         {
             System.Drawing.SizeF size = g.MeasureString(text, style.Font);
 

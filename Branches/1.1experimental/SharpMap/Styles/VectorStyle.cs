@@ -21,7 +21,7 @@ namespace SharpMap.Styles
 	/// <summary>
 	/// Defines a style used for rendering vector data
 	/// </summary>
-	public class VectorStyle : Style
+	public class VectorStyle : Style, IVectorStyle
 	{
 		#region Privates
 		private System.Drawing.Pen _LineStyle;

@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using SharpMap.Renderers.ImageMap;
-using SharpMap.Renderer;
-using SharpMap.Styles;
-using SharpMap.Layers;
 using SharpMap.Data;
+using SharpMap.Layers;
+using SharpMap.Renderer;
+using SharpMap.Renderers.ImageMap;
+using SharpMap.Styles;
 
 namespace SharpMap.Presentation.AspNet.Demo.ImageMap
 {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using SharpMap.Renderer;
 using System.IO;
-using SharpMap.Layers;
+using System.Text;
 using SharpMap.Data;
-using SharpMap.Styles;
 using SharpMap.Geometries;
+using SharpMap.Layers;
+using SharpMap.Renderer;
+using SharpMap.Styles;
 
 namespace SharpMap.Renderers.GeoJson
 {
