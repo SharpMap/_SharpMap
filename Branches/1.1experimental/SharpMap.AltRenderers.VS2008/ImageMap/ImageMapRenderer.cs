@@ -29,6 +29,9 @@ using SharpMap.Styles;
 
 namespace SharpMap.Renderers.ImageMap
 {
+
+#warning Not sure that this implementation is correct
+    
     public class ImageMapRenderer
         : IMapRenderer<XmlDocument>
     {
@@ -64,6 +67,7 @@ namespace SharpMap.Renderers.ImageMap
         private Func<ILayer, FeatureDataRow, ImageMapStyle> _themeProvider;
         /// <summary>
         /// A function which determines styling for a feature; for instance the radius of a point  
+        /// Note: it probably shouldnt really be here but I am not sure where to put it yet.
         /// </summary>
         public Func<ILayer, FeatureDataRow, ImageMapStyle> ImageMapThemeProvider
         {
