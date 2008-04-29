@@ -35,7 +35,7 @@ namespace SharpMap.Renderer.DefaultImage
         {
             RenderLayer((LabelLayer)layer, map, g);
         }
-        public void RenderLayer(LabelLayer layer, Map map, Graphics g)
+        public void RenderLayer(ILabelLayer layer, Map map, Graphics g)
         {
             if (layer.Style.Enabled
                 && layer.Style.MaxVisible >= map.Zoom
