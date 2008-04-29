@@ -137,7 +137,7 @@ namespace SharpMap.Renderer
                 g.Transform = map.MapTransform;
                 g.Clear(map.BackColor);
                 g.PageUnit = GraphicsUnit.Pixel;
-                int SRID = (map.Layers.Count > 0 ? map.Layers[0].SRID : -1); //Get the SRID of the first layer
+                //int SRID = (map.Layers.Count > 0 ? map.Layers[0].SRID : -1); //Get the SRID of the first layer
                 for (int i = 0; i < map.Layers.Count; i++)
                 {
                     ILayer lyr = map.Layers[i];

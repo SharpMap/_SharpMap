@@ -7,6 +7,7 @@ namespace SharpMap.Layers
 {
     public interface ILabelLayer
         : IDataLayer,
+        ITransformableLayer,
         IStyleable<ILabelStyle>,
         IThemeable<ILabelStyle>
     {
