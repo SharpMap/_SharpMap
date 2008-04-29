@@ -28,7 +28,7 @@ using SharpMap.Styles;
 namespace SharpMap.Renderer.DefaultImage
 {
     internal class DefaultLabelRenderer
-        : DefaultImageRenderer.ILayerRenderer<LabelLayer>
+        : DefaultImageRenderer.ILayerRenderer<ILabelLayer>
     {
         #region RenderingHelper<LabelLayer> Members
         public void RenderLayer(ILayer layer, Map map, Graphics g)
