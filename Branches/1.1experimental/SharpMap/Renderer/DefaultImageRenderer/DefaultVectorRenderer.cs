@@ -93,7 +93,6 @@ namespace SharpMap.Renderer.DefaultImage
                 {
                     SharpMap.Data.FeatureDataRow feature = features[i];
                     IVectorStyle style = layer.Theme.GetStyle(feature);
-                    style = style; ///use the defult style if there wasnt one returned
                     RenderGeometry(g, map, layer.ClippingEnabled, feature.Geometry, style);
                 }
             }
