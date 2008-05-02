@@ -34,7 +34,7 @@ namespace SharpMap.Renderers.GeoJson
                 RenderLayer(sb, map, l);
                 sb.Append(",");
             }
-            sb.Remove(sb.Length - 2, 1);
+            sb.Remove(sb.Length - 1, 1);
 
             sb.Append("}");
             OnRenderDone();
@@ -121,7 +121,7 @@ namespace SharpMap.Renderers.GeoJson
             }
 
             if (itemRendered)
-                sb.Remove(sb.Length - 2, 1);
+                sb.Remove(sb.Length - 1, 1);
             sb.Append("]");
             sb.Append("}");
 
@@ -169,7 +169,7 @@ namespace SharpMap.Renderers.GeoJson
                     RenderGeometry(sb, g2);
                     sb.Append(",");
                 }
-                sb.Remove(sb.Length - 2, 1);
+                sb.Remove(sb.Length - 1, 1);
             }
 
             sb.Append("}");
@@ -183,7 +183,7 @@ namespace SharpMap.Renderers.GeoJson
                 RenderPolygonCoordinates(sb, p);
                 sb.Append(",");
             }
-            sb.Remove(sb.Length - 2, 1);
+            sb.Remove(sb.Length - 1, 1);
             sb.Append("]");
         }
 
@@ -195,7 +195,7 @@ namespace SharpMap.Renderers.GeoJson
                 RenderLineStringCoordinates(sb, ls);
                 sb.Append(",");
             }
-            sb.Remove(sb.Length - 2, 1);
+            sb.Remove(sb.Length - 1, 1);
             sb.Append("]");
         }
 
@@ -207,7 +207,7 @@ namespace SharpMap.Renderers.GeoJson
                 RenderPointCoordinates(sb, p);
                 sb.Append(",");
             }
-            sb.Remove(sb.Length - 2, 1);
+            sb.Remove(sb.Length - 1, 1);
             sb.Append("]");
         }
 
@@ -232,7 +232,7 @@ namespace SharpMap.Renderers.GeoJson
                 RenderPointCoordinates(sb, p);
                 sb.Append(",");
             }
-            sb.Remove(sb.Length - 2, 1);
+            sb.Remove(sb.Length - 1, 1);
 
             sb.Append("]");
         }
@@ -245,7 +245,7 @@ namespace SharpMap.Renderers.GeoJson
                 RenderPointCoordinates(sb, p);
                 sb.Append(",");
             }
-            sb.Remove(sb.Length - 2, 1);
+            sb.Remove(sb.Length - 1, 1);
             sb.Append("]");
         }
 
