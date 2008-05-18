@@ -32,7 +32,24 @@ namespace SharpMap.Renderer
     public class DefaultImageRenderer
         : IMapRenderer<Image>, IAsyncMapRenderer<Image>
     {
+        private bool _allowConcurrentRendering = false;
 
+        public bool AllowConcurrentRendering
+        {
+            get { return _allowConcurrentRendering; }
+            set { _allowConcurrentRendering = value; }
+        }
+
+
+        private bool _isRendering;
+        public bool IsRenderering
+        {
+            get { return _isRendering; }
+            protected set
+            {
+                _isRendering = value;
+            }
+        }
 
         private static ImageCodecInfo _defaultCodec;
         private static ImageCodecInfo GetDefaultCodec()
@@ -179,10 +196,14 @@ namespace SharpMap.Renderer
             InternalAsyncRenderDelegate<Image> dlgt = new InternalAsyncRenderDelegate<Image>(
                 delegate(Map m, AsyncRenderCallbackDelegate<Image> call)
                 {
-                    string mime;
-                    Image im = this.Render(map, out mime);
-                    callback(im, mime);
-
+                    if (!this.IsRenderering || this.AllowConcurrentRendering)
+                    {
+                        this.IsRenderering = true;
+                        string mime;
+                        Image im = this.Render(map, out mime);
+                        callback(im, mime);
+                        this.IsRenderering = false;
+                    }
                 });
             return dlgt.BeginInvoke(map, callback, null, null);
         }
@@ -198,10 +219,14 @@ namespace SharpMap.Renderer
             InternalAsyncRenderDelegate dlgt = new InternalAsyncRenderDelegate(
                 delegate(Map m, AsyncRenderCallbackDelegate call)
                 {
-                    string mime;
-                    Stream s = ((IMapRenderer)this).Render(map, out mime);
-                    callback(s, mime);
-
+                    if (!this.IsRenderering || this.AllowConcurrentRendering)
+                    {
+                        this.IsRenderering = true;
+                        string mime;
+                        Stream s = ((IMapRenderer)this).Render(map, out mime);
+                        callback(s, mime);
+                        this.IsRenderering = false;
+                    }
                 });
             return dlgt.BeginInvoke(map, callback, null, null);
 

@@ -19,6 +19,9 @@ namespace SharpMap.Renderer
     public interface IAsyncMapRenderer
     {
         IAsyncResult Render(Map map, AsyncRenderCallbackDelegate callback);
+        bool AllowConcurrentRendering { get; set; }
+        bool IsRenderering { get; }
+
     }
 
     public interface IAsyncMapRenderer<TOutput> : IAsyncMapRenderer
