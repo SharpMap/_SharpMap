@@ -66,6 +66,7 @@
     <Compile Include="Data\FeatureDataSet.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Data\Providers\BufferedDataProviderProxy`1.cs" />
     <Compile Include="Data\Providers\DbaseReader.cs" />
     <Compile Include="Data\Providers\GeometryFeatureProvider.cs" />
     <Compile Include="Data\Providers\GeometryProvider.cs" />
