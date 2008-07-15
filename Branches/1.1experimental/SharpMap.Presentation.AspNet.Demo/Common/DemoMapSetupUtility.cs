@@ -13,12 +13,14 @@
  * 
  */
 using System.Configuration;
+using System.Drawing;
 using System.Web;
 using SharpMap.Data;
 using SharpMap.Data.Providers;
 using SharpMap.Layers;
 using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
+using Point=SharpMap.Geometries.Point;
 
 namespace SharpMap.Presentation.AspNet.Demo
 {
@@ -31,19 +33,38 @@ namespace SharpMap.Presentation.AspNet.Demo
         /// <param name="m"></param>
         public static void SetupMap(HttpContext context, Map m)
         {
-            VectorLayer l = new VectorLayer(
-                   "Countries",
-                   new ShapeFile(context.Server.MapPath(ConfigurationManager.AppSettings["shpfilePath"])));
+            var l = new VectorLayer(
+                "Countries",
+                new ShapeFile(context.Server.MapPath(ConfigurationManager.AppSettings["shpfilePath"])));
 
             l.Style = RandomStyle.RandomVectorStyleNoSymbols();
             l.Theme = new CustomTheme<IVectorStyle>(
-                new GetStyleMethod<IVectorStyle>(
-                    delegate(FeatureDataRow fdr)
-                    {
-                        return RandomStyle.RandomVectorStyleNoSymbols();
-                    }
-                ));
+                delegate { return RandomStyle.RandomVectorStyleNoSymbols(); });
             m.Layers.Add(l);
+
+            FeatureDataTable labelData = new FeatureDataTable();
+            labelData.Columns.Add("Name", typeof (string));
+            FeatureDataRow r = labelData.NewRow();
+            r["Name"] = "My Lair";
+            r.Geometry = new Point(5, 5);
+            labelData.AddRow(r);
+
+            LabelLayer labelLayer = new LabelLayer("labelLayer")
+                            {
+                                DataSource = new GeometryFeatureProvider(labelData),
+                                Enabled = true,
+                                LabelColumn = "Name",
+                                Style = new LabelStyle
+                                            {
+                                                BackColor = new SolidBrush(Color.Black),
+                                                ForeColor = Color.White,
+                                                Halo = new Pen(Color.Yellow, 0.1F),
+                                                CollisionDetection = false,
+                                                Font = new Font("Arial", 10, GraphicsUnit.Point)
+                                            }
+                            };
+
+            m.Layers.Add(labelLayer);
         }
     }
 }
