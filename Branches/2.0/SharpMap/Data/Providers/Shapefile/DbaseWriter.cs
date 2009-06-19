@@ -191,17 +191,17 @@ namespace SharpMap.Data.Providers
 
         private void writeNullDateTime()
         {
-            _dbaseWriter.Write(DbaseConstants.NullDateValue);
+            _dbaseWriter.Write(DbaseConstants.NullDateValue.ToCharArray());
         }
 
         private void writeNullString(int length)
         {
-            _dbaseWriter.Write(new String('\0', length));
+            _dbaseWriter.Write(new String('\0', length).ToCharArray());
         }
 
         private void writeNullNumber(int length)
         {
-            _dbaseWriter.Write(new String(DbaseConstants.NumericNullIndicator, length));
+            _dbaseWriter.Write(new String(DbaseConstants.NumericNullIndicator, length).ToCharArray());
         }
 
         private void writeNumber(double value, short length, byte decimalPlaces)
@@ -211,7 +211,7 @@ namespace SharpMap.Data.Providers
             _format.Append(NumberFormatTemplate);
             _format.Insert(5, decimalPlaces).Insert(3, length);
             string number = String.Format(SharpMap.Map.NumberFormat_EnUS, _format.ToString(), value);
-            _dbaseWriter.Write(number);
+            _dbaseWriter.Write(number.ToCharArray());
         }
 
         private void writeNumber(long value, short length)
@@ -222,18 +222,18 @@ namespace SharpMap.Data.Providers
 
         private void writeDateTime(DateTime dateTime)
         {
-            _dbaseWriter.Write(dateTime.ToString("yyyyMMDD"));
+            _dbaseWriter.Write(dateTime.ToString("yyyyMMDD").ToCharArray());
         }
 
         private void writeString(string value, int length)
         {
             value = (value ?? String.Empty) + new String('\0', length);
-            _dbaseWriter.Write(value.Substring(0, length));
+            _dbaseWriter.Write(value.Substring(0, length).ToCharArray());
         }
 
         private void writeBoolean(bool value)
         {
-            _dbaseWriter.Write(value ? "T" : "F");
+            _dbaseWriter.Write(value ? 'T' : 'F');
         }
 
         private void updateHeader()
