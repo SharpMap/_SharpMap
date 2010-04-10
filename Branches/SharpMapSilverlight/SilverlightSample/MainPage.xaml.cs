@@ -13,7 +13,7 @@ namespace SilverlightSample
 
         private void MyGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            WriteableBitmap bitmap = new WriteableBitmap(256, 256);
+            WriteableBitmap bitmap = new WriteableBitmap(1024, 1024);
             bitmap.Render(grid, null);
             bitmap.Invalidate();
             image.Source = bitmap;
