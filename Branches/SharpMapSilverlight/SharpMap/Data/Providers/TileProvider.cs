@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using BruTile;
-using SharpMap.Geometries;
-using SharpMap.Layers;
-using SharpMap;
 using System.Threading;
+using BruTile;
 using BruTile.Cache;
-using SharpMap.Data.Providers;
-using System.Net;
 using SharpMap.Data;
+using SharpMap.Data.Providers;
+using SharpMap.Geometries;
 using SharpMap.Rasters;
 
 namespace SharpMap.Providers
@@ -160,12 +156,84 @@ namespace SharpMap.Providers
             }
         }
 
-
         #region IRasterProvider Members
+
+        public IFeatureCollection GetFeaturesInView(BoundingBox bbox)
+        {
+            throw new NotImplementedException();
+        }
 
         public IList<IRaster> GetRastersInView(BoundingBox bbox, double resolution)
         {
             return FetchTiles(bbox, resolution);
+        }
+
+        #endregion
+
+        #region IProvider Members
+
+        public string ConnectionID
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool IsOpen
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public System.Collections.ObjectModel.Collection<Geometry> GetGeometriesInView(BoundingBox bbox)
+        {
+            throw new NotImplementedException();
+        }
+
+        public System.Collections.ObjectModel.Collection<uint> GetObjectIDsInView(BoundingBox bbox)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Geometry GetGeometryByID(uint oid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ExecuteIntersectionQuery(Geometry geom, IFeatureCollection table)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ExecuteIntersectionQuery(BoundingBox box, IFeatureCollection table)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetFeatureCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFeatureRow GetFeature(uint RowID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Open()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Close()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

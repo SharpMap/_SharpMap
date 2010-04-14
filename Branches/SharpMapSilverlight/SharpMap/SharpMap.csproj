@@ -87,14 +87,19 @@
     <Compile Include="Converters\WellKnownText\StreamTokenizer.cs" />
     <Compile Include="Converters\WellKnownText\TokenType.cs" />
     <Compile Include="Converters\WellKnownText\WKTStreamTokenizer.cs" />
-    <Compile Include="Data\FeatureTable.cs">
+    <Compile Include="Data\FeatureDataSet.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Data\FeatureCollection.cs">
     </Compile>
     <Compile Include="Data\Providers\DbaseReader.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\Providers\IProvider.cs" />
     <Compile Include="Data\Providers\IRasterProvider.cs" />
-    <Compile Include="Data\Providers\IVectorProvider.cs" />
+    <Compile Include="Data\Providers\MsSql.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Data\Providers\ShapeFile.cs">
       <SubType>Code</SubType>
     </Compile>

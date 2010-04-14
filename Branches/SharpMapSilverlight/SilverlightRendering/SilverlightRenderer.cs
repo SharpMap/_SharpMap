@@ -28,31 +28,28 @@ namespace SilverlightRendering
         public void Render(IProvider provider, Func<IFeatureRow, IStyle> getStyle, ICoordinateTransformation coordinateTransformation, IMapTransform mapTransform)
         {
             BoundingBox envelope = mapTransform.Extent;
-            if (provider is IVectorProvider)
-            {
-                IVectorProvider vectorProvider = provider as IVectorProvider;
-                vectorProvider.Open();
-                IFeatureTable features = vectorProvider.GetFeaturesInView(envelope);
-                vectorProvider.Close();
+            provider.Open();
+            IFeatureCollection features = provider.GetFeaturesInView(envelope);
+            provider.Close();
 
-                foreach (FeatureRow row in features.Rows)
-                {
-                    if (row.Geometry is Point)
-                        elements.Add(RenderPoint(row.Geometry as Point, getStyle(row), mapTransform));
-                    else if (row.Geometry is MultiPoint)
-                        elements.Add(RenderMultiPoint(row.Geometry as MultiPoint, getStyle(row), mapTransform));
-                    else if (row.Geometry is LineString)
-                        elements.Add(RenderLineString(row.Geometry as LineString, getStyle(row), mapTransform));
-                    else if (row.Geometry is MultiLineString)
-                        elements.Add(RenderMultiLineString(row.Geometry as MultiLineString, getStyle(row), mapTransform));
-                    else if (row.Geometry is SharpMap.Geometries.Polygon)
-                        elements.Add(RenderPolygon(row.Geometry as SharpMap.Geometries.Polygon, getStyle(row), mapTransform));
-                    else if (row.Geometry is MultiPolygon)
-                        elements.Add(RenderMultiPolygon(row.Geometry as MultiPolygon, getStyle(row), mapTransform));
-                }
+            foreach (FeatureRow row in features.Rows)
+            {
+                if (row.Geometry is Point)
+                    elements.Add(RenderPoint(row.Geometry as Point, getStyle(row), mapTransform));
+                else if (row.Geometry is MultiPoint)
+                    elements.Add(RenderMultiPoint(row.Geometry as MultiPoint, getStyle(row), mapTransform));
+                else if (row.Geometry is LineString)
+                    elements.Add(RenderLineString(row.Geometry as LineString, getStyle(row), mapTransform));
+                else if (row.Geometry is MultiLineString)
+                    elements.Add(RenderMultiLineString(row.Geometry as MultiLineString, getStyle(row), mapTransform));
+                else if (row.Geometry is SharpMap.Geometries.Polygon)
+                    elements.Add(RenderPolygon(row.Geometry as SharpMap.Geometries.Polygon, getStyle(row), mapTransform));
+                else if (row.Geometry is MultiPolygon)
+                    elements.Add(RenderMultiPolygon(row.Geometry as MultiPolygon, getStyle(row), mapTransform));
             }
+
         }
-        
+
         private Path RenderPoint(SharpMap.Geometries.Point point, IStyle style, IMapTransform mapTransform)
         {
             Path path = CreatePointPath(style);
@@ -63,7 +60,7 @@ namespace SilverlightRendering
         private static Path CreatePointPath(IStyle style)
         {
             var vectorStyle = style as VectorStyle;
-            
+
             //todo: use this:
             //vectorStyle.Symbol.Convert();
             //vectorStyle.SymbolScale;
@@ -125,7 +122,7 @@ namespace SilverlightRendering
         private static Path CreateLineStringPath(IStyle style)
         {
             var vectorStyle = style as VectorStyle;
-            
+
             Path path = new Path();
             if (vectorStyle.EnableOutline)
             {
@@ -148,7 +145,7 @@ namespace SilverlightRendering
         {
             var pathFigure = new PathFigure();
             pathFigure.StartPoint = ConvertPoint(linearRing.StartPoint.WorldToMap(mapTransform));
-            
+
             foreach (Point point in linearRing.Vertices)
             {
                 pathFigure.Segments.Add(
@@ -222,14 +219,14 @@ namespace SilverlightRendering
                 pathGeometry.Figures.Add(CreatePathFigure(linearRing, mapTransform));
             return pathGeometry;
         }
-        
+
         private static Path RenderMultiPolygon(MultiPolygon geometry, IStyle style, IMapTransform mapTransform)
         {
             Path path = CreatePolygonPath(style);
             path.Data = ConvertMultiPolygon(geometry, mapTransform);
             return path;
         }
-        
+
         private static GeometryGroup ConvertMultiPolygon(MultiPolygon geometry, IMapTransform mapTransform)
         {
             var group = new GeometryGroup();
