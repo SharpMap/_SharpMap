@@ -27,7 +27,7 @@ namespace SharpMap.Data.Providers
 	/// </summary>
 	public interface IVectorProvider : IProvider, IDisposable
 	{
-        IFeatureTable GetFeaturesInView(BoundingBox envelope);
+        IFeatureCollection GetFeaturesInView(BoundingBox envelope);
 		/// <summary>
 		/// Gets the features within the specified <see cref="SharpMap.Geometries.BoundingBox"/>
 		/// </summary>

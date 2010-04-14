@@ -304,11 +304,11 @@ namespace SharpMap.Data.Providers
         }
 
 
-        private SharpMap.Data.FeatureTable baseTable;
+        private SharpMap.Data.FeatureCollection baseTable;
 
         private void CreateBaseTable()
         {
-            baseTable = new SharpMap.Data.FeatureTable();
+            baseTable = new SharpMap.Data.FeatureCollection();
             //!!!
             //foreach (DbaseField dbf in DbaseColumns)
             //    baseTable.Columns.Add(dbf.ColumnName, dbf.DataType);
@@ -352,7 +352,7 @@ namespace SharpMap.Data.Providers
         /// <param name="oid"></param>
         /// <param name="table"></param>
         /// <returns></returns>
-        internal IFeatureRow GetFeature(uint oid, IFeatureTable table)
+        internal IFeatureRow GetFeature(uint oid, IFeatureCollection table)
         {
             if (!_isOpen)
                 throw (new ApplicationException("An attempt was made to read from a closed DBF file"));

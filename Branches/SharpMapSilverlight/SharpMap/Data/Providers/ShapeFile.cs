@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using SharpMap.Geometries;
+using System.Collections.ObjectModel;
 
 namespace SharpMap.Data.Providers
 {
@@ -136,7 +137,7 @@ namespace SharpMap.Data.Providers
     /// myLayer.DataSource = new SharpMap.Data.Providers.ShapeFile(@"C:\data\MyShapeData.shp");
     /// </code>
     /// </example>
-    public class ShapeFile :IVectorProvider, IDisposable
+    public class ShapeFile : IProvider, IDisposable
     {
         private ShapeType _ShapeType;
         private string _Filename;
@@ -588,11 +589,11 @@ namespace SharpMap.Data.Providers
         /// <param name="bbox"></param>
         /// <param name="ds"></param>
         /// <returns></returns>
-        public IFeatureTable GetFeaturesInView(BoundingBox bbox)
+        public IFeatureCollection GetFeaturesInView(BoundingBox bbox)
         {
             //Use the spatial index to get a list of features whose boundingbox intersects bbox
             List<uint> objectlist = GetObjectIDsInView(bbox);
-            SharpMap.Data.FeatureTable dt = new FeatureTable();
+            SharpMap.Data.FeatureCollection dt = new FeatureCollection();
 
             for (int i = 0; i < objectlist.Count; i++)
             {
@@ -601,7 +602,7 @@ namespace SharpMap.Data.Providers
                 if (fdr.Geometry != null)
                     if (fdr.Geometry.GetBoundingBox().Intersects(bbox))
                         if (FilterDelegate == null || FilterDelegate(fdr))
-                            dt.Rows.Add(fdr);
+                            ((Collection<IFeatureRow>)dt.Rows).Add(fdr);
             }
             return dt;
         }
@@ -758,9 +759,9 @@ namespace SharpMap.Data.Providers
         /// <param name="distance"></param>
         /// <returns></returns>
         [Obsolete("Use ExecuteIntersectionQuery instead")]
-        public IFeatureTable QueryFeatures(SharpMap.Geometries.Geometry geom, double distance)
+        public IFeatureCollection QueryFeatures(SharpMap.Geometries.Geometry geom, double distance)
         {
-            SharpMap.Data.FeatureTable dt = new FeatureTable();
+            SharpMap.Data.FeatureCollection dt = new FeatureCollection();
             SharpMap.Geometries.BoundingBox bbox = geom.GetBoundingBox();
             bbox.Min.X -= distance; bbox.Max.X += distance;
             bbox.Min.Y -= distance; bbox.Max.Y += distance;
@@ -777,7 +778,7 @@ namespace SharpMap.Data.Providers
                 {
                     IFeatureRow fdr = GetFeature(objectlist[j],dt);
                     if (fdr!=null && ((Geometry)fdr.Geometry).Intersects(geomBuffer))
-                        dt.Rows.Add(fdr);
+                        ((Collection<IFeatureRow>)dt.Rows).Add(fdr);
                 }
             }
             return dt;
@@ -911,11 +912,11 @@ namespace SharpMap.Data.Providers
         /// <param name="RowID"></param>
         /// <param name="dt">Datatable to feature should belong to.</param>
         /// <returns></returns>
-        public IFeatureRow GetFeature(uint RowID, IFeatureTable dt)
+        public IFeatureRow GetFeature(uint RowID, IFeatureCollection dt)
         {
             if (dbaseFile != null)
             {
-                IFeatureRow dr = (IFeatureRow)dbaseFile.GetFeature(RowID, (dt==null) ? new FeatureTable() : dt);
+                IFeatureRow dr = (IFeatureRow)dbaseFile.GetFeature(RowID, (dt==null) ? new FeatureCollection() : dt);
                 dr.Geometry = ReadGeometry(RowID);
                 if (FilterDelegate == null || FilterDelegate(dr))
                     return dr;

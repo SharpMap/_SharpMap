@@ -122,11 +122,11 @@ namespace SharpMap.Layers
             base.Render(renderer, mapTransform);
         }
 
-        private static Func<IFeatureRow, IStyle>  CreateStyleMethod(IStyle style, ITheme theme)
+        private static Func<IFeatureRow, IStyle> CreateStyleMethod(IStyle style, ITheme theme)
         {
-            if (theme == null) 
+            if (theme == null)
                 return (row) => style;
-            else 
+            else
                 return (row) => theme.GetStyle(row);
         }
 
@@ -141,24 +141,16 @@ namespace SharpMap.Layers
                 if (this.DataSource == null)
                     throw (new Exception("DataSource property not set on layer '" + this.LayerName + "'"));
 
-                if (DataSource is IVectorProvider)
-                {
-
-                    bool wasOpen = (this.DataSource as IVectorProvider).IsOpen;
-                    if (!wasOpen)
-                        (this.DataSource as IVectorProvider).Open();
-                    SharpMap.Geometries.BoundingBox box = this.DataSource.GetExtents();
-                    if (!wasOpen) //Restore state
-                        (this.DataSource as IVectorProvider).Close();
-                    if (this.CoordinateTransformation != null)
-                        throw new NotImplementedException();
-                    //!!!return ProjNet.CoordinateSystems.Transformations.GeometryTransform.TransformBox(box, this.CoordinateTransformation.MathTransform);
-                    return box;
-                }
-                else
-                {
-                    return (DataSource as IRasterProvider).GetExtents();
-                }
+                bool wasOpen = this.DataSource.IsOpen;
+                if (!wasOpen)
+                    this.DataSource.Open();
+                SharpMap.Geometries.BoundingBox box = this.DataSource.GetExtents();
+                if (!wasOpen) //Restore state
+                    this.DataSource.Close();
+                if (this.CoordinateTransformation != null)
+                    throw new NotImplementedException();
+                //!!!return ProjNet.CoordinateSystems.Transformations.GeometryTransform.TransformBox(box, this.CoordinateTransformation.MathTransform);
+                return box;
             }
         }
 

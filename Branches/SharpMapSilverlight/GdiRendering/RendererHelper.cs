@@ -54,11 +54,9 @@ namespace SharpMap.Rendering
             }
             else
             {
-                IVectorProvider vectorProvider = provider as IVectorProvider;
-
-                vectorProvider.Open();
-                IFeatureTable features = vectorProvider.GetFeaturesInView(envelope);
-                vectorProvider.Close();
+                provider.Open();
+                IFeatureCollection features = provider.GetFeaturesInView(envelope);
+                provider.Close();
 
                 if (coordinateTransformation != null)
                     foreach (FeatureRow feature in features.Rows)
@@ -67,10 +65,8 @@ namespace SharpMap.Rendering
                 //Linestring outlines is drawn by drawing the layer once with a thicker line
                 //before drawing the "inline" on top.
 
-                //foreach (SharpMap.Geometries.Geometry feature in features)
-                for (int i = 0; i < features.Rows.Count; i++)
+                foreach (IFeatureRow feature in features.Rows)
                 {
-                    IFeatureRow feature = features.Rows[i];
                     if ((getStyle(feature) as VectorStyle).EnableOutline)
                     {
                         //Draw background of all line-outlines first
@@ -87,9 +83,8 @@ namespace SharpMap.Rendering
                     }
                 }
 
-                for (int i = 0; i < features.Rows.Count; i++)
+                foreach (IFeatureRow feature in features.Rows)
                 {
-                    IFeatureRow feature = features.Rows[i];
                     SharpMap.Styles.VectorStyle style = getStyle(feature) as SharpMap.Styles.VectorStyle;
                     RenderGeometry(g, transform, feature.Geometry, style);
                 }
