@@ -25,27 +25,27 @@ namespace SilverlightRendering
             this.elements = elements;
         }
 
-        public void Render(IProvider provider, Func<IFeatureRow, IStyle> getStyle, ICoordinateTransformation coordinateTransformation, IMapTransform mapTransform)
+        public void Render(IProvider provider, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation, IMapTransform mapTransform)
         {
             BoundingBox envelope = mapTransform.Extent;
             provider.Open();
-            IFeatureCollection features = provider.GetFeaturesInView(envelope);
+            IFeatures features = provider.GetFeaturesInView(envelope);
             provider.Close();
 
-            foreach (FeatureRow row in features.Rows)
+            foreach (var feature in features.Items)
             {
-                if (row.Geometry is Point)
-                    elements.Add(RenderPoint(row.Geometry as Point, getStyle(row), mapTransform));
-                else if (row.Geometry is MultiPoint)
-                    elements.Add(RenderMultiPoint(row.Geometry as MultiPoint, getStyle(row), mapTransform));
-                else if (row.Geometry is LineString)
-                    elements.Add(RenderLineString(row.Geometry as LineString, getStyle(row), mapTransform));
-                else if (row.Geometry is MultiLineString)
-                    elements.Add(RenderMultiLineString(row.Geometry as MultiLineString, getStyle(row), mapTransform));
-                else if (row.Geometry is SharpMap.Geometries.Polygon)
-                    elements.Add(RenderPolygon(row.Geometry as SharpMap.Geometries.Polygon, getStyle(row), mapTransform));
-                else if (row.Geometry is MultiPolygon)
-                    elements.Add(RenderMultiPolygon(row.Geometry as MultiPolygon, getStyle(row), mapTransform));
+                if (feature.Geometry is Point)
+                    elements.Add(RenderPoint(feature.Geometry as Point, getStyle(feature), mapTransform));
+                else if (feature.Geometry is MultiPoint)
+                    elements.Add(RenderMultiPoint(feature.Geometry as MultiPoint, getStyle(feature), mapTransform));
+                else if (feature.Geometry is LineString)
+                    elements.Add(RenderLineString(feature.Geometry as LineString, getStyle(feature), mapTransform));
+                else if (feature.Geometry is MultiLineString)
+                    elements.Add(RenderMultiLineString(feature.Geometry as MultiLineString, getStyle(feature), mapTransform));
+                else if (feature.Geometry is SharpMap.Geometries.Polygon)
+                    elements.Add(RenderPolygon(feature.Geometry as SharpMap.Geometries.Polygon, getStyle(feature), mapTransform));
+                else if (feature.Geometry is MultiPolygon)
+                    elements.Add(RenderMultiPolygon(feature.Geometry as MultiPolygon, getStyle(feature), mapTransform));
             }
 
         }

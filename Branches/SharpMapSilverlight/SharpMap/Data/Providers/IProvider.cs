@@ -85,7 +85,7 @@ namespace SharpMap.Data.Providers
         /// <param name="ds">FeatureDataSet to fill data into</param>
         //!!! Disabled to get a compile: void ExecuteIntersectionQuery(BoundingBox box, IFeatureTable table);
 
-        IFeatureCollection GetFeaturesInView(BoundingBox envelope);
+        IFeatures GetFeaturesInView(BoundingBox envelope);
 		
         /// <summary>
         /// Returns the number of features in the dataset
@@ -98,7 +98,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="RowID"></param>
         /// <returns>datarow</returns>
-        IFeatureRow GetFeature(uint RowID);
+        IFeature GetFeature(uint RowID);
 
         /// <summary>
         /// <see cref="SharpMap.Geometries.BoundingBox"/> of dataset

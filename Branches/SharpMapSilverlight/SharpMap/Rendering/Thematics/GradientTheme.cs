@@ -173,7 +173,7 @@ namespace SharpMap.Rendering.Thematics
         /// </summary>
         /// <param name="row">Feature</param>
         /// <returns><see cref="SharpMap.Styles.IStyle">Style</see> calculated by a linear interpolation between the min/max styles</returns>
-        public SharpMap.Styles.IStyle GetStyle(IFeatureRow row)
+        public SharpMap.Styles.IStyle GetStyle(IFeature row)
         {
             double attr = 0;
             try { attr = Convert.ToDouble(row[this._ColumnName.ToUpper()]); }

@@ -158,7 +158,7 @@ namespace SharpMap.Providers
 
         #region IRasterProvider Members
 
-        public IFeatureCollection GetFeaturesInView(BoundingBox bbox)
+        public IFeatures GetFeaturesInView(BoundingBox bbox)
         {
             throw new NotImplementedException();
         }
@@ -197,12 +197,12 @@ namespace SharpMap.Providers
             throw new NotImplementedException();
         }
 
-        public void ExecuteIntersectionQuery(Geometry geom, IFeatureCollection table)
+        public void ExecuteIntersectionQuery(Geometry geom, IFeatures table)
         {
             throw new NotImplementedException();
         }
 
-        public void ExecuteIntersectionQuery(BoundingBox box, IFeatureCollection table)
+        public void ExecuteIntersectionQuery(BoundingBox box, IFeatures table)
         {
             throw new NotImplementedException();
         }
@@ -212,7 +212,7 @@ namespace SharpMap.Providers
             throw new NotImplementedException();
         }
 
-        public IFeatureRow GetFeature(uint RowID)
+        public IFeature GetFeature(uint RowID)
         {
             throw new NotImplementedException();
         }

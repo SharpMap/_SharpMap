@@ -27,7 +27,7 @@ namespace SharpMap.Data.Providers
 	/// </summary>
 	public interface IVectorProvider : IProvider, IDisposable
 	{
-        IFeatureCollection GetFeaturesInView(BoundingBox envelope);
+        IFeatures GetFeaturesInView(BoundingBox envelope);
 		/// <summary>
 		/// Gets the features within the specified <see cref="SharpMap.Geometries.BoundingBox"/>
 		/// </summary>
@@ -64,7 +64,7 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="RowID"></param>
 		/// <returns>datarow</returns>
-		IFeatureRow GetFeature(uint RowID);
+		IFeature GetFeature(uint RowID);
 		
 		/// <summary>
 		/// Gets the connection ID of the datasource

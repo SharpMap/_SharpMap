@@ -83,9 +83,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataSourceCreator.cs" />
-    <Compile Include="Data\FeatureCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Data\Features.cs" />
     <Compile Include="Data\Providers\IProvider.cs" />
     <Compile Include="Data\Providers\IRasterProvider.cs" />
     <Compile Include="Data\Providers\IVectorProvider.cs" />

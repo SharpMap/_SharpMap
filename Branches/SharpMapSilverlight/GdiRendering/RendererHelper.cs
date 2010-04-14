@@ -34,7 +34,7 @@ namespace SharpMap.Rendering
     /// </summary>
     public static class RendererHelper
     {
-        public static void Render(System.Drawing.Graphics g, IProvider provider, Func<IFeatureRow, IStyle> getStyle, 
+        public static void Render(System.Drawing.Graphics g, IProvider provider, Func<IFeature, IStyle> getStyle, 
             ICoordinateTransformation coordinateTransformation, IMapTransform transform)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -55,17 +55,17 @@ namespace SharpMap.Rendering
             else
             {
                 provider.Open();
-                IFeatureCollection features = provider.GetFeaturesInView(envelope);
+                IFeatures features = provider.GetFeaturesInView(envelope);
                 provider.Close();
 
                 if (coordinateTransformation != null)
-                    foreach (FeatureRow feature in features.Rows)
+                    foreach (var feature in features.Items)
                         feature.Geometry = ProjectionHelper.Transform(feature.Geometry, coordinateTransformation);
 
                 //Linestring outlines is drawn by drawing the layer once with a thicker line
                 //before drawing the "inline" on top.
 
-                foreach (IFeatureRow feature in features.Rows)
+                foreach (IFeature feature in features.Items)
                 {
                     if ((getStyle(feature) as VectorStyle).EnableOutline)
                     {
@@ -83,7 +83,7 @@ namespace SharpMap.Rendering
                     }
                 }
 
-                foreach (IFeatureRow feature in features.Rows)
+                foreach (IFeature feature in features.Items)
                 {
                     SharpMap.Styles.VectorStyle style = getStyle(feature) as SharpMap.Styles.VectorStyle;
                     RenderGeometry(g, transform, feature.Geometry, style);

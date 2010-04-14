@@ -90,7 +90,7 @@
     <Compile Include="Data\FeatureDataSet.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Data\FeatureCollection.cs">
+    <Compile Include="Data\Features.cs">
     </Compile>
     <Compile Include="Data\Providers\DbaseReader.cs">
       <SubType>Code</SubType>

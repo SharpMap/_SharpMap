@@ -32,6 +32,6 @@ namespace SharpMap.Rendering.Thematics
 		/// </summary>
 		/// <param name="attribute">Attribute to calculate color from</param>
 		/// <returns>Color</returns>
-		SharpMap.Styles.IStyle GetStyle(IFeatureRow attribute);
+		SharpMap.Styles.IStyle GetStyle(IFeature attribute);
 	}
 }
