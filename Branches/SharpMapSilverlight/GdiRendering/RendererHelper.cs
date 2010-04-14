@@ -15,17 +15,17 @@
 // along with SharpMap; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
+using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.IO;
 using ProjNet.CoordinateSystems.Transformations;
 using SharpMap.Data;
 using SharpMap.Data.Providers;
 using SharpMap.Geometries;
-using SharpMap.Rendering.Thematics;
-using SharpMap.Styles;
-using System.Drawing.Imaging;
-using System.IO;
-using System;
 using SharpMap.Rasters;
+using SharpMap.Styles;
+using SharpMap.Projection;
 
 namespace SharpMap.Rendering
 {
@@ -34,16 +34,17 @@ namespace SharpMap.Rendering
     /// </summary>
     public static class RendererHelper
     {
-        public static void Render(System.Drawing.Graphics g, IProvider provider, Func<FeatureDataRow, IStyle> getStyle, ICoordinateTransformation CoordinateTransformation, IMapTransform transform)
+        public static void Render(System.Drawing.Graphics g, IProvider provider, Func<IFeatureRow, IStyle> getStyle, 
+            ICoordinateTransformation coordinateTransformation, IMapTransform transform)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             BoundingBox envelope = transform.Extent; //View to render
 
-            //!!!
-            //if (CoordinateTransformation != null)
-            //    envelope = ProjNet.CoordinateSystems.Transformations.GeometryTransform.TransformBox(envelope, CoordinateTransformation.MathTransform.Inverse());
-
+            if (coordinateTransformation != null)
+            {
+                envelope = ProjectionHelper.InverseTransform(envelope, coordinateTransformation);
+            }
 
             if (provider is IRasterProvider)
             {
@@ -56,13 +57,12 @@ namespace SharpMap.Rendering
                 IVectorProvider vectorProvider = provider as IVectorProvider;
 
                 vectorProvider.Open();
-                FeatureDataTable features = vectorProvider.GetFeaturesInView(envelope);
+                IFeatureTable features = vectorProvider.GetFeaturesInView(envelope);
                 vectorProvider.Close();
 
-                //!!!
-                //if (CoordinateTransformation != null)
-                //    for (int i = 0; i < features.Rows.Count; i++)
-                //        features[i].Geometry = ProjNet.CoordinateSystems.Transformations.CoordinateTransformation(features.Rows[i].Geometry, CoordinateTransformation.MathTransform);
+                if (coordinateTransformation != null)
+                    foreach (FeatureRow feature in features.Rows)
+                        feature.Geometry = ProjectionHelper.Transform(feature.Geometry, coordinateTransformation);
 
                 //Linestring outlines is drawn by drawing the layer once with a thicker line
                 //before drawing the "inline" on top.
@@ -70,8 +70,7 @@ namespace SharpMap.Rendering
                 //foreach (SharpMap.Geometries.Geometry feature in features)
                 for (int i = 0; i < features.Rows.Count; i++)
                 {
-
-                    SharpMap.Data.FeatureDataRow feature = features.Rows[i];
+                    IFeatureRow feature = features.Rows[i];
                     if ((getStyle(feature) as VectorStyle).EnableOutline)
                     {
                         //Draw background of all line-outlines first
@@ -90,7 +89,7 @@ namespace SharpMap.Rendering
 
                 for (int i = 0; i < features.Rows.Count; i++)
                 {
-                    SharpMap.Data.FeatureDataRow feature = features.Rows[i];
+                    IFeatureRow feature = features.Rows[i];
                     SharpMap.Styles.VectorStyle style = getStyle(feature) as SharpMap.Styles.VectorStyle;
                     RenderGeometry(g, transform, feature.Geometry, style);
                 }
@@ -403,7 +402,6 @@ namespace SharpMap.Rendering
                     float height = symbol.Height * symbolscale;
                     g.DrawImage(symbol, (int)pp.X - width / 2 + offset.X * symbolscale, (int)pp.Y - height / 2 + offset.Y * symbolscale, width, height);
                 }
-                //!!!g.Transform = map.MapTransform;
             }
             else
             {
@@ -482,10 +480,5 @@ namespace SharpMap.Rendering
                 (int)(Math.Round(dest.Bottom) - Math.Round(dest.Top)));
             return result;
         }
-
-
-
-
-
     }
 }

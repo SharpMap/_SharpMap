@@ -588,15 +588,15 @@ namespace SharpMap.Data.Providers
         /// <param name="bbox"></param>
         /// <param name="ds"></param>
         /// <returns></returns>
-        public FeatureDataTable GetFeaturesInView(BoundingBox bbox)
+        public IFeatureTable GetFeaturesInView(BoundingBox bbox)
         {
             //Use the spatial index to get a list of features whose boundingbox intersects bbox
             List<uint> objectlist = GetObjectIDsInView(bbox);
-            SharpMap.Data.FeatureDataTable dt = new FeatureDataTable();
+            SharpMap.Data.FeatureTable dt = new FeatureTable();
 
             for (int i = 0; i < objectlist.Count; i++)
             {
-                SharpMap.Data.FeatureDataRow fdr = dbaseFile.GetFeature(objectlist[i], dt);
+                IFeatureRow fdr = dbaseFile.GetFeature(objectlist[i], dt);
                 fdr.Geometry = ReadGeometry(objectlist[i]);
                 if (fdr.Geometry != null)
                     if (fdr.Geometry.GetBoundingBox().Intersects(bbox))
@@ -628,7 +628,7 @@ namespace SharpMap.Data.Providers
         {
             if (FilterDelegate != null) //Apply filtering
             {
-                FeatureDataRow fdr = GetFeature(oid);
+                IFeatureRow fdr = GetFeature(oid);
                 if (fdr!=null)
                     return (Geometry)fdr.Geometry;
                 else
@@ -758,9 +758,9 @@ namespace SharpMap.Data.Providers
         /// <param name="distance"></param>
         /// <returns></returns>
         [Obsolete("Use ExecuteIntersectionQuery instead")]
-        public SharpMap.Data.FeatureDataTable QueryFeatures(SharpMap.Geometries.Geometry geom, double distance)
+        public IFeatureTable QueryFeatures(SharpMap.Geometries.Geometry geom, double distance)
         {
-            SharpMap.Data.FeatureDataTable dt = new FeatureDataTable();
+            SharpMap.Data.FeatureTable dt = new FeatureTable();
             SharpMap.Geometries.BoundingBox bbox = geom.GetBoundingBox();
             bbox.Min.X -= distance; bbox.Max.X += distance;
             bbox.Min.Y -= distance; bbox.Max.Y += distance;
@@ -775,7 +775,7 @@ namespace SharpMap.Data.Providers
             {
                 for (uint i = (uint)dt.Rows.Count - 1; i >= 0; i--)
                 {
-                    SharpMap.Data.FeatureDataRow fdr = GetFeature(objectlist[j],dt);
+                    IFeatureRow fdr = GetFeature(objectlist[j],dt);
                     if (fdr!=null && ((Geometry)fdr.Geometry).Intersects(geomBuffer))
                         dt.Rows.Add(fdr);
                 }
@@ -837,7 +837,7 @@ namespace SharpMap.Data.Providers
         /// <seealso cref="FilterDelegate"/>
         /// <param name="dr"><see cref="SharpMap.Data.FeatureDataRow"/> to test on</param>
         /// <returns>true if this feature should be included, false if it should be filtered</returns>
-        public delegate bool FilterMethod(SharpMap.Data.FeatureDataRow dr);
+        public delegate bool FilterMethod(IFeatureRow dr);
         private FilterMethod _FilterDelegate;
         /// <summary>
         /// Filter Delegate Method for limiting the datasource
@@ -900,7 +900,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="RowID"></param>
         /// <returns></returns>
-        public SharpMap.Data.FeatureDataRow GetFeature(uint RowID)
+        public IFeatureRow GetFeature(uint RowID)
         {
             return GetFeature(RowID, null);
         }
@@ -911,11 +911,11 @@ namespace SharpMap.Data.Providers
         /// <param name="RowID"></param>
         /// <param name="dt">Datatable to feature should belong to.</param>
         /// <returns></returns>
-        public SharpMap.Data.FeatureDataRow GetFeature(uint RowID, FeatureDataTable dt)
+        public IFeatureRow GetFeature(uint RowID, IFeatureTable dt)
         {
             if (dbaseFile != null)
             {
-                SharpMap.Data.FeatureDataRow dr = (SharpMap.Data.FeatureDataRow)dbaseFile.GetFeature(RowID, (dt==null) ? new FeatureDataTable() : dt);
+                IFeatureRow dr = (IFeatureRow)dbaseFile.GetFeature(RowID, (dt==null) ? new FeatureTable() : dt);
                 dr.Geometry = ReadGeometry(RowID);
                 if (FilterDelegate == null || FilterDelegate(dr))
                     return dr;

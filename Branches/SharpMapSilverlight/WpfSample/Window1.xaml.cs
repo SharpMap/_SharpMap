@@ -25,7 +25,7 @@ namespace WpfSample
         }
 
 
-        int MethodToTestFrom(Func<SharpMap.Data.FeatureDataRow, int> getStyle)
+        int MethodToTestFrom(Func<SharpMap.Data.FeatureRow, int> getStyle)
         {
             return getStyle(null);
         }

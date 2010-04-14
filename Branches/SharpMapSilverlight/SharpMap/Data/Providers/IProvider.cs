@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using SharpMap.Geometries;
 
 namespace SharpMap.Data.Providers
 {
@@ -22,6 +23,6 @@ namespace SharpMap.Data.Providers
         /// <see cref="SharpMap.Geometries.BoundingBox"/> of dataset
         /// </summary>
         /// <returns>boundingbox</returns>
-        SharpMap.Geometries.BoundingBox GetExtents();
+        BoundingBox GetExtents();
     }
 }
