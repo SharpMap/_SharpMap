@@ -589,20 +589,20 @@ namespace SharpMap.Data.Providers
         /// <param name="bbox"></param>
         /// <param name="ds"></param>
         /// <returns></returns>
-        public IFeatureCollection GetFeaturesInView(BoundingBox bbox)
+        public IFeatures GetFeaturesInView(BoundingBox bbox)
         {
             //Use the spatial index to get a list of features whose boundingbox intersects bbox
             List<uint> objectlist = GetObjectIDsInView(bbox);
-            SharpMap.Data.FeatureCollection dt = new FeatureCollection();
+            IFeatures dt = new Features();
 
             for (int i = 0; i < objectlist.Count; i++)
             {
-                IFeatureRow fdr = dbaseFile.GetFeature(objectlist[i], dt);
+                IFeature fdr = dbaseFile.GetFeature(objectlist[i], dt);
                 fdr.Geometry = ReadGeometry(objectlist[i]);
                 if (fdr.Geometry != null)
                     if (fdr.Geometry.GetBoundingBox().Intersects(bbox))
                         if (FilterDelegate == null || FilterDelegate(fdr))
-                            ((Collection<IFeatureRow>)dt.Rows).Add(fdr);
+                            dt.Add(fdr);
             }
             return dt;
         }
@@ -629,7 +629,7 @@ namespace SharpMap.Data.Providers
         {
             if (FilterDelegate != null) //Apply filtering
             {
-                IFeatureRow fdr = GetFeature(oid);
+                IFeature fdr = GetFeature(oid);
                 if (fdr!=null)
                     return (Geometry)fdr.Geometry;
                 else
@@ -752,38 +752,6 @@ namespace SharpMap.Data.Providers
                 throw (new ApplicationException("Shapefile type " + _ShapeType.ToString() + " not supported"));
         }
 
-        /// <summary>
-        /// Returns all objects within a distance of a geometry
-        /// </summary>
-        /// <param name="geom"></param>
-        /// <param name="distance"></param>
-        /// <returns></returns>
-        [Obsolete("Use ExecuteIntersectionQuery instead")]
-        public IFeatureCollection QueryFeatures(SharpMap.Geometries.Geometry geom, double distance)
-        {
-            SharpMap.Data.FeatureCollection dt = new FeatureCollection();
-            SharpMap.Geometries.BoundingBox bbox = geom.GetBoundingBox();
-            bbox.Min.X -= distance; bbox.Max.X += distance;
-            bbox.Min.Y -= distance; bbox.Max.Y += distance;
-            //Get candidates by intersecting the spatial index tree
-            List<uint> objectlist = tree.Search(bbox);
-
-            if (objectlist.Count == 0)
-                return dt;
-
-            SharpMap.Geometries.Geometry geomBuffer = geom.Buffer(distance);
-            for (int j = 0; j < objectlist.Count; j++)
-            {
-                for (uint i = (uint)dt.Rows.Count - 1; i >= 0; i--)
-                {
-                    IFeatureRow fdr = GetFeature(objectlist[j],dt);
-                    if (fdr!=null && ((Geometry)fdr.Geometry).Intersects(geomBuffer))
-                        ((Collection<IFeatureRow>)dt.Rows).Add(fdr);
-                }
-            }
-            return dt;
-        }
-
         ///// <summary>
         ///// Returns the data associated with all the geometries that are intersected by 'geom'.
         ///// Please note that the ShapeFile provider currently doesn't fully support geometryintersection
@@ -838,7 +806,7 @@ namespace SharpMap.Data.Providers
         /// <seealso cref="FilterDelegate"/>
         /// <param name="dr"><see cref="SharpMap.Data.FeatureDataRow"/> to test on</param>
         /// <returns>true if this feature should be included, false if it should be filtered</returns>
-        public delegate bool FilterMethod(IFeatureRow dr);
+        public delegate bool FilterMethod(IFeature dr);
         private FilterMethod _FilterDelegate;
         /// <summary>
         /// Filter Delegate Method for limiting the datasource
@@ -901,7 +869,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="RowID"></param>
         /// <returns></returns>
-        public IFeatureRow GetFeature(uint RowID)
+        public IFeature GetFeature(uint RowID)
         {
             return GetFeature(RowID, null);
         }
@@ -912,11 +880,11 @@ namespace SharpMap.Data.Providers
         /// <param name="RowID"></param>
         /// <param name="dt">Datatable to feature should belong to.</param>
         /// <returns></returns>
-        public IFeatureRow GetFeature(uint RowID, IFeatureCollection dt)
+        public IFeature GetFeature(uint RowID, IFeatures dt)
         {
             if (dbaseFile != null)
             {
-                IFeatureRow dr = (IFeatureRow)dbaseFile.GetFeature(RowID, (dt==null) ? new FeatureCollection() : dt);
+                IFeature dr = (IFeature)dbaseFile.GetFeature(RowID, (dt==null) ? new Features() : dt);
                 dr.Geometry = ReadGeometry(RowID);
                 if (FilterDelegate == null || FilterDelegate(dr))
                     return dr;

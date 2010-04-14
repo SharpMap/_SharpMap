@@ -4,6 +4,7 @@ using System.Windows.Media;
 using SharpMap;
 using SharpMap.Samples;
 using SilverlightRendering;
+using SharpMap.Data;
 
 namespace WpfSample
 {
@@ -19,16 +20,8 @@ namespace WpfSample
         public Window1()
         {
             CompositionTarget.Rendering += new System.EventHandler(CompositionTarget_Rendering);
-
-            SharpMap.Styles.IStyle myStyle = new SharpMap.Styles.VectorStyle();
-            int x = MethodToTestFrom((row) => soep);
         }
 
-
-        int MethodToTestFrom(Func<SharpMap.Data.FeatureRow, int> getStyle)
-        {
-            return getStyle(null);
-        }
 
         void CompositionTarget_Rendering(object sender, System.EventArgs e)
         {

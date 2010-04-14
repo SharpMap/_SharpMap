@@ -27,6 +27,7 @@ using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 using SharpMap.Geometries;
+using System.Collections.ObjectModel;
 
 namespace SharpMap.Data
 {
@@ -192,7 +193,7 @@ namespace SharpMap.Data
     /// </summary>
     [DebuggerStepThrough()]
     [Serializable()]
-    public class FeatureDataTable : DataTable, IFeatureCollection, IEnumerable
+    public class FeatureDataTable : DataTable, IFeatures, IEnumerable
     {
         /// <summary>
         /// Initializes a new instance of the FeatureDataTable class with no arguments.
@@ -283,15 +284,6 @@ namespace SharpMap.Data
         public event FeatureDataRowChangeEventHandler FeatureDataRowDeleting;
 
         /// <summary>
-        /// Adds a row to the FeatureDataTable
-        /// </summary>
-        /// <param name="row"></param>
-        public void AddRow(IFeatureRow row)
-        {
-            base.Rows.Add(row);
-        }
-
-        /// <summary>
         /// Clones the structure of the FeatureDataTable, including all FeatureDataTable schemas and constraints. 
         /// </summary>
         /// <returns></returns>
@@ -326,9 +318,9 @@ namespace SharpMap.Data
         /// Creates a new FeatureDataRow with the same schema as the table.
         /// </summary>
         /// <returns></returns>
-        public new IFeatureRow NewRow()
+        public new FeatureDataRow NewRow()
         {
-            return (IFeatureRow)base.NewRow();
+            return (FeatureDataRow)base.NewRow();
         }
 
         
@@ -421,14 +413,29 @@ namespace SharpMap.Data
             base.Rows.Remove(row);
         }
 
-        public new ICollection Rows 
-        { 
+        public IEnumerable<IFeature> Items
+        {
             get 
-            {
-                return (ICollection)base.Rows; 
-            }  
+            { 
+                foreach (FeatureDataRow row in base.Rows)
+                {
+                    yield return row; 
+                }
+            }
         }
 
+        //Not sure if the New and Add methods should be here. 
+        //Maybe FeatureDataSet should just have some 
+        //readonly IFeatureCollection inteface. PDD.
+        public IFeature New()
+        {
+            return (FeatureDataRow)base.NewRow();
+        }
+
+        public void Add(IFeature row)
+        {
+            base.Rows.Add(row);
+        }
     }
 
     /// <summary>
@@ -444,7 +451,7 @@ namespace SharpMap.Data
     /// </summary>
     [DebuggerStepThrough()]
     [Serializable()]
-    public class FeatureDataRow : DataRow, IFeatureRow
+    public class FeatureDataRow : DataRow, IFeature
     {
         //private FeatureDataTable tableFeatureTable;
 

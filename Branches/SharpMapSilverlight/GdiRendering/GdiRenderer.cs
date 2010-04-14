@@ -23,7 +23,7 @@ namespace SharpMap.Rendering
         {
         }
 
-        public void Render(IProvider DataSource, Func<IFeatureRow, IStyle> getStyle, ICoordinateTransformation coordinateTransformation, IMapTransform mapTansform)
+        public void Render(IProvider DataSource, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation, IMapTransform mapTansform)
         {
             if (graphics == null) throw new ApplicationException("Graphics was not initialized");
             RendererHelper.Render(graphics, DataSource, getStyle, coordinateTransformation, mapTansform);
