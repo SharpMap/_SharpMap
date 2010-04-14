@@ -304,11 +304,11 @@ namespace SharpMap.Data.Providers
         }
 
 
-        private SharpMap.Data.FeatureDataTable baseTable;
+        private SharpMap.Data.FeatureTable baseTable;
 
         private void CreateBaseTable()
         {
-            baseTable = new SharpMap.Data.FeatureDataTable();
+            baseTable = new SharpMap.Data.FeatureTable();
             //!!!
             //foreach (DbaseField dbf in DbaseColumns)
             //    baseTable.Columns.Add(dbf.ColumnName, dbf.DataType);
@@ -352,7 +352,7 @@ namespace SharpMap.Data.Providers
         /// <param name="oid"></param>
         /// <param name="table"></param>
         /// <returns></returns>
-        internal SharpMap.Data.FeatureDataRow GetFeature(uint oid, SharpMap.Data.FeatureDataTable table)
+        internal IFeatureRow GetFeature(uint oid, IFeatureTable table)
         {
             if (!_isOpen)
                 throw (new ApplicationException("An attempt was made to read from a closed DBF file"));
@@ -360,7 +360,7 @@ namespace SharpMap.Data.Providers
                 throw (new ArgumentException("Invalid DataRow requested at index " + oid.ToString()));
             fs.Seek(_HeaderLength + oid * _RecordLength,0);
 
-            SharpMap.Data.FeatureDataRow dr = table.NewRow();
+            IFeatureRow dr = table.NewRow();
 
             if (br.ReadChar() == '*') //is record marked deleted?
                 return null;

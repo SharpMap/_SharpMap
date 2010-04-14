@@ -13,6 +13,6 @@ namespace SharpMap.Rendering
 {
     public interface IRenderer
     {
-        void Render(IProvider DataSource, Func<FeatureDataRow, IStyle> getStyle, ICoordinateTransformation CoordinateTransformation, IMapTransform mapTansform);
+        void Render(IProvider DataSource, Func<IFeatureRow, IStyle> getStyle, ICoordinateTransformation CoordinateTransformation, IMapTransform mapTansform);
     }
 }

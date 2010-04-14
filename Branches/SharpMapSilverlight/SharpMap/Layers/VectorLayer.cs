@@ -122,7 +122,7 @@ namespace SharpMap.Layers
             base.Render(renderer, mapTransform);
         }
 
-        private static Func<FeatureDataRow, IStyle>  CreateStyleMethod(IStyle style, ITheme theme)
+        private static Func<IFeatureRow, IStyle>  CreateStyleMethod(IStyle style, ITheme theme)
         {
             if (theme == null) 
                 return (row) => style;

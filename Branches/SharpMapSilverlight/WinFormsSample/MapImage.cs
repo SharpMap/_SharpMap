@@ -450,7 +450,7 @@ namespace SharpMap.Forms
         /// Eventtype fired when the map is queried
         /// </summary>
         /// <param name="data"></param>
-        public delegate void MapQueryHandler(FeatureDataTable data);
+        public delegate void MapQueryHandler(FeatureTable data);
 
         /// <summary>
         /// Eventtype fired when the zoom was or are being changed

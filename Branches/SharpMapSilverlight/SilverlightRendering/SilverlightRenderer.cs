@@ -25,17 +25,17 @@ namespace SilverlightRendering
             this.elements = elements;
         }
 
-        public void Render(IProvider provider, Func<FeatureDataRow, IStyle> getStyle, ICoordinateTransformation coordinateTransformation, IMapTransform mapTransform)
+        public void Render(IProvider provider, Func<IFeatureRow, IStyle> getStyle, ICoordinateTransformation coordinateTransformation, IMapTransform mapTransform)
         {
             BoundingBox envelope = mapTransform.Extent;
             if (provider is IVectorProvider)
             {
                 IVectorProvider vectorProvider = provider as IVectorProvider;
                 vectorProvider.Open();
-                FeatureDataTable features = vectorProvider.GetFeaturesInView(envelope);
+                IFeatureTable features = vectorProvider.GetFeaturesInView(envelope);
                 vectorProvider.Close();
 
-                foreach (FeatureDataRow row in features.Rows)
+                foreach (FeatureRow row in features.Rows)
                 {
                     if (row.Geometry is Point)
                         elements.Add(RenderPoint(row.Geometry as Point, getStyle(row), mapTransform));
