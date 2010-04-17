@@ -27,7 +27,6 @@ using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 using SharpMap.Geometries;
-using System.Collections.ObjectModel;
 
 namespace SharpMap.Data
 {
@@ -193,7 +192,7 @@ namespace SharpMap.Data
     /// </summary>
     [DebuggerStepThrough()]
     [Serializable()]
-    public class FeatureDataTable : DataTable, IFeatures, IEnumerable
+    public class FeatureDataTable : DataTable, IEnumerable
     {
         /// <summary>
         /// Initializes a new instance of the FeatureDataTable class with no arguments.
@@ -284,6 +283,15 @@ namespace SharpMap.Data
         public event FeatureDataRowChangeEventHandler FeatureDataRowDeleting;
 
         /// <summary>
+        /// Adds a row to the FeatureDataTable
+        /// </summary>
+        /// <param name="row"></param>
+        public void AddRow(FeatureDataRow row)
+        {
+            base.Rows.Add(row);
+        }
+
+        /// <summary>
         /// Clones the structure of the FeatureDataTable, including all FeatureDataTable schemas and constraints. 
         /// </summary>
         /// <returns></returns>
@@ -320,10 +328,9 @@ namespace SharpMap.Data
         /// <returns></returns>
         public new FeatureDataRow NewRow()
         {
-            return (FeatureDataRow)base.NewRow();
+            return (FeatureDataRow) base.NewRow();
         }
 
-        
         /// <summary>
         /// Creates a new FeatureDataRow with the same schema as the table, based on a datarow builder
         /// </summary>
@@ -413,13 +420,14 @@ namespace SharpMap.Data
             base.Rows.Remove(row);
         }
 
+
         public IEnumerable<IFeature> Items
         {
-            get 
-            { 
+            get
+            {
                 foreach (FeatureDataRow row in base.Rows)
                 {
-                    yield return row; 
+                    yield return row;
                 }
             }
         }

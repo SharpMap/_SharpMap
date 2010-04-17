@@ -105,6 +105,8 @@ namespace SharpMap
 
         private void UpdateExtent()
         {
+            if (center.IsEmpty()) return;
+
             float spanX = width * (float)resolution;
             float spanY = height * (float)resolution;
             extent = new BoundingBox(center.X - spanX * 0.5f, center.Y - spanY * 0.5f,

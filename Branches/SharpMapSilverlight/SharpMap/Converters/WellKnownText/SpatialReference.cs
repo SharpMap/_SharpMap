@@ -15,9 +15,10 @@
 // along with SharpMap; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
+using System.IO;
+using System.Reflection;
+using System.Xml;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SharpMap.Converters.WellKnownText
 {
@@ -34,19 +35,6 @@ namespace SharpMap.Converters.WellKnownText
         public static string SridToWkt(int srid)
         {
             throw new NotImplementedException("Not ported yet");
-            //System.Xml.XmlDocument xmldoc = new System.Xml.XmlDocument();
-            //string file = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase) + "\\SpatialRefSys.xml";
-            ////if (!System.IO.File.Exists(file))
-            ////    throw new ApplicationException("Spatial reference system database not found: " + file);
-            //xmldoc.Load(file);
-            ////xmldoc.Load(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("SharpMap.SpatialReference.SpatialRefSys.xml"));
-            //System.Xml.XmlNode node = xmldoc.DocumentElement.SelectSingleNode("/SpatialReference/ReferenceSystem[SRID='" + srid.ToString() + "']");
-            //if(node!=null)
-            //    return node.LastChild.InnerText;
-            //else
-            //    return String.Empty;
-
-            return string.Empty;
         }
     }
 }
