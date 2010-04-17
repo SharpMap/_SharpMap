@@ -16,8 +16,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
+using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SharpMap.Utilities
 {
@@ -29,9 +30,9 @@ namespace SharpMap.Utilities
         /// <summary>
         /// Returns a list of available data providers in this assembly
         /// </summary>
-        public static List<Type> GetProviders()
+        public static Collection<Type> GetProviders()
         {
-            List<Type> ProviderList = new List<Type>();
+            Collection<Type> ProviderList = new Collection<Type>();
             System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly();
             foreach (Type t in asm.GetTypes())
             {
@@ -50,7 +51,7 @@ namespace SharpMap.Utilities
                 if (FoundOne == true)
                     ProviderList.Add(t);
 
-                
+
             }
             return ProviderList;
         }

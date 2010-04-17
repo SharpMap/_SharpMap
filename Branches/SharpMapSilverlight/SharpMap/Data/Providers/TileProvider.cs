@@ -234,6 +234,16 @@ namespace SharpMap.Providers
         }
 
         #endregion
+
+        public void ExecuteIntersectionQuery(Geometry geom, FeatureDataSet ds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ExecuteIntersectionQuery(BoundingBox box, FeatureDataSet ds)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

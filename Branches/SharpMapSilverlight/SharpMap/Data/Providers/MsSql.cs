@@ -181,7 +181,7 @@ namespace SharpMap.Data.Providers
                         {
                             if (dr[0] != DBNull.Value)
                             {
-                                Geometry geom = GeometryFromWKB.Parse((byte[])dr[0]);
+                                Geometry geom = GeometryFromWKB.Parse((byte[]) dr[0]);
                                 if (geom != null)
                                     features.Add(geom);
                             }
@@ -213,7 +213,7 @@ namespace SharpMap.Data.Providers
                         while (dr.Read())
                         {
                             if (dr[0] != DBNull.Value)
-                                geom = GeometryFromWKB.Parse((byte[])dr[0]);
+                                geom = GeometryFromWKB.Parse((byte[]) dr[0]);
                         }
                     }
                 }
@@ -249,7 +249,7 @@ namespace SharpMap.Data.Providers
                         {
                             if (dr[0] != DBNull.Value)
                             {
-                                uint ID = (uint)(int)dr[0];
+                                uint ID = (uint) (int) dr[0];
                                 objectlist.Add(ID);
                             }
                         }
@@ -258,16 +258,6 @@ namespace SharpMap.Data.Providers
                 }
             }
             return objectlist;
-        }
-
-        /// <summary>
-        /// Returns the features that intersects with 'geom' [NOT IMPLEMENTED]
-        /// </summary>
-        /// <param name="geom"></param>
-        /// <param name="ds">FeatureDataSet to fill data into</param>
-        public void ExecuteIntersectionQuery(Geometry geom, FeatureDataSet ds)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -285,7 +275,7 @@ namespace SharpMap.Data.Providers
                 using (SqlCommand command = new SqlCommand(strSQL, conn))
                 {
                     conn.Open();
-                    count = (int)command.ExecuteScalar();
+                    count = (int) command.ExecuteScalar();
                     conn.Close();
                 }
             }
@@ -334,7 +324,7 @@ namespace SharpMap.Data.Providers
                                     !col.ColumnName.StartsWith("Envelope_"))
                                     fdr[col.ColumnName] = dr[col];
                             if (dr["sharpmap_tempgeometry"] != DBNull.Value)
-                                fdr.Geometry = GeometryFromWKB.Parse((byte[])dr["sharpmap_tempgeometry"]);
+                                fdr.Geometry = GeometryFromWKB.Parse((byte[]) dr["sharpmap_tempgeometry"]);
                             return fdr;
                         }
                         else
@@ -366,7 +356,7 @@ namespace SharpMap.Data.Providers
                     using (SqlDataReader dr = command.ExecuteReader())
                         if (dr.Read())
                         {
-                            box = new BoundingBox((float)dr[0], (float)dr[1], (float)dr[2], (float)dr[3]);
+                            box = new BoundingBox((float) dr[0], (float) dr[1], (float) dr[2], (float) dr[3]);
                         }
                     conn.Close();
                 }
@@ -387,47 +377,47 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="bbox">view box</param>
         /// <param name="ds">FeatureDataSet to fill data into</param>
-        public void ExecuteIntersectionQuery(BoundingBox bbox, FeatureDataSet ds)
-        {
-            //List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
-            using (SqlConnection conn = new SqlConnection(_ConnectionString))
-            {
-                string strSQL = "SELECT *, " + GeometryColumn + " AS sharpmap_tempgeometry ";
-                strSQL += "FROM " + Table + " WHERE ";
-                strSQL += GetBoxClause(bbox);
+        //public void ExecuteIntersectionQuery(BoundingBox bbox, FeatureDataSet ds)
+        //{
+        //    //List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
+        //    using (SqlConnection conn = new SqlConnection(_ConnectionString))
+        //    {
+        //        string strSQL = "SELECT *, " + GeometryColumn + " AS sharpmap_tempgeometry ";
+        //        strSQL += "FROM " + Table + " WHERE ";
+        //        strSQL += GetBoxClause(bbox);
 
-                if (!String.IsNullOrEmpty(_defintionQuery))
-                    strSQL += " AND " + DefinitionQuery;
+        //        if (!String.IsNullOrEmpty(_defintionQuery))
+        //            strSQL += " AND " + DefinitionQuery;
 
-                using (SqlDataAdapter adapter = new SqlDataAdapter(strSQL, conn))
-                {
-                    conn.Open();
-                    DataSet ds2 = new DataSet();
-                    adapter.Fill(ds2);
-                    conn.Close();
-                    if (ds2.Tables.Count > 0)
-                    {
-                        FeatureDataTable fdt = new FeatureDataTable(ds2.Tables[0]);
-                        foreach (DataColumn col in ds2.Tables[0].Columns)
-                            if (col.ColumnName != GeometryColumn && col.ColumnName != "sharpmap_tempgeometry" &&
-                                !col.ColumnName.StartsWith("Envelope_"))
-                                fdt.Columns.Add(col.ColumnName, col.DataType, col.Expression);
-                        foreach (DataRow dr in ds2.Tables[0].Rows)
-                        {
-                            FeatureDataRow fdr = fdt.NewRow();
-                            foreach (DataColumn col in ds2.Tables[0].Columns)
-                                if (col.ColumnName != GeometryColumn && col.ColumnName != "sharpmap_tempgeometry" &&
-                                    !col.ColumnName.StartsWith("Envelope_"))
-                                    fdr[col.ColumnName] = dr[col];
-                            if (dr["sharpmap_tempgeometry"] != DBNull.Value)
-                                fdr.Geometry = GeometryFromWKB.Parse((byte[])dr["sharpmap_tempgeometry"]);
-                            fdt.Rows.Add(fdr);
-                        }
-                        ds.Tables.Add(fdt);
-                    }
-                }
-            }
-        }
+        //        using (SqlDataAdapter adapter = new SqlDataAdapter(strSQL, conn))
+        //        {
+        //            conn.Open();
+        //            DataSet ds2 = new DataSet();
+        //            adapter.Fill(ds2);
+        //            conn.Close();
+        //            if (ds2.Tables.Count > 0)
+        //            {
+        //                FeatureDataTable fdt = new FeatureDataTable(ds2.Tables[0]);
+        //                foreach (DataColumn col in ds2.Tables[0].Columns)
+        //                    if (col.ColumnName != GeometryColumn && col.ColumnName != "sharpmap_tempgeometry" &&
+        //                        !col.ColumnName.StartsWith("Envelope_"))
+        //                        fdt.Columns.Add(col.ColumnName, col.DataType, col.Expression);
+        //                foreach (DataRow dr in ds2.Tables[0].Rows)
+        //                {
+        //                    FeatureDataRow fdr = fdt.NewRow();
+        //                    foreach (DataColumn col in ds2.Tables[0].Columns)
+        //                        if (col.ColumnName != GeometryColumn && col.ColumnName != "sharpmap_tempgeometry" &&
+        //                            !col.ColumnName.StartsWith("Envelope_"))
+        //                            fdr[col.ColumnName] = dr[col];
+        //                    if (dr["sharpmap_tempgeometry"] != DBNull.Value)
+        //                        fdr.Geometry = GeometryFromWKB.Parse((byte[]) dr["sharpmap_tempgeometry"]);
+        //                    fdt.AddRow(fdr);
+        //                }
+        //                ds.Tables.Add(fdt);
+        //            }
+        //        }
+        //    }
+        //}
 
         #endregion
 
@@ -511,7 +501,7 @@ namespace SharpMap.Data.Providers
         //public static int CreateDataTable(IProvider datasource, string tablename, string connstr)
         //{
         //    datasource.Open();
-        //    IFeatureRow geom = datasource.GetFeature(0);
+        //    FeatureDataRow geom = datasource.GetFeature(0);
         //    DataColumnCollection columns = geom.Table.Columns;
         //    int counter = -1;
         //    using (SqlConnection conn = new SqlConnection(connstr))
@@ -533,7 +523,7 @@ namespace SharpMap.Data.Providers
         //        string sql = "CREATE TABLE " + tablename + " (oid INTEGER IDENTITY PRIMARY KEY, WKB_Geometry Image, " +
         //                     "Envelope_MinX real, Envelope_MinY real, Envelope_MaxX real, Envelope_MaxY real";
         //        foreach (DataColumn col in columns)
-        //            if (col.DataType != typeof(String))
+        //            if (col.DataType != typeof (String))
         //                sql += ", " + col.ColumnName + " " + Type2SqlType(col.DataType).ToString();
         //            else
         //                sql += ", " + col.ColumnName + " VARCHAR(256)";
@@ -576,7 +566,7 @@ namespace SharpMap.Data.Providers
         //            if (feature.Geometry != null)
         //            {
         //                command.Parameters["@WKB_Geometry"].Value = feature.Geometry.AsBinary();
-        //                //Add the geometry as Well-Known Binary
+        //                    //Add the geometry as Well-Known Binary
         //                BoundingBox box = feature.Geometry.GetBoundingBox();
         //                command.Parameters["@Envelope_MinX"].Value = box.Left;
         //                command.Parameters["@Envelope_MinY"].Value = box.Bottom;

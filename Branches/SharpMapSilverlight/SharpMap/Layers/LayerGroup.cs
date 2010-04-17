@@ -16,93 +16,132 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Collections.ObjectModel;
+using System.Drawing;
+using SharpMap.Data;
+using SharpMap.Geometries;
 
 namespace SharpMap.Layers
 {
-	/// <summary>
-	/// Class for holding a group of layers.
-	/// </summary>
-	/// <remarks>
-	/// The Group layer is useful for grouping a set of layers,
-	/// for instance a set of image tiles, and expose them as a single layer
-	/// </remarks>
-	public class LayerGroup : Layer
-	{
+    /// <summary>
+    /// Class for holding a group of layers.
+    /// </summary>
+    /// <remarks>
+    /// The Group layer is useful for grouping a set of layers,
+    /// for instance a set of image tiles, and expose them as a single layer
+    /// </remarks>
+    public class LayerGroup : Layer, ICanQueryLayer, IDisposable
+    {
+        private Collection<ILayer> _Layers;
 
-		/// <summary>
-		/// Initializes a new group layer
-		/// </summary>
-		/// <param name="layername">Name of layer</param>
-		public LayerGroup(string layername)
-		{
-			this.LayerName = layername;
-			_Layers = new List<Layer>();
-		}
+        /// <summary>
+        /// Initializes a new group layer
+        /// </summary>
+        /// <param name="layername">Name of layer</param>
+        public LayerGroup(string layername)
+        {
+            LayerName = layername;
+            _Layers = new Collection<ILayer>();
+        }
 
-		private List<Layer> _Layers;
+        /// <summary>
+        /// Sublayers in the group
+        /// </summary>
+        public Collection<ILayer> Layers
+        {
+            get { return _Layers; }
+            set { _Layers = value; }
+        }
 
-		/// <summary>
-		/// Sublayers in the group
-		/// </summary>
-		public List<Layer> Layers
-		{
-			get { return _Layers; }
-			set { _Layers = value; }
-		}
+        /// <summary>
+        /// Returns the extent of the layer
+        /// </summary>
+        /// <returns>Bounding box corresponding to the extent of the features in the layer</returns>
+        public override BoundingBox Envelope
+        {
+            get
+            {
+                if (Layers.Count == 0)
+                    return null;
+                BoundingBox bbox = Layers[0].Envelope;
+                for (int i = 1; i < Layers.Count; i++)
+                    bbox = bbox.Join(Layers[i].Envelope);
+                return bbox;
+            }
+        }
 
-		/// <summary>
-		/// Returns a layer by its name
-		/// </summary>
-		/// <param name="name">Name of layer</param>
-		/// <returns>Layer</returns>
-		public SharpMap.Layers.Layer GetLayerByName(string name)
-		{
-			return _Layers.Find( delegate(SharpMap.Layers.Layer layer) { return layer.LayerName.Equals(name); });
-		}
+        #region IDisposable Members
 
-		/// <summary>
-		/// Renders the layer
-		/// </summary>
-		/// <param name="g">Graphics object reference</param>
-		/// <param name="map">Map which is rendered</param>
-		public override void Render(System.Drawing.Graphics g, Map map)
-		{
-			for (int i = 0; i < _Layers.Count;i++ )
-				if (_Layers[i].Enabled && _Layers[i].MaxVisible >= map.Zoom && _Layers[i].MinVisible < map.Zoom)
-						_Layers[i].Render(g, map);
-		}
+        /// <summary>
+        /// Disposes the object
+        /// </summary>
+        public void Dispose()
+        {
+            foreach (Layer layer in Layers)
+                if (layer is IDisposable)
+                    ((IDisposable) layer).Dispose();
+            Layers.Clear();
+        }
 
-		/// <summary>
-		/// Returns the extent of the layer
-		/// </summary>
-		/// <returns>Bounding box corresponding to the extent of the features in the layer</returns>
-		public override SharpMap.Geometries.BoundingBox Envelope
-		{
-			get
-			{
-				if (this.Layers.Count == 0)
-					return null;
-				SharpMap.Geometries.BoundingBox bbox = this.Layers[0].Envelope;
-				for (int i = 1; i < this.Layers.Count; i++)
-					bbox = bbox.Join(this.Layers[i].Envelope);
-				return bbox;
-			}
-		}
+        #endregion
 
+        /// <summary>
+        /// Returns a layer by its name
+        /// </summary>
+        /// <param name="name">Name of layer</param>
+        /// <returns>Layer</returns>
+        public ILayer GetLayerByName(string name)
+        {
+            //return _Layers.Find( delegate(SharpMap.Layers.Layer layer) { return layer.LayerName.Equals(name); });
 
-		#region ICloneable Members
+            for (int i = 0; i < _Layers.Count; i++)
+                if (String.Equals(_Layers[i].LayerName, name, StringComparison.InvariantCultureIgnoreCase))
+                    return _Layers[i];
 
-		/// <summary>
-		/// Clones the layer
-		/// </summary>
-		/// <returns>cloned object</returns>
-		public override object Clone()
-		{
-			throw new NotImplementedException();
-		}
+            return null;
+        }
 
-		#endregion
-	}
+        /// <summary>
+        /// Renders the layer
+        /// </summary>
+        /// <param name="g">Graphics object reference</param>
+        /// <param name="map">Map which is rendered</param>
+        public override void Render(Graphics g, Map map)
+        {
+            for (int i = 0; i < _Layers.Count; i++)
+                if (_Layers[i].Enabled && _Layers[i].MaxVisible >= map.Zoom && _Layers[i].MinVisible < map.Zoom)
+                    _Layers[i].Render(g, map);
+        }
+
+        /// <summary>
+        /// Clones the layer
+        /// </summary>
+        /// <returns>cloned object</returns>
+        public override object Clone()
+        {
+            throw new NotImplementedException();
+        }
+
+        #region Implementation of ICanQueryLayer
+
+        /// <summary>
+        /// Returns the data associated with all the geometries that are intersected by 'geom'
+        /// </summary>
+        /// <param name="box">Geometry to intersect with</param>
+        /// <param name="ds">FeatureDataSet to fill data into</param>
+        public void ExecuteIntersectionQuery(BoundingBox box, FeatureDataSet ds)
+        {
+            foreach (Layer layer in Layers)
+            {
+                if (layer is ICanQueryLayer)
+                {
+                    FeatureDataSet dsTmp = new FeatureDataSet();
+                    ((ICanQueryLayer)layer).ExecuteIntersectionQuery(box, dsTmp);
+                    ds.Tables.AddRange(dsTmp.Tables);
+                }
+            }
+        }
+
+        #endregion
+    }
 }

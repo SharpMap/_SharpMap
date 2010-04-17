@@ -1,4 +1,4 @@
-﻿// Copyright 2005, 2006 - Morten Nielsen (www.iter.dk)
+// Copyright 2005, 2006 - Morten Nielsen (www.iter.dk)
 //
 // This file is part of SharpMap.
 // SharpMap is free software; you can redistribute it and/or modify
@@ -51,7 +51,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="bbox"></param>
         /// <returns>Features within the specified <see cref="SharpMap.Geometries.BoundingBox"/></returns>
-        //!!! Disabled to get a compile: Collection<Geometry> GetGeometriesInView(BoundingBox bbox);
+        Collection<Geometry> GetGeometriesInView(BoundingBox bbox);
 
         /// <summary>
         /// Returns all objects whose <see cref="SharpMap.Geometries.BoundingBox"/> intersects 'bbox'.
@@ -62,7 +62,7 @@ namespace SharpMap.Data.Providers
         /// </remarks>
         /// <param name="bbox">Box that objects should intersect</param>
         /// <returns></returns>
-        //!!! Disabled to get a compile: Collection<uint> GetObjectIDsInView(BoundingBox bbox);
+        Collection<uint> GetObjectIDsInView(BoundingBox bbox);
 
         /// <summary>
         /// Returns the geometry corresponding to the Object ID
@@ -71,22 +71,8 @@ namespace SharpMap.Data.Providers
         /// <returns>geometry</returns>
         Geometry GetGeometryByID(uint oid);
 
-        /// <summary>
-        /// Returns the data associated with all the geometries that are intersected by 'geom'
-        /// </summary>
-        /// <param name="geom">Geometry to intersect with</param>
-        /// <param name="ds">FeatureDataSet to fill data into</param>
-        //!!! Disabled to get a compile: void ExecuteIntersectionQuery(Geometry geom, IFeatureTable table);
-
-        /// <summary>
-        /// Returns the data associated with all the geometries that are intersected by 'geom'
-        /// </summary>
-        /// <param name="box">Geometry to intersect with</param>
-        /// <param name="ds">FeatureDataSet to fill data into</param>
-        //!!! Disabled to get a compile: void ExecuteIntersectionQuery(BoundingBox box, IFeatureTable table);
-
         IFeatures GetFeaturesInView(BoundingBox envelope, double resolution);
-		
+
         /// <summary>
         /// Returns the number of features in the dataset
         /// </summary>
