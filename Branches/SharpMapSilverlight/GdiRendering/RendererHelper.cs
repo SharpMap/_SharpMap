@@ -23,9 +23,9 @@ using ProjNet.CoordinateSystems.Transformations;
 using SharpMap.Data;
 using SharpMap.Data.Providers;
 using SharpMap.Geometries;
+using SharpMap.Projection;
 using SharpMap.Rasters;
 using SharpMap.Styles;
-using SharpMap.Projection;
 
 namespace SharpMap.Rendering
 {
@@ -34,7 +34,7 @@ namespace SharpMap.Rendering
     /// </summary>
     public static class RendererHelper
     {
-        public static void Render(System.Drawing.Graphics g, IProvider provider, Func<IFeature, IStyle> getStyle, 
+        public static void Render(System.Drawing.Graphics g, IProvider provider, Func<IFeature, IStyle> getStyle,
             ICoordinateTransformation coordinateTransformation, IMapTransform transform)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -46,51 +46,43 @@ namespace SharpMap.Rendering
                 envelope = ProjectionHelper.InverseTransform(envelope, coordinateTransformation);
             }
 
-            if (provider is IRasterProvider)
+            provider.Open();
+            IFeatures features = provider.GetFeaturesInView(envelope, transform.Resolution);
+            provider.Close();
+
+            if (coordinateTransformation != null)
+                foreach (var feature in features.Items)
+                    feature.Geometry = ProjectionHelper.Transform(feature.Geometry, coordinateTransformation);
+
+            //Linestring outlines is drawn by drawing the layer once with a thicker line
+            //before drawing the "inline" on top.
+
+            foreach (IFeature feature in features.Items)
             {
-                var rasters = (provider as IRasterProvider).GetRastersInView(envelope, transform.Resolution);
-                foreach (IRaster raster in rasters)
-                    SharpMap.Rendering.RendererHelper.DrawRaster(g, raster, transform);
-            }
-            else
-            {
-                provider.Open();
-                IFeatures features = provider.GetFeaturesInView(envelope);
-                provider.Close();
-
-                if (coordinateTransformation != null)
-                    foreach (var feature in features.Items)
-                        feature.Geometry = ProjectionHelper.Transform(feature.Geometry, coordinateTransformation);
-
-                //Linestring outlines is drawn by drawing the layer once with a thicker line
-                //before drawing the "inline" on top.
-
-                foreach (IFeature feature in features.Items)
+                if ((getStyle(feature) as VectorStyle).EnableOutline)
                 {
-                    if ((getStyle(feature) as VectorStyle).EnableOutline)
+                    //Draw background of all line-outlines first
+                    if (feature.Geometry is SharpMap.Geometries.LineString)
                     {
-                        //Draw background of all line-outlines first
-                        if (feature.Geometry is SharpMap.Geometries.LineString)
-                        {
-                            SharpMap.Styles.VectorStyle outlinestyle1 = getStyle(feature) as SharpMap.Styles.VectorStyle;
-                            RendererHelper.DrawLineString(g, feature.Geometry as LineString, outlinestyle1.Outline.Convert(), transform);
-                        }
-                        else if (feature.Geometry is SharpMap.Geometries.MultiLineString)
-                        {
-                            SharpMap.Styles.VectorStyle outlinestyle2 = getStyle(feature) as SharpMap.Styles.VectorStyle;
-                            RendererHelper.DrawMultiLineString(g, feature.Geometry as MultiLineString, outlinestyle2.Outline.Convert(), transform);
-                        }
+                        SharpMap.Styles.VectorStyle outlinestyle1 = getStyle(feature) as SharpMap.Styles.VectorStyle;
+                        RendererHelper.DrawLineString(g, feature.Geometry as LineString, outlinestyle1.Outline.Convert(), transform);
+                    }
+                    else if (feature.Geometry is SharpMap.Geometries.MultiLineString)
+                    {
+                        SharpMap.Styles.VectorStyle outlinestyle2 = getStyle(feature) as SharpMap.Styles.VectorStyle;
+                        RendererHelper.DrawMultiLineString(g, feature.Geometry as MultiLineString, outlinestyle2.Outline.Convert(), transform);
                     }
                 }
-
-                foreach (IFeature feature in features.Items)
-                {
-                    SharpMap.Styles.VectorStyle style = getStyle(feature) as SharpMap.Styles.VectorStyle;
-                    RenderGeometry(g, transform, feature.Geometry, style);
-                }
             }
+
+            foreach (IFeature feature in features.Items)
+            {
+                SharpMap.Styles.VectorStyle style = getStyle(feature) as SharpMap.Styles.VectorStyle;
+                RenderGeometry(g, transform, feature.Geometry, style);
+            }
+
         }
-        
+
         /// <summary>
         /// Renders a MultiLineString to the map.
         /// </summary>
@@ -419,31 +411,29 @@ namespace SharpMap.Rendering
         private static void RenderGeometry(System.Drawing.Graphics g, IMapTransform transform, IGeometry feature, IStyle inStyle)
         {
             var style = inStyle as VectorStyle;
-            switch (feature.GetType().FullName)
+
+            if (feature is Polygon)
             {
-                case "SharpMap.Geometries.Polygon":
-                    if (style.EnableOutline)
-                        RendererHelper.DrawPolygon(g, (Polygon)feature, style.Fill.Convert(), style.Outline.Convert(), transform);
-                    else
-                        RendererHelper.DrawPolygon(g, (Polygon)feature, style.Fill.Convert(), null, transform);
-                    break;
-                case "SharpMap.Geometries.MultiPolygon":
-                    if (style.EnableOutline)
-                        SharpMap.Rendering.RendererHelper.DrawMultiPolygon(g, (MultiPolygon)feature, style.Fill.Convert(), style.Outline.Convert(), transform);
-                    else
-                        SharpMap.Rendering.RendererHelper.DrawMultiPolygon(g, (MultiPolygon)feature, style.Fill.Convert(), null, transform);
-                    break;
-                case "SharpMap.Geometries.LineString":
-                    RendererHelper.DrawLineString(g, (LineString)feature, style.Line.Convert(), transform);
-                    break;
-                case "SharpMap.Geometries.MultiLineString":
-                    RendererHelper.DrawMultiLineString(g, (MultiLineString)feature, style.Line.Convert(), transform);
-                    break;
-                case "SharpMap.Geometries.Point":
-                    SharpMap.Rendering.RendererHelper.DrawPoint(g, (Point)feature, style.Symbol.Convert(), style.SymbolScale, style.SymbolOffset.Convert(), style.SymbolRotation, transform);
-                    break;
-                default:
-                    break;
+                if (style.EnableOutline)
+                    RendererHelper.DrawPolygon(g, (Polygon)feature, style.Fill.Convert(), style.Outline.Convert(), transform);
+                else
+                    RendererHelper.DrawPolygon(g, (Polygon)feature, style.Fill.Convert(), null, transform);
+            }
+            else if (feature is MultiPolygon)
+            {
+                if (style.EnableOutline)
+                    SharpMap.Rendering.RendererHelper.DrawMultiPolygon(g, (MultiPolygon)feature, style.Fill.Convert(), style.Outline.Convert(), transform);
+                else
+                    SharpMap.Rendering.RendererHelper.DrawMultiPolygon(g, (MultiPolygon)feature, style.Fill.Convert(), null, transform);
+            }
+            else if (feature is LineString)
+            {
+                RendererHelper.DrawLineString(g, (LineString)feature, style.Line.Convert(), transform);
+                SharpMap.Rendering.RendererHelper.DrawPoint(g, (Point)feature, style.Symbol.Convert(), style.SymbolScale, style.SymbolOffset.Convert(), style.SymbolRotation, transform);
+            }
+            else if (feature is IRaster)
+            {
+                SharpMap.Rendering.RendererHelper.DrawRaster(g, feature as IRaster, transform);
             }
         }
 

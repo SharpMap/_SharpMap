@@ -85,8 +85,6 @@
     <Compile Include="DataSourceCreator.cs" />
     <Compile Include="Data\Features.cs" />
     <Compile Include="Data\Providers\IProvider.cs" />
-    <Compile Include="Data\Providers\IRasterProvider.cs" />
-    <Compile Include="Data\Providers\IVectorProvider.cs" />
     <Compile Include="Data\Providers\Pooling\Connector.cs" />
     <Compile Include="Data\Providers\Pooling\ConnectorPool.cs" />
     <Compile Include="Geometries\BoundingBox.cs" />
