@@ -85,7 +85,7 @@ namespace SharpMap.Data.Providers
         /// <param name="ds">FeatureDataSet to fill data into</param>
         //!!! Disabled to get a compile: void ExecuteIntersectionQuery(BoundingBox box, IFeatureTable table);
 
-        IFeatures GetFeaturesInView(BoundingBox envelope);
+        IFeatures GetFeaturesInView(BoundingBox envelope, double resolution);
 		
         /// <summary>
         /// Returns the number of features in the dataset

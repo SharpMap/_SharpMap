@@ -647,7 +647,7 @@ namespace SharpMap.Data.Providers
         #region IProvider Members
 
 
-        public IFeatures GetFeaturesInView(BoundingBox envelope)
+        public IFeatures GetFeaturesInView(BoundingBox envelope, double resolution)
         {
             throw new NotImplementedException();
         }

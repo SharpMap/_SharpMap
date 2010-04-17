@@ -96,10 +96,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\Providers\IProvider.cs" />
-    <Compile Include="Data\Providers\IRasterProvider.cs" />
     <Compile Include="Data\Providers\MsSql.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\Providers\Pooling\Connector.cs" />
+    <Compile Include="Data\Providers\Pooling\ConnectorPool.cs" />
     <Compile Include="Data\Providers\ShapeFile.cs">
       <SubType>Code</SubType>
     </Compile>

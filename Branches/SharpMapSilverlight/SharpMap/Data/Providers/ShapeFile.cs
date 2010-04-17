@@ -589,7 +589,7 @@ namespace SharpMap.Data.Providers
         /// <param name="bbox"></param>
         /// <param name="ds"></param>
         /// <returns></returns>
-        public IFeatures GetFeaturesInView(BoundingBox bbox)
+        public IFeatures GetFeaturesInView(BoundingBox bbox, double resolution)
         {
             //Use the spatial index to get a list of features whose boundingbox intersects bbox
             List<uint> objectlist = GetObjectIDsInView(bbox);

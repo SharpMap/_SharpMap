@@ -10,7 +10,7 @@ using SharpMap.Rasters;
 
 namespace SharpMap.Providers
 {
-    public class TileProvider : IRasterProvider
+    public class TileProvider : IProvider
     {
         #region Fields
 
@@ -102,13 +102,13 @@ namespace SharpMap.Providers
         //    }
         //}
 
-        public IList<IRaster> FetchTiles(BoundingBox boundingBox, double resolution)
+        public IFeatures FetchTiles(BoundingBox boundingBox, double resolution)
         {
             Extent extent = new Extent(boundingBox.Min.X, boundingBox.Min.Y, boundingBox.Max.X, boundingBox.Max.Y);
             int level = BruTile.Utilities.GetNearestLevel(source.Schema.Resolutions, resolution);
             IList<TileInfo> tiles = source.Schema.GetTilesInView(extent, level);
 
-            IList<WaitHandle> waitHandles = new List<WaitHandle>();
+            ICollection<WaitHandle> waitHandles = new List<WaitHandle>();
 
             foreach (TileInfo info in tiles)    
             {
@@ -121,15 +121,17 @@ namespace SharpMap.Providers
             foreach (WaitHandle handle in waitHandles)
                 handle.WaitOne();
 
-
-            IList<IRaster> elements = new List<IRaster>(); 
+            IFeatures features = new Features();
             foreach (TileInfo info in tiles)
             {
                 byte[] bitmap = bitmaps.Find(info.Key);
                 if (bitmap == null) continue;
-                elements.Add(new Raster(bitmap, new BoundingBox(info.Extent.MinX, info.Extent.MinY, info.Extent.MaxX, info.Extent.MaxY)));
+                IRaster raster = new Raster(bitmap, new BoundingBox(info.Extent.MinX, info.Extent.MinY, info.Extent.MaxX, info.Extent.MaxY));
+                IFeature feature = features.New();
+                feature.Geometry = raster;
+                features.Add(feature);
             }
-            return elements;
+            return features;
         }
         
         private void GetTileOnThread(object parameter)
@@ -158,12 +160,7 @@ namespace SharpMap.Providers
 
         #region IRasterProvider Members
 
-        public IFeatures GetFeaturesInView(BoundingBox bbox)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IList<IRaster> GetRastersInView(BoundingBox bbox, double resolution)
+        public IFeatures GetFeaturesInView(BoundingBox bbox, double resolution)
         {
             return FetchTiles(bbox, resolution);
         }
@@ -179,7 +176,7 @@ namespace SharpMap.Providers
 
         public bool IsOpen
         {
-            get { throw new NotImplementedException(); }
+            get { return true; }
         }
 
         public System.Collections.ObjectModel.Collection<Geometry> GetGeometriesInView(BoundingBox bbox)
@@ -219,12 +216,12 @@ namespace SharpMap.Providers
 
         public void Open()
         {
-            throw new NotImplementedException();
+            //TODO: redesign so that methods like these are not necessary if not implemented
         }
 
         public void Close()
         {
-            throw new NotImplementedException();
+            //TODO: redesign so that methods like these are not necessary if not implemented
         }
 
         #endregion

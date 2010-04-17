@@ -27,12 +27,12 @@ namespace SharpMap.Samples
             //osm.DataSource = new TileProvider(new TileSourceOsm(), "OSM");
             //map.Layers.Add(osm);
 
-            //VectorLayer osm = new VectorLayer("OSM");
-            //string url = "http://labs.metacarta.com/wms-c/tilecache.py?version=1.1.1&amp;request=GetCapabilities&amp;service=wms-c";
-            //var tileSources = TileSourceWmsC.TileSourceBuilder(new Uri(url), null);
-            //var tileSource = new List<ITileSource>(tileSources).Find(source => source.Schema.Name == "osm-map");
-            //osm.DataSource = new TileProvider(tileSource, "OSM");
-            //map.Layers.Add(osm);
+            VectorLayer osm = new VectorLayer("OSM");
+            string url = "http://labs.metacarta.com/wms-c/tilecache.py?version=1.1.1&amp;request=GetCapabilities&amp;service=wms-c";
+            var tileSources = TileSourceWmsC.TileSourceBuilder(new Uri(url), null);
+            var tileSource = new List<ITileSource>(tileSources).Find(source => source.Schema.Name == "osm-map");
+            osm.DataSource = new TileProvider(tileSource, "OSM");
+            map.Layers.Add(osm);
 
             //Set up countries layer
             VectorLayer layCountries = new VectorLayer("Countries");

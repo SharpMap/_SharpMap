@@ -29,7 +29,7 @@ namespace SilverlightRendering
         {
             BoundingBox envelope = mapTransform.Extent;
             provider.Open();
-            IFeatures features = provider.GetFeaturesInView(envelope);
+            IFeatures features = provider.GetFeaturesInView(envelope, mapTransform.Resolution);
             provider.Close();
 
             foreach (var feature in features.Items)
