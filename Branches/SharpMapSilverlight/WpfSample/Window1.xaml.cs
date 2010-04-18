@@ -13,7 +13,7 @@ namespace WpfSample
     /// </summary>
     public partial class Window1 : Window
     {
-        MapTransform transform = new MapTransform();
+        View transform = new View();
         bool refresh = false;
         int soep = 100;
 
@@ -36,7 +36,7 @@ namespace WpfSample
             Map map = GradiantThemeSample.InitializeMap();
 
             SilverlightRenderer renderer = new SilverlightRenderer(canvas.Children);
-            MapTransform transform = new MapTransform();
+            View transform = new View();
 
             transform.Center = map.GetExtents().GetCentroid();
             transform.Width = (float)canvas.ActualWidth;

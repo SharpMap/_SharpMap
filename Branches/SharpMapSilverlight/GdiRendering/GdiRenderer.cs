@@ -23,30 +23,30 @@ namespace SharpMap.Rendering
         {
         }
 
-        public void Render(IProvider DataSource, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation, IMapTransform mapTansform)
+        public void Render(IView view, IProvider DataSource, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation)
         {
             if (graphics == null) throw new ApplicationException("Graphics was not initialized");
-            RendererHelper.Render(graphics, DataSource, getStyle, coordinateTransformation, mapTansform);
+            RendererHelper.Render(graphics, DataSource, getStyle, coordinateTransformation, view);
         }
-        
-        private void Initialize(IMapTransform transform)
+
+        private void Initialize(IView view)
         {
-            image = new System.Drawing.Bitmap((int)transform.Width, (int)transform.Height);
+            image = new System.Drawing.Bitmap((int)view.Width, (int)view.Height);
             graphics = System.Drawing.Graphics.FromImage(image);
         }
 
-        public Image GetMapAsImage(IMapTransform transform, Map map)
+        public Image GetMapAsImage(IView view, Map map)
         {
-            Initialize(transform); //TODO: only initilize when needed
+            Initialize(view); //TODO: only initilize when needed
             graphics.Clear(map.BackColor.Convert());
             graphics.PageUnit = System.Drawing.GraphicsUnit.Pixel;
-            map.Render(this, transform);
+            map.Render(this, view);
             return image;
         }
 
-        public byte[] GetMapAsByteArray(IMapTransform transform, Map map)
+        public byte[] GetMapAsByteArray(IView view, Map map)
         {
-            Image image = GetMapAsImage(transform, map);
+            Image image = GetMapAsImage(view, map);
             MemoryStream memoryStream = new MemoryStream();
             image.Save(memoryStream, ImageFormat.Bmp);
             return memoryStream.ToArray();

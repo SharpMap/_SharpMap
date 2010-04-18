@@ -25,35 +25,35 @@ namespace SilverlightRendering
             this.elements = elements;
         }
 
-        public void Render(IProvider provider, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation, IMapTransform mapTransform)
+        public void Render(IView view, IProvider provider, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation)
         {
-            BoundingBox envelope = mapTransform.Extent;
+            BoundingBox envelope = view.Extent;
             provider.Open();
-            IFeatures features = provider.GetFeaturesInView(envelope, mapTransform.Resolution);
+            IFeatures features = provider.GetFeaturesInView(envelope, view.Resolution);
             provider.Close();
 
             foreach (var feature in features.Items)
             {
                 if (feature.Geometry is Point)
-                    elements.Add(RenderPoint(feature.Geometry as Point, getStyle(feature), mapTransform));
+                    elements.Add(RenderPoint(feature.Geometry as Point, getStyle(feature), view));
                 else if (feature.Geometry is MultiPoint)
-                    elements.Add(RenderMultiPoint(feature.Geometry as MultiPoint, getStyle(feature), mapTransform));
+                    elements.Add(RenderMultiPoint(feature.Geometry as MultiPoint, getStyle(feature), view));
                 else if (feature.Geometry is LineString)
-                    elements.Add(RenderLineString(feature.Geometry as LineString, getStyle(feature), mapTransform));
+                    elements.Add(RenderLineString(feature.Geometry as LineString, getStyle(feature), view));
                 else if (feature.Geometry is MultiLineString)
-                    elements.Add(RenderMultiLineString(feature.Geometry as MultiLineString, getStyle(feature), mapTransform));
+                    elements.Add(RenderMultiLineString(feature.Geometry as MultiLineString, getStyle(feature), view));
                 else if (feature.Geometry is SharpMap.Geometries.Polygon)
-                    elements.Add(RenderPolygon(feature.Geometry as SharpMap.Geometries.Polygon, getStyle(feature), mapTransform));
+                    elements.Add(RenderPolygon(feature.Geometry as SharpMap.Geometries.Polygon, getStyle(feature), view));
                 else if (feature.Geometry is MultiPolygon)
-                    elements.Add(RenderMultiPolygon(feature.Geometry as MultiPolygon, getStyle(feature), mapTransform));
+                    elements.Add(RenderMultiPolygon(feature.Geometry as MultiPolygon, getStyle(feature), view));
             }
 
         }
 
-        private Path RenderPoint(SharpMap.Geometries.Point point, IStyle style, IMapTransform mapTransform)
+        private Path RenderPoint(SharpMap.Geometries.Point point, IStyle style, IViewTransform viewTransform)
         {
             Path path = CreatePointPath(style);
-            path.Data = ConvertPoint(point, style, mapTransform);
+            path.Data = ConvertPoint(point, style, viewTransform);
             return path;
         }
 
@@ -86,10 +86,10 @@ namespace SilverlightRendering
             return path;
         }
 
-        private static EllipseGeometry ConvertPoint(Point point, IStyle style, IMapTransform mapTransform)
+        private static EllipseGeometry ConvertPoint(Point point, IStyle style, IViewTransform viewTransform)
         {
             var vectorStyle = style as VectorStyle;
-            Point p = mapTransform.WorldToMap(point);
+            Point p = viewTransform.WorldToView(point);
             EllipseGeometry ellipse = new EllipseGeometry();
             ellipse.Center = new System.Windows.Point(p.X, p.Y);
             ellipse.RadiusX = 10 * vectorStyle.SymbolScale;  //!!! todo: get actual width and height
@@ -97,25 +97,25 @@ namespace SilverlightRendering
             return ellipse;
         }
 
-        private static Path RenderMultiPoint(MultiPoint multiPoint, IStyle style, IMapTransform mapTransform)
+        private static Path RenderMultiPoint(MultiPoint multiPoint, IStyle style, IViewTransform viewTransform)
         {
             Path path = CreatePointPath(style);
-            path.Data = ConvertMultiPoint(multiPoint, style, mapTransform);
+            path.Data = ConvertMultiPoint(multiPoint, style, viewTransform);
             return path;
         }
 
-        private static GeometryGroup ConvertMultiPoint(MultiPoint multiPoint, IStyle style, IMapTransform mapTransform)
+        private static GeometryGroup ConvertMultiPoint(MultiPoint multiPoint, IStyle style, IViewTransform viewTransform)
         {
             var group = new GeometryGroup();
             foreach (Point point in multiPoint)
-                group.Children.Add(ConvertPoint(point, style, mapTransform));
+                group.Children.Add(ConvertPoint(point, style, viewTransform));
             return group;
         }
 
-        private static Path RenderLineString(LineString lineString, IStyle style, IMapTransform mapTransform)
+        private static Path RenderLineString(LineString lineString, IStyle style, IViewTransform viewTransform)
         {
             Path path = CreateLineStringPath(style);
-            path.Data = ConvertLineString(lineString, mapTransform);
+            path.Data = ConvertLineString(lineString, viewTransform);
             return path;
         }
 
@@ -134,22 +134,22 @@ namespace SilverlightRendering
             return path;
         }
 
-        private static Windows.Geometry ConvertLineString(LineString lineString, IMapTransform mapTransform)
+        private static Windows.Geometry ConvertLineString(LineString lineString, IViewTransform viewTransform)
         {
             var pathGeometry = new PathGeometry();
-            pathGeometry.Figures.Add(CreatePathFigure(lineString, mapTransform));
+            pathGeometry.Figures.Add(CreatePathFigure(lineString, viewTransform));
             return pathGeometry;
         }
 
-        private static PathFigure CreatePathFigure(LineString linearRing, IMapTransform mapTransform)
+        private static PathFigure CreatePathFigure(LineString linearRing, IViewTransform viewTransform)
         {
             var pathFigure = new PathFigure();
-            pathFigure.StartPoint = ConvertPoint(linearRing.StartPoint.WorldToMap(mapTransform));
+            pathFigure.StartPoint = ConvertPoint(linearRing.StartPoint.WorldToMap(viewTransform));
 
             foreach (Point point in linearRing.Vertices)
             {
                 pathFigure.Segments.Add(
-                    new LineSegment() { Point = ConvertPoint(point.WorldToMap(mapTransform)) });
+                    new LineSegment() { Point = ConvertPoint(point.WorldToMap(viewTransform)) });
             }
             return pathFigure;
         }
@@ -159,25 +159,25 @@ namespace SilverlightRendering
             return new System.Windows.Point((float)point.X, (float)point.Y);
         }
 
-        private static Path RenderMultiLineString(MultiLineString multiLineString, IStyle style, IMapTransform mapTransform)
+        private static Path RenderMultiLineString(MultiLineString multiLineString, IStyle style, IViewTransform viewTransform)
         {
             Path path = CreateLineStringPath(style);
-            path.Data = ConvertMultiLineString(multiLineString, mapTransform);
+            path.Data = ConvertMultiLineString(multiLineString, viewTransform);
             return path;
         }
 
-        private static System.Windows.Media.Geometry ConvertMultiLineString(MultiLineString multiLineString, IMapTransform mapTransform)
+        private static System.Windows.Media.Geometry ConvertMultiLineString(MultiLineString multiLineString, IViewTransform viewTransform)
         {
             var group = new GeometryGroup();
             foreach (LineString lineString in multiLineString)
-                group.Children.Add(ConvertLineString(lineString, mapTransform));
+                group.Children.Add(ConvertLineString(lineString, viewTransform));
             return group;
         }
 
-        private Path RenderPolygon(SharpMap.Geometries.Polygon polygon, IStyle style, IMapTransform mapTransform)
+        private Path RenderPolygon(SharpMap.Geometries.Polygon polygon, IStyle style, IViewTransform viewTransform)
         {
             Path path = CreatePolygonPath(style);
-            path.Data = ConvertPolygon(polygon, mapTransform);
+            path.Data = ConvertPolygon(polygon, viewTransform);
             return path;
         }
 
@@ -196,42 +196,42 @@ namespace SilverlightRendering
             return path;
         }
 
-        private static GeometryGroup ConvertPolygon(SharpMap.Geometries.Polygon polygon, IMapTransform mapTransform)
+        private static GeometryGroup ConvertPolygon(SharpMap.Geometries.Polygon polygon, IViewTransform viewTransform)
         {
             var group = new GeometryGroup();
             group.FillRule = FillRule.EvenOdd;
-            group.Children.Add(ConvertLinearRing(polygon.ExteriorRing, mapTransform));
-            group.Children.Add(ConvertLinearRings(polygon.InteriorRings, mapTransform));
+            group.Children.Add(ConvertLinearRing(polygon.ExteriorRing, viewTransform));
+            group.Children.Add(ConvertLinearRings(polygon.InteriorRings, viewTransform));
             return group;
         }
 
-        private static PathGeometry ConvertLinearRing(LinearRing linearRing, IMapTransform mapTransform)
+        private static PathGeometry ConvertLinearRing(LinearRing linearRing, IViewTransform viewTransform)
         {
             var pathGeometry = new PathGeometry();
-            pathGeometry.Figures.Add(CreatePathFigure(linearRing, mapTransform));
+            pathGeometry.Figures.Add(CreatePathFigure(linearRing, viewTransform));
             return pathGeometry;
         }
 
-        private static PathGeometry ConvertLinearRings(IList<LinearRing> linearRings, IMapTransform mapTransform)
+        private static PathGeometry ConvertLinearRings(IList<LinearRing> linearRings, IViewTransform viewTransform)
         {
             var pathGeometry = new PathGeometry();
             foreach (var linearRing in linearRings)
-                pathGeometry.Figures.Add(CreatePathFigure(linearRing, mapTransform));
+                pathGeometry.Figures.Add(CreatePathFigure(linearRing, viewTransform));
             return pathGeometry;
         }
 
-        private static Path RenderMultiPolygon(MultiPolygon geometry, IStyle style, IMapTransform mapTransform)
+        private static Path RenderMultiPolygon(MultiPolygon geometry, IStyle style, IViewTransform viewTransform)
         {
             Path path = CreatePolygonPath(style);
-            path.Data = ConvertMultiPolygon(geometry, mapTransform);
+            path.Data = ConvertMultiPolygon(geometry, viewTransform);
             return path;
         }
 
-        private static GeometryGroup ConvertMultiPolygon(MultiPolygon geometry, IMapTransform mapTransform)
+        private static GeometryGroup ConvertMultiPolygon(MultiPolygon geometry, IViewTransform viewTransform)
         {
             var group = new GeometryGroup();
             foreach (SharpMap.Geometries.Polygon polygon in geometry.Polygons)
-                group.Children.Add(ConvertPolygon(polygon, mapTransform));
+                group.Children.Add(ConvertPolygon(polygon, viewTransform));
             return group;
         }
     }
