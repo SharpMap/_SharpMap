@@ -80,10 +80,10 @@ namespace SharpMap.Forms
         private System.Drawing.Point mousedrag;
         private bool mousedragging = false;
         private Image mousedragImg;
-        private MapTransform transform = new MapTransform();
+        private View transform = new View();
         private GdiRenderer gdiRenderer = new GdiRenderer();
 
-        public MapTransform Transform
+        public View Transform
         {
             get { return transform; }
         }
@@ -253,7 +253,7 @@ namespace SharpMap.Forms
                 if (e.Button == MouseButtons.Left) //dragging
                     mousedrag = e.Location;
                 if (MouseDown != null)
-                    MouseDown(transform.MapToWorld(new Point(e.X, e.Y)), e);
+                    MouseDown(transform.ViewToWorld(new Point(e.X, e.Y)), e);
             }
         }
 
@@ -262,7 +262,7 @@ namespace SharpMap.Forms
         {
             if (_Map != null)
             {
-                Point p = transform.MapToWorld(new Point(e.X, e.Y));
+                Point p = transform.ViewToWorld(new Point(e.X, e.Y));
 
                 if (MouseMove != null)
                     MouseMove(p, e);
@@ -320,7 +320,7 @@ namespace SharpMap.Forms
             if (_Map != null)
             {
                 if (MouseUp != null)
-                    MouseUp(transform.MapToWorld(new Point(e.X, e.Y)), e);
+                    MouseUp(transform.ViewToWorld(new Point(e.X, e.Y)), e);
 
                 if (e.Button == MouseButtons.Left)
                 {
@@ -329,7 +329,7 @@ namespace SharpMap.Forms
                         double scale = 0.5;
                         if (!mousedragging)
                         {
-                            transform.Center = transform.MapToWorld(new Point(e.X, e.Y));
+                            transform.Center = transform.ViewToWorld(new Point(e.X, e.Y));
                             if (MapCenterChanged != null)
                                 MapCenterChanged(transform.Center);
                         }
@@ -350,7 +350,7 @@ namespace SharpMap.Forms
                         double scale = 2;
                         if (!mousedragging)
                         {
-                            transform.Center = transform.MapToWorld(new Point(e.X, e.Y));
+                            transform.Center = transform.ViewToWorld(new Point(e.X, e.Y));
                             if (MapCenterChanged != null)
                                 MapCenterChanged(transform.Center);
                         }
@@ -372,13 +372,13 @@ namespace SharpMap.Forms
                         {
                             System.Drawing.Point pnt = new System.Drawing.Point(Width / 2 + (mousedrag.X - e.Location.X),
                                                                                 Height / 2 + (mousedrag.Y - e.Location.Y));
-                            transform.Center = transform.MapToWorld(new Point(pnt.X, pnt.Y));
+                            transform.Center = transform.ViewToWorld(new Point(pnt.X, pnt.Y));
                             if (MapCenterChanged != null)
                                 MapCenterChanged(transform.Center);
                         }
                         else
                         {
-                            transform.Center = transform.MapToWorld(new Point(e.X, e.Y));
+                            transform.Center = transform.ViewToWorld(new Point(e.X, e.Y));
                             if (MapCenterChanged != null)
                                 MapCenterChanged(transform.Center);
                         }

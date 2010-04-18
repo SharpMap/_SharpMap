@@ -35,11 +35,11 @@ namespace SharpMap.Rendering
     public static class RendererHelper
     {
         public static void Render(System.Drawing.Graphics g, IProvider provider, Func<IFeature, IStyle> getStyle,
-            ICoordinateTransformation coordinateTransformation, IMapTransform transform)
+            ICoordinateTransformation coordinateTransformation, IView view)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            BoundingBox envelope = transform.Extent; //View to render
+            BoundingBox envelope = view.Extent; //View to render
 
             if (coordinateTransformation != null)
             {
@@ -47,7 +47,7 @@ namespace SharpMap.Rendering
             }
 
             provider.Open();
-            IFeatures features = provider.GetFeaturesInView(envelope, transform.Resolution);
+            IFeatures features = provider.GetFeaturesInView(envelope, view.Resolution);
             provider.Close();
 
             if (coordinateTransformation != null)
@@ -65,12 +65,12 @@ namespace SharpMap.Rendering
                     if (feature.Geometry is SharpMap.Geometries.LineString)
                     {
                         SharpMap.Styles.VectorStyle outlinestyle1 = getStyle(feature) as SharpMap.Styles.VectorStyle;
-                        RendererHelper.DrawLineString(g, feature.Geometry as LineString, outlinestyle1.Outline.Convert(), transform);
+                        RendererHelper.DrawLineString(g, feature.Geometry as LineString, outlinestyle1.Outline.Convert(), view);
                     }
                     else if (feature.Geometry is SharpMap.Geometries.MultiLineString)
                     {
                         SharpMap.Styles.VectorStyle outlinestyle2 = getStyle(feature) as SharpMap.Styles.VectorStyle;
-                        RendererHelper.DrawMultiLineString(g, feature.Geometry as MultiLineString, outlinestyle2.Outline.Convert(), transform);
+                        RendererHelper.DrawMultiLineString(g, feature.Geometry as MultiLineString, outlinestyle2.Outline.Convert(), view);
                     }
                 }
             }
@@ -78,7 +78,7 @@ namespace SharpMap.Rendering
             foreach (IFeature feature in features.Items)
             {
                 SharpMap.Styles.VectorStyle style = getStyle(feature) as SharpMap.Styles.VectorStyle;
-                RenderGeometry(g, transform, feature.Geometry, style);
+                RenderGeometry(g, view, feature.Geometry, style);
             }
 
         }
@@ -90,7 +90,7 @@ namespace SharpMap.Rendering
         /// <param name="lines">MultiLineString to be rendered</param>
         /// <param name="pen">Pen style used for rendering</param>
         /// <param name="map">Map reference</param>
-        private static void DrawMultiLineString(System.Drawing.Graphics g, Geometries.MultiLineString lines, System.Drawing.Pen pen, IMapTransform transform)
+        private static void DrawMultiLineString(System.Drawing.Graphics g, Geometries.MultiLineString lines, System.Drawing.Pen pen, IViewTransform transform)
         {
             System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
             for (int i = 0; i < lines.LineStrings.Count; i++)
@@ -104,13 +104,13 @@ namespace SharpMap.Rendering
         /// <param name="line">LineString to render</param>
         /// <param name="pen">Pen style used for rendering</param>
         /// <param name="map">Map reference</param>
-        private static void DrawLineString(System.Drawing.Graphics g, Geometries.LineString line, System.Drawing.Pen pen, IMapTransform transform)
+        private static void DrawLineString(System.Drawing.Graphics g, Geometries.LineString line, System.Drawing.Pen pen, IViewTransform transform)
         {
             if (line.Vertices.Count > 1)
             {
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
 
-                gp.AddLines(ConvertPoints(line.WorldToMap(transform)));
+                gp.AddLines(ConvertPoints(line.WorldToView(transform)));
                 g.DrawPath(pen, gp);
 
             }
@@ -131,7 +131,7 @@ namespace SharpMap.Rendering
         /// <param name="brush">Brush used for filling (null or transparent for no filling)</param>
         /// <param name="pen">Outline pen style (null if no outline)</param>
         /// <param name="map">Map reference</param>
-        private static void DrawMultiPolygon(System.Drawing.Graphics g, Geometries.MultiPolygon pols, System.Drawing.Brush brush, System.Drawing.Pen pen, IMapTransform transform)
+        private static void DrawMultiPolygon(System.Drawing.Graphics g, Geometries.MultiPolygon pols, System.Drawing.Brush brush, System.Drawing.Pen pen, IViewTransform transform)
         {
             for (int i = 0; i < pols.Polygons.Count; i++)
                 DrawPolygon(g, pols.Polygons[i], brush, pen, transform);
@@ -145,7 +145,7 @@ namespace SharpMap.Rendering
         /// <param name="brush">Brush used for filling (null or transparent for no filling)</param>
         /// <param name="pen">Outline pen style (null if no outline)</param>
         /// <param name="map">Map reference</param>
-        private static void DrawPolygon(System.Drawing.Graphics g, Polygon pol, System.Drawing.Brush brush, System.Drawing.Pen pen, IMapTransform transform)
+        private static void DrawPolygon(System.Drawing.Graphics g, Polygon pol, System.Drawing.Brush brush, System.Drawing.Pen pen, IViewTransform transform)
         {
             if (pol.ExteriorRing == null)
                 return;
@@ -155,10 +155,10 @@ namespace SharpMap.Rendering
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
 
                 //Add the exterior polygon
-                gp.AddPolygon(ConvertPoints(pol.ExteriorRing.WorldToMap(transform)));
+                gp.AddPolygon(ConvertPoints(pol.ExteriorRing.WorldToView(transform)));
                 //Add the interior polygons (holes)
                 for (int i = 0; i < pol.InteriorRings.Count; i++)
-                    gp.AddPolygon(ConvertPoints(pol.InteriorRings[i].WorldToMap(transform)));
+                    gp.AddPolygon(ConvertPoints(pol.InteriorRings[i].WorldToView(transform)));
 
                 // Only render inside of polygon if the brush isn't null or isn't transparent
                 if (brush != null && brush != System.Drawing.Brushes.Transparent)
@@ -182,7 +182,7 @@ namespace SharpMap.Rendering
         /// <param name="rotation">Text rotation in degrees</param>
         /// <param name="text">Text to render</param>
         /// <param name="map">Map reference</param>
-        private static void DrawLabel(System.Drawing.Graphics g, System.Drawing.PointF LabelPoint, System.Drawing.PointF Offset, System.Drawing.Font font, System.Drawing.Color forecolor, System.Drawing.Brush backcolor, System.Drawing.Pen halo, float rotation, string text, IMapTransform transform)
+        private static void DrawLabel(System.Drawing.Graphics g, System.Drawing.PointF LabelPoint, System.Drawing.PointF Offset, System.Drawing.Font font, System.Drawing.Color forecolor, System.Drawing.Brush backcolor, System.Drawing.Pen halo, float rotation, string text, IViewTransform transform)
         {
             System.Drawing.SizeF fontSize = g.MeasureString(text, font); //Calculate the size of the text
             LabelPoint.X += Offset.X; LabelPoint.Y += Offset.Y; //add label offset
@@ -368,13 +368,13 @@ namespace SharpMap.Rendering
         /// <param name="offset">Symbol offset af scale=1</param>
         /// <param name="rotation">Symbol rotation in degrees</param>
         /// <param name="map">Map reference</param>
-        private static void DrawPoint(System.Drawing.Graphics g, SharpMap.Geometries.Point point, System.Drawing.Bitmap symbol, float symbolscale, System.Drawing.PointF offset, float rotation, IMapTransform transform)
+        private static void DrawPoint(System.Drawing.Graphics g, SharpMap.Geometries.Point point, System.Drawing.Bitmap symbol, float symbolscale, System.Drawing.PointF offset, float rotation, IViewTransform transform)
         {
             if (point == null)
                 return;
             if (symbol == null)
                 throw new Rendering.Exceptions.RenderException("Cannot render point. Symbol style is null");
-            System.Drawing.PointF pp = ConvertPoint(transform.WorldToMap(point.X, point.Y));
+            System.Drawing.PointF pp = ConvertPoint(transform.WorldToView(point));
 
             if (rotation != 0 && rotation != float.NaN)
             {
@@ -408,7 +408,7 @@ namespace SharpMap.Rendering
             return new System.Drawing.PointF((float)point.X, (float)point.Y);
         }
 
-        private static void RenderGeometry(System.Drawing.Graphics g, IMapTransform transform, IGeometry feature, IStyle inStyle)
+        private static void RenderGeometry(System.Drawing.Graphics g, IViewTransform transform, IGeometry feature, IStyle inStyle)
         {
             var style = inStyle as VectorStyle;
 
@@ -437,14 +437,14 @@ namespace SharpMap.Rendering
             }
         }
 
-        private static void DrawRaster(System.Drawing.Graphics graphics, IRaster raster, IMapTransform transform)
+        private static void DrawRaster(System.Drawing.Graphics graphics, IRaster raster, IViewTransform transform)
         {
             ImageAttributes imageAttributes = new ImageAttributes();
 
             System.Drawing.Bitmap bitmap = (System.Drawing.Bitmap)System.Drawing.Bitmap.FromStream(new MemoryStream(raster.Data));
 
-            SharpMap.Geometries.Point min = transform.WorldToMap(new SharpMap.Geometries.Point(raster.GetBoundingBox().MinX, raster.GetBoundingBox().MinY));
-            SharpMap.Geometries.Point max = transform.WorldToMap(new SharpMap.Geometries.Point(raster.GetBoundingBox().MaxX, raster.GetBoundingBox().MaxY));
+            SharpMap.Geometries.Point min = transform.WorldToView(new SharpMap.Geometries.Point(raster.GetBoundingBox().MinX, raster.GetBoundingBox().MinY));
+            SharpMap.Geometries.Point max = transform.WorldToView(new SharpMap.Geometries.Point(raster.GetBoundingBox().MaxX, raster.GetBoundingBox().MaxY));
 
             System.Drawing.Rectangle destination = RoundToPixel(new System.Drawing.RectangleF((float)min.X, (float)max.Y, (float)(max.X - min.X), (float)(min.Y - max.Y)));
             graphics.DrawImage(bitmap,
