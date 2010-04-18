@@ -150,11 +150,11 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="map">Map to base coordinates on</param>
         /// <returns>Linestring in image coordinates</returns>
-        public IList<Point> WorldToMap(IMapTransform transform)
+        public IList<Point> WorldToView(IViewTransform transform)
         {
             Point[] v = new Point[_Vertices.Count];
             for (int i = 0; i < this.Vertices.Count; i++)
-                v[i] = transform.WorldToMap(_Vertices[i].X, _Vertices[i].Y);
+                v[i] = transform.WorldToView(_Vertices[i]);
             return v;
         }	
 

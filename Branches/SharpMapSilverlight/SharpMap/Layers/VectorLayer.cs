@@ -50,12 +50,17 @@ namespace SharpMap.Layers
     /// System.Drawing.Image mapImage = myMap.GetMap();
     /// </code>
     /// </example>
-    public class VectorLayer : Layer
+    public class VectorLayer : ILayer
     {
         private SharpMap.Rendering.Thematics.ITheme _theme;
         private SharpMap.Data.Providers.IProvider _DataSource;
         private Styles.VectorStyle _Style;
-
+        private double _MaxVisible = double.MaxValue;
+        private double _MinVisible = 0;
+        private bool _Enabled = true;
+        private string _LayerName;
+        private int _SRID = -1;
+		
         /// <summary>
         /// Initializes a new layer
         /// </summary>
@@ -64,6 +69,42 @@ namespace SharpMap.Layers
         {
             this.Style = new SharpMap.Styles.VectorStyle();
             this.LayerName = layername;
+        }
+
+        /// <summary>
+        /// Minimum visibility zoom, including this value
+        /// </summary>
+        public double MinVisible
+        {
+            get { return _MinVisible; }
+            set { _MinVisible = value; }
+        }
+
+        /// <summary>
+        /// Maximum visibility zoom, excluding this value
+        /// </summary>
+        public double MaxVisible
+        {
+            get { return _MaxVisible; }
+            set { _MaxVisible = value; }
+        }
+
+        /// <summary>
+        /// Specified whether the layer is rendered or not
+        /// </summary>
+        public bool Enabled
+        {
+            get { return _Enabled; }
+            set { _Enabled = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the layer
+        /// </summary>
+        public string LayerName
+        {
+            get { return _LayerName; }
+            set { _LayerName = value; }
         }
 
         /// <summary>
@@ -97,7 +138,7 @@ namespace SharpMap.Layers
         /// Gets or sets the SRID of this VectorLayer's data source
         /// </summary>
         /// 
-        public override int SRID
+        public int SRID
         {
             get
             {
@@ -116,10 +157,9 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
-        public override void Render(IRenderer renderer, IMapTransform mapTransform)
+        public void Render(IRenderer renderer, IView view)
         {
-            renderer.Render(DataSource, CreateStyleMethod(Style, Theme), CoordinateTransformation, mapTransform);
-            base.Render(renderer, mapTransform);
+            renderer.Render(view, DataSource, CreateStyleMethod(Style, Theme), CoordinateTransformation);
         }
 
         private static Func<IFeature, IStyle> CreateStyleMethod(IStyle style, ITheme theme)
@@ -130,11 +170,23 @@ namespace SharpMap.Layers
                 return (row) => theme.GetStyle(row);
         }
 
+        private ICoordinateTransformation _CoordinateTransform;
+
+        /// <summary>
+        /// Gets or sets the <see cref="SharpMap.CoordinateSystems.Transformations.ICoordinateTransformation"/> applied 
+        /// to this vectorlayer prior to rendering
+        /// </summary>
+        public ProjNet.CoordinateSystems.Transformations.ICoordinateTransformation CoordinateTransformation
+        {
+            get { return _CoordinateTransform; }
+            set { _CoordinateTransform = value; }
+        }
+
         /// <summary>
         /// Returns the extent of the layer
         /// </summary>
         /// <returns>Bounding box corresponding to the extent of the features in the layer</returns>
-        public override BoundingBox Envelope
+        public BoundingBox Envelope
         {
             get
             {

@@ -205,9 +205,9 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="map">Map to base coordinates on</param>
         /// <returns>point in image coordinates</returns>
-        public Point WorldToMap(IMapTransform transform)
+        public Point WorldToMap(IViewTransform transform)
         {
-            return transform.WorldToMap(this);
+            return transform.WorldToView(this);
         }
 
         /// <summary>

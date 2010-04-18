@@ -142,7 +142,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="map">Map to base coordinates on</param>
         /// <returns>Polygon in image coordinates</returns>
-        public Point[] WorldToMap(IMapTransform transform)
+        public Point[] WorldToView(IViewTransform transform)
         {
 
             int vertices = _ExteriorRing.Vertices.Count;
@@ -151,7 +151,7 @@ namespace SharpMap.Geometries
 
             Point[] v = new Point[vertices];
             for (int i = 0; i < _ExteriorRing.Vertices.Count; i++)
-                v[i] = transform.WorldToMap(_ExteriorRing.Vertices[i]);
+                v[i] = transform.WorldToView(_ExteriorRing.Vertices[i]);
             int j = _ExteriorRing.Vertices.Count;
             for (int k = 0; k < _InteriorRings.Count; k++)
             {
@@ -160,7 +160,7 @@ namespace SharpMap.Geometries
                 //if (_InteriorRings[k].IsCCW())
                 //{
                 for (int i = 0; i < _InteriorRings[k].Vertices.Count; i++)
-                    v[j + i] = transform.WorldToMap(_InteriorRings[k].Vertices[i]);
+                    v[j + i] = transform.WorldToView(_InteriorRings[k].Vertices[i]);
                 //}
                 //else
                 //{

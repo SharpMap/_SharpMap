@@ -32,7 +32,7 @@ namespace SharpMap.Layers
 		/// </summary>
 		/// <param name="g">Graphics object reference</param>
 		/// <param name="map">Map which is rendered</param>
-		void Render(IRenderer renderer, IMapTransform transform);
+		void Render(IRenderer renderer, IView view);
 
 		/// <summary>
 		/// Minimum visible zoom level
