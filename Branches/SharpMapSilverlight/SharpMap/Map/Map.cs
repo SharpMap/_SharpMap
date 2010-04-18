@@ -143,7 +143,7 @@ namespace SharpMap
         /// Renders the map to an image
         /// </summary>
         /// <returns></returns>
-        public void Render(IRenderer renderer, IMapTransform transform)
+        public void Render(IRenderer renderer, IView transform)
         {
             
             int SRID = (Layers.Count > 0 ? Layers[0].SRID : -1); //Get the SRID of the first layer
