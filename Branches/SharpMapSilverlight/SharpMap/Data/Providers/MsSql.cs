@@ -159,9 +159,9 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="bbox"></param>
         /// <returns></returns>
-        public Collection<Geometry> GetGeometriesInView(BoundingBox bbox)
+        public Collection<IGeometry> GetGeometriesInView(BoundingBox bbox)
         {
-            Collection<Geometry> features = new Collection<Geometry>();
+            Collection<IGeometry> features = new Collection<IGeometry>();
             using (SqlConnection conn = new SqlConnection(_ConnectionString))
             {
                 string BoxIntersect = GetBoxClause(bbox);
@@ -198,7 +198,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="oid">Object ID</param>
         /// <returns>geometry</returns>
-        public Geometry GetGeometryByID(uint oid)
+        public IGeometry GetGeometryByID(uint oid)
         {
             Geometry geom = null;
             using (SqlConnection conn = new SqlConnection(_ConnectionString))

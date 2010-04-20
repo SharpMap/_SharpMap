@@ -407,19 +407,19 @@ namespace SharpMap.Data.Providers
         /// </remarks>
         /// <param name="bbox"></param>
         /// <returns></returns>
-        public Collection<Geometry> GetGeometriesInView(BoundingBox bbox)
+        public Collection<IGeometry> GetGeometriesInView(BoundingBox bbox)
         {
             //Use the spatial index to get a list of features whose boundingbox intersects bbox
             Collection<uint> objectlist = GetObjectIDsInView(bbox);
             if (objectlist.Count == 0) //no features found. Return an empty set
-                return new Collection<Geometry>();
+                return new Collection<IGeometry>();
 
             //Collection<SharpMap.Geometries.Geometry> geometries = new Collection<SharpMap.Geometries.Geometry>(objectlist.Count);
-            Collection<Geometry> geometries = new Collection<Geometry>();
+            Collection<IGeometry> geometries = new Collection<IGeometry>();
 
             for (int i = 0; i < objectlist.Count; i++)
             {
-                Geometry g = GetGeometryByID(objectlist[i]);
+                IGeometry g = GetGeometryByID(objectlist[i]);
                 if (g != null)
                     geometries.Add(g);
             }
@@ -482,7 +482,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="oid">Object ID</param>
         /// <returns>geometry</returns>
-        public SharpMap.Geometries.Geometry GetGeometryByID(uint oid)
+        public IGeometry GetGeometryByID(uint oid)
         {
             if (FilterDelegate != null) //Apply filtering
             {

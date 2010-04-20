@@ -7,6 +7,7 @@ using SharpMap.Data;
 using SharpMap.Data.Providers;
 using SharpMap.Geometries;
 using SharpMap.Rasters;
+using System.Collections.ObjectModel;
 
 namespace SharpMap.Providers
 {
@@ -179,7 +180,7 @@ namespace SharpMap.Providers
             get { return true; }
         }
 
-        public System.Collections.ObjectModel.Collection<Geometry> GetGeometriesInView(BoundingBox bbox)
+        public Collection<IGeometry> GetGeometriesInView(BoundingBox bbox)
         {
             throw new NotImplementedException();
         }
@@ -189,7 +190,7 @@ namespace SharpMap.Providers
             throw new NotImplementedException();
         }
 
-        public Geometry GetGeometryByID(uint oid)
+        public IGeometry GetGeometryByID(uint oid)
         {
             throw new NotImplementedException();
         }
@@ -249,6 +250,5 @@ namespace BruTile
                 extent.MaxX,
                 extent.MaxY);
         }
-
     }
 }

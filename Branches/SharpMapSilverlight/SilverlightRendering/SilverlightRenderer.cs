@@ -32,7 +32,7 @@ namespace SilverlightRendering
             IFeatures features = provider.GetFeaturesInView(envelope, view.Resolution);
             provider.Close();
 
-            foreach (var feature in features.Items)
+            foreach (var feature in features)
             {
                 if (feature.Geometry is Point)
                     elements.Add(RenderPoint(feature.Geometry as Point, getStyle(feature), view));

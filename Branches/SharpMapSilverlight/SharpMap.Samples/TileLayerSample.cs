@@ -15,7 +15,7 @@ namespace WinFormSamples.Samples
         public static Map InitializeMap()
         {
             Map map = new Map();
-            VectorLayer osm = new VectorLayer("OSM");
+            Layer osm = new Layer("OSM");
             osm.DataSource = new TileProvider(new TileSourceOsm(), "OSM");
             map.Layers.Add(osm);
             return map;

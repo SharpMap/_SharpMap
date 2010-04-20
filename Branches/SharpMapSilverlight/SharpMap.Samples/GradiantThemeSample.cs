@@ -22,12 +22,7 @@ namespace SharpMap.Samples
             //Initialize a new map based on the simple map
             Map map = new Map();
 
-            //VectorLayer osm = new VectorLayer("OSM");
-            ////Set the datasource to a shapefile in the App_data folder
-            //osm.DataSource = new TileProvider(new TileSourceOsm(), "OSM");
-            //map.Layers.Add(osm);
-
-            VectorLayer osm = new VectorLayer("OSM");
+            Layer osm = new Layer("OSM");
             string url = "http://labs.metacarta.com/wms-c/tilecache.py?version=1.1.1&amp;request=GetCapabilities&amp;service=wms-c";
             var tileSources = TileSourceWmsC.TileSourceBuilder(new Uri(url), null);
             var tileSource = new List<ITileSource>(tileSources).Find(source => source.Schema.Name == "osm-map");
@@ -35,7 +30,7 @@ namespace SharpMap.Samples
             map.Layers.Add(osm);
 
             //Set up countries layer
-            VectorLayer layCountries = new VectorLayer("Countries");
+            Layer layCountries = new Layer("Countries");
             //Set the datasource to a shapefile in the App_data folder
             layCountries.DataSource = new ShapeFile("GeoData/World/countries.shp", true);
             //Set fill-style to green
@@ -48,7 +43,7 @@ namespace SharpMap.Samples
             map.Layers.Add(layCountries);
 
             //set up cities layer
-            VectorLayer layCities = new VectorLayer("Cities");
+            Layer layCities = new Layer("Cities");
             //Set the datasource to a shapefile in the App_data folder
             layCities.DataSource = new ShapeFile("GeoData/World/cities.shp", true);
             layCities.Style.SymbolScale = 0.8f;

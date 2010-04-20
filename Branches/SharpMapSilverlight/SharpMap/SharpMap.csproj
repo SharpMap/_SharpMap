@@ -95,12 +95,11 @@
     <Compile Include="Data\Providers\DbaseReader.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\Providers\MemoryProvider.cs" />
     <Compile Include="Data\Providers\IProvider.cs" />
     <Compile Include="Data\Providers\MsSql.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\Providers\Pooling\Connector.cs" />
-    <Compile Include="Data\Providers\Pooling\ConnectorPool.cs" />
     <Compile Include="Data\Providers\ShapeFile.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -124,9 +123,10 @@
     <Compile Include="Geometries\Polygon.cs" />
     <Compile Include="Geometries\SpatialRelations.cs" />
     <Compile Include="Geometries\Surface.cs" />
+    <Compile Include="Layers\ICanQueryLayer.cs" />
     <Compile Include="Layers\ILayer.cs" />
     <Compile Include="Data\Providers\TileProvider.cs" />
-    <Compile Include="Layers\VectorLayer.cs" />
+    <Compile Include="Layers\Layer.cs" />
     <Compile Include="Map\IViewTransform.cs" />
     <Compile Include="Map\IView.cs" />
     <Compile Include="Map\Map.cs" />
