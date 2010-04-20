@@ -51,7 +51,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="bbox"></param>
         /// <returns>Features within the specified <see cref="SharpMap.Geometries.BoundingBox"/></returns>
-        Collection<Geometry> GetGeometriesInView(BoundingBox bbox);
+        Collection<IGeometry> GetGeometriesInView(BoundingBox bbox);
 
         /// <summary>
         /// Returns all objects whose <see cref="SharpMap.Geometries.BoundingBox"/> intersects 'bbox'.
@@ -69,7 +69,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="oid">Object ID</param>
         /// <returns>geometry</returns>
-        Geometry GetGeometryByID(uint oid);
+        IGeometry GetGeometryByID(uint oid);
 
         IFeatures GetFeaturesInView(BoundingBox envelope, double resolution);
 
@@ -84,7 +84,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="RowID"></param>
         /// <returns>datarow</returns>
-        IFeature GetFeature(uint RowID);
+        IFeature GetFeature(uint id);
 
         /// <summary>
         /// <see cref="SharpMap.Geometries.BoundingBox"/> of dataset

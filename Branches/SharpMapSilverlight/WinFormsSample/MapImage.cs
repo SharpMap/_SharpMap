@@ -388,34 +388,14 @@ namespace SharpMap.Forms
                     {
                         if (_Map.Layers.Count > _queryLayerIndex && _queryLayerIndex > -1)
                         {
-                            /*
-                            if (_Map.Layers[_queryLayerIndex].GetType() == typeof(VectorLayer))
+                            if (_Map.Layers[_queryLayerIndex] is IQueryLayer)
                             {
-                                VectorLayer layer = _Map.Layers[_queryLayerIndex] as VectorLayer;
-                                BoundingBox bbox =
-                                    _Map.ImageToWorld(new System.Drawing.Point(e.X, e.Y)).GetBoundingBox().Grow(
-                                        _Map.PixelSize * 5);
-                                FeatureDataSet ds = new FeatureDataSet();
-                                layer.DataSource.Open();
-                                layer.DataSource.ExecuteIntersectionQuery(bbox, ds);
-                                layer.DataSource.Close();
-                                if (ds.Tables.Count > 0)
-                                    if (MapQueried != null) MapQueried(ds.Tables[0]);
-                                    else if (MapQueried != null) MapQueried(new FeatureDataTable());
+                                IQueryLayer layer = _Map.Layers[_queryLayerIndex] as IQueryLayer;
+                                Point pointWorld = transform.ViewToWorld(new Point(e.X, e.Y));
+                                BoundingBox bbox = pointWorld.GetBoundingBox().Grow(transform.Resolution * 5);
+                                IFeatures features = layer.GetFeatures(bbox);
+                                if (MapQueried != null) MapQueried(features);
                             }
-                            */
-                            //if (_Map.Layers[_queryLayerIndex] is ICanQueryLayer)
-                            //{
-                            //    ICanQueryLayer layer = _Map.Layers[_queryLayerIndex] as ICanQueryLayer;
-                            //    BoundingBox bbox =
-                            //        _Map.ImageToWorld(new System.Drawing.Point(e.X, e.Y)).GetBoundingBox().Grow(
-                            //            _Map.PixelSize*5);
-                            //    FeatureDataSet ds = new FeatureDataSet();
-                            //    layer.ExecuteIntersectionQuery(bbox, ds);
-                            //    if (ds.Tables.Count > 0)
-                            //        if (MapQueried != null) MapQueried(ds.Tables[0]);
-                            //        else if (MapQueried != null) MapQueried(new FeatureDataTable());
-                            //}
                         }
                         else
                             MessageBox.Show("No active layer to query");
@@ -450,7 +430,7 @@ namespace SharpMap.Forms
         /// Eventtype fired when the map is queried
         /// </summary>
         /// <param name="data"></param>
-        public delegate void MapQueryHandler(Features data);
+        public delegate void MapQueryHandler(IFeatures data);
 
         /// <summary>
         /// Eventtype fired when the zoom was or are being changed

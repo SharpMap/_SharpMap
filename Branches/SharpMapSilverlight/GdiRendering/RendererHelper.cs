@@ -51,13 +51,13 @@ namespace SharpMap.Rendering
             provider.Close();
 
             if (coordinateTransformation != null)
-                foreach (var feature in features.Items)
+                foreach (var feature in features)
                     feature.Geometry = ProjectionHelper.Transform(feature.Geometry, coordinateTransformation);
 
             //Linestring outlines is drawn by drawing the layer once with a thicker line
             //before drawing the "inline" on top.
 
-            foreach (IFeature feature in features.Items)
+            foreach (IFeature feature in features)
             {
                 if ((getStyle(feature) as VectorStyle).EnableOutline)
                 {
@@ -75,7 +75,7 @@ namespace SharpMap.Rendering
                 }
             }
 
-            foreach (IFeature feature in features.Items)
+            foreach (IFeature feature in features)
             {
                 SharpMap.Styles.VectorStyle style = getStyle(feature) as SharpMap.Styles.VectorStyle;
                 RenderGeometry(g, view, feature.Geometry, style);

@@ -18,17 +18,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using SharpMap.Geometries;
+using System.Collections;
 
 namespace SharpMap.Data
 {
-    public interface IFeatures
+    public interface IFeatures : IEnumerable<IFeature>
     {
         //todo: This should be an enumerator directly on IFeatures
-        IEnumerable<IFeature> Items
-        {
-            get;
-        }
-
         void Add(IFeature feature);
         IFeature New();
     }
@@ -46,29 +42,44 @@ namespace SharpMap.Data
 
     public class Features : IFeatures
     {
-        Collection<IFeature> features = new Collection<IFeature>();
+        private List<IFeature> features = new List<IFeature>();
+
+        public int Count
+        {
+            get { return features.Count; }
+        }
+
+        public IFeature this[int index]
+        {
+            get { return features[index]; }
+        }
 
         public Features()
         {
             //Perhaps this constructor should get a dictionary parameter
-            //to specify the columns
-        }
-
-        public IEnumerable<IFeature> Items
-        {
-            get { return features; }
+            //to specify the name and type of the columns
         }
 
         public IFeature New()
         {
-            //At this point it is possible to initialize a improved version of
-            //Feature with a specifed set of Columns.
+            //At this point it is possible to initialize an improved version of
+            //Feature with a specifed set of columns.
             return new Feature();
         }
 
         public void Add(IFeature feature)
         {
             features.Add(feature);
+        }
+
+        public IEnumerator<IFeature> GetEnumerator()
+        {
+            return features.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return features.GetEnumerator();
         }
 
         private class Feature : IFeature
@@ -94,8 +105,5 @@ namespace SharpMap.Data
             }
         }
     }        
-
-   
-
 }
 
