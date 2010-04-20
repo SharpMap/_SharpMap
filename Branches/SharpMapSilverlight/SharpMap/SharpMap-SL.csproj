@@ -85,8 +85,6 @@
     <Compile Include="DataSourceCreator.cs" />
     <Compile Include="Data\Features.cs" />
     <Compile Include="Data\Providers\IProvider.cs" />
-    <Compile Include="Data\Providers\Pooling\Connector.cs" />
-    <Compile Include="Data\Providers\Pooling\ConnectorPool.cs" />
     <Compile Include="Geometries\BoundingBox.cs" />
     <Compile Include="Geometries\Curve.cs" />
     <Compile Include="Geometries\Geometry.cs" />
@@ -108,7 +106,6 @@
     <Compile Include="Geometries\SpatialRelations.cs" />
     <Compile Include="Geometries\Surface.cs" />
     <Compile Include="Layers\ILayer.cs" />
-    <Compile Include="Layers\VectorLayer.cs" />
     <Compile Include="Map\IView.cs" />
     <Compile Include="Map\IViewTransform.cs" />
     <Compile Include="Map\Map.cs" />
