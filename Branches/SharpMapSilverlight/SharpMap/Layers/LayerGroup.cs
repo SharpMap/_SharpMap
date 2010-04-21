@@ -17,9 +17,9 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using SharpMap.Data;
 using SharpMap.Geometries;
+using SharpMap.Rendering;
 
 namespace SharpMap.Layers
 {
@@ -30,7 +30,7 @@ namespace SharpMap.Layers
     /// The Group layer is useful for grouping a set of layers,
     /// for instance a set of image tiles, and expose them as a single layer
     /// </remarks>
-    public class LayerGroup : Layer, ICanQueryLayer, IDisposable
+    public class LayerGroup : Layer, IQueryLayer, IDisposable
     {
         private Collection<ILayer> _Layers;
 
@@ -38,7 +38,7 @@ namespace SharpMap.Layers
         /// Initializes a new group layer
         /// </summary>
         /// <param name="layername">Name of layer</param>
-        public LayerGroup(string layername)
+        public LayerGroup(string layername) : base(layername)
         {
             LayerName = layername;
             _Layers = new Collection<ILayer>();
@@ -102,24 +102,15 @@ namespace SharpMap.Layers
         }
 
         /// <summary>
-        /// Renders the layer
+        /// Render the layer
         /// </summary>
-        /// <param name="g">Graphics object reference</param>
-        /// <param name="map">Map which is rendered</param>
-        public override void Render(Graphics g, Map map)
+        /// <param name="renderer"></param>
+        /// <param name="view"></param>
+         public void Render(IRenderer renderer, IView view)
         {
-            for (int i = 0; i < _Layers.Count; i++)
-                if (_Layers[i].Enabled && _Layers[i].MaxVisible >= map.Zoom && _Layers[i].MinVisible < map.Zoom)
-                    _Layers[i].Render(g, map);
-        }
-
-        /// <summary>
-        /// Clones the layer
-        /// </summary>
-        /// <returns>cloned object</returns>
-        public override object Clone()
-        {
-            throw new NotImplementedException();
+            foreach (ILayer layer in _Layers)
+                if (layer.Enabled && layer.MaxVisible >= view.Resolution && layer.MinVisible < view.Resolution)
+                    layer.Render(renderer, view);
         }
 
         #region Implementation of ICanQueryLayer
@@ -131,17 +122,27 @@ namespace SharpMap.Layers
         /// <param name="ds">FeatureDataSet to fill data into</param>
         public void ExecuteIntersectionQuery(BoundingBox box, FeatureDataSet ds)
         {
-            foreach (Layer layer in Layers)
-            {
-                if (layer is ICanQueryLayer)
-                {
-                    FeatureDataSet dsTmp = new FeatureDataSet();
-                    ((ICanQueryLayer)layer).ExecuteIntersectionQuery(box, dsTmp);
-                    ds.Tables.AddRange(dsTmp.Tables);
-                }
-            }
+
         }
 
         #endregion
+
+
+        public IFeatures GetFeatures(BoundingBox box)
+        {
+            foreach (Layer layer in Layers)
+            {
+                if (layer is IQueryLayer)
+                {
+                    //Not implemented because not sure how to deal with multiple result sets //!!!
+                    throw new NotImplementedException("Not implemented");
+                    var queryLayer = layer as IQueryLayer;
+                    var features = queryLayer.GetFeatures(box);
+                    return features;
+                }
+            }
+            return null;
+        }
+
     }
 }

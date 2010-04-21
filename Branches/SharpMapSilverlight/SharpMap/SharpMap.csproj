@@ -127,6 +127,7 @@
     <Compile Include="Layers\ILayer.cs" />
     <Compile Include="Data\Providers\TileProvider.cs" />
     <Compile Include="Layers\Layer.cs" />
+    <Compile Include="Layers\LayerGroup.cs" />
     <Compile Include="Map\IViewTransform.cs" />
     <Compile Include="Map\IView.cs" />
     <Compile Include="Map\Map.cs" />
