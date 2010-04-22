@@ -313,17 +313,6 @@ namespace SharpMap.Web.Wms
         }
 
         /// <summary>
-        /// Used for setting up output format of image file
-        /// </summary>
-        private static ImageCodecInfo GetEncoderInfo(String mimeType)
-        {
-            foreach (ImageCodecInfo encoder in ImageCodecInfo.GetImageEncoders())
-                if (encoder.MimeType == mimeType)
-                    return encoder;
-            return null;
-        }
-
-        /// <summary>
         /// Parses a boundingbox string to a boundingbox geometry from the format minx,miny,maxx,maxy. Returns null if the format is invalid
         /// </summary>
         /// <param name="strBBOX">string representation of a boundingbox</param>
@@ -337,16 +326,16 @@ namespace SharpMap.Web.Wms
             double miny = 0;
             double maxx = 0;
             double maxy = 0;
-            if (!double.TryParse(strVals[0], NumberStyles.Float, Map.NumberFormatEnUs, out minx))
+            if (!double.TryParse(strVals[0], NumberStyles.Float, CultureInfo.InvariantCulture, out minx))
                 return null;
-            if (!double.TryParse(strVals[2], NumberStyles.Float, Map.NumberFormatEnUs, out maxx))
+            if (!double.TryParse(strVals[2], NumberStyles.Float, CultureInfo.InvariantCulture, out maxx))
                 return null;
             if (maxx < minx)
                 return null;
 
-            if (!double.TryParse(strVals[1], NumberStyles.Float, Map.NumberFormatEnUs, out miny))
+            if (!double.TryParse(strVals[1], NumberStyles.Float, CultureInfo.InvariantCulture, out miny))
                 return null;
-            if (!double.TryParse(strVals[3], NumberStyles.Float, Map.NumberFormatEnUs, out maxy))
+            if (!double.TryParse(strVals[3], NumberStyles.Float, CultureInfo.InvariantCulture, out maxy))
                 return null;
             if (maxy < miny)
                 return null;
