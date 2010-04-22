@@ -60,7 +60,6 @@
     <Compile Include="Wms\Client.cs" />
     <Compile Include="Wms\WmsException.cs" />
     <Compile Include="Wms\WmsProvider.cs" />
-    <Compile Include="Wms\WmsServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpMap\SharpMap.csproj">
