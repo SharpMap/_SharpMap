@@ -1,12 +1,12 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Xml;
 using SharpMap.Geometries;
+using SharpMap.Styles;
 
 namespace SharpMap.Web.Wms
 {
@@ -503,9 +503,9 @@ namespace SharpMap.Web.Wms
                     if (node != null)
                     {
                         layer.Style[i].LegendUrl = new WmsStyleLegend();
-                        layer.Style[i].LegendUrl.Size = new Size(
-                            int.Parse(node.Attributes["width"].InnerText),
-                            int.Parse(node.Attributes["height"].InnerText));
+                        layer.Style[i].LegendUrl.Size = new Size();
+                        layer.Style[i].LegendUrl.Size.Width  = int.Parse(node.Attributes["width"].InnerText);
+                        layer.Style[i].LegendUrl.Size.Height = int.Parse(node.Attributes["height"].InnerText);
                         layer.Style[i].LegendUrl.OnlineResource.OnlineResource =
                             node.SelectSingleNode("sm:OnlineResource", nsmgr).Attributes["xlink:href"].InnerText;
                         layer.Style[i].LegendUrl.OnlineResource.Type =
@@ -535,10 +535,10 @@ namespace SharpMap.Web.Wms
                 double miny = 0;
                 double maxx = 0;
                 double maxy = 0;
-                if (!double.TryParse(node.Attributes["minx"].Value, NumberStyles.Any, Map.NumberFormatEnUs, out minx) &
-                    !double.TryParse(node.Attributes["miny"].Value, NumberStyles.Any, Map.NumberFormatEnUs, out miny) &
-                    !double.TryParse(node.Attributes["maxx"].Value, NumberStyles.Any, Map.NumberFormatEnUs, out maxx) &
-                    !double.TryParse(node.Attributes["maxy"].Value, NumberStyles.Any, Map.NumberFormatEnUs, out maxy))
+                if (!double.TryParse(node.Attributes["minx"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out minx) &
+                    !double.TryParse(node.Attributes["miny"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out miny) &
+                    !double.TryParse(node.Attributes["maxx"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out maxx) &
+                    !double.TryParse(node.Attributes["maxy"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out maxy))
                     throw new ArgumentException("Invalid LatLonBoundingBox on layer '" + layer.Name + "'");
                 layer.LatLonBoundingBox = new BoundingBox(minx, miny, maxx, maxy);
             }

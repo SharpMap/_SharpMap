@@ -16,7 +16,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Web;
@@ -24,6 +23,7 @@ using System.Xml;
 using System.Xml.Schema;
 using SharpMap.Geometries;
 using SharpMap.Layers;
+using System.Globalization;
 
 namespace SharpMap.Web.Wms
 {
@@ -153,8 +153,9 @@ namespace SharpMap.Web.Wms
 
             XmlNode GetMapNode = capabilities.CreateNode(XmlNodeType.Element, "GetMap", wmsNamespaceURI);
             //Add supported fileformats. Return the ones that GDI+ supports
-            foreach (ImageCodecInfo encoder in ImageCodecInfo.GetImageEncoders())
-                GetMapNode.AppendChild(CreateElement("Format", encoder.MimeType, capabilities, false, wmsNamespaceURI));
+            //!!!foreach (ImageCodecInfo encoder in ImageCodecInfo.GetImageEncoders())
+            //!!!    GetMapNode.AppendChild(CreateElement("Format", encoder.MimeType, capabilities, false, wmsNamespaceURI));
+            throw new NotImplementedException();
 
             GetMapNode.AppendChild(GenerateDCPTypeNode(capabilities, OnlineResource));
 
@@ -287,10 +288,10 @@ namespace SharpMap.Web.Wms
         private static XmlElement GenerateBoundingBoxElement(BoundingBox bbox, int SRID, XmlDocument doc)
         {
             XmlElement xmlBbox = doc.CreateElement("BoundingBox", wmsNamespaceURI);
-            xmlBbox.Attributes.Append(CreateAttribute("minx", bbox.Left.ToString(Map.NumberFormatEnUs), doc));
-            xmlBbox.Attributes.Append(CreateAttribute("miny", bbox.Bottom.ToString(Map.NumberFormatEnUs), doc));
-            xmlBbox.Attributes.Append(CreateAttribute("maxx", bbox.Right.ToString(Map.NumberFormatEnUs), doc));
-            xmlBbox.Attributes.Append(CreateAttribute("maxy", bbox.Top.ToString(Map.NumberFormatEnUs), doc));
+            xmlBbox.Attributes.Append(CreateAttribute("minx", bbox.Left.ToString(CultureInfo.InvariantCulture), doc));
+            xmlBbox.Attributes.Append(CreateAttribute("miny", bbox.Bottom.ToString(CultureInfo.InvariantCulture), doc));
+            xmlBbox.Attributes.Append(CreateAttribute("maxx", bbox.Right.ToString(CultureInfo.InvariantCulture), doc));
+            xmlBbox.Attributes.Append(CreateAttribute("maxy", bbox.Top.ToString(CultureInfo.InvariantCulture), doc));
             xmlBbox.Attributes.Append(CreateAttribute("CRS", "EPSG:" + SRID, doc));
             return xmlBbox;
         }

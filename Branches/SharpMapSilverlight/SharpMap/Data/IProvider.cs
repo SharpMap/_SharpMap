@@ -71,7 +71,7 @@ namespace SharpMap.Data.Providers
         /// <returns>geometry</returns>
         IGeometry GetGeometryByID(uint oid);
 
-        IFeatures GetFeaturesInView(BoundingBox envelope, double resolution);
+        IFeatures GetFeaturesInView(IView view);
 
         /// <summary>
         /// Returns the number of features in the dataset

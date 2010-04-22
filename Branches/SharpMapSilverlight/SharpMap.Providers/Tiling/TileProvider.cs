@@ -161,9 +161,9 @@ namespace SharpMap.Providers
 
         #region IRasterProvider Members
 
-        public IFeatures GetFeaturesInView(BoundingBox bbox, double resolution)
+        public IFeatures GetFeaturesInView(IView view)
         {
-            return FetchTiles(bbox, resolution);
+            return FetchTiles(view.Extent, view.Resolution);
         }
 
         #endregion

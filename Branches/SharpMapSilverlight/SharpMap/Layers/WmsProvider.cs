@@ -18,8 +18,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -28,6 +26,11 @@ using System.Web.Caching;
 using SharpMap.Geometries;
 using SharpMap.Rendering.Exceptions;
 using SharpMap.Web.Wms;
+using SharpMap.Styles;
+using System.Globalization;
+using SharpMap.Data.Providers;
+using SharpMap.Data;
+using SharpMap.Rasters;
 
 namespace SharpMap.Layers
 {
@@ -59,11 +62,10 @@ namespace SharpMap.Layers
     /// myMap.MinimumZoom = 0.1;
     /// </code>
     /// </example>
-    public class WmsLayer : Layer
+    public class WmsProvider : IProvider
     {
         private Boolean _ContinueOnError;
         private ICredentials _Credentials;
-        private ImageAttributes _ImageAttributes;
         private Collection<string> _LayerList;
         private string _MimeType = "";
         private WebProxy _Proxy;
@@ -71,6 +73,7 @@ namespace SharpMap.Layers
         private Collection<string> _StylesList;
         private int _TimeOut;
         private Client wmsClient;
+        private int _SRID;
 
         /// <summary>
         /// Initializes a new layer, and downloads and parses the service description
@@ -78,8 +81,8 @@ namespace SharpMap.Layers
         /// <remarks>In and ASP.NET application the service description is automatically cached for 24 hours when not specified</remarks>
         /// <param name="layername">Layername</param>
         /// <param name="url">Url of WMS server</param>
-        public WmsLayer(string layername, string url)
-            : this(layername, url, new TimeSpan(24, 0, 0))
+        public WmsProvider(string url)
+            : this(url, new TimeSpan(24, 0, 0))
         {
         }
 
@@ -89,8 +92,8 @@ namespace SharpMap.Layers
         /// <param name="layername">Layername</param>
         /// <param name="url">Url of WMS server</param>
         /// <param name="cachetime">Time for caching Service Description (ASP.NET only)</param>
-        public WmsLayer(string layername, string url, TimeSpan cachetime)
-            : this(layername, url, cachetime, null)
+        public WmsProvider(string url, TimeSpan cachetime)
+            : this(url, cachetime, null)
         {
         }
 
@@ -101,8 +104,8 @@ namespace SharpMap.Layers
         /// <param name="layername">Layername</param>
         /// <param name="url">Url of WMS server</param>
         /// <param name="proxy">Proxy</param>
-        public WmsLayer(string layername, string url, WebProxy proxy)
-            : this(layername, url, new TimeSpan(24, 0, 0), proxy)
+        public WmsProvider(string url, WebProxy proxy)
+            : this(url, new TimeSpan(24, 0, 0), proxy)
         {
         }
 
@@ -113,11 +116,10 @@ namespace SharpMap.Layers
         /// <param name="url">Url of WMS server</param>
         /// <param name="cachetime">Time for caching Service Description (ASP.NET only)</param>
         /// <param name="proxy">Proxy</param>
-        public WmsLayer(string layername, string url, TimeSpan cachetime, WebProxy proxy)
+        public WmsProvider(string url, TimeSpan cachetime, WebProxy proxy)
         {
             _Proxy = proxy;
             _TimeOut = 10000;
-            LayerName = layername;
             _ContinueOnError = true;
             if (HttpContext.Current != null && HttpContext.Current.Cache["SharpMap_WmsClient_" + url] != null)
             {
@@ -136,17 +138,8 @@ namespace SharpMap.Layers
             else if (OutputFormats.Contains("image/gif")) _MimeType = "image/gif";
             else //None of the default formats supported - Look for the first supported output format
             {
-                bool formatSupported = false;
-                foreach (ImageCodecInfo encoder in ImageCodecInfo.GetImageEncoders())
-                    if (OutputFormats.Contains(encoder.MimeType.ToLower()))
-                    {
-                        formatSupported = true;
-                        _MimeType = encoder.MimeType;
-                        break;
-                    }
-                if (!formatSupported)
-                    throw new ArgumentException(
-                        "GDI+ doesn't not support any of the mimetypes supported by this WMS service");
+                throw new ArgumentException(
+                    "None of the formates provided by the WMS service are supported");
             }
             _LayerList = new Collection<string>();
             _StylesList = new Collection<string>();
@@ -209,46 +202,6 @@ namespace SharpMap.Layers
         public string Version
         {
             get { return wmsClient.WmsVersion; }
-        }
-
-        /// <summary>
-        /// When specified, applies image attributes at image (fx. make WMS layer semi-transparent)
-        /// </summary>
-        /// <remarks>
-        /// <para>You can make the WMS layer semi-transparent by settings a up a ColorMatrix,
-        /// or scale/translate the colors in any other way you like.</para>
-        /// <example>
-        /// Setting the WMS layer to be semi-transparent.
-        /// <code lang="C#">
-        /// float[][] colorMatrixElements = { 
-        ///				new float[] {1,  0,  0,  0, 0},
-        ///				new float[] {0,  1,  0,  0, 0},
-        ///				new float[] {0,  0,  1,  0, 0},
-        ///				new float[] {0,  0,  0,  0.5, 0},
-        ///				new float[] {0, 0, 0, 0, 1}};
-        /// ColorMatrix colorMatrix = new ColorMatrix(colorMatrixElements);
-        /// ImageAttributes imageAttributes = new ImageAttributes();
-        /// imageAttributes.SetColorMatrix(
-        /// 	   colorMatrix,
-        /// 	   ColorMatrixFlag.Default,
-        /// 	   ColorAdjustType.Bitmap);
-        /// myWmsLayer.ImageAttributes = imageAttributes;
-        /// </code>
-        /// </example>
-        /// </remarks>
-        public ImageAttributes ImageAttributes
-        {
-            get { return _ImageAttributes; }
-            set { _ImageAttributes = value; }
-        }
-
-        /// <summary>
-        /// Returns the extent of the layer
-        /// </summary>
-        /// <returns>Bounding box corresponding to the extent of the features in the layer</returns>
-        public override BoundingBox Envelope
-        {
-            get { return RootLayer.LatLonBoundingBox; }
         }
 
         /// <summary>
@@ -407,28 +360,18 @@ namespace SharpMap.Layers
         {
             if (!OutputFormats.Contains(mimeType))
                 throw new ArgumentException("WMS service doesn't not offer mimetype '" + mimeType + "'");
-            //Check whether SharpMap supports the specified mimetype
-            bool formatSupported = false;
-            foreach (ImageCodecInfo encoder in ImageCodecInfo.GetImageEncoders())
-                if (encoder.MimeType.ToLower() == mimeType.ToLower())
-                {
-                    formatSupported = true;
-                    break;
-                }
-            if (!formatSupported)
-                throw new ArgumentException("GDI+ doesn't not support mimetype '" + mimeType + "'");
             _MimeType = mimeType;
         }
 
         /// <summary>
-        /// Renders the layer
+        /// Retrieves the bitmap from WMS service
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
-        public override void Render(Graphics g, Map map)
+        public bool TryGetMap(IView view, ref IRaster raster)
         {
             Client.WmsOnlineResource resource = GetPreferredMethod();
-            Uri myUri = new Uri(GetRequestUrl(map.Envelope, map.Size));
+            Uri myUri = new Uri(GetRequestUrl(view.Extent, view.Width, view.Height));
             WebRequest myWebRequest = WebRequest.Create(myUri);
             myWebRequest.Method = resource.Type;
             myWebRequest.Timeout = _TimeOut;
@@ -442,42 +385,37 @@ namespace SharpMap.Layers
 
             try
             {
-                HttpWebResponse myWebResponse = (HttpWebResponse) myWebRequest.GetResponse();
+                HttpWebResponse myWebResponse = (HttpWebResponse)myWebRequest.GetResponse();
                 Stream dataStream = myWebResponse.GetResponseStream();
 
                 if (myWebResponse.ContentType.StartsWith("image"))
                 {
-                    Image img = Image.FromStream(myWebResponse.GetResponseStream());
-                    if (_ImageAttributes != null)
-                        g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0,
-                                    img.Width, img.Height, GraphicsUnit.Pixel, ImageAttributes);
-                    else
-                        g.DrawImageUnscaled(img, 0, 0, map.Size.Width, map.Size.Height);
+                    byte[] bytes = BruTile.Utilities.ReadFully(myWebResponse.GetResponseStream());
+                    raster = new Raster(bytes, view.Extent);
                 }
                 dataStream.Close();
                 myWebResponse.Close();
+                return true;
             }
             catch (WebException webEx)
             {
                 if (!_ContinueOnError)
                     throw (new RenderException(
-                        "There was a problem connecting to the WMS server when rendering layer '" + LayerName + "'",
+                        "There was a problem connecting to the WMS server",
                         webEx));
                 else
                     //Write out a trace warning instead of throwing an error to help debugging WMS problems
-                    Trace.Write("There was a problem connecting to the WMS server when rendering layer '" + LayerName +
-                                "': " + webEx.Message);
+                    Trace.Write("There was a problem connecting to the WMS server: " + webEx.Message);
             }
             catch (Exception ex)
             {
                 if (!_ContinueOnError)
-                    throw (new RenderException("There was a problem rendering layer '" + LayerName + "'", ex));
+                    throw (new RenderException("There was a problem while attempting to request the WMS", ex));
                 else
                     //Write out a trace warning instead of throwing an error to help debugging WMS problems
-                    Trace.Write("There was a problem connecting to the WMS server when rendering layer '" + LayerName +
-                                "': " + ex.Message);
+                    Trace.Write("There was a problem while attempting to request the WMS" + ex.Message);
             }
-            base.Render(g, map);
+            return false;
         }
 
         /// <summary>
@@ -486,7 +424,7 @@ namespace SharpMap.Layers
         /// <param name="box">Area the WMS request should cover</param>
         /// <param name="size">Size of image</param>
         /// <returns>URL for WMS request</returns>
-        public string GetRequestUrl(BoundingBox box, Size size)
+        public string GetRequestUrl(BoundingBox box, double width, double height)
         {
             Client.WmsOnlineResource resource = GetPreferredMethod();
             StringBuilder strReq = new StringBuilder(resource.OnlineResource);
@@ -495,9 +433,9 @@ namespace SharpMap.Layers
             if (!strReq.ToString().EndsWith("&") && !strReq.ToString().EndsWith("?"))
                 strReq.Append("&");
 
-            strReq.AppendFormat(Map.NumberFormatEnUs, "REQUEST=GetMap&BBOX={0},{1},{2},{3}",
+            strReq.AppendFormat(CultureInfo.InvariantCulture, "REQUEST=GetMap&BBOX={0},{1},{2},{3}",
                                 box.Min.X, box.Min.Y, box.Max.X, box.Max.Y);
-            strReq.AppendFormat("&WIDTH={0}&Height={1}", size.Width, size.Height);
+            strReq.AppendFormat("&WIDTH={0}&Height={1}", width, height);
             strReq.Append("&Layers=");
             if (_LayerList != null && _LayerList.Count > 0)
             {
@@ -544,13 +482,92 @@ namespace SharpMap.Layers
             return wmsClient.GetMapRequests[0];
         }
 
-        /// <summary>
-        /// Clones the object
-        /// </summary>
-        /// <returns></returns>
-        public override object Clone()
+        #region IProvider Members
+
+        public string ConnectionID
+        {
+            get { return String.Empty; }
+        }
+
+        public bool IsOpen
+        {
+            get { return true; }
+        }
+
+        public int SRID
+        {
+            get
+            {
+                return _SRID;
+            }
+            set
+            {
+                this._SRID = value;
+            }
+        }
+
+        public Collection<IGeometry> GetGeometriesInView(BoundingBox bbox)
         {
             throw new NotImplementedException();
         }
+
+        public Collection<uint> GetObjectIDsInView(BoundingBox bbox)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGeometry GetGeometryByID(uint oid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFeatures GetFeaturesInView(IView view)
+        {
+            IFeatures features = new Features();
+            IRaster raster = null;
+            if (TryGetMap(view, ref raster))
+            {
+                IFeature feature = features.New();
+                feature.Geometry = raster;
+                features.Add(feature);
+            }
+            return features;
+        }
+
+        public int GetFeatureCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public SharpMap.Data.IFeature GetFeature(uint id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BoundingBox GetExtents()
+        {
+            return wmsClient.Layer.LatLonBoundingBox;//!!! not sure what to use here      
+        }
+
+        public void Open()
+        {
+            //TODO: See if we can remove this from the interface
+        }
+
+        public void Close()
+        {
+            //TODO: See if we can remove this from the interface
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
