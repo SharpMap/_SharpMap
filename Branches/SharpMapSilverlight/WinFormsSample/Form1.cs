@@ -16,7 +16,7 @@ namespace WinFormsSample
         public Form1()
         {
             InitializeComponent();
-            mapImage1.Map = GradiantThemeSample.InitializeMap();
+            mapImage1.Map = WmsSample.InitializeMap();
             mapImage1.Transform.Center = mapImage1.Map.GetExtents().GetCentroid();
             mapImage1.Transform.Resolution = 1;
             this.Load += new EventHandler(Form1_Load);

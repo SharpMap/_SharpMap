@@ -7,7 +7,6 @@ using System.Windows.Shapes;
 using ProjNet.CoordinateSystems.Transformations;
 using SharpMap;
 using SharpMap.Data;
-using SharpMap.Data.Providers;
 using SharpMap.Geometries;
 using SharpMap.Rendering;
 using SharpMap.Rendering.Thematics;
@@ -29,7 +28,7 @@ namespace SilverlightRendering
         {
             BoundingBox envelope = view.Extent;
             provider.Open();
-            IFeatures features = provider.GetFeaturesInView(envelope, view.Resolution);
+            IFeatures features = provider.GetFeaturesInView(view);
             provider.Close();
 
             foreach (var feature in features)

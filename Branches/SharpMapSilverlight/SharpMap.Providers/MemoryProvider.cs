@@ -222,7 +222,7 @@ namespace SharpMap.Data.Providers
             throw new NotSupportedException("Attribute data is not supported by the MemoryProvider.");
         }
 
-        public IFeatures GetFeaturesInView(BoundingBox envelope, double resolution)
+        public IFeatures GetFeaturesInView(IView view)
         {
             throw new NotImplementedException();
         }

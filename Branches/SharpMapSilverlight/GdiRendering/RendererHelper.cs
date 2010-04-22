@@ -46,8 +46,9 @@ namespace SharpMap.Rendering
                 envelope = ProjectionHelper.InverseTransform(envelope, coordinateTransformation);
             }
 
+            //TODO: projected enverlope is not used!
             provider.Open();
-            IFeatures features = provider.GetFeaturesInView(envelope, view.Resolution);
+            IFeatures features = provider.GetFeaturesInView(view);
             provider.Close();
 
             if (coordinateTransformation != null)
