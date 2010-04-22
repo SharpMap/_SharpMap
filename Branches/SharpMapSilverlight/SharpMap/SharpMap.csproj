@@ -113,7 +113,6 @@
     <Compile Include="Geometries\SpatialRelations.cs" />
     <Compile Include="Geometries\Surface.cs" />
     <Compile Include="Data\IProvider.cs" />
-    <Compile Include="Layers\IQueryLayer.cs" />
     <Compile Include="Layers\ILayer.cs" />
     <Compile Include="Layers\Layer.cs" />
     <Compile Include="Layers\LayerGroup.cs" />
@@ -192,6 +191,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Styles\DefaultSymbol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Providers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

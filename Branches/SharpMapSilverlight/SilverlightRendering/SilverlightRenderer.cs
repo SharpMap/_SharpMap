@@ -6,12 +6,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ProjNet.CoordinateSystems.Transformations;
 using SharpMap;
-using SharpMap.Data;
+using SharpMap.Data.Providers;
 using SharpMap.Geometries;
 using SharpMap.Rendering;
 using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
 using Windows = System.Windows.Media;
+using SharpMap.Data;
 
 namespace SilverlightRendering
 {
