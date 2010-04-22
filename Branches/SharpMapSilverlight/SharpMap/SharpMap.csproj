@@ -92,17 +92,6 @@
     </Compile>
     <Compile Include="Data\Features.cs">
     </Compile>
-    <Compile Include="Data\Providers\DbaseReader.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Data\Providers\MemoryProvider.cs" />
-    <Compile Include="Data\Providers\IProvider.cs" />
-    <Compile Include="Data\Providers\MsSql.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Data\Providers\ShapeFile.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Geometries\BoundingBox.cs" />
     <Compile Include="Geometries\Curve.cs" />
     <Compile Include="Geometries\Geometry.cs" />
@@ -123,9 +112,9 @@
     <Compile Include="Geometries\Polygon.cs" />
     <Compile Include="Geometries\SpatialRelations.cs" />
     <Compile Include="Geometries\Surface.cs" />
-    <Compile Include="Layers\ICanQueryLayer.cs" />
+    <Compile Include="Data\IProvider.cs" />
+    <Compile Include="Layers\IQueryLayer.cs" />
     <Compile Include="Layers\ILayer.cs" />
-    <Compile Include="Data\Providers\TileProvider.cs" />
     <Compile Include="Layers\Layer.cs" />
     <Compile Include="Layers\LayerGroup.cs" />
     <Compile Include="Map\IViewTransform.cs" />

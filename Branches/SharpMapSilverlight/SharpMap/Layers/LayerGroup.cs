@@ -112,22 +112,7 @@ namespace SharpMap.Layers
                 if (layer.Enabled && layer.MaxVisible >= view.Resolution && layer.MinVisible < view.Resolution)
                     layer.Render(renderer, view);
         }
-
-        #region Implementation of ICanQueryLayer
-
-        /// <summary>
-        /// Returns the data associated with all the geometries that are intersected by 'geom'
-        /// </summary>
-        /// <param name="box">Geometry to intersect with</param>
-        /// <param name="ds">FeatureDataSet to fill data into</param>
-        public void ExecuteIntersectionQuery(BoundingBox box, FeatureDataSet ds)
-        {
-
-        }
-
-        #endregion
-
-
+        
         public IFeatures GetFeatures(BoundingBox box)
         {
             foreach (Layer layer in Layers)
@@ -135,6 +120,8 @@ namespace SharpMap.Layers
                 if (layer is IQueryLayer)
                 {
                     //Not implemented because not sure how to deal with multiple result sets //!!!
+                    //Update: I now think the grouplayer shoudl not implement IQueryLayer. The
+                    //calling code should iterate over its children to call the individual layers.
                     throw new NotImplementedException("Not implemented");
                     var queryLayer = layer as IQueryLayer;
                     var features = queryLayer.GetFeatures(box);
