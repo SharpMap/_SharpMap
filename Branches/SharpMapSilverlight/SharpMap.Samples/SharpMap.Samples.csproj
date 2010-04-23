@@ -52,6 +52,7 @@
     <Compile Include="GradiantThemeSample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TileLayerSample.cs" />
+    <Compile Include="WfsSample.cs" />
     <Compile Include="WmsSample.cs" />
   </ItemGroup>
   <ItemGroup>
