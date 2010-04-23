@@ -50,11 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeatureDataSet.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MemoryProvider.cs" />
+    <Compile Include="MsSqlSpatial\MsSqlSpatial.cs" />
     <Compile Include="MsSql\MsSql.cs" />
+    <Compile Include="OleDbPoint\OleDbPoint.cs" />
     <Compile Include="Shapefile\DbaseReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapefile\ShapeFile.cs" />
+    <Compile Include="SqlServer2008\SqlServer2008.cs" />
     <Compile Include="Tiling\TileProvider.cs" />
     <Compile Include="Wfs\WFSClient.cs" />
     <Compile Include="Wfs\Utilities\FeatureTypeInfo.cs" />
@@ -92,11 +98,6 @@
     <None Include="Wms\Schemas\1.3.0\exceptions_1_3_0.xsx">
       <DependentUpon>exceptions_1_3_0.xsd</DependentUpon>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MsSqlSpatial\" />
-    <Folder Include="OleDbPoint\" />
-    <Folder Include="SqlServer2008\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

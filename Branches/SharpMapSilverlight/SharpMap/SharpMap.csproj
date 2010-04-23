@@ -87,9 +87,6 @@
     <Compile Include="Converters\WellKnownText\StreamTokenizer.cs" />
     <Compile Include="Converters\WellKnownText\TokenType.cs" />
     <Compile Include="Converters\WellKnownText\WKTStreamTokenizer.cs" />
-    <Compile Include="Data\FeatureDataSet.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Data\Features.cs">
     </Compile>
     <Compile Include="Geometries\BoundingBox.cs" />
