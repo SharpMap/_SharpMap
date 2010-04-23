@@ -7,7 +7,7 @@ using System.IO;
 
 namespace SharpMap.Rendering
 {
-    static class GdiStyle
+    public static class GdiStyle
     {
         public static System.Drawing.Color Convert(this Color color)
         {

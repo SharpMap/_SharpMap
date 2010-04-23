@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3E99181D-B701-493F-AFAE-109D023935F7}</ProjectGuid>
+    <ProjectGuid>{4F0D111C-87B6-4F86-B160-35E0E321D728}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpMap.Providers</RootNamespace>
-    <AssemblyName>SharpMap.Providers</AssemblyName>
+    <RootNamespace>SharpMap.WmsServer</RootNamespace>
+    <AssemblyName>SharpMap.WmsServer</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,14 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BruTile, Version=0.3.3738.42292, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libs\BruTile.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -50,53 +47,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeatureDataSet.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MemoryProvider.cs" />
-    <Compile Include="MsSqlSpatial\MsSqlSpatial.cs" />
-    <Compile Include="MsSql\MsSql.cs" />
-    <Compile Include="OleDbPoint\OleDbPoint.cs" />
-    <Compile Include="Shapefile\DbaseReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Shapefile\ShapeFile.cs" />
-    <Compile Include="SqlServer2008\SqlServer2008.cs" />
-    <Compile Include="Tiling\TileProvider.cs" />
-    <Compile Include="Wfs\WFSClient.cs" />
-    <Compile Include="Wfs\Utilities\FeatureTypeInfo.cs" />
-    <Compile Include="Wfs\Utilities\GeometryFactories.cs" />
-    <Compile Include="Wfs\Utilities\HttpClientUtil.cs" />
-    <Compile Include="Wfs\Utilities\IWFS_TextResources.cs" />
-    <Compile Include="Wfs\Utilities\IXPathQueryManager.cs" />
-    <Compile Include="Wfs\Utilities\OGCFilter_FE1_1_0.cs" />
-    <Compile Include="Wfs\Utilities\PathNode.cs" />
-    <Compile Include="Wfs\Utilities\WFS1_0_0_XPathTextResources.cs" />
-    <Compile Include="Wfs\Utilities\WFS1_1_0_XPathTextResources.cs" />
-    <Compile Include="Wfs\Utilities\WFS_1_0_0_TextResources.cs" />
-    <Compile Include="Wfs\Utilities\WFS_1_1_0_TextResources.cs" />
-    <Compile Include="Wfs\Utilities\WFS_XPathTextResourcesBase.cs" />
-    <Compile Include="Wfs\Utilities\XPathQueryManager.cs" />
-    <Compile Include="Wfs\Utilities\XPathQueryManager_CompiledExpressionsDecorator.cs" />
-    <Compile Include="Wfs\Utilities\XPathQueryManager_DecoratorBase.cs" />
-    <Compile Include="Wms\Capabilities.cs" />
-    <Compile Include="Wms\Client.cs" />
-    <Compile Include="Wms\WmsProvider.cs" />
+    <Compile Include="WmsException.cs" />
+    <Compile Include="WmsServer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GdiRendering\GdiRendering.csproj">
+      <Project>{B7ADBCD6-71AA-48E5-AD04-54649B73773C}</Project>
+      <Name>GdiRendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpMap.Providers\SharpMap.Providers.csproj">
+      <Project>{3E99181D-B701-493F-AFAE-109D023935F7}</Project>
+      <Name>SharpMap.Providers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpMap\SharpMap.csproj">
       <Project>{65A23C7B-E21D-40D7-A8AF-2E72A01E9A5B}</Project>
       <Name>SharpMap</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Wms\Schemas\1.3.0\capabilities_1_3_0.xsd" />
-    <None Include="Wms\Schemas\1.3.0\capabilities_1_3_0.xsx">
-      <DependentUpon>capabilities_1_3_0.xsd</DependentUpon>
-    </None>
-    <None Include="Wms\Schemas\1.3.0\exceptions_1_3_0.xsd" />
-    <None Include="Wms\Schemas\1.3.0\exceptions_1_3_0.xsx">
-      <DependentUpon>exceptions_1_3_0.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
