@@ -56,6 +56,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapefile\ShapeFile.cs" />
     <Compile Include="Tiling\TileProvider.cs" />
+    <Compile Include="Wfs\WFSClient.cs" />
+    <Compile Include="Wfs\Utilities\FeatureTypeInfo.cs" />
+    <Compile Include="Wfs\Utilities\GeometryFactories.cs" />
+    <Compile Include="Wfs\Utilities\HttpClientUtil.cs" />
+    <Compile Include="Wfs\Utilities\IWFS_TextResources.cs" />
+    <Compile Include="Wfs\Utilities\IXPathQueryManager.cs" />
+    <Compile Include="Wfs\Utilities\OGCFilter_FE1_1_0.cs" />
+    <Compile Include="Wfs\Utilities\PathNode.cs" />
+    <Compile Include="Wfs\Utilities\WFS1_0_0_XPathTextResources.cs" />
+    <Compile Include="Wfs\Utilities\WFS1_1_0_XPathTextResources.cs" />
+    <Compile Include="Wfs\Utilities\WFS_1_0_0_TextResources.cs" />
+    <Compile Include="Wfs\Utilities\WFS_1_1_0_TextResources.cs" />
+    <Compile Include="Wfs\Utilities\WFS_XPathTextResourcesBase.cs" />
+    <Compile Include="Wfs\Utilities\XPathQueryManager.cs" />
+    <Compile Include="Wfs\Utilities\XPathQueryManager_CompiledExpressionsDecorator.cs" />
+    <Compile Include="Wfs\Utilities\XPathQueryManager_DecoratorBase.cs" />
     <Compile Include="Wms\Capabilities.cs" />
     <Compile Include="Wms\Client.cs" />
     <Compile Include="Wms\WmsException.cs" />
@@ -81,7 +97,6 @@
     <Folder Include="MsSqlSpatial\" />
     <Folder Include="OleDbPoint\" />
     <Folder Include="SqlServer2008\" />
-    <Folder Include="Wfs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
