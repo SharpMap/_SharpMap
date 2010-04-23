@@ -22,6 +22,10 @@ using System.Web;
 using System.Xml;
 using SharpMap.Geometries;
 using SharpMap.Layers;
+using SharpMap.Styles;
+using System.Drawing.Imaging;
+using Gdi = System.Drawing;
+using SharpMap.Rendering;
 
 namespace SharpMap.Web.Wms
 {
@@ -194,12 +198,13 @@ namespace SharpMap.Web.Wms
 
                 //Set background color of map
                 if (String.Compare(context.Request.Params["TRANSPARENT"], "TRUE", ignorecase) == 0)
-                    map.BackColor = Color.Transparent;
+                    map.BackColor = Color.White;
                 else if (context.Request.Params["BGCOLOR"] != null)
                 {
                     try
                     {
-                        map.BackColor = ColorTranslator.FromHtml(context.Request.Params["BGCOLOR"]);
+                        Gdi.Color color = Gdi.ColorTranslator.FromHtml(context.Request.Params["BGCOLOR"]);
+                        map.BackColor = Color.FromArgb(color.A, color.R, color.G, color.B);
                     }
                     catch
                     {
@@ -246,7 +251,9 @@ namespace SharpMap.Web.Wms
                                                    "Parameter HEIGHT too large");
                     return;
                 }
-                map.Size = new Size(width, height);
+                View view = new View();
+                view.Width = width;
+                view.Height = height;
 
                 BoundingBox bbox = ParseBBOX(context.Request.Params["bbox"]);
                 if (bbox == null)
@@ -254,9 +261,7 @@ namespace SharpMap.Web.Wms
                     WmsException.ThrowWmsException("Invalid parameter BBOX");
                     return;
                 }
-                map.PixelAspectRatio = (width/(double) height)/(bbox.Width/bbox.Height);
-                map.Center = bbox.GetCentroid();
-                map.Zoom = bbox.Width;
+                view.Resolution = bbox.Width / width; //not sure if this is correct. PDD.
 
                 //Set layers on/off
                 if (!String.IsNullOrEmpty(context.Request.Params["LAYERS"]))
@@ -296,7 +301,7 @@ namespace SharpMap.Web.Wms
                     }
                 }
                 //Render map
-                Image img = map.GetMap();
+                Gdi.Image img = new GdiRenderer().GetMapAsImage(view, map);
 
                 //Png can't stream directy. Going through a memorystream instead
                 MemoryStream MS = new MemoryStream();
@@ -312,6 +317,17 @@ namespace SharpMap.Web.Wms
                 WmsException.ThrowWmsException(WmsException.WmsExceptionCode.OperationNotSupported, "Invalid request");
         }
 
+        /// <summary>
+        /// Used for setting up output format of image file
+        /// </summary>
+        private static ImageCodecInfo GetEncoderInfo(String mimeType)
+        {
+            foreach (ImageCodecInfo encoder in ImageCodecInfo.GetImageEncoders())
+                if (encoder.MimeType == mimeType)
+                    return encoder;
+            return null;
+        }
+        
         /// <summary>
         /// Parses a boundingbox string to a boundingbox geometry from the format minx,miny,maxx,maxy. Returns null if the format is invalid
         /// </summary>

@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.Samples", "SharpMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.Providers", "SharpMap.Providers\SharpMap.Providers.csproj", "{3E99181D-B701-493F-AFAE-109D023935F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.WmsServer", "SharpMap.WmsServer\SharpMap.WmsServer.csproj", "{4F0D111C-87B6-4F86-B160-35E0E321D728}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{3E99181D-B701-493F-AFAE-109D023935F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E99181D-B701-493F-AFAE-109D023935F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E99181D-B701-493F-AFAE-109D023935F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F0D111C-87B6-4F86-B160-35E0E321D728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F0D111C-87B6-4F86-B160-35E0E321D728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F0D111C-87B6-4F86-B160-35E0E321D728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F0D111C-87B6-4F86-B160-35E0E321D728}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

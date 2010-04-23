@@ -15,19 +15,19 @@ using System.Collections.Generic;
 
 namespace SharpMap.Samples
 {
-    public class GradiantThemeSample
+    public static class GradiantThemeSample
     {
         public static Map InitializeMap()
         {
             //Initialize a new map based on the simple map
             Map map = new Map();
 
-            Layer osm = new Layer("OSM");
-            string url = "http://labs.metacarta.com/wms-c/tilecache.py?version=1.1.1&amp;request=GetCapabilities&amp;service=wms-c";
-            var tileSources = TileSourceWmsC.TileSourceBuilder(new Uri(url), null);
-            var tileSource = new List<ITileSource>(tileSources).Find(source => source.Schema.Name == "osm-map");
-            osm.DataSource = new TileProvider(tileSource, "OSM");
-            map.Layers.Add(osm);
+            //Layer osm = new Layer("OSM");
+            //string url = "http://labs.metacarta.com/wms-c/tilecache.py?version=1.1.1&amp;request=GetCapabilities&amp;service=wms-c";
+            //var tileSources = TileSourceWmsC.TileSourceBuilder(new Uri(url), null);
+            //var tileSource = new List<ITileSource>(tileSources).Find(source => source.Schema.Name == "osm-map");
+            //osm.DataSource = new TileProvider(tileSource, "OSM");
+            //map.Layers.Add(osm);
 
             //Set up countries layer
             Layer layCountries = new Layer("Countries");
