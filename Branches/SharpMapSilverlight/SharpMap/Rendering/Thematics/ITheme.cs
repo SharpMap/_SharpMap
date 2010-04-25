@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SharpMap.Data;
+using SharpMap.Styles;
 
 namespace SharpMap.Rendering.Thematics
 {
@@ -32,6 +33,6 @@ namespace SharpMap.Rendering.Thematics
 		/// </summary>
 		/// <param name="attribute">Attribute to calculate color from</param>
 		/// <returns>Color</returns>
-		SharpMap.Styles.IStyle GetStyle(IFeature attribute);
+		IStyle GetStyle(IFeature attribute);
 	}
 }

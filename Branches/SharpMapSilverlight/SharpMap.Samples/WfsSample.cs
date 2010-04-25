@@ -83,10 +83,10 @@ namespace WinFormSamples.Samples
                 prov3.OGCFilter = filter4;
 
                 // Layer Style
-                layer1.Style.Fill = new Brush() { Fill = Color.Red };
-                layer2.Style.Fill = new Brush() { Fill = Color.DarkGreen }; // SelectedStatesAndHousholds
-                layer3.Style.Fill = new Brush() { Fill = Color.Yellow }; // e.g. New York, New Jersey,...
-                layer5.Style.Fill = new Brush() { Fill = Color.DarkBlue };
+                layer1.Style = new VectorStyle() { Fill = new Brush() { Fill = Color.Red } };
+                layer2.Style = new VectorStyle() { Fill = new Brush() { Fill= Color.DarkGreen } }; // SelectedStatesAndHousholds
+                layer3.Style = new VectorStyle() { Fill = new Brush() { Fill = Color.Yellow } }; // e.g. New York, New Jersey,...
+                layer5.Style = new VectorStyle() { Fill = new Brush() { Fill = Color.DarkBlue } };
 
                 // Labels
                 // Labels are collected when parsing the geometry. So there's just one 'GetFeature' call necessary.
