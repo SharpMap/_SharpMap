@@ -56,7 +56,7 @@ namespace SharpMap.Layers
 
         private SharpMap.Rendering.Thematics.ITheme _theme;
         private SharpMap.Data.Providers.IProvider _DataSource;
-        private Styles.VectorStyle _Style;
+        private IStyle _Style;
         private double _MaxVisible = double.MaxValue;
         private double _MinVisible = 0;
         private bool _Enabled = true;
@@ -106,7 +106,7 @@ namespace SharpMap.Layers
         /// <summary>
         /// Gets or sets thematic settings for the layer. Set to null to ignore thematics
         /// </summary>
-        public SharpMap.Rendering.Thematics.ITheme Theme
+        public ITheme Theme
         {
             get { return _theme; }
             set { _theme = value; }
@@ -115,7 +115,7 @@ namespace SharpMap.Layers
         /// <summary>
         /// Gets or sets the datasource
         /// </summary>
-        public SharpMap.Data.Providers.IProvider DataSource
+        public IProvider DataSource
         {
             get { return _DataSource; }
             set { _DataSource = value; }
@@ -124,7 +124,7 @@ namespace SharpMap.Layers
         /// <summary>
         /// Gets or sets the rendering style of the vector layer.
         /// </summary>
-        public Styles.VectorStyle Style
+        public IStyle Style
         {
             get { return _Style; }
             set { _Style = value; }

@@ -26,6 +26,7 @@ using SharpMap.Geometries;
 using SharpMap.Projection;
 using SharpMap.Rasters;
 using SharpMap.Styles;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering
 {
@@ -62,26 +63,33 @@ namespace SharpMap.Rendering
             {
                 if ((getStyle(feature) as VectorStyle).EnableOutline)
                 {
-                    //Draw background of all line-outlines first
-                    if (feature.Geometry is SharpMap.Geometries.LineString)
-                    {
-                        SharpMap.Styles.VectorStyle outlinestyle1 = getStyle(feature) as SharpMap.Styles.VectorStyle;
-                        RendererHelper.DrawLineString(g, feature.Geometry as LineString, outlinestyle1.Outline.Convert(), view);
-                    }
-                    else if (feature.Geometry is SharpMap.Geometries.MultiLineString)
-                    {
-                        SharpMap.Styles.VectorStyle outlinestyle2 = getStyle(feature) as SharpMap.Styles.VectorStyle;
-                        RendererHelper.DrawMultiLineString(g, feature.Geometry as MultiLineString, outlinestyle2.Outline.Convert(), view);
-                    }
+                    RenderGeometryOutline(g, view, feature.Geometry, getStyle(feature));
                 }
             }
 
             foreach (IFeature feature in features)
             {
-                SharpMap.Styles.VectorStyle style = getStyle(feature) as SharpMap.Styles.VectorStyle;
-                RenderGeometry(g, view, feature.Geometry, style);
-            }
+                if (getStyle(feature) is VectorStyle)
+                    RenderGeometry(g, view, feature.Geometry, getStyle(feature));
+                //else if (getStyle(feature) is LabelTheme)
+                //   LabelRenderer.Render(g, view, feature, getStyle(feature) as LabelTheme);
 
+            }
+        }
+
+        private static void RenderGeometryOutline(System.Drawing.Graphics g, IView view, IGeometry geometry, IStyle style)
+        {
+            //Draw background of all line-outlines first
+            if (geometry is SharpMap.Geometries.LineString)
+            {
+                SharpMap.Styles.VectorStyle outlinestyle1 = style as SharpMap.Styles.VectorStyle;
+                RendererHelper.DrawLineString(g, geometry as LineString, outlinestyle1.Outline.Convert(), view);
+            }
+            else if (geometry is SharpMap.Geometries.MultiLineString)
+            {
+                SharpMap.Styles.VectorStyle outlinestyle2 = style as SharpMap.Styles.VectorStyle;
+                RendererHelper.DrawMultiLineString(g, geometry as MultiLineString, outlinestyle2.Outline.Convert(), view);
+            }
         }
 
         /// <summary>
@@ -409,28 +417,28 @@ namespace SharpMap.Rendering
             return new System.Drawing.PointF((float)point.X, (float)point.Y);
         }
 
-        private static void RenderGeometry(System.Drawing.Graphics g, IViewTransform transform, IGeometry feature, IStyle inStyle)
+        private static void RenderGeometry(System.Drawing.Graphics g, IViewTransform transform, IGeometry feature, IStyle style)
         {
-            var style = inStyle as VectorStyle;
+            var vectorStyle = style as VectorStyle;
 
             if (feature is Polygon)
             {
-                if (style.EnableOutline)
-                    RendererHelper.DrawPolygon(g, (Polygon)feature, style.Fill.Convert(), style.Outline.Convert(), transform);
+                if (vectorStyle.EnableOutline)
+                    RendererHelper.DrawPolygon(g, (Polygon)feature, vectorStyle.Fill.Convert(), vectorStyle.Outline.Convert(), transform);
                 else
-                    RendererHelper.DrawPolygon(g, (Polygon)feature, style.Fill.Convert(), null, transform);
+                    RendererHelper.DrawPolygon(g, (Polygon)feature, vectorStyle.Fill.Convert(), null, transform);
             }
             else if (feature is MultiPolygon)
             {
-                if (style.EnableOutline)
-                    SharpMap.Rendering.RendererHelper.DrawMultiPolygon(g, (MultiPolygon)feature, style.Fill.Convert(), style.Outline.Convert(), transform);
+                if (vectorStyle.EnableOutline)
+                    SharpMap.Rendering.RendererHelper.DrawMultiPolygon(g, (MultiPolygon)feature, vectorStyle.Fill.Convert(), vectorStyle.Outline.Convert(), transform);
                 else
-                    SharpMap.Rendering.RendererHelper.DrawMultiPolygon(g, (MultiPolygon)feature, style.Fill.Convert(), null, transform);
+                    SharpMap.Rendering.RendererHelper.DrawMultiPolygon(g, (MultiPolygon)feature, vectorStyle.Fill.Convert(), null, transform);
             }
             else if (feature is LineString)
             {
-                RendererHelper.DrawLineString(g, (LineString)feature, style.Line.Convert(), transform);
-                SharpMap.Rendering.RendererHelper.DrawPoint(g, (Point)feature, style.Symbol.Convert(), style.SymbolScale, style.SymbolOffset.Convert(), style.SymbolRotation, transform);
+                RendererHelper.DrawLineString(g, (LineString)feature, vectorStyle.Line.Convert(), transform);
+                SharpMap.Rendering.RendererHelper.DrawPoint(g, (Point)feature, vectorStyle.Symbol.Convert(), vectorStyle.SymbolScale, vectorStyle.SymbolOffset.Convert(), vectorStyle.SymbolRotation, transform);
             }
             else if (feature is IRaster)
             {
