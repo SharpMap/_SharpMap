@@ -22,7 +22,7 @@ namespace SharpMap.Rendering
     /// <summary>
     /// Class defining delegate for label collision detection and static predefined methods
     /// </summary>
-    public class LabelCollisionDetection
+    public static class LabelCollisionDetection
     {
         #region Delegates
 

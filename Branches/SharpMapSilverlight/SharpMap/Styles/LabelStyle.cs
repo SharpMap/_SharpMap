@@ -18,6 +18,7 @@
 
 
 using System;
+
 namespace SharpMap.Styles
 {
     /// <summary>
@@ -88,14 +89,13 @@ namespace SharpMap.Styles
         /// </summary>
         public LabelStyle()
         {
-            throw new NotImplementedException("needs to be ported");
-            //_Font = new Font("Times New Roman", 12f);
-            //_Offset = new PointF(0, 0);
-            //_CollisionDetection = false;
-            //_CollisionBuffer = new Size(0, 0);
-            //_ForeColor = Color.Black;
-            //_HorisontalAlignment = HorizontalAlignmentEnum.Center;
-            //_VerticalAlignment = VerticalAlignmentEnum.Middle;
+            _Font = new Font() { FontFamily = "Times New Roman", Size = 12 };
+            _Offset = new Offset() { X = 0, Y = 0 };
+            _CollisionDetection = false;
+            _CollisionBuffer = new Size() { Width = 0, Height = 0 };
+            _ForeColor = Color.Black;
+            _HorisontalAlignment = HorizontalAlignmentEnum.Center;
+            _VerticalAlignment = VerticalAlignmentEnum.Middle;
         }
 
         /// <summary>

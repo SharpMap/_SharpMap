@@ -114,6 +114,7 @@
     <Compile Include="Layers\IQueryLayer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Layers\LabelStyleDescriptor.cs" />
     <Compile Include="Layers\Layer.cs" />
     <Compile Include="Layers\LayerGroup.cs" />
     <Compile Include="Map\IViewTransform.cs" />
@@ -137,6 +138,8 @@
     <Compile Include="Rasters\IRaster.cs" />
     <Compile Include="Rasters\Raster.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
+    <Compile Include="Rendering\Label.cs" />
+    <Compile Include="Rendering\LabelCollisionDetection.cs" />
     <Compile Include="Rendering\RenderExceptions.cs" />
     <Compile Include="Rendering\Thematics\ColorBlend.cs" />
     <Compile Include="Rendering\Thematics\CustomTheme.cs" />
