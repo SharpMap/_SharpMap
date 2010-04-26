@@ -57,8 +57,8 @@ namespace SharpMap.Samples
             Layer labelLayer = new Layer("Country labels");
             labelLayer.DataSource = countryLayer.DataSource;
             labelLayer.Enabled = true;
-            labelLayer.MaxVisible = 90;
-            labelLayer.MinVisible = 30;
+            labelLayer.MaxVisible = 1000000;
+            labelLayer.MinVisible = 0;
             labelLayer.SRID = 4326;
 
             //LabelTheme labelTheme = new LabelTheme();
@@ -66,7 +66,7 @@ namespace SharpMap.Samples
             //labelTheme.Style = new LabelStyle();
             //labelTheme.Style.ForeColor = Color.White;
             //labelTheme.Style.Font = new Font() { FontFamily = "GenericSerif", Size = 12 };
-            //labelTheme.Style.BackColor = new Brush() { Fill = Color.DarkBlue } ;
+            //labelTheme.Style.BackColor = new Brush() { Fill = Color.DarkBlue };
             //labelTheme.Style.HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Center;
             //labelTheme.MultipartGeometryBehaviour = LabelTheme.MultipartGeometryBehaviourEnum.Largest;
             //labelLayer.Style = labelTheme;

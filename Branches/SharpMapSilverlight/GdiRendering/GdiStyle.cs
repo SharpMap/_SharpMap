@@ -33,5 +33,10 @@ namespace SharpMap.Rendering
         {
             return new System.Drawing.PointF(offset.X, offset.Y);
         }
+
+        public static System.Drawing.Font Convert(this Font font)
+        {
+            return new System.Drawing.Font(font.FontFamily, (float)font.Size);
+        }
     }
 }

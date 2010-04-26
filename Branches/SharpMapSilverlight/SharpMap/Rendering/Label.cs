@@ -17,8 +17,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using SharpMap.Styles;
+using SharpMap.Geometries;
 
 namespace SharpMap.Rendering
 {
@@ -27,10 +27,10 @@ namespace SharpMap.Rendering
     /// </summary>
     public class LabelBox : IComparable<LabelBox>
     {
-        private float _height;
-        private float _left;
-        private float _top;
-        private float _width;
+        private double _height;
+        private double _left;
+        private double _top;
+        private double _width;
 
         /// <summary>
         /// Initializes a new LabelBox instance
@@ -39,7 +39,7 @@ namespace SharpMap.Rendering
         /// <param name="top">Top of box</param>
         /// <param name="width">Width of the box</param>
         /// <param name="height">Height of the box</param>
-        public LabelBox(float left, float top, float width, float height)
+        public LabelBox(double left, double top, double width, double height)
         {
             _left = left;
             _top = top;
@@ -51,10 +51,10 @@ namespace SharpMap.Rendering
         /// Initializes a new LabelBox instance based on a rectangle
         /// </summary>
         /// <param name="rectangle"></param>
-        public LabelBox(RectangleF rectangle)
+        public LabelBox(BoundingBox rectangle)
         {
-            _left = rectangle.X;
-            _top = rectangle.Y;
+            _left = rectangle.MinX;
+            _top = rectangle.MinY;
             _width = rectangle.Width;
             _height = rectangle.Height;
         }
@@ -62,7 +62,7 @@ namespace SharpMap.Rendering
         /// <summary>
         /// The Left tie-point for the Label
         /// </summary>
-        public float Left
+        public double Left
         {
             get { return _left; }
             set { _left = value; }
@@ -71,7 +71,7 @@ namespace SharpMap.Rendering
         /// <summary>
         /// The Top tie-point for the label
         /// </summary>
-        public float Top
+        public double Top
         {
             get { return _top; }
             set { _top = value; }
@@ -80,7 +80,7 @@ namespace SharpMap.Rendering
         /// <summary>
         /// Width of the box
         /// </summary>
-        public float Width
+        public double Width
         {
             get { return _width; }
             set { _width = value; }
@@ -89,7 +89,7 @@ namespace SharpMap.Rendering
         /// <summary>
         /// Height of the box
         /// </summary>
-        public float Height
+        public double Height
         {
             get { return _height; }
             set { _height = value; }
@@ -98,7 +98,7 @@ namespace SharpMap.Rendering
         /// <summary>
         /// Right side of the box
         /// </summary>
-        public float Right
+        public double Right
         {
             get { return _left + _width; }
         }
@@ -106,7 +106,7 @@ namespace SharpMap.Rendering
         /// <summary>
         /// Bottom of th ebox
         /// </summary>
-        public float Bottom
+        public double Bottom
         {
             get { return _top - _height; }
         }
@@ -152,7 +152,7 @@ namespace SharpMap.Rendering
     {
         private LabelBox _box;
         private Font _Font;
-        private PointF _LabelPoint;
+        private Point _LabelPoint;
         private int _Priority;
         private float _Rotation;
         private bool _show;
@@ -169,7 +169,7 @@ namespace SharpMap.Rendering
         /// <param name="priority">Label priority used for collision detection</param>
         /// <param name="collisionbox">Box around label for collision detection</param>
         /// <param name="style">The style of the label</param>
-        public Label(string text, PointF labelpoint, float rotation, int priority, LabelBox collisionbox,
+        public Label(string text, Point labelpoint, float rotation, int priority, LabelBox collisionbox,
                      LabelStyle style)
         {
             _Text = text;
@@ -202,7 +202,7 @@ namespace SharpMap.Rendering
         /// <summary>
         /// Label position
         /// </summary>
-        public PointF LabelPoint
+        public Point LabelPoint
         {
             get { return _LabelPoint; }
             set { _LabelPoint = value; }

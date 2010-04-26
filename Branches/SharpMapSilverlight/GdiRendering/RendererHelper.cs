@@ -27,6 +27,7 @@ using SharpMap.Projection;
 using SharpMap.Rasters;
 using SharpMap.Styles;
 using SharpMap.Layers;
+using Gdi = System.Drawing;
 
 namespace SharpMap.Rendering
 {
@@ -191,35 +192,35 @@ namespace SharpMap.Rendering
         /// <param name="rotation">Text rotation in degrees</param>
         /// <param name="text">Text to render</param>
         /// <param name="map">Map reference</param>
-        private static void DrawLabel(System.Drawing.Graphics g, System.Drawing.PointF LabelPoint, System.Drawing.PointF Offset, System.Drawing.Font font, System.Drawing.Color forecolor, System.Drawing.Brush backcolor, System.Drawing.Pen halo, float rotation, string text, IViewTransform transform)
+        public static void DrawLabel(System.Drawing.Graphics g, Point LabelPoint, Offset Offset, Font font, Color forecolor, Brush backcolor, Pen halo, double rotation, string text, IViewTransform transform)
         {
-            System.Drawing.SizeF fontSize = g.MeasureString(text, font); //Calculate the size of the text
+            System.Drawing.SizeF fontSize = g.MeasureString(text, font.Convert()); //Calculate the size of the text
             LabelPoint.X += Offset.X; LabelPoint.Y += Offset.Y; //add label offset
             if (rotation != 0 && rotation != float.NaN)
             {
-                g.TranslateTransform(LabelPoint.X, LabelPoint.Y);
-                g.RotateTransform(rotation);
+                g.TranslateTransform((float)LabelPoint.X, (float)LabelPoint.Y);
+                g.RotateTransform((float)rotation);
                 g.TranslateTransform(-fontSize.Width / 2, -fontSize.Height / 2);
-                if (backcolor != null && backcolor != System.Drawing.Brushes.Transparent)
-                    g.FillRectangle(backcolor, 0, 0, fontSize.Width * 0.74f + 1f, fontSize.Height * 0.74f);
+                if (backcolor != null && backcolor.Convert() != System.Drawing.Brushes.Transparent)
+                    g.FillRectangle(backcolor.Convert(), 0, 0, fontSize.Width * 0.74f + 1f, fontSize.Height * 0.74f);
                 System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
-                path.AddString(text, font.FontFamily, (int)font.Style, font.Size, new System.Drawing.Point(0, 0), null);
+                path.AddString(text, new Gdi.FontFamily(font.FontFamily), (int)font.Convert().Style, font.Convert().Size, new System.Drawing.Point(0, 0), null);
                 if (halo != null)
-                    g.DrawPath(halo, path);
-                g.FillPath(new System.Drawing.SolidBrush(forecolor), path);
+                    g.DrawPath(halo.Convert(), path);
+                g.FillPath(new System.Drawing.SolidBrush(forecolor.Convert()), path);
                 //g.DrawString(text, font, new System.Drawing.SolidBrush(forecolor), 0, 0);                
             }
             else
             {
-                if (backcolor != null && backcolor != System.Drawing.Brushes.Transparent)
-                    g.FillRectangle(backcolor, LabelPoint.X, LabelPoint.Y, fontSize.Width * 0.74f + 1, fontSize.Height * 0.74f);
+                if (backcolor != null && backcolor.Convert() != System.Drawing.Brushes.Transparent)
+                    g.FillRectangle(backcolor.Convert(), (float)LabelPoint.X, (float)LabelPoint.Y, fontSize.Width * 0.74f + 1, (float)fontSize.Height * 0.74f);
 
                 System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
 
-                path.AddString(text, font.FontFamily, (int)font.Style, font.Size, LabelPoint, null);
+                path.AddString(text, new Gdi.FontFamily(font.FontFamily), (int)font.Convert().Style, (float)font.Size, new Gdi.Point((int)LabelPoint.X, (int)LabelPoint.Y), null);
                 if (halo != null)
-                    g.DrawPath(halo, path);
-                g.FillPath(new System.Drawing.SolidBrush(forecolor), path);
+                    g.DrawPath(halo.Convert(), path);
+                g.FillPath(new System.Drawing.SolidBrush(forecolor.Convert()), path);
                 //g.DrawString(text, font, new System.Drawing.SolidBrush(forecolor), LabelPoint.X, LabelPoint.Y);
             }
         }
