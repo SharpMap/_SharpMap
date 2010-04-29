@@ -199,9 +199,9 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
-        public void Render(IRenderer renderer, IView view)
+        public virtual void Render(IRenderer renderer, IView view)
         {
-            renderer.Render(view, DataSource, CreateStyleMethod(Style, Theme), CoordinateTransformation);
+            renderer.RenderLayer(view, DataSource, CreateStyleMethod(Style, Theme), CoordinateTransformation);
         }
 
         #endregion

@@ -8,6 +8,7 @@ using ProjNet.CoordinateSystems.Transformations;
 using SharpMap;
 using SharpMap.Data.Providers;
 using SharpMap.Geometries;
+using SharpMap.Layers;
 using SharpMap.Rendering;
 using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
@@ -25,7 +26,7 @@ namespace SilverlightRendering
             this.elements = elements;
         }
 
-        public void Render(IView view, IProvider provider, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation)
+        public void RenderLayer(IView view, IProvider provider, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation)
         {
             BoundingBox envelope = view.Extent;
             provider.Open();
@@ -234,5 +235,15 @@ namespace SilverlightRendering
                 group.Children.Add(ConvertPolygon(polygon, viewTransform));
             return group;
         }
+
+        #region IRenderer Members
+
+
+        public void RenderLabelLayer(IView view, IProvider dataSource, LabelLayer labelLayer)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

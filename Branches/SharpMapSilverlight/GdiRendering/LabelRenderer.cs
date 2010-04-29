@@ -37,7 +37,7 @@ namespace GdiRendering
 
                 IFeatures features = new Features();
                 DataSource.Open();
-                DataSource.GetFeaturesInView(map);
+                features = DataSource.GetFeaturesInView(map);
                 DataSource.Close();
                 
                 //Initialize label collection
@@ -69,11 +69,11 @@ namespace GdiRendering
                         int.TryParse(feature[labelLayer.PriorityColumn].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture,
                                      out priority);
 
-                    string text = "temp"; //!!!lab
-                    //if (labelTheme.GetLabelMethod != null)
-                    //    text = labelTheme.GetLabelMethod(feature);
-                    //else
-                    //    text = feature[labelTheme.LabelColumn].ToString();
+                    string text;
+                    if (labelLayer.LabelStringDelegate != null)
+                        text = labelLayer.LabelStringDelegate(feature);
+                    else
+                        text = feature[labelLayer.LabelColumn].ToString();
 
                     if (text != null && text != String.Empty)
                     {
