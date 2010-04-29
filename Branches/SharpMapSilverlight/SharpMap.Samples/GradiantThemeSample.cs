@@ -53,23 +53,21 @@ namespace SharpMap.Samples
             cityLayer.SRID = 4326;
             map.Layers.Add(cityLayer);
 
-            //Set up a country label layer
-            Layer labelLayer = new Layer("Country labels");
-            labelLayer.DataSource = countryLayer.DataSource;
-            labelLayer.Enabled = true;
-            labelLayer.MaxVisible = 1000000;
-            labelLayer.MinVisible = 0;
-            labelLayer.SRID = 4326;
-
-            //LabelTheme labelTheme = new LabelTheme();
-            //labelTheme.LabelColumn = "Name";
-            //labelTheme.Style = new LabelStyle();
-            //labelTheme.Style.ForeColor = Color.White;
-            //labelTheme.Style.Font = new Font() { FontFamily = "GenericSerif", Size = 12 };
-            //labelTheme.Style.BackColor = new Brush() { Fill = Color.DarkBlue };
-            //labelTheme.Style.HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Center;
-            //labelTheme.MultipartGeometryBehaviour = LabelTheme.MultipartGeometryBehaviourEnum.Largest;
-            //labelLayer.Style = labelTheme;
+            ////Set up a country label layer
+            //LabelLayer labelLayer = new LabelLayer("Country labels");
+            //labelLayer.DataSource = countryLayer.DataSource;
+            //labelLayer.Enabled = true;
+            //labelLayer.MaxVisible = 1000000;
+            //labelLayer.MinVisible = 0;
+            //labelLayer.SRID = 4326;
+            //labelLayer.LabelColumn = "Name";
+            //var labelStyle = new LabelStyle();
+            //labelStyle.ForeColor = Color.White;
+            //labelStyle.Font = new Font() { FontFamily = "GenericSerif", Size = 12 };
+            //labelStyle.BackColor = new Brush() { Fill = Color.DarkBlue };
+            //labelStyle.HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Center;
+            //labelLayer.MultipartGeometryBehaviour = LabelLayer.MultipartGeometryBehaviourEnum.Largest;
+            //labelLayer.Style = labelStyle;
             //map.Layers.Add(labelLayer);
 
             ////Set up a city label layer

@@ -36,7 +36,7 @@ namespace SharpMap.Rendering
     /// </summary>
     public static class RendererHelper
     {
-        public static void Render(System.Drawing.Graphics g, IProvider provider, Func<IFeature, IStyle> getStyle,
+        public static void RenderLayer(System.Drawing.Graphics g, IProvider provider, Func<IFeature, IStyle> getStyle,
             ICoordinateTransformation coordinateTransformation, IView view)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -119,10 +119,8 @@ namespace SharpMap.Rendering
             if (line.Vertices.Count > 1)
             {
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
-
                 gp.AddLines(ConvertPoints(line.WorldToView(transform)));
                 g.DrawPath(pen, gp);
-
             }
         }
 
@@ -378,7 +376,7 @@ namespace SharpMap.Rendering
         /// <param name="offset">Symbol offset af scale=1</param>
         /// <param name="rotation">Symbol rotation in degrees</param>
         /// <param name="map">Map reference</param>
-        private static void DrawPoint(System.Drawing.Graphics g, SharpMap.Geometries.Point point, System.Drawing.Bitmap symbol, float symbolscale, System.Drawing.PointF offset, float rotation, IViewTransform transform)
+        private static void DrawPoint(System.Drawing.Graphics g, Point point, System.Drawing.Bitmap symbol, float symbolscale, System.Drawing.PointF offset, float rotation, IViewTransform transform)
         {
             if (point == null)
                 return;
@@ -422,7 +420,23 @@ namespace SharpMap.Rendering
         {
             var vectorStyle = style as VectorStyle;
 
-            if (feature is Polygon)
+            if (feature is Point)
+            {
+                RendererHelper.DrawPoint(g, (Point)feature, vectorStyle.Symbol.Convert(), vectorStyle.SymbolScale, vectorStyle.SymbolOffset.Convert(), vectorStyle.SymbolRotation, transform);
+            }
+            else if (feature is MultiPoint)
+            {
+                RendererHelper.DrawLineString(g, (LineString)feature, vectorStyle.Line.Convert(), transform);
+            }
+            else if (feature is LineString)
+            {
+                RendererHelper.DrawLineString(g, (LineString)feature, vectorStyle.Line.Convert(), transform);
+            }
+            else if (feature is MultiLineString)
+            {
+                RendererHelper.DrawMultiLineString(g, (MultiLineString)feature, vectorStyle.Line.Convert(), transform);
+            }
+            else if (feature is Polygon)
             {
                 if (vectorStyle.EnableOutline)
                     RendererHelper.DrawPolygon(g, (Polygon)feature, vectorStyle.Fill.Convert(), vectorStyle.Outline.Convert(), transform);
@@ -435,11 +449,6 @@ namespace SharpMap.Rendering
                     SharpMap.Rendering.RendererHelper.DrawMultiPolygon(g, (MultiPolygon)feature, vectorStyle.Fill.Convert(), vectorStyle.Outline.Convert(), transform);
                 else
                     SharpMap.Rendering.RendererHelper.DrawMultiPolygon(g, (MultiPolygon)feature, vectorStyle.Fill.Convert(), null, transform);
-            }
-            else if (feature is LineString)
-            {
-                RendererHelper.DrawLineString(g, (LineString)feature, vectorStyle.Line.Convert(), transform);
-                SharpMap.Rendering.RendererHelper.DrawPoint(g, (Point)feature, vectorStyle.Symbol.Convert(), vectorStyle.SymbolScale, vectorStyle.SymbolOffset.Convert(), vectorStyle.SymbolRotation, transform);
             }
             else if (feature is IRaster)
             {

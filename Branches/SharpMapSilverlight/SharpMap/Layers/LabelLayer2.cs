@@ -48,10 +48,8 @@ namespace SharpMap.Layers
     /// layLabel.Style.HorizontalAlignment = SharpMap.Styles.LabelStyle.HorizontalAlignmentEnum.Center;
     /// </code>
     /// </example>
-    public class LabelTheme : IStyle, IDisposable
+    public class LabelLayer : Layer, IDisposable
     {
-        bool enabled = false;
-
         #region Delegates
 
         /// <summary>
@@ -70,7 +68,7 @@ namespace SharpMap.Layers
 
         #endregion
 
-        #region MultipartGeometryBehaviourEnum enum
+        #region Enums
 
         /// <summary>
         /// Labelling behaviour for Multipart geometry collections
@@ -100,33 +98,24 @@ namespace SharpMap.Layers
 
         #endregion
 
-        private IProvider _DataSource;
+        #region Fields
+
         private GetLabelMethod _getLabelMethod;
         private GetPriorityMethod _getPriorityMethod;
         private string _LabelColumn;
         private LabelCollisionDetection.LabelFilterMethod _LabelFilter;
-
         private MultipartGeometryBehaviourEnum _MultipartGeometryBehaviour;
         private int _Priority;
-
         /// <summary>
         /// A value indication the priority of the label in cases of label-collision detection
         /// </summary>
         private string _PriorityColumn = "";
-
         private string _RotationColumn;
         private LabelStyle _Style;
-        private ITheme _theme;
 
-        /// <summary>
-        /// Creates a new instance of a LabelLayer
-        /// </summary>
-        public LabelTheme()
-        {
-            _Style = new LabelStyle();
-            _MultipartGeometryBehaviour = MultipartGeometryBehaviourEnum.All;
-            _LabelFilter = LabelCollisionDetection.SimpleCollisionDetection;
-        }
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Gets or sets labelling behavior on multipart geometries
@@ -148,34 +137,6 @@ namespace SharpMap.Layers
         {
             get { return _LabelFilter; }
             set { _LabelFilter = value; }
-        }
-
-
-        /// <summary>
-        /// Gets or sets the datasource
-        /// </summary>
-        public IProvider DataSource
-        {
-            get { return _DataSource; }
-            set { _DataSource = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the rendering style of the label layer.
-        /// </summary>
-        public LabelStyle Style
-        {
-            get { return _Style; }
-            set { _Style = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets thematic settings for the layer. Set to null to ignore thematics
-        /// </summary>
-        public ITheme Theme
-        {
-            get { return _theme; }
-            set { _theme = value; }
         }
 
         /// <summary>
@@ -210,7 +171,6 @@ namespace SharpMap.Layers
             get { return _getLabelMethod; }
             set { _getLabelMethod = value; }
         }
-
 
         /// <summary>
         /// Gets or sets the method for calculating the render priority of a label based on a feature.
@@ -262,6 +222,24 @@ namespace SharpMap.Layers
             set { _PriorityColumn = value; }
         }
 
+        #endregion
+
+        #region Constructors and Public members
+
+        /// <summary>
+        /// Creates a new instance of a LabelLayer
+        /// </summary>
+        public LabelLayer(string LayerName)
+            : base(LayerName)
+        {
+            _Style = new LabelStyle();
+            _MultipartGeometryBehaviour = MultipartGeometryBehaviourEnum.All;
+            _LabelFilter = LabelCollisionDetection.SimpleCollisionDetection;
+        }
+
+        #endregion
+
+
         #region IDisposable Members
 
         /// <summary>
@@ -271,55 +249,6 @@ namespace SharpMap.Layers
         {
             if (DataSource is IDisposable)
                 ((IDisposable) DataSource).Dispose();
-        }
-
-        #endregion
-
-        #region ITheme Members
-
-        public IStyle GetStyle(IFeature attribute)
-        {
-            return this.Style;
-        }
-
-        #endregion
-
-        #region IStyle Members
-
-        public double MinVisible
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public double MaxVisible
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool Enabled
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
         }
 
         #endregion

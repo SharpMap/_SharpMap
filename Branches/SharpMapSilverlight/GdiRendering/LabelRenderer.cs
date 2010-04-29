@@ -22,11 +22,10 @@ namespace GdiRendering
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
-        public static void Render(Graphics g, IView map, IProvider DataSource, LabelTheme labelTheme)
+        public static void Render(Graphics g, IView map, IProvider DataSource, LabelLayer labelLayer)
         {
-
             //!!!SmoothingMode = SmoothingMode.AntiAlias;
-            if (labelTheme.Style.Enabled && labelTheme.MaxVisible >= map.Resolution && labelTheme.MinVisible < map.Resolution)
+            if (labelLayer.Style.Enabled && labelLayer.MaxVisible >= map.Resolution && labelLayer.MinVisible < map.Resolution)
             {
                 if (DataSource == null)
                     throw (new ApplicationException("DataSource property not set"));
@@ -53,24 +52,24 @@ namespace GdiRendering
                     //!!!   features[i].Geometry, CoordinateTransformation. MathTransform);
 
                     LabelStyle style = null;
-                    if (labelTheme.Theme != null) //If thematics is enabled, lets override the style
-                        style = labelTheme.Theme.GetStyle(feature) as LabelStyle;
+                    if (labelLayer.Theme != null) //If thematics is enabled, lets override the style
+                        style = labelLayer.Theme.GetStyle(feature) as LabelStyle;
                     else
-                        style = labelTheme.Style;
+                        style = (LabelStyle)labelLayer.Style;
 
                     float rotation = 0;
-                    if (!String.IsNullOrEmpty(labelTheme.RotationColumn))
-                        float.TryParse(feature[labelTheme.RotationColumn].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture,
+                    if (!String.IsNullOrEmpty(labelLayer.RotationColumn))
+                        float.TryParse(feature[labelLayer.RotationColumn].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture,
                                        out rotation);
 
-                    int priority = labelTheme.Priority;
-                    if (labelTheme.PriorityDelegate != null)
-                        priority = labelTheme.PriorityDelegate(feature);
-                    else if (!String.IsNullOrEmpty(labelTheme.PriorityColumn))
-                        int.TryParse(feature[labelTheme.PriorityColumn].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture,
+                    int priority = labelLayer.Priority;
+                    if (labelLayer.PriorityDelegate != null)
+                        priority = labelLayer.PriorityDelegate(feature);
+                    else if (!String.IsNullOrEmpty(labelLayer.PriorityColumn))
+                        int.TryParse(feature[labelLayer.PriorityColumn].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture,
                                      out priority);
 
-                    string text = "temp"; //!!!
+                    string text = "temp"; //!!!lab
                     //if (labelTheme.GetLabelMethod != null)
                     //    text = labelTheme.GetLabelMethod(feature);
                     //else
@@ -80,22 +79,22 @@ namespace GdiRendering
                     {
                         if (feature.Geometry is GeometryCollection)
                         {
-                            if (labelTheme.MultipartGeometryBehaviour == SharpMap.Layers.LabelTheme.MultipartGeometryBehaviourEnum.All)
+                            if (labelLayer.MultipartGeometryBehaviour == SharpMap.Layers.LabelLayer.MultipartGeometryBehaviourEnum.All)
                             {
                                 foreach (Geometry geom in (feature.Geometry as GeometryCollection))
                                 {
-                                    Label lbl = CreateLabel(geom, text, rotation, priority, style, map, g, labelTheme);
+                                    Label lbl = CreateLabel(geom, text, rotation, priority, style, map, g, labelLayer);
                                     if (lbl != null)
                                         labels.Add(lbl);
                                 }
                             }
-                            else if (labelTheme.MultipartGeometryBehaviour == SharpMap.Layers.LabelTheme.MultipartGeometryBehaviourEnum.CommonCenter)
+                            else if (labelLayer.MultipartGeometryBehaviour == SharpMap.Layers.LabelLayer.MultipartGeometryBehaviourEnum.CommonCenter)
                             {
-                                Label lbl = CreateLabel(feature.Geometry, text, (float)rotation, priority, style, map, g, labelTheme);
+                                Label lbl = CreateLabel(feature.Geometry, text, (float)rotation, priority, style, map, g, labelLayer);
                                 if (lbl != null)
                                     labels.Add(lbl);
                             }
-                            else if (labelTheme.MultipartGeometryBehaviour == SharpMap.Layers.LabelTheme.MultipartGeometryBehaviourEnum.First)
+                            else if (labelLayer.MultipartGeometryBehaviour == SharpMap.Layers.LabelLayer.MultipartGeometryBehaviourEnum.First)
                             {
                                 //!!!
                                 //if ((feature.Geometry as GeometryCollection).Collection.Count > 0)
@@ -106,7 +105,7 @@ namespace GdiRendering
                                 //        labels.Add(lbl);
                                 //}
                             }
-                            else if (labelTheme.MultipartGeometryBehaviour == SharpMap.Layers.LabelTheme.MultipartGeometryBehaviourEnum.Largest)
+                            else if (labelLayer.MultipartGeometryBehaviour == SharpMap.Layers.LabelLayer.MultipartGeometryBehaviourEnum.Largest)
                             {
                                 GeometryCollection coll = (feature.Geometry as GeometryCollection);
                                 if (coll.NumGeometries > 0)
@@ -139,7 +138,7 @@ namespace GdiRendering
                                     }
 
                                     Label lbl = CreateLabel(coll.Geometry(idxOfLargest), text, rotation, priority, style,
-                                                            map, g, labelTheme);
+                                                            map, g, labelLayer);
                                     if (lbl != null)
                                         labels.Add(lbl);
                                 }
@@ -147,7 +146,7 @@ namespace GdiRendering
                         }
                         else
                         {
-                            Label lbl = CreateLabel(feature.Geometry, text, rotation, priority, style, map, g, labelTheme);
+                            Label lbl = CreateLabel(feature.Geometry, text, rotation, priority, style, map, g, labelLayer);
                             if (lbl != null)
                                 labels.Add(lbl);
                         }
@@ -155,26 +154,26 @@ namespace GdiRendering
                 }
                 if (labels.Count > 0) //We have labels to render...
                 {
-                    if (labelTheme.Style.CollisionDetection && labelTheme.LabelFilter != null)
-                        labelTheme.LabelFilter(labels);
+                    if ((labelLayer.Style as LabelStyle).CollisionDetection && labelLayer.LabelFilter != null)
+                        labelLayer.LabelFilter(labels);
                     for (int i = 0; i < labels.Count; i++)
                         if (labels[i].Show)
                             RendererHelper.DrawLabel(g, labels[i].LabelPoint, labels[i].Style.Offset,
                                                      labels[i].Style.Font, labels[i].Style.ForeColor,
-                                                     labels[i].Style.BackColor, labelTheme.Style.Halo, labels[i].Rotation,
+                                                     labels[i].Style.BackColor, (labelLayer.Style as LabelStyle).Halo, labels[i].Rotation,
                                                      labels[i].Text, map);
                 }
                 labels = null;
             }
         }
 
-        private static Label CreateLabel(IGeometry feature, string text, float rotation, LabelStyle style, IView map, Graphics g, LabelTheme labelTheme)
+        private static Label CreateLabel(IGeometry feature, string text, float rotation, LabelStyle style, IView map, Graphics g, LabelLayer labelTheme)
         {
             return CreateLabel(feature, text, rotation, labelTheme.Priority, style, map, g, labelTheme);
         }
 
         private static Label CreateLabel(IGeometry feature, string text, float rotation, int priority, LabelStyle style, IView map,
-                                  Graphics g, LabelTheme labelTheme)
+                                  Graphics g, LabelLayer labelTheme)
         {
             System.Drawing.SizeF gdiSize = g.MeasureString(text, style.Font.Convert());
             SharpMap.Styles.Size size = new SharpMap.Styles.Size() { Width = gdiSize.Width, Height = gdiSize.Height };

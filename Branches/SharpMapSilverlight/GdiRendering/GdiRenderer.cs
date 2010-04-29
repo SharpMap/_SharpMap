@@ -26,7 +26,7 @@ namespace SharpMap.Rendering
         public void Render(IView view, IProvider DataSource, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation)
         {
             if (graphics == null) throw new ApplicationException("Graphics was not initialized");
-            RendererHelper.Render(graphics, DataSource, getStyle, coordinateTransformation, view);
+            RendererHelper.RenderLayer(graphics, DataSource, getStyle, coordinateTransformation, view);
         }
 
         private void Initialize(IView view)
