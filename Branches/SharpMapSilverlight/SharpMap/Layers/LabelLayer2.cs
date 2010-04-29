@@ -224,6 +224,10 @@ namespace SharpMap.Layers
 
         #endregion
 
+        public override void Render(IRenderer renderer, IView view)
+        {
+            renderer.RenderLabelLayer(view, DataSource, this);
+        }
         #region Constructors and Public members
 
         /// <summary>
@@ -238,7 +242,6 @@ namespace SharpMap.Layers
         }
 
         #endregion
-
 
         #region IDisposable Members
 

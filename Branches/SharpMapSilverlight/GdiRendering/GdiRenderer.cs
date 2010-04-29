@@ -6,6 +6,7 @@ using ProjNet.CoordinateSystems.Transformations;
 using SharpMap.Data;
 using SharpMap.Data.Providers;
 using SharpMap.Styles;
+using GdiRendering;
 
 namespace SharpMap.Rendering
 {
@@ -23,9 +24,9 @@ namespace SharpMap.Rendering
         {
         }
 
-        public void Render(IView view, IProvider DataSource, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation)
+        public void RenderLayer(IView view, IProvider DataSource, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation)
         {
-            if (graphics == null) throw new ApplicationException("Graphics was not initialized");
+            if (graphics == null) throw new Exception("Graphics was not initialized");
             RendererHelper.RenderLayer(graphics, DataSource, getStyle, coordinateTransformation, view);
         }
 
@@ -51,5 +52,16 @@ namespace SharpMap.Rendering
             image.Save(memoryStream, ImageFormat.Bmp);
             return memoryStream.ToArray();
         }
+
+        #region IRenderer Members
+
+
+        public void RenderLabelLayer(IView view, IProvider dataSource, SharpMap.Layers.LabelLayer labelLayer)
+        {
+            if (graphics == null) throw new Exception("Graphics was not initialized");
+            LabelRenderer.Render(graphics, view, dataSource, labelLayer);
+        }
+
+        #endregion
     }
 }

@@ -53,22 +53,22 @@ namespace SharpMap.Samples
             cityLayer.SRID = 4326;
             map.Layers.Add(cityLayer);
 
-            ////Set up a country label layer
-            //LabelLayer labelLayer = new LabelLayer("Country labels");
-            //labelLayer.DataSource = countryLayer.DataSource;
-            //labelLayer.Enabled = true;
-            //labelLayer.MaxVisible = 1000000;
-            //labelLayer.MinVisible = 0;
-            //labelLayer.SRID = 4326;
-            //labelLayer.LabelColumn = "Name";
-            //var labelStyle = new LabelStyle();
-            //labelStyle.ForeColor = Color.White;
-            //labelStyle.Font = new Font() { FontFamily = "GenericSerif", Size = 12 };
-            //labelStyle.BackColor = new Brush() { Fill = Color.DarkBlue };
-            //labelStyle.HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Center;
-            //labelLayer.MultipartGeometryBehaviour = LabelLayer.MultipartGeometryBehaviourEnum.Largest;
-            //labelLayer.Style = labelStyle;
-            //map.Layers.Add(labelLayer);
+            //Set up a country label layer
+            LabelLayer labelLayer = new LabelLayer("Country labels");
+            labelLayer.DataSource = countryLayer.DataSource;
+            labelLayer.Enabled = true;
+            labelLayer.MaxVisible = 1000000;
+            labelLayer.MinVisible = 0;
+            labelLayer.SRID = 4326;
+            labelLayer.LabelColumn = "NAME";
+            var labelStyle = new LabelStyle();
+            labelStyle.ForeColor = Color.White;
+            labelStyle.Font = new Font() { FontFamily = "GenericSerif", Size = 12 };
+            labelStyle.BackColor = new Brush() { Fill = Color.DarkBlue };
+            labelStyle.HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Center;
+            labelLayer.MultipartGeometryBehaviour = LabelLayer.MultipartGeometryBehaviourEnum.Largest;
+            labelLayer.Style = labelStyle;
+            map.Layers.Add(labelLayer);
 
             ////Set up a city label layer
             //LabelLayer layCityLabel = new LabelLayer("City labels");

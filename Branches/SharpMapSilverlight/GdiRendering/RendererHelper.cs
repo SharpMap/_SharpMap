@@ -215,7 +215,8 @@ namespace SharpMap.Rendering
 
                 System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
 
-                path.AddString(text, new Gdi.FontFamily(font.FontFamily), (int)font.Convert().Style, (float)font.Size, new Gdi.Point((int)LabelPoint.X, (int)LabelPoint.Y), null);
+                //Arial hack
+                path.AddString(text, new Gdi.FontFamily("Arial"), (int)font.Convert().Style, (float)font.Size, new Gdi.Point((int)LabelPoint.X, (int)LabelPoint.Y), null);
                 if (halo != null)
                     g.DrawPath(halo.Convert(), path);
                 g.FillPath(new System.Drawing.SolidBrush(forecolor.Convert()), path);

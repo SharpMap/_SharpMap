@@ -85,7 +85,7 @@ namespace SharpMap.Data
         private class Feature : IFeature
         {
             private IGeometry _Geometry;
-            Dictionary<string, object> dictionary;
+            private Dictionary<string, object> dictionary;
 
             public Feature()
             {
