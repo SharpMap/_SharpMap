@@ -114,7 +114,7 @@
     <Compile Include="Layers\IQueryLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Layers\LabelStyleDescriptor.cs" />
+    <Compile Include="Layers\LabelLayer2.cs" />
     <Compile Include="Layers\Layer.cs" />
     <Compile Include="Layers\LayerGroup.cs" />
     <Compile Include="Map\IViewTransform.cs" />

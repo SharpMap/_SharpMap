@@ -190,7 +190,7 @@ namespace SharpMap.Layers
         /// <param name="layername">Name of layer</param>
         public Layer(string layername)
         {
-            this.Style = new SharpMap.Styles.VectorStyle();
+            this.Style = new VectorStyle();
             this.LayerName = layername;
         }
 
