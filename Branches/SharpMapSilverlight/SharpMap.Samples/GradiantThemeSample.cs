@@ -49,48 +49,49 @@ namespace SharpMap.Samples
             //Set the datasource to a shapefile in the App_data folder
             cityLayer.DataSource = new ShapeFile("GeoData/World/cities.shp", true);
             cityLayer.Style = new VectorStyle() { SymbolScale = 0.8f };
-            cityLayer.MaxVisible = 0.5;
+            cityLayer.MaxVisible = 0.09;
             cityLayer.SRID = 4326;
             map.Layers.Add(cityLayer);
 
             //Set up a country label layer
-            LabelLayer labelLayer = new LabelLayer("Country labels");
-            labelLayer.DataSource = countryLayer.DataSource;
-            labelLayer.Enabled = true;
-            labelLayer.MaxVisible = 1000000;
-            labelLayer.MinVisible = 0;
-            labelLayer.SRID = 4326;
-            labelLayer.LabelColumn = "NAME";
+            LabelLayer countryLabelLayer = new LabelLayer("Country labels");
+            countryLabelLayer.DataSource = countryLayer.DataSource;
+            countryLabelLayer.Enabled = true;
+            countryLabelLayer.MaxVisible = 0.18;
+            countryLabelLayer.MinVisible = 0.054;
+            countryLabelLayer.SRID = 4326;
+            countryLabelLayer.LabelColumn = "NAME";
             var labelStyle = new LabelStyle();
-            labelStyle.ForeColor = Color.White;
+            labelStyle.ForeColor = Color.Black;
             labelStyle.Font = new Font() { FontFamily = "GenericSerif", Size = 12 };
-            labelStyle.BackColor = new Brush() { Fill = Color.DarkBlue };
+            labelStyle.BackColor = new Brush() { Fill = new Color() { A = 128, R = 255, G = 255, B = 255 } };
             labelStyle.HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Center;
-            labelLayer.MultipartGeometryBehaviour = LabelLayer.MultipartGeometryBehaviourEnum.Largest;
-            labelLayer.Style = labelStyle;
-            map.Layers.Add(labelLayer);
+            countryLabelLayer.MultipartGeometryBehaviour = LabelLayer.MultipartGeometryBehaviourEnum.Largest;
+            countryLabelLayer.Style = labelStyle;
+            map.Layers.Add(countryLabelLayer);
 
-            ////Set up a city label layer
-            //LabelLayer layCityLabel = new LabelLayer("City labels");
-            //layCityLabel.DataSource = layCities.DataSource;
-            //layCityLabel.Enabled = true;
-            //layCityLabel.LabelColumn = "Name";
-            //layCityLabel.Style = new LabelStyle();
-            //layCityLabel.Style.ForeColor = Color.Black;
-            //layCityLabel.Style.Font = new Font() { FontFamily = "GenericSerif", Size = 11 };
-            //layCityLabel.MaxVisible = layLabel.MinVisible;
-            //layCityLabel.Style.HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Left;
-            //layCityLabel.Style.VerticalAlignment = LabelStyle.VerticalAlignmentEnum.Bottom;
-            //layCityLabel.Style.Offset = new Offset() { X = 3, Y = 3 };
-            //layCityLabel.Style.Halo = new Pen() { Color = Color.Yellow, Width = 2 };
-            ////!!!layCityLabel.TextRenderingHint = TextRenderingHint.AntiAlias;
-            ////!!!layCityLabel.SmoothingMode = SmoothingMode.AntiAlias;
-            //layCityLabel.SRID = 4326;
-            //layCityLabel.LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection;
-            //layCityLabel.Style.CollisionDetection = true;
-            //map.Layers.Add(layCityLabel);
+            //Set up a city label layer
+            LabelLayer cityLabelLayer = new LabelLayer("City labels");
+            cityLabelLayer.DataSource = cityLayer.DataSource;
+            cityLabelLayer.Enabled = true;
+            cityLabelLayer.LabelColumn = "NAME";
+            cityLabelLayer.MaxVisible = countryLabelLayer.MinVisible;
+            cityLabelLayer.MinVisible = 0;
+            cityLabelLayer.SRID = 4326;
+            cityLabelLayer.LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection;
+            
+            var cityLabelStyle = new LabelStyle();
+            cityLabelStyle.ForeColor = Color.Black;
+            cityLabelStyle.Font = new Font() { FontFamily = "GenericSerif", Size = 11 };
+            cityLabelStyle.HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Left;
+            cityLabelStyle.VerticalAlignment = LabelStyle.VerticalAlignmentEnum.Bottom;
+            cityLabelStyle.Offset = new Offset() { X = 3, Y = 3 };
+            cityLabelStyle.Halo = new Pen() { Color = Color.Yellow, Width = 2 };
+            cityLabelStyle.CollisionDetection = true;
+            cityLabelLayer.Style = cityLabelStyle;
 
-
+            map.Layers.Add(cityLabelLayer);
+            
             //Set a gradient theme on the countries layer, based on Population density
             //First create two styles that specify min and max styles
             //In this case we will just use the default values and override the fill-colors
@@ -107,15 +108,15 @@ namespace SharpMap.Samples
             countryLayer.Theme = popdens;
 
             //Lets scale the labels so that big countries have larger texts as well
-            //LabelStyle lblMin = new LabelStyle();
-            //LabelStyle lblMax = new LabelStyle();
-            //lblMin.ForeColor = Color.Black;
-            //lblMin.Font = new Font(FontFamily.GenericSerif, 6);
-            //lblMax.ForeColor = Color.Blue;
-            //lblMax.BackColor = new SolidBrush(Color.FromArgb(128, 255, 255, 255));
-            //lblMin.BackColor = lblMax.BackColor;
-            //lblMax.Font = new Font(FontFamily.GenericSerif, 9);
-            //!!!layLabel.Theme = new GradientTheme("PopDens", 0, 400, lblMin, lblMax);
+            LabelStyle lblMin = new LabelStyle();
+            LabelStyle lblMax = new LabelStyle();
+            lblMin.ForeColor = Color.Black;
+            lblMin.Font = new Font() { FontFamily = "Sans Serif", Size = 6 };
+            lblMax.ForeColor = Color.DarkBlue;
+            lblMax.BackColor = new Brush() { Fill = new Color() { A = 128, R = 255, G = 255, B = 255 } };
+            lblMin.BackColor = lblMax.BackColor;
+            lblMax.Font = new Font() { FontFamily = "Sans Serif", Size = 9 };
+            countryLabelLayer.Theme = new GradientTheme("PopDens", 0, 400, lblMin, lblMax);
 
             //Lets scale city icons based on city population
             //cities below 1.000.000 gets the smallest symbol, and cities with more than 5.000.000 the largest symbol

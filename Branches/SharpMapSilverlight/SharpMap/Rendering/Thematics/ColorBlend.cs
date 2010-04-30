@@ -160,7 +160,7 @@ namespace SharpMap.Rendering.Thematics
             get
             {
                 return new ColorBlend(
-                    new Color[] { Color.DarkBlue, Color.DarkGreen, Color.Yellow, Color.Orange, Color.Red },
+                    new Color[] { Color.Red, Color.Yellow, Color.Green, Color.Cyan, Color.Blue },
                     new float[] { 0f, 0.25f, 0.5f, 0.75f, 1f });
             }
         }
