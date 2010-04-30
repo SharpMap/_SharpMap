@@ -32,6 +32,7 @@ namespace SharpMap.Rendering
 
         private void Initialize(IView view)
         {
+            if ((view.Width <= 0) || (view.Height <= 0)) return;
             image = new System.Drawing.Bitmap((int)view.Width, (int)view.Height);
             graphics = System.Drawing.Graphics.FromImage(image);
         }

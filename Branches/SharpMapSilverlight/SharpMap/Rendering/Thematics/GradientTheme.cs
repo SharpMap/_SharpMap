@@ -224,10 +224,8 @@ namespace SharpMap.Rendering.Thematics
             style.CollisionDetection = min.CollisionDetection;
             style.Enabled = InterpolateBool(min.Enabled, max.Enabled, value);
 
-            throw new NotImplementedException("more porting to be done");
-            //!!!
-            //float FontSize = InterpolateFloat(min.Font.Size, max.Font.Size, value);
-            //style.Font = new Font(min.Font.FontFamily, FontSize, min.Font.Style);
+            double FontSize = InterpolateDouble(min.Font.Size, max.Font.Size, value);
+            style.Font = new Font() { FontFamily = min.Font.FontFamily, Size = min.Font.Size };
 
             if (min.BackColor != null && max.BackColor != null)
                 style.BackColor = InterpolateBrush(min.BackColor, max.BackColor, value);
