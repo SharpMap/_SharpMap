@@ -84,9 +84,9 @@ namespace WinFormSamples.Samples
 
                 // Layer Style
                 layer1.Style = new VectorStyle() { Fill = new Brush() { Fill = Color.Red } };
-                layer2.Style = new VectorStyle() { Fill = new Brush() { Fill= Color.DarkGreen } }; // SelectedStatesAndHousholds
+                layer2.Style = new VectorStyle() { Fill = new Brush() { Fill= Color.Green } }; // SelectedStatesAndHousholds
                 layer3.Style = new VectorStyle() { Fill = new Brush() { Fill = Color.Yellow } }; // e.g. New York, New Jersey,...
-                layer5.Style = new VectorStyle() { Fill = new Brush() { Fill = Color.DarkBlue } };
+                layer5.Style = new VectorStyle() { Fill = new Brush() { Fill = Color.Blue } };
 
                 // Labels
                 // Labels are collected when parsing the geometry. So there's just one 'GetFeature' call necessary.

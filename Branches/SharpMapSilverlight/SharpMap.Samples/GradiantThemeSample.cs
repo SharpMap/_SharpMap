@@ -36,7 +36,7 @@ namespace SharpMap.Samples
             //Set fill-style to green
             
             VectorStyle vectorStyle = new VectorStyle();
-            vectorStyle.Fill = new Brush() { Fill = Color.DarkGreen};
+            vectorStyle.Fill = new Brush() { Fill = Color.Green};
              //Set the polygons to have a black outline
             vectorStyle.Outline = new Pen() { Color = Color.Black };
             vectorStyle.EnableOutline = true;
@@ -112,7 +112,7 @@ namespace SharpMap.Samples
             LabelStyle lblMax = new LabelStyle();
             lblMin.ForeColor = Color.Black;
             lblMin.Font = new Font() { FontFamily = "Sans Serif", Size = 6 };
-            lblMax.ForeColor = Color.DarkBlue;
+            lblMax.ForeColor = Color.Black;
             lblMax.BackColor = new Brush() { Fill = new Color() { A = 128, R = 255, G = 255, B = 255 } };
             lblMin.BackColor = lblMax.BackColor;
             lblMax.Font = new Font() { FontFamily = "Sans Serif", Size = 9 };

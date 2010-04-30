@@ -84,7 +84,7 @@
     </Compile>
     <Compile Include="DataSourceCreator.cs" />
     <Compile Include="Data\Features.cs" />
-    <Compile Include="Data\Providers\IProvider.cs" />
+    <Compile Include="Data\IProvider.cs" />
     <Compile Include="Geometries\BoundingBox.cs" />
     <Compile Include="Geometries\Curve.cs" />
     <Compile Include="Geometries\Geometry.cs" />
@@ -106,6 +106,10 @@
     <Compile Include="Geometries\SpatialRelations.cs" />
     <Compile Include="Geometries\Surface.cs" />
     <Compile Include="Layers\ILayer.cs" />
+    <Compile Include="Layers\IQueryLayer.cs" />
+    <Compile Include="Layers\LabelLayer2.cs" />
+    <Compile Include="Layers\Layer.cs" />
+    <Compile Include="Layers\LayerGroup.cs" />
     <Compile Include="Map\IView.cs" />
     <Compile Include="Map\IViewTransform.cs" />
     <Compile Include="Map\Map.cs" />
@@ -115,6 +119,8 @@
     <Compile Include="Rasters\IRaster.cs" />
     <Compile Include="Rasters\Raster.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
+    <Compile Include="Rendering\Label.cs" />
+    <Compile Include="Rendering\LabelCollisionDetection.cs" />
     <Compile Include="Rendering\RenderExceptions.cs" />
     <Compile Include="Rendering\Thematics\ColorBlend.cs" />
     <Compile Include="Rendering\Thematics\CustomTheme.cs" />
@@ -139,6 +145,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Styles\DefaultSymbol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Providers\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
