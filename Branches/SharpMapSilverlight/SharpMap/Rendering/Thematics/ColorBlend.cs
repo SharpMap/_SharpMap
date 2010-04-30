@@ -143,7 +143,8 @@ namespace SharpMap.Rendering.Thematics
                 int i = 0;
                 for (float f = 0; f <= 1; f += 1.0f / 6)
                     cb.Positions[i++] = f;
-                cb.Colors = new Color[] { Color.Black, Color.DarkBlue, Color.DarkCyan, Color.DarkGreen, Color.Yellow, Color.Orange, Color.Red };
+                cb.Colors = new Color[] { 
+                    Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Blue, Color.Indigo, Color.Violet};
                 return cb;
             }
         }
@@ -194,7 +195,7 @@ namespace SharpMap.Rendering.Thematics
 		{
 			get
 			{
-				return new ColorBlend(new Color[] { Color.Red, Color.DarkGreen }, new float[] { 0f, 1f });
+				return new ColorBlend(new Color[] { Color.Red, Color.Green }, new float[] { 0f, 1f });
 			}
 		}
 
@@ -205,7 +206,7 @@ namespace SharpMap.Rendering.Thematics
 		{
 			get
 			{
-				return new ColorBlend(new Color[] { Color.DarkGreen, Color.Red }, new float[] { 0f, 1f });
+				return new ColorBlend(new Color[] { Color.Green, Color.Red }, new float[] { 0f, 1f });
 			}
 		}
 
@@ -216,7 +217,7 @@ namespace SharpMap.Rendering.Thematics
 		{
 			get
 			{
-				return new ColorBlend(new Color[] { Color.DarkBlue, Color.DarkGreen }, new float[] { 0f, 1f });
+				return new ColorBlend(new Color[] { Color.Blue, Color.Green }, new float[] { 0f, 1f });
 			}
 		}
 
@@ -227,7 +228,7 @@ namespace SharpMap.Rendering.Thematics
 		{
 			get
 			{
-				return new ColorBlend(new Color[] { Color.DarkGreen, Color.DarkBlue }, new float[] { 0f, 1f });
+				return new ColorBlend(new Color[] { Color.Green, Color.Blue }, new float[] { 0f, 1f });
 			}
 		}
 
@@ -238,7 +239,7 @@ namespace SharpMap.Rendering.Thematics
 		{
 			get
 			{
-				return new ColorBlend(new Color[] { Color.Red, Color.DarkBlue }, new float[] { 0f, 1f });
+				return new ColorBlend(new Color[] { Color.Red, Color.Blue }, new float[] { 0f, 1f });
 			}
 		}
 
@@ -249,7 +250,7 @@ namespace SharpMap.Rendering.Thematics
 		{
 			get
 			{
-				return new ColorBlend(new Color[] { Color.DarkBlue, Color.Red }, new float[] { 0f, 1f });
+				return new ColorBlend(new Color[] { Color.Blue, Color.Red }, new float[] { 0f, 1f });
 			}
 		}
 

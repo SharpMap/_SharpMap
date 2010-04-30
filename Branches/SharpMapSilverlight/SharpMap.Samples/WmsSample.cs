@@ -31,7 +31,7 @@ namespace WinFormSamples.Samples
             
             //limit the zoom to 360 degrees width
             map.MaximumZoom = 360;
-            map.BackColor = Color.DarkBlue;
+            map.BackColor = Color.Blue;
 
             return map;
         }

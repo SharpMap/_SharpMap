@@ -26,12 +26,14 @@ namespace SharpMap.Styles
         public static Color Cyan { get { return new Color() { A = 255, R = 0, G = 255, B = 255 }; } }
         public static Color Blue { get { return new Color() { A = 255, R = 0, G = 0, B = 255 }; } }
 
-        //do i need the rest?
-        public static Color DarkGreen { get { return new Color() { A = 255, R = 0, G = 128, B = 0 }; } }
-        public static Color DarkBlue { get { return new Color() { A = 255, R = 0, G = 0, B = 128 }; } }
-        public static Color Orange { get { return new Color() { A = 255, R = 255, G = 128, B = 0 }; } }
-        public static Color Violet { get { return new Color() { A = 238, G = 130, B = 238 }; } }
+        public static Color Orange { get { return new Color() { A = 255, R = 255, G = 165, B = 0 }; } }
         public static Color Indigo { get { return new Color() { A = 255, R = 75, G = 0, B = 130 }; } }
-        public static Color DarkCyan { get { return new Color() { A = 255, R = 0, G = 128, B = 128 }; } }
+        public static Color Violet { get { return new Color() { A = 255, R = 238, G = 130, B = 238 }; } }
+
+        //do i need the rest?
+        //public static Color DarkGreen { get { return new Color() { A = 255, R = 0, G = 128, B = 0 }; } }
+        //public static Color DarkBlue { get { return new Color() { A = 255, R = 0, G = 0, B = 128 }; } }
+        
+        //public static Color DarkCyan { get { return new Color() { A = 255, R = 0, G = 128, B = 128 }; } }
     }
 }
