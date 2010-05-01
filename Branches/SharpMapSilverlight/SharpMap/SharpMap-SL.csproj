@@ -80,8 +80,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataSourceCreator.cs" />
-    <Compile Include="Data\Features.cs" />
-    <Compile Include="Data\IProvider.cs" />
     <Compile Include="Geometries\BoundingBox.cs" />
     <Compile Include="Geometries\Curve.cs" />
     <Compile Include="Geometries\Geometry.cs" />
@@ -106,7 +104,7 @@
     <Compile Include="Geometries\Surface.cs" />
     <Compile Include="Layers\ILayer.cs" />
     <Compile Include="Layers\IQueryLayer.cs" />
-    <Compile Include="Layers\LabelLayer2.cs" />
+    <Compile Include="Layers\LabelLayer.cs" />
     <Compile Include="Layers\Layer.cs" />
     <Compile Include="Layers\LayerGroup.cs" />
     <Compile Include="Map\IView.cs" />
@@ -115,6 +113,8 @@
     <Compile Include="Map\View.cs" />
     <Compile Include="Projection\ProjectionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\Features.cs" />
+    <Compile Include="Providers\IProvider.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
     <Compile Include="Rendering\Label.cs" />
     <Compile Include="Rendering\LabelCollisionDetection.cs" />
