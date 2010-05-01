@@ -6,7 +6,6 @@ using BruTile.Cache;
 using SharpMap.Data;
 using SharpMap.Data.Providers;
 using SharpMap.Geometries;
-using SharpMap.Rasters;
 using System.Collections.ObjectModel;
 
 namespace SharpMap.Providers

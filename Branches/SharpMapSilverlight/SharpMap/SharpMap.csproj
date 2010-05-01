@@ -134,8 +134,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Rasters\IRaster.cs" />
-    <Compile Include="Rasters\Raster.cs" />
+    <Compile Include="Geometries\IRaster.cs" />
+    <Compile Include="Geometries\Raster.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
     <Compile Include="Rendering\Label.cs" />
     <Compile Include="Rendering\LabelCollisionDetection.cs" />

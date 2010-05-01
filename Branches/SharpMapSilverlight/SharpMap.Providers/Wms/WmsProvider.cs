@@ -30,7 +30,6 @@ using SharpMap.Styles;
 using System.Globalization;
 using SharpMap.Data.Providers;
 using SharpMap.Data;
-using SharpMap.Rasters;
 
 namespace SharpMap.Layers
 {

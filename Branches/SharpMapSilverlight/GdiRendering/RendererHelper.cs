@@ -24,7 +24,6 @@ using SharpMap.Data;
 using SharpMap.Data.Providers;
 using SharpMap.Geometries;
 using SharpMap.Projection;
-using SharpMap.Rasters;
 using SharpMap.Styles;
 using SharpMap.Layers;
 using Gdi = System.Drawing;
