@@ -24,7 +24,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;   
 using System.Text;   
 using System.Data.SqlClient;
-using System.Globalization;   
+using System.Globalization;
+using System.Data;   
   
 namespace SharpMap.Data.Providers   
 {   
@@ -413,16 +414,6 @@ namespace SharpMap.Data.Providers
            set { _defintionQuery = value; }   
        }   
  
-       /// <summary>   
-       /// Gets a collection of columns in the dataset   
-       /// </summary>   
-       public System.Data.DataColumnCollection Columns   
-       {   
-           get {   
-               throw new NotImplementedException();   
-           }   
-       }   
- 
        private int _srid = 0;   
  
        /// <summary>   
@@ -581,25 +572,11 @@ namespace SharpMap.Data.Providers
    
        #region IProvider Members
 
-
-       Collection<SharpMap.Geometries.IGeometry> IProvider.GetGeometriesInView(SharpMap.Geometries.BoundingBox bbox)
-       {
-           throw new NotImplementedException();
-       }
-
-       SharpMap.Geometries.IGeometry IProvider.GetGeometryByID(uint oid)
-       {
-           throw new NotImplementedException();
-       }
-
        public IFeatures GetFeaturesInView(IView view)
        {
-           throw new NotImplementedException();
-       }
-
-       IFeature IProvider.GetFeature(uint id)
-       {
-           throw new NotImplementedException();
+           FeatureDataSet dataSet = new FeatureDataSet();
+           ExecuteIntersectionQuery(view.Extent, dataSet);
+           return SharpMap.Providers.Utilities.DataSetToFeatures(dataSet);
        }
 
        #endregion

@@ -152,11 +152,11 @@ namespace SharpMap.Web.Wms
             RequestNode.AppendChild(GetCapabilitiesNode);
 
             XmlNode GetMapNode = capabilities.CreateNode(XmlNodeType.Element, "GetMap", wmsNamespaceURI);
-            //Add supported fileformats. Return the ones that GDI+ supports
-            //!!!foreach (ImageCodecInfo encoder in ImageCodecInfo.GetImageEncoders())
-            //!!!    GetMapNode.AppendChild(CreateElement("Format", encoder.MimeType, capabilities, false, wmsNamespaceURI));
-            throw new NotImplementedException();
-
+            
+            var supportedMimeTypes = new string[] { "image/png", "image/jpg" };
+            foreach (string mimeType in supportedMimeTypes)
+                GetMapNode.AppendChild(CreateElement("Format", mimeType, capabilities, false, wmsNamespaceURI));
+            
             GetMapNode.AppendChild(GenerateDCPTypeNode(capabilities, OnlineResource));
 
             RequestNode.AppendChild(GetMapNode);

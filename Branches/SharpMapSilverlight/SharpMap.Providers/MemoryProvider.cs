@@ -197,7 +197,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="oid">Object ID</param>
         /// <returns>geometry</returns>
-        public IGeometry GetGeometryByID(uint oid)
+        public IGeometry GetGeometry(uint oid)
         {
             return _Features[(int)oid].Geometry;
         }
@@ -225,11 +225,6 @@ namespace SharpMap.Data.Providers
         public IFeatures GetFeaturesInView(IView view)
         {
             throw new NotImplementedException();
-        }
-
-        IFeature IProvider.GetFeature(uint index)
-        {
-            return _Features[(int)index];
         }
 
         /// <summary>

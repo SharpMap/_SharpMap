@@ -30,7 +30,7 @@ namespace SharpMap.Layers
     /// The Group layer is useful for grouping a set of layers,
     /// for instance a set of image tiles, and expose them as a single layer
     /// </remarks>
-    public class LayerGroup : Layer, IQueryLayer, IDisposable
+    public class LayerGroup : Layer, IDisposable
     {
         private Collection<ILayer> _Layers;
 
@@ -113,18 +113,20 @@ namespace SharpMap.Layers
                     layer.Render(renderer, view);
         }
         
-        public IFeatures GetFeatures(BoundingBox box)
+        public override IFeatures GetFeaturesInView(IView view)
         {
             foreach (Layer layer in Layers)
             {
                 if (layer is IQueryLayer)
                 {
-                    //Not implemented because not sure how to deal with multiple result sets //!!!
+                    //!!!
+                    //Not implemented because not sure how to deal with multiple result sets 
                     //Update: I now think the grouplayer shoudl not implement IQueryLayer. The
                     //calling code should iterate over its children to call the individual layers.
+                    //!!!
                     throw new NotImplementedException("Not implemented");
                     var queryLayer = layer as IQueryLayer;
-                    var features = queryLayer.GetFeatures(box);
+                    var features = queryLayer.GetFeaturesInView(view);
                     return features;
                 }
             }

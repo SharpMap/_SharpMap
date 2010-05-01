@@ -31,19 +31,13 @@ namespace SharpMap.Rasters
 
         public int Dimension
         {
-            get { throw new NotImplementedException(); }
+            get { return 2; }
         }
 
         public int SRID
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Geometry Envelope()

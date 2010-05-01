@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using SharpMap.Samples;
 using WinFormSamples.Samples;
+using SharpMap.Forms;
 
 namespace WinFormsSample
 {
@@ -16,6 +17,7 @@ namespace WinFormsSample
         public Form1()
         {
             InitializeComponent();
+            mapImage1.ActiveTool = MapImage.Tools.Pan;
             mapImage1.Map = GradiantThemeSample.InitializeMap();
             mapImage1.Transform.Center = mapImage1.Map.GetExtents().GetCentroid();
             mapImage1.Transform.Resolution = 1;

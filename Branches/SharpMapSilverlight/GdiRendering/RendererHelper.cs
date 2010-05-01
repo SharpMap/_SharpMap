@@ -36,10 +36,10 @@ namespace SharpMap.Rendering
     /// </summary>
     public static class RendererHelper
     {
-        public static void RenderLayer(System.Drawing.Graphics g, IProvider provider, Func<IFeature, IStyle> getStyle,
+        public static void RenderLayer(Gdi.Graphics graphics, IProvider provider, Func<IFeature, IStyle> getStyle,
             ICoordinateTransformation coordinateTransformation, IView view)
         {
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.SmoothingMode = Gdi.Drawing2D.SmoothingMode.AntiAlias;
 
             BoundingBox envelope = view.Extent; //View to render
 
@@ -59,22 +59,18 @@ namespace SharpMap.Rendering
 
             //Linestring outlines is drawn by drawing the layer once with a thicker line
             //before drawing the "inline" on top.
-
             foreach (IFeature feature in features)
             {
                 if ((getStyle(feature) as VectorStyle).EnableOutline)
                 {
-                    RenderGeometryOutline(g, view, feature.Geometry, getStyle(feature));
+                    RenderGeometryOutline(graphics, view, feature.Geometry, getStyle(feature));
                 }
             }
 
             foreach (IFeature feature in features)
             {
                 if (getStyle(feature) is VectorStyle)
-                    RenderGeometry(g, view, feature.Geometry, getStyle(feature));
-                //else if (getStyle(feature) is LabelTheme)
-                //   LabelRenderer.Render(g, view, feature, getStyle(feature) as LabelTheme);
-
+                    RenderGeometry(graphics, view, feature.Geometry, getStyle(feature));
             }
         }
 
@@ -190,36 +186,36 @@ namespace SharpMap.Rendering
         /// <param name="rotation">Text rotation in degrees</param>
         /// <param name="text">Text to render</param>
         /// <param name="map">Map reference</param>
-        public static void DrawLabel(System.Drawing.Graphics g, Point LabelPoint, Offset Offset, Font font, Color forecolor, Brush backcolor, Pen halo, double rotation, string text, IViewTransform transform)
+        public static void DrawLabel(Gdi.Graphics graphics, Point labelPoint, Offset offset, Font font, Color forecolor, Brush backcolor, Pen halo, double rotation, string text, IViewTransform transform)
         {
-            System.Drawing.SizeF fontSize = g.MeasureString(text, font.Convert()); //Calculate the size of the text
-            LabelPoint.X += Offset.X; LabelPoint.Y += Offset.Y; //add label offset
+            System.Drawing.SizeF fontSize = graphics.MeasureString(text, font.Convert()); //Calculate the size of the text
+            labelPoint.X += offset.X; labelPoint.Y += offset.Y; //add label offset
             if (rotation != 0 && rotation != float.NaN)
             {
-                g.TranslateTransform((float)LabelPoint.X, (float)LabelPoint.Y);
-                g.RotateTransform((float)rotation);
-                g.TranslateTransform(-fontSize.Width / 2, -fontSize.Height / 2);
+                graphics.TranslateTransform((float)labelPoint.X, (float)labelPoint.Y);
+                graphics.RotateTransform((float)rotation);
+                graphics.TranslateTransform(-fontSize.Width / 2, -fontSize.Height / 2);
                 if (backcolor != null && backcolor.Convert() != System.Drawing.Brushes.Transparent)
-                    g.FillRectangle(backcolor.Convert(), 0, 0, fontSize.Width * 0.74f + 1f, fontSize.Height * 0.74f);
+                    graphics.FillRectangle(backcolor.Convert(), 0, 0, fontSize.Width * 0.74f + 1f, fontSize.Height * 0.74f);
                 System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
                 path.AddString(text, new Gdi.FontFamily(font.FontFamily), (int)font.Convert().Style, font.Convert().Size, new System.Drawing.Point(0, 0), null);
                 if (halo != null)
-                    g.DrawPath(halo.Convert(), path);
-                g.FillPath(new System.Drawing.SolidBrush(forecolor.Convert()), path);
+                    graphics.DrawPath(halo.Convert(), path);
+                graphics.FillPath(new System.Drawing.SolidBrush(forecolor.Convert()), path);
                 //g.DrawString(text, font, new System.Drawing.SolidBrush(forecolor), 0, 0);                
             }
             else
             {
                 if (backcolor != null && backcolor.Convert() != System.Drawing.Brushes.Transparent)
-                    g.FillRectangle(backcolor.Convert(), (float)LabelPoint.X, (float)LabelPoint.Y, fontSize.Width * 0.74f + 1, (float)fontSize.Height * 0.74f);
+                    graphics.FillRectangle(backcolor.Convert(), (float)labelPoint.X, (float)labelPoint.Y, fontSize.Width * 0.74f + 1, (float)fontSize.Height * 0.74f);
 
                 System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
 
                 //Arial hack
-                path.AddString(text, new Gdi.FontFamily("Arial"), (int)font.Convert().Style, (float)font.Size, new Gdi.Point((int)LabelPoint.X, (int)LabelPoint.Y), null);
+                path.AddString(text, new Gdi.FontFamily("Arial"), (int)font.Convert().Style, (float)font.Size, new Gdi.Point((int)labelPoint.X, (int)labelPoint.Y), null);
                 if (halo != null)
-                    g.DrawPath(halo.Convert(), path);
-                g.FillPath(new System.Drawing.SolidBrush(forecolor.Convert()), path);
+                    graphics.DrawPath(halo.Convert(), path);
+                graphics.FillPath(new System.Drawing.SolidBrush(forecolor.Convert()), path);
                 //g.DrawString(text, font, new System.Drawing.SolidBrush(forecolor), LabelPoint.X, LabelPoint.Y);
             }
         }

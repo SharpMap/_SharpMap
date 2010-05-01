@@ -419,7 +419,7 @@ namespace SharpMap.Data.Providers
 
             for (int i = 0; i < objectlist.Count; i++)
             {
-                IGeometry g = GetGeometryByID(objectlist[i]);
+                IGeometry g = GetGeometry(objectlist[i]);
                 if (g != null)
                     geometries.Add(g);
             }
@@ -482,7 +482,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="oid">Object ID</param>
         /// <returns>geometry</returns>
-        public IGeometry GetGeometryByID(uint oid)
+        public IGeometry GetGeometry(uint oid)
         {
             if (FilterDelegate != null) //Apply filtering
             {
@@ -956,18 +956,18 @@ namespace SharpMap.Data.Providers
         {
             //Use the spatial index to get a list of features whose boundingbox intersects bbox
             Collection<uint> objectlist = GetObjectIDsInView(view.Extent);
-            IFeatures dt = new Features();
+            IFeatures features = new Features();
 
             foreach (uint index in objectlist)
             {
-                IFeature fdr = dbaseFile.GetFeature(index, dt);
-                fdr.Geometry = ReadGeometry(index);
-                if (fdr.Geometry != null)
-                    if (fdr.Geometry.GetBoundingBox().Intersects(view.Extent))
-                        if (FilterDelegate == null || FilterDelegate(fdr))
-                            dt.Add(fdr);
+                IFeature feature = dbaseFile.GetFeature(index, features);
+                feature.Geometry = ReadGeometry(index);
+                if (feature.Geometry != null)
+                    if (feature.Geometry.GetBoundingBox().Intersects(view.Extent))
+                        if (FilterDelegate == null || FilterDelegate(feature))
+                            features.Add(feature);
             }
-            return dt;
+            return features;
         }
 
 

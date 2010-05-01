@@ -62,6 +62,7 @@
     <Compile Include="Shapefile\ShapeFile.cs" />
     <Compile Include="SqlServer2008\SqlServer2008.cs" />
     <Compile Include="Tiling\TileProvider.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="Wfs\WFSClient.cs" />
     <Compile Include="Wfs\Utilities\FeatureTypeInfo.cs" />
     <Compile Include="Wfs\Utilities\GeometryFactories.cs" />
