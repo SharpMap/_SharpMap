@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using SharpMap.Geometries;
 
-namespace SharpMap.Rasters
+namespace SharpMap.Geometries
 {
     public class Raster : IRaster
     {

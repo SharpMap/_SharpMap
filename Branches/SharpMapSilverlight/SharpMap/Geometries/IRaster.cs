@@ -1,6 +1,6 @@
 ﻿using System;
 using SharpMap.Geometries;
-namespace SharpMap.Rasters
+namespace SharpMap.Geometries
 {
     public interface IRaster : IGeometry
     {
