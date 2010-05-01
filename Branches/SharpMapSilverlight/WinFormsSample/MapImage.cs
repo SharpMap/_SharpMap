@@ -28,6 +28,7 @@ using Point = SharpMap.Geometries.Point;
 using SharpMap.Rendering;
 using System.IO;
 using System.Drawing.Imaging;
+using System.Linq;
 
 namespace SharpMap.Forms
 {
@@ -393,7 +394,8 @@ namespace SharpMap.Forms
                                 IQueryLayer layer = _Map.Layers[_queryLayerIndex] as IQueryLayer;
                                 Point pointWorld = transform.ViewToWorld(new Point(e.X, e.Y));
                                 BoundingBox bbox = pointWorld.GetBoundingBox().Grow(transform.Resolution * 5);
-                                IFeatures features = layer.GetFeatures(bbox);
+                                IView view = new View() { Center = pointWorld, Resolution = transform.Resolution, Width = 1, Height = 1 };
+                                IFeatures features = layer.GetFeaturesInView(view);
                                 if (MapQueried != null) MapQueried(features);
                             }
                         }

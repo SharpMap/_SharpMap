@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Net;
 using SharpMap.Geometries;
 using SharpMap.Utilities.Wfs;
+using System.Data;
 
 namespace SharpMap.Data.Providers
 {
@@ -1090,28 +1091,14 @@ namespace SharpMap.Data.Providers
         #endregion
 
         #region IProvider Members
-
-
-        Collection<IGeometry> IProvider.GetGeometriesInView(BoundingBox bbox)
-        {
-            throw new NotImplementedException();
-        }
-
-        IGeometry IProvider.GetGeometryByID(uint oid)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public IFeatures GetFeaturesInView(IView view)
         {
-            throw new NotImplementedException();
+            FeatureDataSet dataSet = new FeatureDataSet();
+            ExecuteIntersectionQuery(view.Extent, dataSet);
+            return SharpMap.Providers.Utilities.DataSetToFeatures(dataSet);
         }
-
-        IFeature IProvider.GetFeature(uint id)
-        {
-            throw new NotImplementedException();
-        }
-
+                
         #endregion
     }
 }

@@ -466,25 +466,11 @@ namespace SharpMap.Data.Providers
 
         #region IProvider Members
 
-
-        Collection<IGeometry> IProvider.GetGeometriesInView(BoundingBox bbox)
-        {
-            throw new NotImplementedException();
-        }
-
-        IGeometry IProvider.GetGeometryByID(uint oid)
-        {
-            throw new NotImplementedException();
-        }
-
         public IFeatures GetFeaturesInView(IView view)
         {
-            throw new NotImplementedException();
-        }
-
-        IFeature IProvider.GetFeature(uint id)
-        {
-            throw new NotImplementedException();
+            FeatureDataSet dataSet = new FeatureDataSet();
+            ExecuteIntersectionQuery(view.Extent, dataSet);
+            return SharpMap.Providers.Utilities.DataSetToFeatures(dataSet);
         }
 
         #endregion

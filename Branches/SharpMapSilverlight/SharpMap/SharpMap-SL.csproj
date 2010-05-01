@@ -70,9 +70,6 @@
     <Compile Include="Converters\WellKnownText\GeometryToWKT.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Converters\WellKnownText\SpatialReference.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Converters\WellKnownText\StreamTokenizer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -138,7 +135,6 @@
     <Compile Include="Styles\Style.cs" />
     <Compile Include="Styles\VectorStyle.cs" />
     <Compile Include="Utilities\Algorithms.cs" />
-    <Compile Include="Utilities\Indexing\SpatialIndexing.cs" />
     <Compile Include="Utilities\LeastSquaresTransform.cs" />
     <Compile Include="Utilities\Providers.cs" />
     <Compile Include="Utilities\Version.cs" />
@@ -147,7 +143,7 @@
     <Resource Include="Styles\DefaultSymbol.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\Providers\" />
+    <Folder Include="Utilities\Indexing\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

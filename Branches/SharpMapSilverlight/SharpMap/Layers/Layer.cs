@@ -25,6 +25,7 @@ using ProjNet.CoordinateSystems.Transformations;
 using SharpMap.Rendering.Thematics;
 using SharpMap.Data;
 using SharpMap.Rendering;
+using SharpMap.Projection;
 
 namespace SharpMap.Layers
 {
@@ -50,7 +51,7 @@ namespace SharpMap.Layers
     /// System.Drawing.Image mapImage = myMap.GetMap();
     /// </code>
     /// </example>
-    public class Layer : ILayer
+    public class Layer : ILayer, IQueryLayer
     {
         #region Fields
 
@@ -174,8 +175,7 @@ namespace SharpMap.Layers
                 if (!wasOpen) //Restore state
                     this.DataSource.Close();
                 if (this.CoordinateTransformation != null)
-                    throw new NotImplementedException();
-                //!!!return ProjNet.CoordinateSystems.Transformations.GeometryTransform.TransformBox(box, this.CoordinateTransformation.MathTransform);
+                    return ProjectionHelper.Transform(box, this.CoordinateTransformation);
                 return box;
             }
         }
@@ -214,6 +214,19 @@ namespace SharpMap.Layers
                 return (row) => style;
             else
                 return (row) => theme.GetStyle(row);
+        }
+
+        #endregion
+
+
+        #region IQueryLayer Members
+
+        public virtual IFeatures GetFeaturesInView(IView view)
+        {
+            DataSource.Open();
+            var features = DataSource.GetFeaturesInView(view);
+            DataSource.Close();
+            return features;
         }
 
         #endregion

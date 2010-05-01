@@ -506,44 +506,6 @@ namespace SharpMap.Layers
             }
         }
 
-        public Collection<IGeometry> GetGeometriesInView(BoundingBox bbox)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Collection<uint> GetObjectIDsInView(BoundingBox bbox)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IGeometry GetGeometryByID(uint oid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IFeatures GetFeaturesInView(IView view)
-        {
-            IFeatures features = new Features();
-            IRaster raster = null;
-            if (TryGetMap(view, ref raster))
-            {
-                IFeature feature = features.New();
-                feature.Geometry = raster;
-                features.Add(feature);
-            }
-            return features;
-        }
-
-        public int GetFeatureCount()
-        {
-            throw new NotImplementedException();
-        }
-
-        public SharpMap.Data.IFeature GetFeature(uint id)
-        {
-            throw new NotImplementedException();
-        }
-
         public BoundingBox GetExtents()
         {
             return wmsClient.Layer.LatLonBoundingBox;//!!! not sure what to use here      
@@ -565,7 +527,24 @@ namespace SharpMap.Layers
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //nothing to dispose
+        }
+
+        #endregion
+
+        #region IProvider Members
+
+        public IFeatures GetFeaturesInView(IView view)
+        {
+            IFeatures features = new Features();
+            IRaster raster = null;
+            if (TryGetMap(view, ref raster))
+            {
+                IFeature feature = features.New();
+                feature.Geometry = raster;
+                features.Add(feature);
+            }
+            return features;
         }
 
         #endregion

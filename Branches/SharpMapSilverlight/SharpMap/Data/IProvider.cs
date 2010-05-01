@@ -46,45 +46,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         int SRID { get; set; }
 
-        /// <summary>
-        /// Gets the features within the specified <see cref="SharpMap.Geometries.BoundingBox"/>
-        /// </summary>
-        /// <param name="bbox"></param>
-        /// <returns>Features within the specified <see cref="SharpMap.Geometries.BoundingBox"/></returns>
-        Collection<IGeometry> GetGeometriesInView(BoundingBox bbox);
-
-        /// <summary>
-        /// Returns all objects whose <see cref="SharpMap.Geometries.BoundingBox"/> intersects 'bbox'.
-        /// </summary>
-        /// <remarks>
-        /// This method is usually much faster than the QueryFeatures method, because intersection tests
-        /// are performed on objects simplifed by their <see cref="SharpMap.Geometries.BoundingBox"/>, and using the Spatial Index
-        /// </remarks>
-        /// <param name="bbox">Box that objects should intersect</param>
-        /// <returns></returns>
-        Collection<uint> GetObjectIDsInView(BoundingBox bbox);
-
-        /// <summary>
-        /// Returns the geometry corresponding to the Object ID
-        /// </summary>
-        /// <param name="oid">Object ID</param>
-        /// <returns>geometry</returns>
-        IGeometry GetGeometryByID(uint oid);
-
         IFeatures GetFeaturesInView(IView view);
-
-        /// <summary>
-        /// Returns the number of features in the dataset
-        /// </summary>
-        /// <returns>number of features</returns>
-        int GetFeatureCount();
-
-        /// <summary>
-        /// Returns a <see cref="SharpMap.Data.FeatureDataRow"/> based on a RowID
-        /// </summary>
-        /// <param name="RowID"></param>
-        /// <returns>datarow</returns>
-        IFeature GetFeature(uint id);
 
         /// <summary>
         /// <see cref="SharpMap.Geometries.BoundingBox"/> of dataset

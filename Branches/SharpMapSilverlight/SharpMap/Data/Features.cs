@@ -22,13 +22,6 @@ using System.Collections;
 
 namespace SharpMap.Data
 {
-    public interface IFeatures : IEnumerable<IFeature>
-    {
-        //todo: This should be an enumerator directly on IFeatures
-        void Add(IFeature feature);
-        IFeature New();
-    }
-
     public interface IFeature
     {
         IGeometry Geometry { get; set; }
@@ -38,6 +31,13 @@ namespace SharpMap.Data
             get;
             set;
         }
+    }
+
+    public interface IFeatures : IEnumerable<IFeature>
+    {
+        //todo: This should be an enumerator directly on IFeatures
+        void Add(IFeature feature);
+        IFeature New();
     }
 
     public class Features : IFeatures

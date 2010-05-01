@@ -191,59 +191,6 @@ namespace SharpMap.Data.Providers
             }
         }
 
-        /// <summary>
-        /// Gets a collection of columns in the dataset
-        /// </summary>
-        public DataColumnCollection Columns
-        {
-            get
-            {
-                throw new NotImplementedException();
-                //using (SqlConnection conn = new SqlConnection(this.ConnectionString))
-                //{
-                //    System.Data.DataColumnCollection columns = new System.Data.DataColumnCollection();
-                //    string strSQL = "SELECT column_name, udt_name FROM information_schema.columns WHERE table_name='" + this.Table + "' ORDER BY ordinal_position";
-                //    using (SqlCommand command = new SqlCommand(strSQL, conn))
-                //    {
-                //        conn.Open();
-                //        using (SqlDataReader dr = command.ExecuteReader())
-                //        {
-                //            while (dr.Read())
-                //            {
-                //                System.Data.DataColumn col = new System.Data.DataColumn((string)dr["column_name"]);
-                //                switch((string)dr["udt_name"])
-                //                {
-                //                    case "int4":
-                //                        col.DataType = typeof(Int32);
-                //                        break;
-                //                    case "int8":
-                //                        col.DataType = typeof(Int64);
-                //                        break;
-                //                    case "varchar":
-                //                        col.DataType = typeof(string);
-                //                        break;
-                //                    case "text":
-                //                        col.DataType = typeof(string);
-                //                        break;
-                //                    case "bool":
-                //                        col.DataType = typeof(bool);
-                //                        break;
-                //                    case "geometry":
-                //                        col.DataType = typeof(SharpMap.Geometries.Geometry);
-                //                        break;
-                //                    default:
-                //                        col.DataType = typeof(object);
-                //                        break;
-                //                }
-                //                columns.Add(col);
-                //            }
-                //        }
-                //    }
-                //    return columns;
-                //}
-            }
-        }
-
         #region IProvider Members
 
         /// <summary>
@@ -815,25 +762,11 @@ namespace SharpMap.Data.Providers
 
         #region IProvider Members
 
-
-        Collection<IGeometry> IProvider.GetGeometriesInView(BoundingBox bbox)
-        {
-            throw new NotImplementedException();
-        }
-
-        IGeometry IProvider.GetGeometryByID(uint oid)
-        {
-            throw new NotImplementedException();
-        }
-
         public IFeatures GetFeaturesInView(IView view)
         {
-            throw new NotImplementedException();
-        }
-
-        IFeature IProvider.GetFeature(uint id)
-        {
-            throw new NotImplementedException();
+            FeatureDataSet dataSet = new FeatureDataSet();
+            ExecuteIntersectionQuery(view.Extent, dataSet);
+            return SharpMap.Providers.Utilities.DataSetToFeatures(dataSet);
         }
 
         #endregion

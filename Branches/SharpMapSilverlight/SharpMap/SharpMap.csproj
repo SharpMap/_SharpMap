@@ -83,7 +83,6 @@
     <Compile Include="Converters\WellKnownBinary\WKBGeometryType.cs" />
     <Compile Include="Converters\WellKnownText\GeometryFromWKT.cs" />
     <Compile Include="Converters\WellKnownText\GeometryToWKT.cs" />
-    <Compile Include="Converters\WellKnownText\SpatialReference.cs" />
     <Compile Include="Converters\WellKnownText\StreamTokenizer.cs" />
     <Compile Include="Converters\WellKnownText\TokenType.cs" />
     <Compile Include="Converters\WellKnownText\WKTStreamTokenizer.cs" />
@@ -174,9 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Styles\DefaultSymbol.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Providers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

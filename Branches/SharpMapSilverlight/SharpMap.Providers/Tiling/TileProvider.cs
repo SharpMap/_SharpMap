@@ -172,49 +172,14 @@ namespace SharpMap.Providers
 
         public string ConnectionID
         {
-            get { throw new NotImplementedException(); }
+            get { return String.Empty; }
         }
 
         public bool IsOpen
         {
             get { return true; }
         }
-
-        public Collection<IGeometry> GetGeometriesInView(BoundingBox bbox)
-        {
-            throw new NotImplementedException();
-        }
-
-        public System.Collections.ObjectModel.Collection<uint> GetObjectIDsInView(BoundingBox bbox)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IGeometry GetGeometryByID(uint oid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ExecuteIntersectionQuery(Geometry geom, IFeatures table)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ExecuteIntersectionQuery(BoundingBox box, IFeatures table)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetFeatureCount()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IFeature GetFeature(uint RowID)
-        {
-            throw new NotImplementedException();
-        }
-
+                
         public void Open()
         {
             //TODO: redesign so that methods like these are not necessary if not implemented
@@ -231,7 +196,7 @@ namespace SharpMap.Providers
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //nothing to dispose
         }
 
         #endregion
