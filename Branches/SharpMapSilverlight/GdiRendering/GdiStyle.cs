@@ -26,6 +26,7 @@ namespace SharpMap.Rendering
 
         public static System.Drawing.Bitmap Convert(this Bitmap bitmap)
         {
+            if (bitmap == null) return null;
             return new System.Drawing.Bitmap(bitmap.data);
         }
 

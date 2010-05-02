@@ -71,6 +71,9 @@
     <Content Include="ClientBin\SilverlightSample.xap" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Images\icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Silverlight.js" />
     <Content Include="SilverlightSampleTestPage.aspx" />
     <Content Include="SilverlightSampleTestPage.html" />

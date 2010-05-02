@@ -16,7 +16,7 @@ namespace WinFormSamples.Samples
         {
             Map map = new Map();
             Layer osm = new Layer("OSM");
-            osm.DataSource = new TileProvider(new TileSourceOsm(), "OSM");
+            osm.DataSource = new TileProvider(new OsmTileSource(), "OSM");
             map.Layers.Add(osm);
             return map;
         }

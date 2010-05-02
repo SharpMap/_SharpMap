@@ -47,8 +47,9 @@ namespace SilverlightRendering
                     elements.Add(RenderPolygon(feature.Geometry as SharpMap.Geometries.Polygon, getStyle(feature), view));
                 else if (feature.Geometry is MultiPolygon)
                     elements.Add(RenderMultiPolygon(feature.Geometry as MultiPolygon, getStyle(feature), view));
+                else if (feature.Geometry is IRaster)
+                    elements.Add(RenderRaster(feature.Geometry as IRaster, getStyle(feature), view));
             }
-
         }
 
         private Path RenderPoint(SharpMap.Geometries.Point point, IStyle style, IViewTransform viewTransform)
@@ -236,8 +237,45 @@ namespace SilverlightRendering
             return group;
         }
 
-        #region IRenderer Members
+        private Path RenderRaster(IRaster raster, IStyle style, IView view)
+        {
+            Path path = CreateRasterPath(style, raster);
+            path.Data = ConvertRaster(raster.GetBoundingBox(), view);
+            return path;
+        }
 
+        private Path CreateRasterPath(IStyle style, IRaster raster)
+        {
+            //todo: use this:
+            //vectorStyle.Symbol.Convert();
+            //vectorStyle.SymbolScale;
+            //vectorStyle.SymbolOffset.Convert();
+            //vectorStyle.SymbolRotation;
+
+            BitmapImage bitmapImage = new BitmapImage();
+#if !SILVERLIGHT
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = new System.IO.MemoryStream(raster.Data);
+            bitmapImage.EndInit();
+#else
+            bitmapImage.SetSource(new System.IO.MemoryStream(raster.Data));
+#endif
+            Path path = new Path();
+            path.Fill = new ImageBrush() { ImageSource = bitmapImage };
+            return path;
+        }
+
+        private System.Windows.Media.Geometry ConvertRaster(BoundingBox boundingBox, IViewTransform viewTransform)
+        {
+            return new RectangleGeometry
+            {
+                Rect = new System.Windows.Rect(
+                    ConvertPoint(viewTransform.WorldToView(boundingBox.Min)),
+                    ConvertPoint(viewTransform.WorldToView(boundingBox.Max)))
+            };
+        }
+
+        #region IRenderer Members
 
         public void RenderLabelLayer(IView view, IProvider dataSource, LabelLayer labelLayer)
         {
