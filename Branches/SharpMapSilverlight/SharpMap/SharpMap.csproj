@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BruTile, Version=0.3.3738.42292, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="BruTile, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\BruTile.dll</HintPath>
     </Reference>
@@ -77,10 +77,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\WellKnownBinary\GeometryFromWKB.cs" />
-    <Compile Include="Converters\WellKnownBinary\GeometryToWKB.cs" />
-    <Compile Include="Converters\WellKnownBinary\WKBByteOrder.cs" />
-    <Compile Include="Converters\WellKnownBinary\WKBGeometryType.cs" />
+    <Compile Include="Converters\WellKnownBinary\GeometryFromWKB.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Converters\WellKnownBinary\GeometryToWKB.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Converters\WellKnownBinary\WKBByteOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Converters\WellKnownBinary\WKBGeometryType.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Converters\WellKnownText\GeometryFromWKT.cs" />
     <Compile Include="Converters\WellKnownText\GeometryToWKT.cs" />
     <Compile Include="Converters\WellKnownText\StreamTokenizer.cs" />
@@ -135,6 +143,8 @@
     <Compile Include="Geometries\Raster.cs" />
     <Compile Include="Providers\Features.cs" />
     <Compile Include="Providers\IProvider.cs" />
+    <Compile Include="Providers\MemoryProvider.cs" />
+    <Compile Include="Providers\TileProvider.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
     <Compile Include="Rendering\Label.cs" />
     <Compile Include="Rendering\LabelCollisionDetection.cs" />
@@ -170,6 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Styles\DefaultSymbol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Providers\Tiling\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -24,7 +24,6 @@ namespace GdiRendering
         /// <param name="map">Map which is rendered</param>
         public static void Render(Graphics g, IView map, IProvider DataSource, LabelLayer labelLayer)
         {
-            //!!!SmoothingMode = SmoothingMode.AntiAlias;
             if (labelLayer.Style.Enabled && labelLayer.MaxVisible >= map.Resolution && labelLayer.MinVisible < map.Resolution)
             {
                 if (DataSource == null)

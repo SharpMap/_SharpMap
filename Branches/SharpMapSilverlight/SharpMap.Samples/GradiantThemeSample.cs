@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using SharpMap;
 using SharpMap.Data.Providers;
 using SharpMap.Layers;
 using SharpMap.Rendering;
@@ -8,10 +7,6 @@ using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
 using ColorBlend=SharpMap.Rendering.Thematics.ColorBlend;
 using Point=SharpMap.Geometries.Point;
-using BruTile.Web;
-using SharpMap.Providers;
-using BruTile;
-using System.Collections.Generic;
 
 namespace SharpMap.Samples
 {
@@ -89,7 +84,6 @@ namespace SharpMap.Samples
             cityLabelStyle.Halo = new Pen() { Color = Color.Yellow, Width = 2 };
             cityLabelStyle.CollisionDetection = true;
             cityLabelLayer.Style = cityLabelStyle;
-
             map.Layers.Add(cityLabelLayer);
             
             //Set a gradient theme on the countries layer, based on Population density
@@ -135,6 +129,13 @@ namespace SharpMap.Samples
             citymax.Symbol = new Bitmap() { data = new FileStream(iconPath, FileMode.Open, FileAccess.Read) };
             citymax.SymbolScale = 1f;
             cityLayer.Theme = new GradientTheme("Population", 1000000, 5000000, citymin, citymax);
+            
+            Layer geodanLayer = new Layer("Geodan");
+            geodanLayer.DataSource = new MemoryProvider(new Point(4.9130567, 52.3422033));
+            var style = new VectorStyle();
+            style.Symbol = new Bitmap() { data = new FileStream(iconPath, FileMode.Open, FileAccess.Read) };
+            geodanLayer.Style = style;
+            map.Layers.Add(geodanLayer);
 
             //limit the zoom to 360 degrees width
             map.MaximumZoom = 360;
