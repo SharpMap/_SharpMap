@@ -23,13 +23,13 @@ namespace BruTile.UI.Windows
 {
     public static class MapTransformHelper
     {
-        public static void Pan(View transform, Point currentMap, Point previousMap)
+        public static void Pan(View view, Point currentMap, Point previousMap)
         {
-            SharpMap.Geometries.Point current = transform.ViewToWorld(new SharpMap.Geometries.Point(currentMap.X, currentMap.Y));
-            SharpMap.Geometries.Point previous = transform.ViewToWorld(new SharpMap.Geometries.Point(previousMap.X, previousMap.Y));
+            SharpMap.Geometries.Point current = view.ViewToWorld(new SharpMap.Geometries.Point(currentMap.X, currentMap.Y));
+            SharpMap.Geometries.Point previous = view.ViewToWorld(new SharpMap.Geometries.Point(previousMap.X, previousMap.Y));
             double diffX = previous.X - current.X;
             double diffY = previous.Y - current.Y;
-            transform.Center = new SharpMap.Geometries.Point(transform.Center.X + diffX, transform.Center.Y + diffY);
+            view.Center = new SharpMap.Geometries.Point(view.Center.X + diffX, view.Center.Y + diffY);
         }
 
         public static Rect WorldToMap(Extent extent, IViewTransform transform)
