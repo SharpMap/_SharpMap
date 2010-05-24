@@ -14,6 +14,8 @@ using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
 using Windows = System.Windows.Media;
 using SharpMap.Data;
+using SharpMap.Projection;
+
 
 namespace SilverlightRendering
 {
@@ -28,9 +30,8 @@ namespace SilverlightRendering
 
         public void RenderLayer(IView view, IProvider provider, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation)
         {
-            BoundingBox envelope = view.Extent;
             provider.Open();
-            IFeatures features = provider.GetFeaturesInView(view);
+            IFeatures features = provider.GetFeaturesInView(view.Extent, view.Resolution);
             provider.Close();
 
             foreach (var feature in features)
@@ -279,7 +280,7 @@ namespace SilverlightRendering
 
         public void RenderLabelLayer(IView view, IProvider dataSource, LabelLayer labelLayer)
         {
-            throw new NotImplementedException();
+            //!!!throw new NotImplementedException();
         }
 
         #endregion

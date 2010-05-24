@@ -7,6 +7,7 @@ using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
 using ColorBlend=SharpMap.Rendering.Thematics.ColorBlend;
 using Point=SharpMap.Geometries.Point;
+using System.Reflection;
 
 namespace SharpMap.Samples
 {

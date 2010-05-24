@@ -7,6 +7,7 @@ using SharpMap.Data.Providers;
 using SharpMap.Geometries;
 using System.Collections.ObjectModel;
 using BruTile.Cache;
+using System.Linq;
 
 namespace SharpMap.Providers
 {
@@ -21,6 +22,7 @@ namespace SharpMap.Providers
         int srid;
         ITileSource source;
         MemoryCache<byte[]> bitmaps = new MemoryCache<byte[]>(100, 200);
+        List<TileIndex> queue = new List<TileIndex>();
 
         #endregion
 
@@ -76,17 +78,22 @@ namespace SharpMap.Providers
             IList<TileInfo> tiles = source.Schema.GetTilesInView(extent, level);
 
             ICollection<WaitHandle> waitHandles = new List<WaitHandle>();
-
+                        
             foreach (TileInfo info in tiles)    
             {
                 if (bitmaps.Find(info.Index) != null) continue;
+                if (queue.Contains(info.Index)) continue;
                 AutoResetEvent waitHandle = new AutoResetEvent(false);
                 waitHandles.Add(waitHandle);
-                ThreadPool.QueueUserWorkItem(GetTileOnThread, new object[] { source.Provider, info, bitmaps, waitHandle });
+                queue.Add(info.Index);
+
+                Thread thread = new Thread(GetTileOnThread);
+                thread.Start(new object[] { source.Provider, info, bitmaps, waitHandle });
+                //!!!ThreadPool.QueueUserWorkItem(GetTileOnThread, new object[] { source.Provider, info, bitmaps, waitHandle });
             }
 
-            foreach (WaitHandle handle in waitHandles)
-                handle.WaitOne();
+            //foreach (WaitHandle handle in waitHandles)
+            //    handle.WaitOne();
 
             IFeatures features = new Features();
             foreach (TileInfo info in tiles)
@@ -120,15 +127,16 @@ namespace SharpMap.Providers
             }
             finally
             {
+                queue.Remove(tileInfo.Index);
                 autoResetEvent.Set();
             }
         }
 
         #region IRasterProvider Members
 
-        public IFeatures GetFeaturesInView(IView view)
+        public IFeatures GetFeaturesInView(BoundingBox box, double resolution)
         {
-            return FetchTiles(view.Extent, view.Resolution);
+            return FetchTiles(box, resolution);
         }
 
         #endregion

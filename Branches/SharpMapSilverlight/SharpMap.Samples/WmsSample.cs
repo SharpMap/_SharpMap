@@ -3,7 +3,7 @@ using SharpMap.Layers;
 using Point=SharpMap.Geometries.Point;
 using SharpMap.Styles;
 
-namespace WinFormSamples.Samples
+namespace SharpMap.Samples
 {
     public static class WmsSample
     {

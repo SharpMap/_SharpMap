@@ -112,8 +112,8 @@ namespace SharpMap.Layers
                 if (layer.Enabled && layer.MaxVisible >= view.Resolution && layer.MinVisible < view.Resolution)
                     layer.Render(renderer, view);
         }
-        
-        public override IFeatures GetFeaturesInView(IView view)
+
+         public override IFeatures GetFeaturesInView(BoundingBox box, double resolution)
         {
             foreach (Layer layer in Layers)
             {
@@ -126,7 +126,7 @@ namespace SharpMap.Layers
                     //!!!
                     throw new NotImplementedException("Not implemented");
                     var queryLayer = layer as IQueryLayer;
-                    var features = queryLayer.GetFeaturesInView(view);
+                    var features = queryLayer.GetFeaturesInView(box, resolution);
                     return features;
                 }
             }

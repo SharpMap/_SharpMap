@@ -394,8 +394,7 @@ namespace SharpMap.Forms
                                 IQueryLayer layer = _Map.Layers[_queryLayerIndex] as IQueryLayer;
                                 Point pointWorld = transform.ViewToWorld(new Point(e.X, e.Y));
                                 BoundingBox bbox = pointWorld.GetBoundingBox().Grow(transform.Resolution * 5);
-                                IView view = new View() { Center = pointWorld, Resolution = transform.Resolution, Width = 1, Height = 1 };
-                                IFeatures features = layer.GetFeaturesInView(view);
+                                IFeatures features = layer.GetFeaturesInView(bbox, transform.Resolution);
                                 if (MapQueried != null) MapQueried(features);
                             }
                         }

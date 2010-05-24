@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap", "SharpMap\SharpM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightSample-SL", "SilverlightSample\SilverlightSample-SL.csproj", "{D712DB4A-123C-4C5B-8D7D-91AE15C19CB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightSample.Web-SL", "SilverlightSample.Web\SilverlightSample.Web-SL.csproj", "{E112944D-905F-4D9C-B14A-C2ABBC8951F6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightRendering-SL", "SilverlightRendering\SilverlightRendering-SL.csproj", "{07774CD1-6112-440B-96B8-DFF788B79649}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightRendering", "SilverlightRendering\SilverlightRendering.csproj", "{612450F3-5EF0-4648-9542-2B3578583243}"
@@ -33,6 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{782ABF42-5
 		libs\ProjNet.Normal.dll = libs\ProjNet.Normal.dll
 		libs\ProjNet.Silverlight.dll = libs\ProjNet.Silverlight.dll
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightSample.WebApp-SL", "SilverlightSample.WebApp-SL\SilverlightSample.WebApp-SL.csproj", "{12E85CAE-86AC-497D-8559-4C6131630165}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMap.Samples-SL", "SharpMap.Samples\SharpMap.Samples-SL.csproj", "{FA011EC5-2C8A-412B-8791-9BB966012099}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,10 +66,6 @@ Global
 		{D712DB4A-123C-4C5B-8D7D-91AE15C19CB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D712DB4A-123C-4C5B-8D7D-91AE15C19CB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D712DB4A-123C-4C5B-8D7D-91AE15C19CB6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E112944D-905F-4D9C-B14A-C2ABBC8951F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E112944D-905F-4D9C-B14A-C2ABBC8951F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E112944D-905F-4D9C-B14A-C2ABBC8951F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E112944D-905F-4D9C-B14A-C2ABBC8951F6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{07774CD1-6112-440B-96B8-DFF788B79649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{07774CD1-6112-440B-96B8-DFF788B79649}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07774CD1-6112-440B-96B8-DFF788B79649}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -88,6 +86,14 @@ Global
 		{4F0D111C-87B6-4F86-B160-35E0E321D728}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F0D111C-87B6-4F86-B160-35E0E321D728}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F0D111C-87B6-4F86-B160-35E0E321D728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12E85CAE-86AC-497D-8559-4C6131630165}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12E85CAE-86AC-497D-8559-4C6131630165}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12E85CAE-86AC-497D-8559-4C6131630165}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12E85CAE-86AC-497D-8559-4C6131630165}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA011EC5-2C8A-412B-8791-9BB966012099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA011EC5-2C8A-412B-8791-9BB966012099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA011EC5-2C8A-412B-8791-9BB966012099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA011EC5-2C8A-412B-8791-9BB966012099}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,6 +8,6 @@ namespace SharpMap.Layers
         /// <summary>
         /// Returns the data associated with all the geometries that are intersected by 'geom'
         /// </summary>
-        IFeatures GetFeaturesInView(IView view);
+        IFeatures GetFeaturesInView(BoundingBox box, double resolution);
     }
 }

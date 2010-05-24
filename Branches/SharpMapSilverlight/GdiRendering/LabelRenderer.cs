@@ -36,7 +36,7 @@ namespace GdiRendering
 
                 IFeatures features = new Features();
                 DataSource.Open();
-                features = DataSource.GetFeaturesInView(map);
+                features = DataSource.GetFeaturesInView(map.Extent, map.Resolution);
                 DataSource.Close();
                 
                 //Initialize label collection

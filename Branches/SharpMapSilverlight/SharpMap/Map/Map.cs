@@ -151,11 +151,10 @@ namespace SharpMap
             {
                 //if (SRID != _Layers[i].SRID) //Check that all layers have the same SRID
                 //    throw (new ArgumentException("An attempt was made to add two layers with different SRIDs"));
-                if (
-                    _Layers[i].Enabled && 
-                    _Layers[i].MaxVisible >= transform.Resolution && 
-                    _Layers[i].MinVisible < transform.Resolution)
-                        _Layers[i].Render(renderer, transform);
+                if (_Layers[i].Enabled 
+                        && _Layers[i].MaxVisible >= transform.Resolution 
+                        && _Layers[i].MinVisible < transform.Resolution)
+                    _Layers[i].Render(renderer, transform);
             }
         }
 

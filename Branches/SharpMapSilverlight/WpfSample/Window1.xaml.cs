@@ -5,6 +5,8 @@ using SharpMap;
 using SharpMap.Samples;
 using SilverlightRendering;
 using SharpMap.Data;
+using System.IO;
+using System.Windows.Controls;
 
 namespace WpfSample
 {
@@ -13,53 +15,25 @@ namespace WpfSample
     /// </summary>
     public partial class Window1 : Window
     {
-        View transform = new View();
-        bool refresh = false;
-        int soep = 100;
+        bool first = true;
 
         public Window1()
         {
-            CompositionTarget.Rendering += new System.EventHandler(CompositionTarget_Rendering);
+            this.Loaded += new RoutedEventHandler(Window1_Loaded);
         }
 
-
-        void CompositionTarget_Rendering(object sender, System.EventArgs e)
+        void Window1_Loaded(object sender, RoutedEventArgs e)
         {
-            RenderMap();    
+            if (first)
+            {
+                InitializeMap();
+                first = false;
+            }
         }
 
-        private void RenderMap()
+        void InitializeMap()
         {
-            if (refresh == false) return;
-            refresh = false;
-
-            Map map = GradiantThemeSample.InitializeMap();
-
-            SilverlightRenderer renderer = new SilverlightRenderer(canvas.Children);
-            View transform = new View();
-
-            transform.Center = map.GetExtents().GetCentroid();
-            transform.Width = (float)canvas.ActualWidth;
-            transform.Height = (float)canvas.ActualHeight;
-            transform.Resolution = map.GetExtents().Width / transform.Width;
-
-            canvas.Children.Clear();
-            map.Render(renderer, transform);
-
-            //!!!byte[] bytes = renderer.GetMapAsByteArray(transform, map);
-            //!!!BitmapImage bitmapImage = new BitmapImage();
-            //!!!bitmapImage.BeginInit();
-            //!!!bitmapImage.StreamSource = new MemoryStream(bytes);
-            //!!!bitmapImage.EndInit();
-            //!!!image.Source = bitmapImage;
-            this.InvalidateVisual();
-        }
-
-        private void grid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            canvas.Width = grid.ActualWidth;
-            canvas.Height = grid.ActualHeight;
-            refresh = true;
+            mapControl.Map = SharpMap.Samples.GradiantThemeSample.InitializeMap();
         }
     }
 }

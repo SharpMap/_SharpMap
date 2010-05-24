@@ -3,14 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
-    <Grid x:Name="grid" MouseLeftButtonDown="MyGrid_MouseLeftButtonDown">
-        <Canvas x:Name="canvas" VerticalAlignment="Stretch" Background="Orange" HorizontalAlignment="Stretch"></Canvas>
-        <!--<StackPanel Background="Pink" >
-            <TextBlock Text="Text to Overlay" />
-            <Border x:Name="border" BorderBrush="Red" BorderThickness="10" Background="LightBlue"   UseLayoutRounding="True">
-                <Image x:Name="image" Width="256" Height="256"></Image>
-            </Border>
-        </StackPanel>-->
+    xmlns:bruTileWindows="clr-namespace:BruTile.UI.Windows;assembly=SilverlightSample"
+    mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
+    xmlns:rendering="clr-namespace:SilverlightRendering;assembly=SilverlightRendering">
+
+    <Grid x:Name="grid">
+        <rendering:MapControl x:Name="mapControl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></rendering:MapControl>
     </Grid>
 </UserControl>

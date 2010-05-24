@@ -7,7 +7,7 @@ using SharpMap.Styles;
 using SharpMap.Utilities.Wfs;
 using Point=SharpMap.Geometries.Point;
 
-namespace WinFormSamples.Samples
+namespace SharpMap.Samples
 {
     public static class WfsSample
     {

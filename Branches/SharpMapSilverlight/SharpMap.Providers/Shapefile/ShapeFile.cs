@@ -952,10 +952,10 @@ namespace SharpMap.Data.Providers
         #region IProvider Members
 
 
-        public IFeatures GetFeaturesInView(IView view)
+        public IFeatures GetFeaturesInView(BoundingBox box, double resolution)
         {
             //Use the spatial index to get a list of features whose boundingbox intersects bbox
-            Collection<uint> objectlist = GetObjectIDsInView(view.Extent);
+            Collection<uint> objectlist = GetObjectIDsInView(box);
             IFeatures features = new Features();
 
             foreach (uint index in objectlist)
@@ -963,7 +963,7 @@ namespace SharpMap.Data.Providers
                 IFeature feature = dbaseFile.GetFeature(index, features);
                 feature.Geometry = ReadGeometry(index);
                 if (feature.Geometry != null)
-                    if (feature.Geometry.GetBoundingBox().Intersects(view.Extent))
+                    if (feature.Geometry.GetBoundingBox().Intersects(box))
                         if (FilterDelegate == null || FilterDelegate(feature))
                             features.Add(feature);
             }

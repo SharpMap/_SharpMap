@@ -163,12 +163,12 @@ namespace SharpMap.Data.Providers
 
         #region IProvider Members
 
-        public IFeatures GetFeaturesInView(IView view)
+        public IFeatures GetFeaturesInView(BoundingBox box, double resolution)
         {
             IFeatures results = new Features();
             foreach (IFeature feature in _Features)
             {
-                if (feature.Geometry.GetBoundingBox().Intersects(view.Extent))
+                if (feature.Geometry.GetBoundingBox().Intersects(box))
                 {
                     results.Add(feature);
                 }
