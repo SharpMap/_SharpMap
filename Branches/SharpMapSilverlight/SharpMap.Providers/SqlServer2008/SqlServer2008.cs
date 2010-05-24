@@ -25,7 +25,8 @@ using System.Collections.ObjectModel;
 using System.Text;   
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Data;   
+using System.Data;
+using SharpMap.Geometries;   
   
 namespace SharpMap.Data.Providers   
 {   
@@ -572,10 +573,10 @@ namespace SharpMap.Data.Providers
    
        #region IProvider Members
 
-       public IFeatures GetFeaturesInView(IView view)
+       public IFeatures GetFeaturesInView(BoundingBox box, double resolution)
        {
            FeatureDataSet dataSet = new FeatureDataSet();
-           ExecuteIntersectionQuery(view.Extent, dataSet);
+           ExecuteIntersectionQuery(box, dataSet);
            return SharpMap.Providers.Utilities.DataSetToFeatures(dataSet);
        }
 

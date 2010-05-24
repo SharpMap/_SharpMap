@@ -49,7 +49,7 @@ namespace SharpMap.Rendering
 
             //TODO: projected enverlope is not used!
             provider.Open();
-            IFeatures features = provider.GetFeaturesInView(view);
+            IFeatures features = provider.GetFeaturesInView(view.Extent, view.Resolution);
             provider.Close();
 
             if (coordinateTransformation != null)

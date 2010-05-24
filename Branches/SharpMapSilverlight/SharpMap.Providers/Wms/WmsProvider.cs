@@ -533,10 +533,11 @@ namespace SharpMap.Layers
 
         #region IProvider Members
 
-        public IFeatures GetFeaturesInView(IView view)
+        public IFeatures GetFeaturesInView(BoundingBox box, double resolution)
         {
             IFeatures features = new Features();
             IRaster raster = null;
+            IView view = new View() { Resolution = resolution, Center = box.GetCentroid(), Width = (float)(box.Width / resolution), Height = (float)(box.Height / resolution) };
             if (TryGetMap(view, ref raster))
             {
                 IFeature feature = features.New();

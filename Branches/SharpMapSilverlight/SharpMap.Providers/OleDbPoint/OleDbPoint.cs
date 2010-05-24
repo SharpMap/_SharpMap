@@ -466,10 +466,10 @@ namespace SharpMap.Data.Providers
 
         #region IProvider Members
 
-        public IFeatures GetFeaturesInView(IView view)
+        public IFeatures GetFeaturesInView(BoundingBox box, double resolution)
         {
             FeatureDataSet dataSet = new FeatureDataSet();
-            ExecuteIntersectionQuery(view.Extent, dataSet);
+            ExecuteIntersectionQuery(box, dataSet);
             return SharpMap.Providers.Utilities.DataSetToFeatures(dataSet);
         }
 

@@ -1,4 +1,4 @@
-﻿// Copyright 2010 - Paul den Dulk (Geodan)
+﻿// Copyright 2008 - Paul den Dulk (Geodan)
 // 
 // This file is part of SharpMap.
 // SharpMap is free software; you can redistribute it and/or modify
@@ -15,19 +15,26 @@
 // along with SharpMap; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using BruTile;
+using SharpMap;
 using SharpMap.Geometries;
 
-namespace SharpMap
+namespace SilverlightRendering
 {
-    public interface IView : IViewTransform
+    public static class ViewHelper
     {
-        double Resolution { get; }
-        BoundingBox Extent { get; }
-        double Width { get; }
-        double Height { get; }
+        public static void Pan(View view, double currentX, double currentY, double previousX, double previousY)
+        {
+            Pan(view, new Point(currentX, currentY), new Point(previousX, previousY));
+        }
+
+        public static void Pan(View view, Point current, Point previous)
+        {
+            Point currentWorld = view.ViewToWorld(current);
+            Point previousWorld = view.ViewToWorld(previous);
+            double diffX = previousWorld.X - currentWorld.X;
+            double diffY = previousWorld.Y - currentWorld.Y;
+            view.Center = new Point(view.Center.X + diffX, view.Center.Y + diffY);
+        }
     }
 }

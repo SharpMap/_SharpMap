@@ -25,8 +25,8 @@ namespace SharpMap
 
         double resolution;
         Point center = new Point();
-        float width;
-        float height;
+        double width;
+        double height;
         BoundingBox extent;
 
         #endregion
@@ -59,7 +59,7 @@ namespace SharpMap
             }
         }
 
-        public float Width
+        public double Width
         {
             set
             {
@@ -69,7 +69,7 @@ namespace SharpMap
             get { return width; }
         }
 
-        public float Height
+        public double Height
         {
             set
             {
@@ -102,8 +102,8 @@ namespace SharpMap
         {
             if (center.IsEmpty()) return;
 
-            float spanX = width * (float)resolution;
-            float spanY = height * (float)resolution;
+            double spanX = width * resolution;
+            double spanY = height * resolution;
             extent = new BoundingBox(center.X - spanX * 0.5f, center.Y - spanY * 0.5f,
               center.X + spanX * 0.5f, center.Y + spanY * 0.5f);
         }

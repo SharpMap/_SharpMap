@@ -11,66 +11,26 @@ namespace SilverlightSample
 {
     public partial class MainPage : UserControl
     {
-        bool refresh = true;
-        Stream stream;
+        bool first = true;
 
         public MainPage()
         {
             InitializeComponent();
-            CompositionTarget.Rendering += new System.EventHandler(CompositionTarget_Rendering);
-            var webClient = new System.Net.WebClient();
-            webClient.OpenReadCompleted += new System.Net.OpenReadCompletedEventHandler(webClient_OpenReadCompleted);
-            webClient.OpenReadAsync(new Uri("http://localhost:62297/Images/icon.png"));
+            this.UseLayoutRounding = true;
+            this.Loaded += new System.Windows.RoutedEventHandler(MainPage_Loaded);
         }
 
-        void webClient_OpenReadCompleted(object sender, System.Net.OpenReadCompletedEventArgs e)
-        {            
-            stream = e.Result;
-        }
-
-        void CompositionTarget_Rendering(object sender, System.EventArgs e)
+        void MainPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            RenderMap(); 
+            if (first)
+            {
+                InitializeMap();
+                first = false;
+            } 
         }
-
-        private void MyGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        void InitializeMap()
         {
-            refresh = true;
-
-            //WriteableBitmap bitmap = new WriteableBitmap(1024, 1024);
-            //bitmap.Render(grid, null);
-            //bitmap.Invalidate();
-            //image.Source = bitmap;
-        }
-
-        Map map = null;
-
-        private void RenderMap()
-        {
-            if (refresh == false) return;
-            refresh = false;
-            if (stream == null) return;
-            
-            if (map == null) map = MySample.InitializeMap(stream);
-
-            SilverlightRenderer renderer = new SilverlightRenderer(canvas.Children);
-            View transform = new View();
-
-            transform.Center = map.GetExtents().GetCentroid();
-            transform.Width = (float)canvas.ActualWidth;
-            transform.Height = (float)canvas.ActualHeight;
-            transform.Resolution = map.GetExtents().Width / transform.Width;
-
-            canvas.Children.Clear();
-            map.Render(renderer, transform);
-
-            //!!!byte[] bytes = renderer.GetMapAsByteArray(transform, map);
-            //!!!BitmapImage bitmapImage = new BitmapImage();
-            //!!!bitmapImage.BeginInit();
-            //!!!bitmapImage.StreamSource = new MemoryStream(bytes);
-            //!!!bitmapImage.EndInit();
-            //!!!image.Source = bitmapImage;
-            //!!!this.InvalidateVisual();
+            mapControl.Map = SharpMap.Samples.TileLayerSample.InitializeMap();
         }
     }
 }

@@ -221,10 +221,10 @@ namespace SharpMap.Layers
 
         #region IQueryLayer Members
 
-        public virtual IFeatures GetFeaturesInView(IView view)
+        public virtual IFeatures GetFeaturesInView(BoundingBox box, double resolution)
         {
             DataSource.Open();
-            var features = DataSource.GetFeaturesInView(view);
+            var features = DataSource.GetFeaturesInView(box, resolution);
             DataSource.Close();
             return features;
         }

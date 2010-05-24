@@ -32,7 +32,9 @@ namespace SharpMap.Projection
         {
             if (geometry is Point)
             {
-                double[] point = CoordinateTransformation.MathTransform.Inverse().Transform(new double[] { ((Point)geometry).X, ((Point)geometry).Y });
+                CoordinateTransformation.MathTransform.Inverse();
+                double[] point = CoordinateTransformation.MathTransform.Transform(new double[] { ((Point)geometry).X, ((Point)geometry).Y });
+                CoordinateTransformation.MathTransform.Inverse();
                 return new Point(point[0], point[1]);
             }
             else
@@ -50,8 +52,10 @@ namespace SharpMap.Projection
 
         public static BoundingBox InverseTransform(BoundingBox box, ICoordinateTransformation CoordinateTransformation)
         {
-            double[] point1 = CoordinateTransformation.MathTransform.Inverse().Transform(new double[] { box.MinX, box.MinY });
-            double[] point2 = CoordinateTransformation.MathTransform.Inverse().Transform(new double[] { box.MaxX, box.MaxY });
+            CoordinateTransformation.MathTransform.Invert();
+            double[] point1 = CoordinateTransformation.MathTransform.Transform(new double[] { box.MinX, box.MinY });
+            double[] point2 = CoordinateTransformation.MathTransform.Transform(new double[] { box.MaxX, box.MaxY });
+            CoordinateTransformation.MathTransform.Invert();
             return new BoundingBox(point1[0], point1[1], point2[0], point2[1]);
         }
     }

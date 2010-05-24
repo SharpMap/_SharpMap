@@ -46,7 +46,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         int SRID { get; set; }
 
-        IFeatures GetFeaturesInView(IView view);
+        IFeatures GetFeaturesInView(BoundingBox box, double resolution);
 
         /// <summary>
         /// <see cref="SharpMap.Geometries.BoundingBox"/> of dataset
