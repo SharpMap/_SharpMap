@@ -81,12 +81,12 @@ namespace SharpMap.Forms
         private System.Drawing.Point mousedrag;
         private bool mousedragging = false;
         private Image mousedragImg;
-        private View transform = new View();
+        private View view = new View();
         private GdiRenderer gdiRenderer = new GdiRenderer();
 
-        public View Transform
+        public View View
         {
-            get { return transform; }
+            get { return view; }
         }
         private bool initialized = false;
 
@@ -107,8 +107,8 @@ namespace SharpMap.Forms
 
         void MapImage_Resize(object sender, EventArgs e)
         {
-            this.transform.Width = this.Width;
-            this.transform.Height = this.Height;
+            this.view.Width = this.Width;
+            this.view.Height = this.Height;
             Refresh();
         }
 
@@ -186,7 +186,7 @@ namespace SharpMap.Forms
         {
             if (_Map != null)
             {
-                this.Image = gdiRenderer.GetMapAsImage(transform, _Map);
+                this.Image = gdiRenderer.GetMapAsImage(view, _Map);
             }
         }
 
@@ -198,7 +198,7 @@ namespace SharpMap.Forms
             if (_Map != null)
             {
                 
-                this.Image = gdiRenderer.GetMapAsImage(transform, _Map);
+                this.Image = gdiRenderer.GetMapAsImage(view, _Map);
                 this.Invalidate();
                 base.Refresh();
             }
@@ -238,10 +238,10 @@ namespace SharpMap.Forms
                 double scale = ((double)e.Delta / 120.0);
                 double scaleBase = 1 + (_wheelZoomMagnitude / (10 * ((double)(_isCtrlPressed ? _fineZoomFactor : 1))));
 
-                transform.Resolution *= Math.Pow(scaleBase, scale);
+                view.Resolution *= Math.Pow(scaleBase, scale);
 
                 if (MapZoomChanged != null)
-                    MapZoomChanged(transform.Resolution);
+                    MapZoomChanged(view.Resolution);
 
                 Refresh();
             }
@@ -254,7 +254,7 @@ namespace SharpMap.Forms
                 if (e.Button == MouseButtons.Left) //dragging
                     mousedrag = e.Location;
                 if (MouseDown != null)
-                    MouseDown(transform.ViewToWorld(new Point(e.X, e.Y)), e);
+                    MouseDown(view.ViewToWorld(new Point(e.X, e.Y)), e);
             }
         }
 
@@ -263,7 +263,7 @@ namespace SharpMap.Forms
         {
             if (_Map != null)
             {
-                Point p = transform.ViewToWorld(new Point(e.X, e.Y));
+                Point p = view.ViewToWorld(new Point(e.X, e.Y));
 
                 if (MouseMove != null)
                     MouseMove(p, e);
@@ -301,8 +301,8 @@ namespace SharpMap.Forms
                         else //Zoom in
                             scale = 1 + (e.Y - mousedrag.Y) * 0.1f;
                         RectangleF rect = new RectangleF(0, 0, Width, Height);
-                        if (transform.Resolution / scale < _Map.MinimumZoom)
-                            scale = (float)Math.Round(transform.Resolution / _Map.MinimumZoom, 4);
+                        if (view.Resolution / scale < _Map.MinimumZoom)
+                            scale = (float)Math.Round(view.Resolution / _Map.MinimumZoom, 4);
                         rect.Width *= scale;
                         rect.Height *= scale;
                         rect.Offset(Width / 2 - rect.Width / 2, Height / 2 - rect.Height / 2);
@@ -321,7 +321,7 @@ namespace SharpMap.Forms
             if (_Map != null)
             {
                 if (MouseUp != null)
-                    MouseUp(transform.ViewToWorld(new Point(e.X, e.Y)), e);
+                    MouseUp(view.ViewToWorld(new Point(e.X, e.Y)), e);
 
                 if (e.Button == MouseButtons.Left)
                 {
@@ -330,9 +330,9 @@ namespace SharpMap.Forms
                         double scale = 0.5;
                         if (!mousedragging)
                         {
-                            transform.Center = transform.ViewToWorld(new Point(e.X, e.Y));
+                            view.Center = view.ViewToWorld(new Point(e.X, e.Y));
                             if (MapCenterChanged != null)
-                                MapCenterChanged(transform.Center);
+                                MapCenterChanged(view.Center);
                         }
                         else
                         {
@@ -341,9 +341,9 @@ namespace SharpMap.Forms
                             else //Zoom in
                                 scale = 1 + (e.Y - mousedrag.Y) * 0.1;
                         }
-                        transform.Resolution *= 1 / scale;
+                        view.Resolution *= 1 / scale;
                         if (MapZoomChanged != null)
-                            MapZoomChanged(transform.Resolution);
+                            MapZoomChanged(view.Resolution);
                         Refresh();
                     }
                     else if (ActiveTool == Tools.ZoomIn)
@@ -351,9 +351,9 @@ namespace SharpMap.Forms
                         double scale = 2;
                         if (!mousedragging)
                         {
-                            transform.Center = transform.ViewToWorld(new Point(e.X, e.Y));
+                            view.Center = view.ViewToWorld(new Point(e.X, e.Y));
                             if (MapCenterChanged != null)
-                                MapCenterChanged(transform.Center);
+                                MapCenterChanged(view.Center);
                         }
                         else
                         {
@@ -362,9 +362,9 @@ namespace SharpMap.Forms
                             else //Zoom in
                                 scale = 1 + (e.Y - mousedrag.Y) * 0.1;
                         }
-                        transform.Resolution *= 1 / scale;
+                        view.Resolution *= 1 / scale;
                         if (MapZoomChanged != null)
-                            MapZoomChanged(transform.Resolution);
+                            MapZoomChanged(view.Resolution);
                         Refresh();
                     }
                     else if (ActiveTool == Tools.Pan)
@@ -373,15 +373,15 @@ namespace SharpMap.Forms
                         {
                             System.Drawing.Point pnt = new System.Drawing.Point(Width / 2 + (mousedrag.X - e.Location.X),
                                                                                 Height / 2 + (mousedrag.Y - e.Location.Y));
-                            transform.Center = transform.ViewToWorld(new Point(pnt.X, pnt.Y));
+                            view.Center = view.ViewToWorld(new Point(pnt.X, pnt.Y));
                             if (MapCenterChanged != null)
-                                MapCenterChanged(transform.Center);
+                                MapCenterChanged(view.Center);
                         }
                         else
                         {
-                            transform.Center = transform.ViewToWorld(new Point(e.X, e.Y));
+                            view.Center = view.ViewToWorld(new Point(e.X, e.Y));
                             if (MapCenterChanged != null)
-                                MapCenterChanged(transform.Center);
+                                MapCenterChanged(view.Center);
                         }
                         Refresh();
                     }
@@ -392,9 +392,9 @@ namespace SharpMap.Forms
                             if (_Map.Layers[_queryLayerIndex] is IQueryLayer)
                             {
                                 IQueryLayer layer = _Map.Layers[_queryLayerIndex] as IQueryLayer;
-                                Point pointWorld = transform.ViewToWorld(new Point(e.X, e.Y));
-                                BoundingBox bbox = pointWorld.GetBoundingBox().Grow(transform.Resolution * 5);
-                                IFeatures features = layer.GetFeaturesInView(bbox, transform.Resolution);
+                                Point pointWorld = view.ViewToWorld(new Point(e.X, e.Y));
+                                BoundingBox bbox = pointWorld.GetBoundingBox().Grow(view.Resolution * 5);
+                                IFeatures features = layer.GetFeaturesInView(bbox, view.Resolution);
                                 if (MapQueried != null) MapQueried(features);
                             }
                         }

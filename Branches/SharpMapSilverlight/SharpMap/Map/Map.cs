@@ -143,7 +143,7 @@ namespace SharpMap
         /// Renders the map to an image
         /// </summary>
         /// <returns></returns>
-        public void Render(IRenderer renderer, IView transform)
+        public void Render(IRenderer renderer, IView view)
         {
             
             int SRID = (Layers.Count > 0 ? Layers[0].SRID : -1); //Get the SRID of the first layer
@@ -152,9 +152,9 @@ namespace SharpMap
                 //if (SRID != _Layers[i].SRID) //Check that all layers have the same SRID
                 //    throw (new ArgumentException("An attempt was made to add two layers with different SRIDs"));
                 if (_Layers[i].Enabled 
-                        && _Layers[i].MaxVisible >= transform.Resolution 
-                        && _Layers[i].MinVisible < transform.Resolution)
-                    _Layers[i].Render(renderer, transform);
+                        && _Layers[i].MaxVisible >= view.Resolution 
+                        && _Layers[i].MinVisible < view.Resolution)
+                    _Layers[i].Render(renderer, view);
             }
         }
 
