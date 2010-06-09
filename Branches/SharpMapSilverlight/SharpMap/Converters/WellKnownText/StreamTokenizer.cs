@@ -183,21 +183,16 @@ namespace SharpMap.Converters.WellKnownText.IO
 
             bool isNumber = false;
             bool isWord = false;
-            byte[] ba = null;
-#if SILVERLIGHT
-            Encoding AE = System.Text.Encoding.Unicode;
-#else
-            ASCIIEncoding AE = new ASCIIEncoding();
-#endif
+            char ba;
+
             char[] ascii = null;
             Char currentCharacter;
             Char nextCharacter;
             while (finished != 0)
             {
                 // convert int to char
-                ba = new Byte[] {(byte) _reader.Peek()};
-
-                ascii = AE.GetChars(ba);
+                ba = (char)this._reader.Peek();
+                ascii = new[] { ba };
 
                 currentCharacter = chars[0];
                 nextCharacter = ascii[0];
