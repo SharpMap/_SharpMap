@@ -84,12 +84,6 @@
     <Compile Include="Wms\WmsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpMap\SharpMap.csproj">
-      <Project>{65A23C7B-E21D-40D7-A8AF-2E72A01E9A5B}</Project>
-      <Name>SharpMap</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Wms\Schemas\1.3.0\capabilities_1_3_0.xsd" />
     <None Include="Wms\Schemas\1.3.0\capabilities_1_3_0.xsx">
       <DependentUpon>capabilities_1_3_0.xsd</DependentUpon>
@@ -98,6 +92,12 @@
     <None Include="Wms\Schemas\1.3.0\exceptions_1_3_0.xsx">
       <DependentUpon>exceptions_1_3_0.xsd</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpMap\SharpMap.csproj">
+      <Project>{65A23C7B-E21D-40D7-A8AF-2E72A01E9A5B}</Project>
+      <Name>SharpMap</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
