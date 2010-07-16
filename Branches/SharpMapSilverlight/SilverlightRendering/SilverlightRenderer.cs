@@ -16,19 +16,25 @@ using Windows = System.Windows.Media;
 using SharpMap.Data;
 using SharpMap.Projection;
 
-
 namespace SilverlightRendering
 {
     public class SilverlightRenderer : IRenderer
     {
         UIElementCollection elements;
-
+        
+        public SilverlightRenderer()
+        {
+            var canvas = new Canvas();
+            elements = canvas.Children;
+        }
+        
         public SilverlightRenderer(UIElementCollection elements)
         {
             this.elements = elements;
         }
 
-        public void RenderLayer(IView view, IProvider provider, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation)
+        public void RenderLayer(IView view, IProvider provider, Func<IFeature, IStyle> getStyle, 
+            ICoordinateTransformation coordinateTransformation)
         {
             provider.Open();
             IFeatures features = provider.GetFeaturesInView(view.Extent, view.Resolution);
@@ -53,6 +59,11 @@ namespace SilverlightRendering
             }
         }
 
+        public void ToBitmap()
+        {
+
+        }
+
         private Path RenderPoint(SharpMap.Geometries.Point point, IStyle style, IViewTransform viewTransform)
         {
             Path path = CreatePointPath(style);
@@ -70,14 +81,7 @@ namespace SilverlightRendering
             //vectorStyle.SymbolOffset.Convert();
             //vectorStyle.SymbolRotation;
 
-            BitmapImage bitmapImage = new BitmapImage();
-#if !SILVERLIGHT
-            bitmapImage.BeginInit();
-            bitmapImage.StreamSource = vectorStyle.Symbol.data;
-            bitmapImage.EndInit();
-#else
-            bitmapImage.SetSource(vectorStyle.Symbol.data);
-#endif
+            BitmapImage bitmapImage = CreateBitmapImage(vectorStyle.Symbol.data);
 
             Path path = new Path();
             path.Fill = new ImageBrush() { ImageSource = bitmapImage };
@@ -87,6 +91,19 @@ namespace SilverlightRendering
                 path.StrokeThickness = vectorStyle.Outline.Width;
             }
             return path;
+        }
+
+        private static BitmapImage CreateBitmapImage(System.IO.Stream imageData)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+#if !SILVERLIGHT
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = imageData;
+            bitmapImage.EndInit();
+#else
+            bitmapImage.SetSource(vectorStyle.Symbol.data);
+#endif
+            return bitmapImage;
         }
 
         private static EllipseGeometry ConvertPoint(Point point, IStyle style, IViewTransform viewTransform)

@@ -16,16 +16,14 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using SharpMap.Geometries;
-using SharpMap.Data.Providers;
-using SharpMap.Styles;
 using ProjNet.CoordinateSystems.Transformations;
-using SharpMap.Rendering.Thematics;
 using SharpMap.Data;
-using SharpMap.Rendering;
+using SharpMap.Data.Providers;
+using SharpMap.Geometries;
 using SharpMap.Projection;
+using SharpMap.Rendering;
+using SharpMap.Rendering.Thematics;
+using SharpMap.Styles;
 
 namespace SharpMap.Layers
 {
@@ -53,83 +51,42 @@ namespace SharpMap.Layers
     /// </example>
     public class Layer : ILayer, IQueryLayer
     {
-        #region Fields
-
-        private SharpMap.Rendering.Thematics.ITheme _theme;
-        private SharpMap.Data.Providers.IProvider _DataSource;
-        private IStyle _Style;
-        private double _MaxVisible = double.MaxValue;
-        private double _MinVisible = 0;
-        private bool _Enabled = true;
-        private string _LayerName;
-        private ICoordinateTransformation _CoordinateTransform;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
         /// Minimum visibility zoom, including this value
         /// </summary>
-        public double MinVisible
-        {
-            get { return _MinVisible; }
-            set { _MinVisible = value; }
-        }
+        public double MinVisible { get; set; }
 
         /// <summary>
         /// Maximum visibility zoom, excluding this value
         /// </summary>
-        public double MaxVisible
-        {
-            get { return _MaxVisible; }
-            set { _MaxVisible = value; }
-        }
+        public double MaxVisible { get; set; }
 
         /// <summary>
         /// Specified whether the layer is rendered or not
         /// </summary>
-        public bool Enabled
-        {
-            get { return _Enabled; }
-            set { _Enabled = value; }
-        }
+        public bool Enabled { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the layer
         /// </summary>
-        public string LayerName
-        {
-            get { return _LayerName; }
-            set { _LayerName = value; }
-        }
+        public string LayerName { get; set; }
 
         /// <summary>
         /// Gets or sets thematic settings for the layer. Set to null to ignore thematics
         /// </summary>
-        public ITheme Theme
-        {
-            get { return _theme; }
-            set { _theme = value; }
-        }
+        public ITheme Theme { get; set; }
 
         /// <summary>
         /// Gets or sets the datasource
         /// </summary>
-        public IProvider DataSource
-        {
-            get { return _DataSource; }
-            set { _DataSource = value; }
-        }
+        public IProvider DataSource { get; set; }
 
         /// <summary>
         /// Gets or sets the rendering style of the vector layer.
         /// </summary>
-        public IStyle Style
-        {
-            get { return _Style; }
-            set { _Style = value; }
-        }
+        public IStyle Style { get; set; }
 
         /// <summary>
         /// Gets or sets the SRID of this VectorLayer's data source
@@ -139,23 +96,15 @@ namespace SharpMap.Layers
         {
             get
             {
-                if (this.DataSource == null)
-                    throw (new Exception("DataSource property not set on layer '" + this.LayerName + "'"));
+                if (DataSource == null)
+                    throw (new Exception("DataSource property not set on layer '" + LayerName + "'"));
 
-                return this.DataSource.SRID;
+                return DataSource.SRID;
             }
-            set { this.DataSource.SRID = value; }
+            set { DataSource.SRID = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the <see cref="SharpMap.CoordinateSystems.Transformations.ICoordinateTransformation"/> applied 
-        /// to this layer prior to rendering
-        /// </summary>
-        public ProjNet.CoordinateSystems.Transformations.ICoordinateTransformation CoordinateTransformation
-        {
-            get { return _CoordinateTransform; }
-            set { _CoordinateTransform = value; }
-        }
+        public ICoordinateTransformation CoordinateTransformation { get; set; }
 
         /// <summary>
         /// Returns the extent of the layer
@@ -165,17 +114,17 @@ namespace SharpMap.Layers
         {
             get
             {
-                if (this.DataSource == null)
-                    throw (new Exception("DataSource property not set on layer '" + this.LayerName + "'"));
+                if (DataSource == null)
+                    throw (new Exception("DataSource property not set on layer '" + LayerName + "'"));
 
-                bool wasOpen = this.DataSource.IsOpen;
+                bool wasOpen = DataSource.IsOpen;
                 if (!wasOpen)
-                    this.DataSource.Open();
-                SharpMap.Geometries.BoundingBox box = this.DataSource.GetExtents();
+                    DataSource.Open();
+                BoundingBox box = DataSource.GetExtents();
                 if (!wasOpen) //Restore state
-                    this.DataSource.Close();
-                if (this.CoordinateTransformation != null)
-                    return ProjectionHelper.Transform(box, this.CoordinateTransformation);
+                    DataSource.Close();
+                if (CoordinateTransformation != null)
+                    return ProjectionHelper.Transform(box, CoordinateTransformation);
                 return box;
             }
         }
@@ -184,21 +133,15 @@ namespace SharpMap.Layers
 
         #region Public methods
 
-        // <summary>
-        /// Initializes a new layer
-        /// </summary>
-        /// <param name="layername">Name of layer</param>
         public Layer(string layername)
         {
-            this.Style = new VectorStyle();
-            this.LayerName = layername;
+            MinVisible = 0;
+            MaxVisible = double.MaxValue;
+            Enabled = true;
+            Style = new VectorStyle();
+            LayerName = layername;
         }
 
-        /// <summary>
-        /// Renders the layer to a graphics object
-        /// </summary>
-        /// <param name="g">Graphics object reference</param>
-        /// <param name="map">Map which is rendered</param>
         public virtual void Render(IRenderer renderer, IView view)
         {
             renderer.RenderLayer(view, DataSource, CreateStyleMethod(Style, Theme), CoordinateTransformation);
@@ -217,7 +160,6 @@ namespace SharpMap.Layers
         }
 
         #endregion
-
 
         #region IQueryLayer Members
 
