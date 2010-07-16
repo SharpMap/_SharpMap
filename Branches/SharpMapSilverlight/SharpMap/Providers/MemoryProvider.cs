@@ -96,6 +96,11 @@ namespace SharpMap.Data.Providers
         
         #region Constructors
 
+        public MemoryProvider()
+        {
+            _Features = new Features();
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryProvider"/>
         /// </summary>
