@@ -20,17 +20,16 @@ namespace SilverlightRendering
 {
     public class SilverlightRenderer : IRenderer
     {
-        UIElementCollection elements;
+        Canvas canvas;
         
         public SilverlightRenderer()
         {
-            var canvas = new Canvas();
-            elements = canvas.Children;
+            canvas = new Canvas();
         }
         
-        public SilverlightRenderer(UIElementCollection elements)
+        public SilverlightRenderer(Canvas canvas)
         {
-            this.elements = elements;
+            this.canvas = canvas;
         }
 
         public void RenderLayer(IView view, IProvider provider, Func<IFeature, IStyle> getStyle, 
@@ -43,19 +42,19 @@ namespace SilverlightRendering
             foreach (var feature in features)
             {
                 if (feature.Geometry is Point)
-                    elements.Add(RenderPoint(feature.Geometry as Point, getStyle(feature), view));
+                    canvas.Children.Add(RenderPoint(feature.Geometry as Point, getStyle(feature), view));
                 else if (feature.Geometry is MultiPoint)
-                    elements.Add(RenderMultiPoint(feature.Geometry as MultiPoint, getStyle(feature), view));
+                    canvas.Children.Add(RenderMultiPoint(feature.Geometry as MultiPoint, getStyle(feature), view));
                 else if (feature.Geometry is LineString)
-                    elements.Add(RenderLineString(feature.Geometry as LineString, getStyle(feature), view));
+                    canvas.Children.Add(RenderLineString(feature.Geometry as LineString, getStyle(feature), view));
                 else if (feature.Geometry is MultiLineString)
-                    elements.Add(RenderMultiLineString(feature.Geometry as MultiLineString, getStyle(feature), view));
+                    canvas.Children.Add(RenderMultiLineString(feature.Geometry as MultiLineString, getStyle(feature), view));
                 else if (feature.Geometry is SharpMap.Geometries.Polygon)
-                    elements.Add(RenderPolygon(feature.Geometry as SharpMap.Geometries.Polygon, getStyle(feature), view));
+                    canvas.Children.Add(RenderPolygon(feature.Geometry as SharpMap.Geometries.Polygon, getStyle(feature), view));
                 else if (feature.Geometry is MultiPolygon)
-                    elements.Add(RenderMultiPolygon(feature.Geometry as MultiPolygon, getStyle(feature), view));
+                    canvas.Children.Add(RenderMultiPolygon(feature.Geometry as MultiPolygon, getStyle(feature), view));
                 else if (feature.Geometry is IRaster)
-                    elements.Add(RenderRaster(feature.Geometry as IRaster, getStyle(feature), view));
+                    canvas.Children.Add(RenderRaster(feature.Geometry as IRaster, getStyle(feature), view));
             }
         }
 
@@ -301,5 +300,17 @@ namespace SilverlightRendering
         }
 
         #endregion
+
+        public System.IO.Stream ToBitmapStream(double width, double height)
+        {            
+            canvas.Arrange(new System.Windows.Rect(0, 0, width, height));
+            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)width, (int)height, 96, 96, new PixelFormat());
+            renderTargetBitmap.Render(canvas);
+            var bitmap = new PngBitmapEncoder();
+            bitmap.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+            var bitmapStream = new System.IO.MemoryStream();
+            bitmap.Save(bitmapStream);
+            return bitmapStream;
+        }
     }
 }

@@ -193,7 +193,7 @@ namespace SilverlightRendering
         private void RenderMap()
         {
             var backBuffer = new Buffer();
-            SilverlightRenderer renderer = new SilverlightRenderer(backBuffer.Canvas.Children);
+            SilverlightRenderer renderer = new SilverlightRenderer(backBuffer.Canvas);
             backBuffer.Extent = view.Extent.Clone();
             map.Render(renderer, view);
 
