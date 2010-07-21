@@ -25,7 +25,6 @@ using SharpMap.Data.Providers;
 using SharpMap.Geometries;
 using SharpMap.Projection;
 using SharpMap.Styles;
-using SharpMap.Layers;
 using Gdi = System.Drawing;
 
 namespace SharpMap.Rendering
@@ -78,13 +77,13 @@ namespace SharpMap.Rendering
             //Draw background of all line-outlines first
             if (geometry is SharpMap.Geometries.LineString)
             {
-                SharpMap.Styles.VectorStyle outlinestyle1 = style as SharpMap.Styles.VectorStyle;
-                RendererHelper.DrawLineString(g, geometry as LineString, outlinestyle1.Outline.Convert(), view);
+                VectorStyle outlinestyle1 = style as SharpMap.Styles.VectorStyle;
+                DrawLineString(g, geometry as LineString, outlinestyle1.Outline.Convert(), view);
             }
             else if (geometry is SharpMap.Geometries.MultiLineString)
             {
-                SharpMap.Styles.VectorStyle outlinestyle2 = style as SharpMap.Styles.VectorStyle;
-                RendererHelper.DrawMultiLineString(g, geometry as MultiLineString, outlinestyle2.Outline.Convert(), view);
+                VectorStyle outlinestyle2 = style as SharpMap.Styles.VectorStyle;
+                DrawMultiLineString(g, geometry as MultiLineString, outlinestyle2.Outline.Convert(), view);
             }
         }
 

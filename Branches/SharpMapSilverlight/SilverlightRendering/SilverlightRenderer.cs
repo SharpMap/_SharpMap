@@ -32,12 +32,38 @@ namespace SilverlightRendering
             this.canvas = canvas;
         }
 
-        public void RenderLayer(IView view, IProvider provider, Func<IFeature, IStyle> getStyle, 
-            ICoordinateTransformation coordinateTransformation)
+        public void Render(IView view, Map map)
         {
-            provider.Open();
-            IFeatures features = provider.GetFeaturesInView(view.Extent, view.Resolution);
-            provider.Close();
+            foreach (var layer in map.Layers)
+            {
+                if (layer.Enabled &&
+                    layer.MinVisible <= view.Resolution &&
+                    layer.MaxVisible >= view.Resolution)
+                {
+                    RenderLayer(view, layer);
+                }
+            }
+        }
+
+        private void RenderLayer(IView view, ILayer layer)
+        {
+            if (layer is LabelLayer)
+            {
+                //
+            }
+            else if (layer is Layer) RenderVectorLayer(view, layer);
+            //!!!else if (layer is LabelLayer) RenderLabelLayer(view, layer);
+            //!!!else if (layer is GroupLayer) RenderVectorLayer(view, layer);
+        }
+
+        private void RenderVectorLayer(IView view, ILayer layer)
+        {
+            var vectorLayer = layer as Layer;
+            var getStyle = CreateStyleMethod(layer.Style, layer.Theme);
+
+            vectorLayer.DataSource.Open();
+            IFeatures features = vectorLayer.DataSource.GetFeaturesInView(view.Extent, view.Resolution);
+            vectorLayer.DataSource.Close();
 
             foreach (var feature in features)
             {
@@ -58,9 +84,11 @@ namespace SilverlightRendering
             }
         }
 
-        public void ToBitmap()
+        private static Func<IFeature, IStyle> CreateStyleMethod(IStyle style, ITheme theme)
         {
+            if (theme == null) return (row) => style;
 
+            return (row) => theme.GetStyle(row);
         }
 
         private Path RenderPoint(SharpMap.Geometries.Point point, IStyle style, IViewTransform viewTransform)
@@ -100,7 +128,7 @@ namespace SilverlightRendering
             bitmapImage.StreamSource = imageData;
             bitmapImage.EndInit();
 #else
-            bitmapImage.SetSource(vectorStyle.Symbol.data);
+            bitmapImage.SetSource(imageData);
 #endif
             return bitmapImage;
         }
@@ -294,17 +322,18 @@ namespace SilverlightRendering
 
         #region IRenderer Members
 
-        public void RenderLabelLayer(IView view, IProvider dataSource, LabelLayer labelLayer)
+        private void RenderLabelLayer(IView view, LabelLayer labelLayer)
         {
             //!!!throw new NotImplementedException();
         }
 
         #endregion
 
+        #if !SILVERLIGHT
         public System.IO.Stream ToBitmapStream(double width, double height)
         {            
             canvas.Arrange(new System.Windows.Rect(0, 0, width, height));
-            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)width, (int)height, 96, 96, new PixelFormat());
+            var renderTargetBitmap = new RenderTargetBitmap((int)width, (int)height, 96, 96, new PixelFormat());
             renderTargetBitmap.Render(canvas);
             var bitmap = new PngBitmapEncoder();
             bitmap.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
@@ -312,5 +341,6 @@ namespace SilverlightRendering
             bitmap.Save(bitmapStream);
             return bitmapStream;
         }
+        #endif
     }
 }

@@ -142,11 +142,6 @@ namespace SharpMap.Layers
             LayerName = layername;
         }
 
-        public virtual void Render(IRenderer renderer, IView view)
-        {
-            renderer.RenderLayer(view, DataSource, CreateStyleMethod(Style, Theme), CoordinateTransformation);
-        }
-
         #endregion
 
         #region Private methods

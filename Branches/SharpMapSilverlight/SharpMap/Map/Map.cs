@@ -140,25 +140,6 @@ namespace SharpMap
         #region Methods
 
         /// <summary>
-        /// Renders the map to an image
-        /// </summary>
-        /// <returns></returns>
-        public void Render(IRenderer renderer, IView view)
-        {
-            
-            int SRID = (Layers.Count > 0 ? Layers[0].SRID : -1); //Get the SRID of the first layer
-            for (int i = 0; i < _Layers.Count; i++)
-            {
-                //if (SRID != _Layers[i].SRID) //Check that all layers have the same SRID
-                //    throw (new ArgumentException("An attempt was made to add two layers with different SRIDs"));
-                if (_Layers[i].Enabled 
-                        && _Layers[i].MaxVisible >= view.Resolution 
-                        && _Layers[i].MinVisible < view.Resolution)
-                    _Layers[i].Render(renderer, view);
-            }
-        }
-
-        /// <summary>
         /// Returns an enumerable for all layers containing the search parameter in the LayerName property
         /// </summary>
         /// <param name="layername">Search parameter</param>

@@ -9,7 +9,6 @@ namespace SharpMap.Rendering
 {
     public interface IRenderer
     {
-        void RenderLayer(IView view, IProvider dataSource, Func<IFeature, IStyle> getStyle, ICoordinateTransformation CoordinateTransformation);
-        void RenderLabelLayer(IView view, IProvider dataSource, LabelLayer labelLayer); //the layer itself should not be passed just a description of the style/theme
+        void Render(IView view, Map map);
     }
 }

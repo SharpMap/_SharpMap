@@ -6,6 +6,7 @@ using NUnit.Framework;
 using SharpMap.Data.Providers;
 using SharpMap.Geometries;
 using SharpMap;
+using SharpMap.Layers;
 using SharpMap.Styles;
 
 namespace SilverlightRendering.Test
@@ -24,7 +25,9 @@ namespace SilverlightRendering.Test
             
             var renderer = new SilverlightRenderer();
             var view = new View() { Center = new Point(50, 50), Width = 100, Height = 100 };
-            renderer.RenderLayer(view, provider, f => new VectorStyle(), null);
+            var map = new Map();
+            map.Layers.Add(new Layer("test") { DataSource = provider});
+            renderer.Render(view, map);
 
 
             
