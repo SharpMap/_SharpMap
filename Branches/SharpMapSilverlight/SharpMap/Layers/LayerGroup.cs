@@ -106,12 +106,12 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="renderer"></param>
         /// <param name="view"></param>
-         public void Render(IRenderer renderer, IView view)
-        {
-            foreach (ILayer layer in _Layers)
-                if (layer.Enabled && layer.MaxVisible >= view.Resolution && layer.MinVisible < view.Resolution)
-                    layer.Render(renderer, view);
-        }
+        //!!! public void Render(IRenderer renderer, IView view)
+        //!!!{
+        //!!!    foreach (ILayer layer in _Layers)
+        //!!!        if (layer.Enabled && layer.MaxVisible >= view.Resolution && layer.MinVisible < view.Resolution)
+        //!!!            layer.Render(renderer, view);
+        //!!!}
 
          public override IFeatures GetFeaturesInView(BoundingBox box, double resolution)
         {

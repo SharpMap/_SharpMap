@@ -11,7 +11,8 @@
     <RootNamespace>SilverlightSample.WebApp_SL</RootNamespace>
     <AssemblyName>SilverlightSample.WebApp-SL</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <SilverlightApplicationList>{D712DB4A-123C-4C5B-8D7D-91AE15C19CB6}|..\SilverlightSample\SilverlightSample-SL.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>
+    </SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BruTile-SL, Version=0.3.3748.24791, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\BruTile-SL.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core">
@@ -60,8 +65,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Silverlight.js" />
-    <Content Include="SilverlightSample-SLTestPage.aspx" />
-    <Content Include="SilverlightSample-SLTestPage.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +76,12 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SilverlightSample\SilverlightSample-SL.csproj">
+      <Project>{D712DB4A-123C-4C5B-8D7D-91AE15C19CB6}</Project>
+      <Name>SilverlightSample-SL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

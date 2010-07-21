@@ -185,21 +185,21 @@ namespace SilverlightRendering
         {
             if (map == null) return;
             if (view == null) InitializeView();
-            view.Width = this.ActualWidth;
-            view.Height = this.ActualHeight;
+            view.Width = ActualWidth;
+            view.Height = ActualHeight;
             RedrawBuffer();
         }
 
         private void RenderMap()
         {
             var backBuffer = new Buffer();
-            SilverlightRenderer renderer = new SilverlightRenderer(backBuffer.Canvas);
+            var renderer = new SilverlightRenderer(backBuffer.Canvas);
             backBuffer.Extent = view.Extent.Clone();
-            map.Render(renderer, view);
+            renderer.Render(view, map);
 
-            this.Children.Remove(frontBuffer.Canvas);
-            this.frontBuffer = backBuffer;
-            this.Children.Add(frontBuffer.Canvas);
+            Children.Remove(frontBuffer.Canvas);
+            frontBuffer = backBuffer;
+            Children.Add(frontBuffer.Canvas);
 
             refresh = true;
 #if !SILVERLIGHT

@@ -19,6 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SharpMap.Rendering;
+using SharpMap.Styles;
+using SharpMap.Rendering.Thematics;
 
 namespace SharpMap.Layers
 {
@@ -27,13 +29,6 @@ namespace SharpMap.Layers
 	/// </summary>
 	public interface ILayer
 	{
-		/// <summary>
-		/// Renders the layer
-		/// </summary>
-		/// <param name="g">Graphics object reference</param>
-		/// <param name="map">Map which is rendered</param>
-		void Render(IRenderer renderer, IView view);
-
 		/// <summary>
 		/// Minimum visible zoom level
 		/// </summary>
@@ -64,6 +59,10 @@ namespace SharpMap.Layers
 		/// The spatial reference ID (CRS)
 		/// </summary>
 		int SRID { get; set;}
+
+        IStyle Style { get; set; }
+
+        ITheme Theme { get; set; }
 
 		//SharpMap.CoordinateSystems.CoordinateSystem CoordinateSystem { get; set; }
 	}

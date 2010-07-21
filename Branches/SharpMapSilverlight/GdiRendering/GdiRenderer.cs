@@ -5,8 +5,10 @@ using System.IO;
 using ProjNet.CoordinateSystems.Transformations;
 using SharpMap.Data;
 using SharpMap.Data.Providers;
+using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
 using GdiRendering;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering
 {
@@ -20,14 +22,31 @@ namespace SharpMap.Rendering
             set { graphics = value; }
         }
 
-        public GdiRenderer()
+        public void Render(IView view, Map map)
         {
+            foreach (var layer in map.Layers)
+            {
+                if (layer.Enabled &&
+                    layer.MinVisible <= view.Resolution &&
+                    layer.MaxVisible >= view.Resolution)
+                {
+                    if (layer is Layer) RenderLayer(view, layer as Layer);
+                    //!!!else if (layer is LabelLayer) RenderLabelLayer(view, layer);
+                }
+            }        
         }
 
-        public void RenderLayer(IView view, IProvider DataSource, Func<IFeature, IStyle> getStyle, ICoordinateTransformation coordinateTransformation)
+        private void RenderLayer(IView view, Layer layer)
         {
             if (graphics == null) throw new Exception("Graphics was not initialized");
-            RendererHelper.RenderLayer(graphics, DataSource, getStyle, coordinateTransformation, view);
+            RendererHelper.RenderLayer(graphics, layer.DataSource, CreateStyleMethod(layer.Style, layer.Theme), layer.CoordinateTransformation, view);
+        }
+
+        private static Func<IFeature, IStyle> CreateStyleMethod(IStyle style, ITheme theme)
+        {
+            if (theme == null) return (row) => style;
+
+            return (row) => theme.GetStyle(row);
         }
 
         private void Initialize(IView view)
@@ -42,7 +61,7 @@ namespace SharpMap.Rendering
             Initialize(view); //TODO: only initilize when needed
             graphics.Clear(map.BackColor.Convert());
             graphics.PageUnit = System.Drawing.GraphicsUnit.Pixel;
-            map.Render(this, view);
+            Render(view, map);
             return image;
         }
 
@@ -57,7 +76,7 @@ namespace SharpMap.Rendering
         #region IRenderer Members
 
 
-        public void RenderLabelLayer(IView view, IProvider dataSource, SharpMap.Layers.LabelLayer labelLayer)
+        private void RenderLabelLayer(IView view, IProvider dataSource, SharpMap.Layers.LabelLayer labelLayer)
         {
             if (graphics == null) throw new Exception("Graphics was not initialized");
             LabelRenderer.Render(graphics, view, dataSource, labelLayer);
