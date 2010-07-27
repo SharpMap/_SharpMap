@@ -179,7 +179,7 @@ namespace SharpMap.Extensions.Tests.Data.Providers
             var vectorLayer = new VectorLayer("test", provider);
             map.Layers.Add(vectorLayer);
 
-            string fileName = DataPath + "wsiearth.tif";
+            string fileName = DataPath + "dvim3.tif";
             var rasterLayer = new RegularGridCoverageLayer();
             var rasterFeatureProvider = new GdalFeatureProvider {Path = fileName};
 
