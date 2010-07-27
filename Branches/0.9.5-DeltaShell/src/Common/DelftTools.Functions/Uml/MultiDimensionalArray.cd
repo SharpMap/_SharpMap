@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DelftTools.DataObjects.Functions.MultiDimensionalArray" Collapsed="true">
+    <Position X="7.75" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AEIFQECAAICAABAUCICAlAQgAABAASAACAAAQAFQJBA=</HashCode>
+      <FileName>MultiDimensionalArray.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DelftTools.DataObjects.Functions.Generic.MultiDimensionalArray&lt;T&gt;" Collapsed="true">
+    <Position X="3" Y="7.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAEAAAAAAABAACAAABEAAAAAAAAAAAAAAQAgQoAA=</HashCode>
+      <FileName>Generic\MultiDimensionalArray.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DelftTools.DataObjects.Functions.MultiDimensionalArrayFilteredView" Collapsed="true">
+    <Position X="6.25" Y="7.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAIAAAABACAAAQAQAIAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>MultiDimensionalArrayFilteredView.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DelftTools.DataObjects.Functions.MultiDimensionalArrayRangeView" Collapsed="true">
+    <Position X="10.25" Y="7.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIAFAAAAQAAAABBACAAAQAAAIAAAAAAQAAAAAAEAAAA=</HashCode>
+      <FileName>MultiDimensionalArrayRangeView.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="DelftTools.DataObjects.Functions.Generic.MultiDimensionalArrayFilteredView&lt;T&gt;" Collapsed="true">
+    <Position X="5.75" Y="9.25" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AEIAAEAAAAAAABAACAAABEAAAAAAAAAAAAAAQAgQoAA=</HashCode>
+      <FileName>Generic\MultiDimensionalArrayFilteredView.cs</FileName>
+      <NewMemberFileName>Generic\MultiDimensionalArrayRangeView.cs</NewMemberFileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DelftTools.DataObjects.Functions.Generic.MultiDimensionalArrayRangeView&lt;T&gt;" Collapsed="true">
+    <Position X="11" Y="9.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAEAAAAAAABAACAAABEAAAAAAAAAAAAAAQAgQoAA=</HashCode>
+      <FileName>Generic\MultiDimensionalArrayRangeView.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="DelftTools.DataObjects.Functions.Generic.IMultiDimensionalArray&lt;T&gt;" Collapsed="true">
+    <Position X="11" Y="2.75" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Generic\IMultiDimensionalArray.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.DataObjects.Functions.Generic.IMultiDimensionalArrayRangeView&lt;T&gt;" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Generic\IMultiDimensionalArrayRangeView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.DataObjects.Functions.IMultiDimensionalArrayRangeView" Collapsed="true">
+    <Position X="3.75" Y="3.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IMultiDimensionalArrayRangeView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.DataObjects.Functions.IMultiDimensionalArrayView" Collapsed="true">
+    <Position X="5.5" Y="2" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IMultiDimensionalArrayView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.DataObjects.Functions.Generic.IMultiDimensionalArrayFilteredView&lt;T&gt;">
+    <Position X="12.75" Y="4.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Generic\IMultiDimensionalArrayFilteredView.cs</FileName>
+      <NewMemberFileName>IMultiDimensionalArrayFilteredView.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.DataObjects.Functions.IMultiDimensionalArray" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAFAAAAAAAAAAAACACAEAAAAABAAAAACAAAQAEAAAA=</HashCode>
+      <FileName>IMultiDimensionalArray.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Collections.Generic.IList&lt;T&gt;" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="DelftTools.DataObjects.Functions.IMultiDimensionalArrayFilteredView" Collapsed="true">
+    <Position X="9" Y="4.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>IMultiDimensionalArrayFilteredView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
