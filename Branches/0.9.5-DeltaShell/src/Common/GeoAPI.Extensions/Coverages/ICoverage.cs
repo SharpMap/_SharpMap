@@ -57,6 +57,8 @@ namespace GeoAPI.Extensions.Coverages
         /// <returns></returns>
         T Evaluate<T>(double x, double y) where T : IComparable;
 
+        // TODO: check if time-dependent stuff can be put into a separate interface (see ITimeDependent)
+
         /// <summary>
         /// Time variable, or null if coverage is not time-dimensional.
         /// </summary>
