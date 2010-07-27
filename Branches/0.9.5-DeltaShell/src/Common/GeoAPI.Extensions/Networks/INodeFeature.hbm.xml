@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="GeoAPI.Extensions">
+  <subclass name="GeoAPI.Extensions.Networks.INodeFeature" discriminator-value="network_node_features" lazy="false" extends="GeoAPI.Extensions.Networks.INetworkFeature">
+        <many-to-one name="Node" class="GeoAPI.Extensions.Networks.INode" column="node_id" cascade="save-update"  />
+    <subclass name="GeoAPI.Extensions.Networks.NodeFeatureStub" discriminator-value="node_feature_stub" lazy="false"/>
+  </subclass>
+</hibernate-mapping>

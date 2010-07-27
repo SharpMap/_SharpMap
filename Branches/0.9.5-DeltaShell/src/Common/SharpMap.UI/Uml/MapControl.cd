@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SharpMap.UI.Topology.TopologyRule" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAhAABEAAAABEBCAAAAIAAAAAQAAAAA=</HashCode>
+      <FileName>Topology\TopologyRule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.FallOff.LinearFallOffPolicy">
+    <Position X="5.5" Y="22.25" Width="1.75" />
+    <InheritanceLine Type="SharpMap.UI.FallOff.NoFallOffPolicy" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.688" Y="21.777" />
+        <Point X="6.688" Y="22.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAABAAAIABAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FallOff\LinearFallOffPolicy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.FallOff.NoFallOffPolicy">
+    <Position X="5.75" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAABAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FallOff\NoFallOffPolicy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Forms.EditorContextMenuEventArgs">
+    <Position X="15.5" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAIIAAACAAAAAA=</HashCode>
+      <FileName>Forms\EditorContextMenuEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Forms.MapControl" BaseTypeListCollapsed="true">
+    <Position X="13" Y="7.5" Width="2.5" />
+    <NestedTypes>
+      <Delegate Name="SharpMap.UI.Forms.MapControl.MouseEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Forms\MapControl.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>kJeIEY2gBhjEgACA5gwADgggAhJAGBRA8AECOBADCAg=</HashCode>
+      <FileName>Forms\MapControl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Mapping.GeometryHelper">
+    <Position X="9.5" Y="19.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAEARgAAAABAgAAACCCIgEABCQAgAQECQACA=</HashCode>
+      <FileName>Helpers\GeometryHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Mapping.GraphicsHelper">
+    <Position X="9.5" Y="18.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\GraphicsHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Mapping.Tracker">
+    <Position X="6" Y="15.75" Width="2.25" />
+    <NestedTypes>
+      <Enum Name="SharpMap.UI.Mapping.Tracker.Style" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Mapping\Tracker.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAQEBgAAAAIgAAQAIAAEAAAAAAAEAAEABAAA=</HashCode>
+      <FileName>Mapping\Tracker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Mapping.TrackingObject">
+    <Position X="8.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Mapping\TrackingObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Mutators.FeatureMutator">
+    <Position X="2.75" Y="10.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIECoAAEAAAABQAABAAwAAAIAUIBAUQAAAEAA=</HashCode>
+      <FileName>Mutators\FeatureMutator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Mutators.FeatureMutatorFactory">
+    <Position X="1.25" Y="8.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mutators\FeatureMutatorFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Mutators.LineStringMutator">
+    <Position X="1.25" Y="16.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAgAAIEAAAQAAAAAwAAAIAAAAASQAAAAAA=</HashCode>
+      <FileName>Mutators\LineStringMutator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Mutators.PointMutator">
+    <Position X="3.25" Y="16.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAgAAAAACAgAAAAAAAAASQAAAAAA=</HashCode>
+      <FileName>Mutators\PointMutator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Mutators.TrackerFeature" BaseTypeListCollapsed="true">
+    <Position X="6" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAgAAAAQAAABAAAAAAEAAAAAgAI=</HashCode>
+      <FileName>Mutators\TrackerFeature.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Snapping.SnapStrategy" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAwAAAAAAEAAAAIAABAACEAAAAAEAAAAQgAAEAA=</HashCode>
+      <FileName>Snapping\SnapStrategy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SharpMap.UI.Topology.ITopologyRule">
+    <Position X="6.25" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAhAABEAAAABEBCAAAAIAAAAAQAAAAA=</HashCode>
+      <FileName>Topology\ITopologyRule.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.UI.FallOff.IFallOffPolicy">
+    <Position X="0.5" Y="20.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAABAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FallOff\IFallOffPolicy.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FallOffPolicy" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="SharpMap.UI.Forms.IMapControl">
+    <Position X="12.5" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAUIAYQkBxBEgAAAIAAAAkAgAIgAEAAA0AACCBABAQA=</HashCode>
+      <FileName>Forms\IMapControl.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Tools" />
+      <Property Name="TopologyRules" />
+      <Property Name="SnappingStrategiesByLayer" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="SharpMap.UI.Tools.IMapTool">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIiAgAgAAACAAISAEABABARAARJgCAAEMBAAAIACAAA=</HashCode>
+      <FileName>Tools\IMapTool.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.UI.Mutators.IFeatureMutator">
+    <Position X="0.5" Y="10.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAECoAAEAAAABQAABAAQAAAIAUIBAQQAAAEAA=</HashCode>
+      <FileName>Mutators\IFeatureMutator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.UI.Mutators.ITrackerFeature">
+    <Position X="8.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAABAAAAAAEAAAAAAAI=</HashCode>
+      <FileName>Mutators\ITrackerFeature.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.UI.Snapping.ISnapStrategies">
+    <Position X="9" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Snapping\ISnapStrategies.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.UI.Snapping.ISnapStrategy">
+    <Position X="9" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAwAAAAAAEAAAAIAABAACEAAAAAEAAAAQgAAEAA=</HashCode>
+      <FileName>Snapping\ISnapStrategy.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SnapRole" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="SharpMap.UI.Snapping.ISnapTool">
+    <Position X="10.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAABAAAAAIAAAAACAAAAAAAADAEAAAAAAA=</HashCode>
+      <FileName>Snapping\ISnapTool.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Collections.Generic.IList&lt;T&gt;">
+    <Position X="9" Y="4.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="SharpMap.UI.FallOff.FallOffPolicyRule">
+    <Position X="3.75" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>FallOff\FallOffPolicyRule.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.UI.Snapping.SnapRole">
+    <Position X="6.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAiAAAAGAAAAAAAAAAAAAAAAAgAAAAAEAAAI=</HashCode>
+      <FileName>Snapping\SnapRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="SharpMap.UI.Topology.AddRelatedFeature">
+    <Position X="3.75" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAEAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Topology\ITopologyRule.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SharpMap.UI.Forms.EditorBeforeContextMenuEventHandler">
+    <Position X="15.5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Forms\IMapControl.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SharpMap.UI.Mutators.FeatureMutatorCreationEventHandler">
+    <Position X="1" Y="7.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAIAAAAAAAAEAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Mutators\FeatureMutatorCreationEventHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
