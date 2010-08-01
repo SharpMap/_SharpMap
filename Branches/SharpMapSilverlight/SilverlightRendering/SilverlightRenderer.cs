@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using ProjNet.CoordinateSystems.Transformations;
 using SharpMap;
-using SharpMap.Data.Providers;
 using SharpMap.Geometries;
 using SharpMap.Layers;
 using SharpMap.Rendering;
@@ -14,7 +12,7 @@ using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
 using Windows = System.Windows.Media;
 using SharpMap.Data;
-using SharpMap.Projection;
+using Path = System.Windows.Shapes.Path;
 
 namespace SilverlightRendering
 {
@@ -24,7 +22,7 @@ namespace SilverlightRendering
         
         public SilverlightRenderer()
         {
-            canvas = new Canvas();
+           canvas = new Canvas();
         }
         
         public SilverlightRenderer(Canvas canvas)
@@ -68,15 +66,15 @@ namespace SilverlightRendering
             foreach (var feature in features)
             {
                 if (feature.Geometry is Point)
-                    canvas.Children.Add(RenderPoint(feature.Geometry as Point, getStyle(feature), view));
+                    RenderPoint(feature.Geometry as Point, getStyle(feature), view);
                 else if (feature.Geometry is MultiPoint)
-                    canvas.Children.Add(RenderMultiPoint(feature.Geometry as MultiPoint, getStyle(feature), view));
+                    RenderMultiPoint(feature.Geometry as MultiPoint, getStyle(feature), view);
                 else if (feature.Geometry is LineString)
                     canvas.Children.Add(RenderLineString(feature.Geometry as LineString, getStyle(feature), view));
                 else if (feature.Geometry is MultiLineString)
                     canvas.Children.Add(RenderMultiLineString(feature.Geometry as MultiLineString, getStyle(feature), view));
                 else if (feature.Geometry is SharpMap.Geometries.Polygon)
-                    canvas.Children.Add(RenderPolygon(feature.Geometry as SharpMap.Geometries.Polygon, getStyle(feature), view));
+                    RenderPolygon(feature.Geometry as Polygon, getStyle(feature), view);
                 else if (feature.Geometry is MultiPolygon)
                     canvas.Children.Add(RenderMultiPolygon(feature.Geometry as MultiPolygon, getStyle(feature), view));
                 else if (feature.Geometry is IRaster)
@@ -91,7 +89,7 @@ namespace SilverlightRendering
             return (row) => theme.GetStyle(row);
         }
 
-        private Path RenderPoint(SharpMap.Geometries.Point point, IStyle style, IViewTransform viewTransform)
+        private Path RenderPoint(Point point, IStyle style, IViewTransform viewTransform)
         {
             Path path = CreatePointPath(style);
             path.Data = ConvertPoint(point, style, viewTransform);
@@ -329,18 +327,160 @@ namespace SilverlightRendering
 
         #endregion
 
-        #if !SILVERLIGHT
         public System.IO.Stream ToBitmapStream(double width, double height)
         {            
             canvas.Arrange(new System.Windows.Rect(0, 0, width, height));
+
+            #if !SILVERLIGHT
+        
             var renderTargetBitmap = new RenderTargetBitmap((int)width, (int)height, 96, 96, new PixelFormat());
             renderTargetBitmap.Render(canvas);
             var bitmap = new PngBitmapEncoder();
             bitmap.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
             var bitmapStream = new System.IO.MemoryStream();
             bitmap.Save(bitmapStream);
+            
+            #else
+
+            var writeableBitmap = new WriteableBitmap(256, 256);
+            writeableBitmap.Render(canvas, null);
+            var bitmapStream = ConverToBitmapStream(writeableBitmap);
+
+            #endif
+            
             return bitmapStream;
         }
-        #endif
+
+#if SILVERLIGHT
+        
+        private Stream ConverToBitmapStream(WriteableBitmap writeableBitmap)
+        {
+            return new MemoryStream(GetBuffer(writeableBitmap));
+        }
+
+        private static byte[] GetBuffer(WriteableBitmap bitmap)
+        {
+            //This method was copied from msdn forums
+            //Thanks Eiji
+            //http://forums.silverlight.net/forums/p/114691/446894.aspx
+
+            int width = bitmap.PixelWidth;
+            int height = bitmap.PixelHeight;
+
+            MemoryStream ms = new MemoryStream();
+
+            #region BMP File Header(14 bytes)
+            //the magic number(2 bytes):BM
+            ms.WriteByte(0x42);
+            ms.WriteByte(0x4D);
+
+            //the size of the BMP file in bytes(4 bytes)
+            long len = bitmap.Pixels.Length * 4 + 0x36;
+
+            ms.WriteByte((byte)len);
+            ms.WriteByte((byte)(len >> 8));
+            ms.WriteByte((byte)(len >> 16));
+            ms.WriteByte((byte)(len >> 24));
+
+            //reserved(2 bytes)
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+
+            //reserved(2 bytes)
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+
+            //the offset(4 bytes)
+            ms.WriteByte(0x36);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            #endregion
+
+            #region Bitmap Information(40 bytes:Windows V3)
+            //the size of this header(4 bytes)
+            ms.WriteByte(0x28);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+
+            //the bitmap width in pixels(4 bytes)
+            ms.WriteByte((byte)width);
+            ms.WriteByte((byte)(width >> 8));
+            ms.WriteByte((byte)(width >> 16));
+            ms.WriteByte((byte)(width >> 24));
+
+            //the bitmap height in pixels(4 bytes)
+            ms.WriteByte((byte)height);
+            ms.WriteByte((byte)(height >> 8));
+            ms.WriteByte((byte)(height >> 16));
+            ms.WriteByte((byte)(height >> 24));
+
+            //the number of color planes(2 bytes)
+            ms.WriteByte(0x01);
+            ms.WriteByte(0x00);
+
+            //the number of bits per pixel(2 bytes)
+            ms.WriteByte(0x20);
+            ms.WriteByte(0x00);
+
+            //the compression method(4 bytes)
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+
+            //the image size(4 bytes)
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+
+            //the horizontal resolution of the image(4 bytes)
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+
+            //the vertical resolution of the image(4 bytes)
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+
+            //the number of colors in the color palette(4 bytes)
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+
+            //the number of important colors(4 bytes)
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            ms.WriteByte(0x00);
+            #endregion
+
+            #region Bitmap data
+            for (int y = height - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int pixel = bitmap.Pixels[width * y + x];
+
+                    ms.WriteByte((byte)(pixel & 0xff)); //B
+                    ms.WriteByte((byte)((pixel >> 8) & 0xff)); //G
+                    ms.WriteByte((byte)((pixel >> 0x10) & 0xff)); //R
+                    ms.WriteByte(0x00); //reserved
+                }
+            }
+            #endregion
+
+
+            return ms.GetBuffer();
+        }
+
+#endif
+        
     }
 }

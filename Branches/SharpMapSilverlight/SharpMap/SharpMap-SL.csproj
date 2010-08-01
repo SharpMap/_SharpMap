@@ -148,6 +148,12 @@
   <ItemGroup>
     <Resource Include="Styles\DefaultSymbol.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BruTile.UI\BruTile.UI-SL.csproj">
+      <Project>{DF93419D-F269-447F-BFE9-0E2A1A4EE2BF}</Project>
+      <Name>BruTile.UI-SL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
