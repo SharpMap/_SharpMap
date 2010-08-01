@@ -14,7 +14,7 @@ using System.IO;
 
 namespace SharpMap.Samples
 {
-    public class TileLayerSample
+    public static class TileLayerSample
     {
         public static Map InitializeMap()
         {
@@ -24,9 +24,9 @@ namespace SharpMap.Samples
             map.Layers.Add(osm);
 
             Layer pointLayer = new Layer("Geodan");
-            pointLayer.DataSource = new MemoryProvider(new SharpMap.Geometries.Point(546919, 6862238)); // lonlat: 4.9130567, 52.3422033
+            pointLayer.DataSource = new MemoryProvider(new Point(546919, 6862238)); // lonlat: 4.9130567, 52.3422033
             var style = new VectorStyle();
-            style.Symbol = new Bitmap() { data = GetImageStreamFromResource("SharpMap.Samples.Images.icon.png") };
+            style.Symbol = new Bitmap { data = GetImageStreamFromResource("SharpMap.Samples.Images.icon.png") };
             pointLayer.Style = style;
             map.Layers.Add(pointLayer);
 
