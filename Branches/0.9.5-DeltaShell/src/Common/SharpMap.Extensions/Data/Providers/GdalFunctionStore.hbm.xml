@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="SharpMap.Extensions.Data.Providers" assembly="SharpMap.Extensions"  >  
-    <subclass name="GdalFunctionStore" discriminator-value="gdal_function_store" extends="DelftTools.Functions.IFunctionStore,DelftTools.Functions" lazy="false" >
-      <property name="Path" type="string"  />
-    </subclass>
-</hibernate-mapping>

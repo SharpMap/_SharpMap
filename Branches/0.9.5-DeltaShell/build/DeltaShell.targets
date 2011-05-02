@@ -4,22 +4,15 @@
    </PropertyGroup>
   
   <!-- use this user.targets file as a custom user file to re-define e.g. InstallDir -->
-  <Import Project="$(SolutionDir)\build\user.targets" Condition="Exists('$(SolutionDir)\build\user.targets')"/>
+  <!-- <Import Project="$(SolutionDir)\build\user.targets" Condition="Exists('$(SolutionDir)\build\user.targets')"/> -->
 
-  <PropertyGroup>
-    <PostSharpAutoUpdateDisable>True</PostSharpAutoUpdateDisable>
-    <PostSharpVerbose>True</PostSharpVerbose>
-    <PostSharpUseCommandLine>True</PostSharpUseCommandLine>
-  </PropertyGroup>
-
-  <Import Project="$(SolutionDir)\build\tools\PostSharp\PostSharp-1.5.targets" Condition="'$(UsePostSharp)'=='true'"/>
+  <Import Project="$(SolutionDir)\build\tools\PostSharp\PostSharp-1.5.targets" Condition="'$(UsePostSharp)'=='true'" />
 
   <PropertyGroup>
     <LoaderProjectName>DeltaShell.Loader</LoaderProjectName>
     <OutputPath Condition="'$(CustomOutputPath)' != ''">$(CustomOutputPath)\</OutputPath>
     <OutDir Condition="'$(CustomOutDir)' != ''">$(CustomOutDir)\</OutDir>
     <IntermediateOutputPath Condition="'$(CustomIntermediateOutputPath)' != ''">$(CustomIntermediateOutputPath)\</IntermediateOutputPath>
-
     <OutDir Condition="'$(CustomOutDir)' != '' and '$(ProjectName)'=='$(LoaderProjectName)'">$(InstallDir)\bin\</OutDir>
   </PropertyGroup>
 
@@ -43,23 +36,21 @@
   <Target Name="BeforeBuild" DependsOnTargets="_TimeStampBeforeCompile;CopyExternalDependencies">
     <Message Text="BuildInParallel: $(BuildInParallel)" />
 
-<!-- EXCLUDED (SharpMap)
     <MakeDir Condition="'$(IsPluginComponent)'=='true' and '$(PluginName)'!='' and !Exists('$(InstallDir)\plugins\$(PluginName)')" 
 		Directories="$(InstallDir)\plugins\$(PluginName)"/>
 
-
+<!--
     <Copy
         SourceFiles="@(GlobalLibraries)"
         DestinationFolder="$(TargetDir)"
 	SkipUnchangedFiles="true"
-	Condition="'$(TopLevelProject)'=='true' and '$(CustomOutDir)' != ''"
-    />
+	Condition="'$(TopLevelProject)'=='true' and '$(CustomOutDir)' != ''" />
 -->
+
   </Target>
 
-  <Target Name="CopyExternalDependencies" Condition="'$(ExternalDependencies)' != ''">
+  <Target Name="CopyExternalDependencies" Condition="'@(DependentLibraries)' != ''">
     <Message Text="Copying ExternalDependencies for project $(ProjectName) ..." />
-
     <Copy 
         SourceFiles="@(DependentLibraries)"
         DestinationFolder="$(TargetDir)"
@@ -69,7 +60,7 @@
   <Target Name="AfterBuild" DependsOnTargets="CheckAssemblyTime">
     <Error Condition="'$(IsPluginComponent)'=='true' and '$(PluginName)'==''" Text="PluginName must be specified when IsPluginComponent==true!"/>
 
-    <Message Text="Copying plugin component $(ProjectName) to $(InstallDir)\plugins directory ..." Condition="'$(IsPluginComponent)'=='true' and '$(AssemblyTimeDiffersAfterCompile)'=='1'" />
+    <Message Text="Copying plugin component $(ProjectName) to $(InstallDir)\plugins directory ..." Condition="'$(IsPluginComponent)'=='true'" />
     <Exec 
 		  WorkingDirectory="$(OutDir)" 
 		  Command="$(SolutionDir)\build\tools\PluginPostBuild.cmd $(SolutionDir) $(TargetDir) $(ProjectName) $(PluginName) $(InstallDir) $(ProjectDir) > nul" 
