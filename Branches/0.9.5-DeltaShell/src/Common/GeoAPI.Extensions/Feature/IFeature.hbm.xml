@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+<class name="GeoAPI.Extensions.Feature.IFeature, GeoAPI.Extensions" table="features" lazy="false">
+  <id name="Id" column="id" type="Int64" unsaved-value="0" access="property">
+    <generator class="increment" />
+  </id>
+  <discriminator column="type" type="string"/>
+  <property name="Geometry" column="the_geom" type="NetTopologySuite.Extensions.NHibernate.GeometryUserType, NetTopologySuite.Extensions.NHibernate" />  
+</class>
+</hibernate-mapping>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="GeoAPI.Extensions">
+<subclass name="GeoAPI.Extensions.Networks.IBranchFeature" discriminator-value="network_branch_feature" lazy="false" extends="GeoAPI.Extensions.Networks.INetworkFeature">
+  <many-to-one name="Branch" class="GeoAPI.Extensions.Networks.IBranch" column="branch_id" cascade="save-update" />
+  <property name="Offset" column="offset" />
+  <property name="Length" column="length" />
+
+  <!-- HACK: remove it -->
+  <subclass name="GeoAPI.Extensions.Networks.BranchFeatureStub, GeoAPI.Extensions" discriminator-value="branch_feature_stub" lazy="false"/>
+</subclass>
+</hibernate-mapping>
