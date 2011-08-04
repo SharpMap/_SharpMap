@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="NetTopologySuite.Extensions.Coverages" assembly="NetTopologySuite.Extensions" >
+  <subclass name="DiscreteGridPointCoverage" discriminator-value="discrete_grid_point_coverage" extends="DelftTools.Functions.Function, DelftTools.Functions" lazy="false" >
+    <many-to-one name="Index1" class="DelftTools.Functions.IVariable, DelftTools.Functions" column="index1_variable_id" cascade="save-update" />
+    <many-to-one name="Index2" class="DelftTools.Functions.IVariable, DelftTools.Functions" column="index2_variable_id" cascade="save-update" />
+    <many-to-one name="X" class="DelftTools.Functions.IVariable, DelftTools.Functions" column="x_variable_id" cascade="save-update" />
+    <many-to-one name="Y" class="DelftTools.Functions.IVariable, DelftTools.Functions" column="y_variable_id" cascade="save-update" />
+  </subclass>
+</hibernate-mapping>
