@@ -2,6 +2,7 @@ namespace SharpMap.Rendering.GeoJSON
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using Geometries;
     using Newtonsoft.Json;
@@ -14,6 +15,43 @@ namespace SharpMap.Rendering.GeoJSON
                 throw new ArgumentNullException("writer");
 
             return new JsonTextWriter(writer) { Formatting = Formatting.None };
+        }
+
+        private static string GetOrCreateUniqueId(IDictionary<string, object> attributes)
+        {
+            if (attributes == null)
+                throw new ArgumentNullException("attributes");
+
+            string masterKey = null;
+            foreach (string name in attributes.Keys)
+            {
+                if ((!String.Equals(name, "layer", StringComparison.InvariantCultureIgnoreCase) &&
+                     !String.Equals(name, "layerName", StringComparison.InvariantCultureIgnoreCase)) &&
+                     !String.Equals(name, "layer_name", StringComparison.InvariantCultureIgnoreCase))
+                    continue;
+                masterKey = name;
+                break;
+            }
+
+            string idKey = null;
+            foreach (string name in attributes.Keys)
+            {
+                if ((!String.Equals(name, "id", StringComparison.InvariantCultureIgnoreCase) &&
+                     !String.Equals(name, "fid", StringComparison.InvariantCultureIgnoreCase)) &&
+                     !String.Equals(name, "oid", StringComparison.InvariantCultureIgnoreCase))
+                    continue;
+                idKey = name;
+                break;
+            }
+
+            object master = masterKey != null ? attributes[masterKey] : null;
+            if (master == null)
+                return Guid.NewGuid().ToString();
+
+            string id = String.IsNullOrEmpty(idKey) ?
+                Guid.NewGuid().ToString() :
+                Convert.ToString(attributes[idKey], CultureInfo.InvariantCulture);
+            return String.Format("{0}_{1}", master, id);
         }
 
         public static void Write(Geometry geometry, JsonTextWriter writer)
@@ -315,7 +353,10 @@ namespace SharpMap.Rendering.GeoJSON
             
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteValue("GeoJSON");
+            writer.WriteValue("Feature");
+            writer.WritePropertyName("id");
+            string id = GetOrCreateUniqueId(feature.Values);
+            writer.WriteValue(id);
             writer.WritePropertyName("properties");
             Write(feature.Values, writer);
             writer.WritePropertyName("geometry_name");
@@ -372,7 +413,7 @@ namespace SharpMap.Rendering.GeoJSON
 
             writer.WriteStartObject();
             ICollection<string> names = attributes.Keys;
-            foreach (var name in names)
+            foreach (string name in names)
             {
                 writer.WritePropertyName(name);
                 writer.WriteValue(attributes[name].ToString());
