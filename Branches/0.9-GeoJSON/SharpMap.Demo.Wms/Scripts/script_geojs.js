@@ -11,6 +11,7 @@ $(document).ready(function() {
 
     options = {
         wms: 'WMS',
+        wmslayers: ['poly_landmarks', 'tiger_roads', 'poi'].join(),
         controls: [],
         maxExtent: new OpenLayers.Bounds(-2.003750834E7, -2.003750834E7, 2.003750834E7, 2.003750834E7),
         resolutions: [
@@ -45,22 +46,15 @@ $(document).ready(function() {
         projection: new OpenLayers.Projection('EPSG:900913'),
         displayProjection: new OpenLayers.Projection('EPSG:4326'),
         units: 'meters',
-        format: 'text/geojson'
+        format: 'image/png',
+        jsonFormat: 'text/geojson'
     };
 
     init = function() {
         var lon = -73.9529;
         var lat = 40.7723;
         var zoom = 10;
-        var map, poi, landmarks, roads, center, url;
-
-        url = [
-            '/wms.ashx',
-            '?SERVICE=', options.wms,
-            '&FORMAT=', options.format,
-            '&CRS=', options.projection.getCode(),
-            '&REQUEST=GETMAP&VERSION=1.3.0&STYLES=&WIDTH=0&HEIGHT=0'
-        ].join('')
+        var map, poi, sharpmap, landmarks, roads, center, url;
 
         map = new OpenLayers.Map('map', options);
         map.addControl(new OpenLayers.Control.LayerSwitcher());
@@ -70,13 +64,41 @@ $(document).ready(function() {
         }));
         map.addControl(new OpenLayers.Control.MousePosition());
 
+        sharpmap = new OpenLayers.Layer.WMS(
+            'SharpMap WMS', 
+            '/wms.ashx', {
+                layers: options.wmslayers,
+                service: options.wms,
+                version: '1.3.0',
+                format: options.format,
+                transparent: true
+            }, {
+                isBaseLayer: false,
+                transparent: true,
+                visibility: true,
+                buffer: 0,
+                singleTile: false,
+                ratio: 1.5,
+                yx: []
+            });
+        map.addLayers([new OpenLayers.Layer.OSM(), sharpmap]);
+            
+        url = [
+            '/wms.ashx',
+            '?SERVICE=', options.wms,
+            '&FORMAT=', options.jsonFormat,
+            '&CRS=', options.projection.getCode(),
+            '&REQUEST=GETMAP&VERSION=1.3.0&STYLES=&WIDTH=0&HEIGHT=0'
+        ].join('')
+        
         poi = new OpenLayers.Layer.Vector(
             'POI', {
                 strategies: [new OpenLayers.Strategy.BBOX()],
                 protocol: new OpenLayers.Protocol.HTTP({
                     url: [url, '&LAYERS=poi'].join(''),
                     format: new OpenLayers.Format.GeoJSON()
-                })
+                }),
+                visibility: false
             });
         roads = new OpenLayers.Layer.Vector(
             'Roads', {
@@ -96,7 +118,7 @@ $(document).ready(function() {
                 }),
                 visibility: false
             });
-        map.addLayers([new OpenLayers.Layer.OSM(), poi, roads, landmarks]);
+        map.addLayers([poi, roads, landmarks]);
 
         center = new OpenLayers.LonLat(lon, lat);
         center.transform(options.displayProjection, options.projection);

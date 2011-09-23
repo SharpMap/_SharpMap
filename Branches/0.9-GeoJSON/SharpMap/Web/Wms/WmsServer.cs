@@ -24,6 +24,7 @@ namespace SharpMap.Web.Wms
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Threading;
     using System.Web;
     using System.Xml;
     using Data;
@@ -633,6 +634,7 @@ namespace SharpMap.Web.Wms
 
                         context.Response.Clear();
                         context.Response.ContentType = "text/json";
+                        context.Response.BufferOutput = true;
                         context.Response.Write(buffer);
                         context.Response.End();
                     }
@@ -650,7 +652,8 @@ namespace SharpMap.Web.Wms
 
                     context.Response.Clear();
                     context.Response.ContentType = imageEncoder.MimeType;
-                    context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+                    context.Response.BufferOutput = true;
+                    context.Response.BinaryWrite(buffer);
                     context.Response.End();
                 }
             }
