@@ -15,31 +15,33 @@
 // along with SharpMap; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
-using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Globalization;
-using System.IO;
-using System.Web;
-using System.Xml;
-using SharpMap.Geometries;
-using SharpMap.Layers;
-
 namespace SharpMap.Web.Wms
 {
+    using System;
     using System.Collections.Generic;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Web;
+    using System.Xml;
     using Data;
-    using Helpers;
+    using Geometries;
+    using Layers;
+    using ProjNet.CoordinateSystems.Transformations;
+    using Rendering.GeoJSON;
+    using Point = Geometries.Point;
 
     /// <summary>
     /// This is a helper class designed to make it easy to create a WMS Service
     /// </summary>
     public static class WmsServer
     {
-        
-		#region Delegates
 
-        public delegate SharpMap.Data.FeatureDataTable InterSectDelegate(SharpMap.Data.FeatureDataTable featureDataTable, SharpMap.Geometries.BoundingBox box);
+        #region Delegates
+
+        public delegate FeatureDataTable InterSectDelegate(FeatureDataTable featureDataTable, BoundingBox box);
 
         #endregion
 
@@ -168,7 +170,7 @@ namespace SharpMap.Web.Wms
 
             //IgnoreCase value should be set according to the VERSION parameter
             //v1.3.0 is case sensitive, but since it causes a lot of problems with several WMS clients, we ignore casing anyway.
-            bool ignorecase = true;
+            const bool ignorecase = true;
 
             //Check for required parameters
             //Request parameter is mandatory
@@ -287,7 +289,7 @@ namespace SharpMap.Web.Wms
                 //sets the map size to the size of the client in order to calculate the coordinates of the projection of the client
                 try
                 {
-                    map.Size = new System.Drawing.Size(System.Convert.ToInt16(context.Request.Params["WIDTH"]), System.Convert.ToInt16(context.Request.Params["HEIGHT"]));
+                    map.Size = new Size(Convert.ToInt16(context.Request.Params["WIDTH"]), Convert.ToInt16(context.Request.Params["HEIGHT"]));
                 }
                 catch
                 {
@@ -303,14 +305,14 @@ namespace SharpMap.Web.Wms
                 }
                 map.ZoomToBox(bbox);
                 //sets the point clicked by the client
-                SharpMap.Geometries.Point p = new SharpMap.Geometries.Point();
+                Point p = new Point();
                 Single x = 0;
                 Single y = 0;
                 //tries to set the x to the Param I, if the client send an X, it will try the X, if both fail, exception is thrown
                 if (context.Request.Params["X"] != null)
                     try
                     {
-                        x = System.Convert.ToSingle(context.Request.Params["X"]);
+                        x = Convert.ToSingle(context.Request.Params["X"]);
                     }
                     catch
                     {
@@ -319,7 +321,7 @@ namespace SharpMap.Web.Wms
                 if (context.Request.Params["I"] != null)
                     try
                     {
-                        x = System.Convert.ToSingle(context.Request.Params["I"]);
+                        x = Convert.ToSingle(context.Request.Params["I"]);
                     }
                     catch
                     {
@@ -329,7 +331,7 @@ namespace SharpMap.Web.Wms
                 if (context.Request.Params["Y"] != null)
                     try
                     {
-                        y = System.Convert.ToSingle(context.Request.Params["Y"]);
+                        y = Convert.ToSingle(context.Request.Params["Y"]);
                     }
                     catch
                     {
@@ -338,17 +340,17 @@ namespace SharpMap.Web.Wms
                 if (context.Request.Params["J"] != null)
                     try
                     {
-                        y = System.Convert.ToSingle(context.Request.Params["J"]);
+                        y = Convert.ToSingle(context.Request.Params["J"]);
                     }
                     catch
                     {
                         WmsException.ThrowWmsException("Invalid parameters for I");
                     }
-                p = map.ImageToWorld(new System.Drawing.PointF(x, y));
+                p = map.ImageToWorld(new PointF(x, y));
                 int fc;
                 try
                 {
-                    fc = System.Convert.ToInt16(context.Request.Params["FEATURE_COUNT"]);
+                    fc = Convert.ToInt16(context.Request.Params["FEATURE_COUNT"]);
                     if (fc < 1)
                         fc = 1;
                 }
@@ -376,12 +378,12 @@ namespace SharpMap.Web.Wms
                                 Single queryBoxMinY = y - (_pixelSensitivity);
                                 Single queryBoxMaxX = x + (_pixelSensitivity);
                                 Single queryBoxMaxY = y + (_pixelSensitivity);
-                                SharpMap.Geometries.Point minXY = map.ImageToWorld(new System.Drawing.PointF(queryBoxMinX, queryBoxMinY));
-                                SharpMap.Geometries.Point maxXY = map.ImageToWorld(new System.Drawing.PointF(queryBoxMaxX, queryBoxMaxY));
+                                Point minXY = map.ImageToWorld(new PointF(queryBoxMinX, queryBoxMinY));
+                                Point maxXY = map.ImageToWorld(new PointF(queryBoxMaxX, queryBoxMaxY));
                                 BoundingBox queryBox = new BoundingBox(minXY, maxXY);
-                                SharpMap.Data.FeatureDataSet fds = new SharpMap.Data.FeatureDataSet();
+                                FeatureDataSet fds = new FeatureDataSet();
                                 queryLayer.ExecuteIntersectionQuery(queryBox, fds);
-								if (_intersectDelegate != null)
+                                if (_intersectDelegate != null)
                                 {
                                     fds.Tables[0] = _intersectDelegate(fds.Tables[0], queryBox);
                                 }
@@ -403,7 +405,7 @@ namespace SharpMap.Web.Wms
                                         double[] area = new double[fds.Tables[0].Rows.Count];
                                         for (int l = 0; l < fds.Tables[0].Rows.Count; l++)
                                         {
-                                            SharpMap.Data.FeatureDataRow fdr = fds.Tables[0].Rows[l] as SharpMap.Data.FeatureDataRow;
+                                            FeatureDataRow fdr = fds.Tables[0].Rows[l] as FeatureDataRow;
                                             area[l] = fdr.Geometry.GetBoundingBox().GetArea();
                                             keys[l] = l;
                                         }
@@ -510,7 +512,7 @@ namespace SharpMap.Web.Wms
                 ImageCodecInfo imageEncoder = null;
                 bool geojson = context.Request.Params["FORMAT"] == "text/geojson";
                 if (!geojson)
-                {                    
+                {
                     imageEncoder = GetEncoderInfo(context.Request.Params["FORMAT"]);
                     if (imageEncoder == null)
                     {
@@ -591,32 +593,49 @@ namespace SharpMap.Web.Wms
                                                            "Unknown layer '" + layer + "'");
                             return;
                         }
-                        else
-                            lay.Enabled = true;
+                        lay.Enabled = true;
                     }
                 }
+
                 if (geojson)
                 {
-                    List<GeoJSON> items = new List<GeoJSON>();
-                    foreach (ILayer layer in map.Layers)
+                    //Only queryable data!
+                    IQueryable<ICanQueryLayer> collection = map.Layers.AsQueryable()
+                        .OfType<ICanQueryLayer>().Where(l => l.Enabled && l.IsQueryEnabled);
+                    foreach (ICanQueryLayer layer in collection)
                     {
-                        if (!(layer is ICanQueryLayer))
-                            continue;
-
-                        ICanQueryLayer query = layer as ICanQueryLayer;
-                        if (!query.IsQueryEnabled)
-                            continue;
-
+                        //Query for data
                         FeatureDataSet ds = new FeatureDataSet();
-                        query.ExecuteIntersectionQuery(bbox, ds);
-                        IEnumerable<GeoJSON> data = JsonHelper.GetData(query.LayerName, ds);
-                        items.AddRange(data);
-                    }
+                        layer.ExecuteIntersectionQuery(bbox, ds);
+                        IEnumerable<GeoJSON> data = GeoJSONHelper.GetData(ds);
 
-                    context.Response.Clear();
-                    context.Response.ContentType = "text/json";
-                    context.Response.Charset = "windows-1252";
-                    context.Response.End();
+                        //Reproject geometries if needed
+                        IMathTransform transform = null;
+                        if (layer is VectorLayer)
+                        {
+                            ICoordinateTransformation transformation = (layer as VectorLayer).CoordinateTransformation;
+                            transform = transformation == null ? null : transformation.MathTransform;
+                        }
+                        if (transform != null)
+                        {
+                            data = data.Select(d =>
+                                {
+                                    Geometry converted = GeometryTransform.TransformGeometry(d.Geometry, transform);
+                                    d.SetGeometry(converted);
+                                    return d;
+                                });
+                        }
+
+                        //Write to stream                        
+                        StringWriter writer = new StringWriter();
+                        GeoJSONWriter.Write(data, writer);
+                        string buffer = writer.ToString();
+
+                        context.Response.Clear();
+                        context.Response.ContentType = "text/json";
+                        context.Response.Write(buffer);
+                        context.Response.End();
+                    }
                 }
                 else
                 {
@@ -624,10 +643,11 @@ namespace SharpMap.Web.Wms
                     Image img = map.GetMap();
 
                     //Png can't stream directy. Going through a memorystream instead
-                    MemoryStream MS = new MemoryStream();
-                    img.Save(MS, imageEncoder, null);
+                    MemoryStream ms = new MemoryStream();
+                    img.Save(ms, imageEncoder, null);
                     img.Dispose();
-                    byte[] buffer = MS.ToArray();
+                    byte[] buffer = ms.ToArray();
+
                     context.Response.Clear();
                     context.Response.ContentType = imageEncoder.MimeType;
                     context.Response.OutputStream.Write(buffer, 0, buffer.Length);

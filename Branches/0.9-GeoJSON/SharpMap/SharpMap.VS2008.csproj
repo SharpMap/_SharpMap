@@ -116,8 +116,6 @@
     <Compile Include="Geometries\Polygon.cs" />
     <Compile Include="Geometries\SpatialRelations.cs" />
     <Compile Include="Geometries\Surface.cs" />
-    <Compile Include="Helpers\GeoJSON.cs" />
-    <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Layers\DuplicateLayerException.cs" />
     <Compile Include="Layers\IAsyncLayer.cs" />
     <Compile Include="Layers\iLayer.cs" />
@@ -151,6 +149,9 @@
     <Compile Include="Rendering\Decoration\ScaleBar\ScaleBarLabelText.cs" />
     <Compile Include="Rendering\Decoration\ScaleBar\ScaleBarStyle.cs" />
     <Compile Include="Rendering\Decoration\ScaleBar\Unit.cs" />
+    <Compile Include="Rendering\GeoJSON\GeoJSON.cs" />
+    <Compile Include="Rendering\GeoJSON\GeoJSONHelper.cs" />
+    <Compile Include="Rendering\GeoJSON\GeoJSONWriter.cs" />
     <Compile Include="Rendering\Label.cs" />
     <Compile Include="Rendering\LabelCollisionDetection.cs" />
     <Compile Include="Rendering\RenderExceptions.cs" />
