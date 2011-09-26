@@ -54,7 +54,7 @@ $(document).ready(function() {
         var lon = -73.9529;
         var lat = 40.7723;
         var zoom = 10;
-        var map, poi, sharpmap, landmarks, roads, center, url;
+        var map, sharpmap, url, poi, landmarks, roads, center, highlight;
 
         map = new OpenLayers.Map('map', options);
         map.addControl(new OpenLayers.Control.LayerSwitcher());
@@ -65,7 +65,7 @@ $(document).ready(function() {
         map.addControl(new OpenLayers.Control.MousePosition());
 
         sharpmap = new OpenLayers.Layer.WMS(
-            'SharpMap WMS', 
+            'SharpMap WMS',
             '/wms.ashx', {
                 layers: options.wmslayers,
                 service: options.wms,
@@ -82,7 +82,7 @@ $(document).ready(function() {
                 yx: []
             });
         map.addLayers([new OpenLayers.Layer.OSM(), sharpmap]);
-            
+
         url = [
             '/wms.ashx',
             '?SERVICE=', options.wms,
@@ -90,7 +90,7 @@ $(document).ready(function() {
             '&CRS=', options.projection.getCode(),
             '&REQUEST=GETMAP&VERSION=1.3.0&STYLES=&WIDTH=0&HEIGHT=0'
         ].join('')
-        
+
         poi = new OpenLayers.Layer.Vector(
             'POI', {
                 strategies: [new OpenLayers.Strategy.BBOX()],
@@ -105,7 +105,7 @@ $(document).ready(function() {
                 strategies: [new OpenLayers.Strategy.BBOX()],
                 protocol: new OpenLayers.Protocol.HTTP({
                     url: [url, '&LAYERS=tiger_roads'].join(''),
-                    format: new OpenLayers.Format.GeoJSON(),
+                    format: new OpenLayers.Format.GeoJSON()
                 }),
                 visibility: false
             });
@@ -119,6 +119,19 @@ $(document).ready(function() {
                 visibility: false
             });
         map.addLayers([poi, roads, landmarks]);
+
+        highlight = new OpenLayers.Control.SelectFeatureEx([poi, roads, landmarks], {
+            hover: true,
+            highlightOnly: true,
+            renderIntent: "temporary"
+        });
+        highlight.events
+            .toObservable("clickFeature")
+            .Subscribe(function(e) {
+                alert(e);
+            });
+        map.addControl(highlight);
+        highlight.activate();
 
         center = new OpenLayers.LonLat(lon, lat);
         center.transform(options.displayProjection, options.projection);

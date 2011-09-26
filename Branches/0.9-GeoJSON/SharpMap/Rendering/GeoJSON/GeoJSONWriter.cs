@@ -54,6 +54,54 @@ namespace SharpMap.Rendering.GeoJSON
             return String.Format("{0}_{1}", master, id);
         }
 
+        public static void WriteCoord(Point coordinate, JsonTextWriter writer)
+        {
+            if (coordinate == null)
+                return;
+            if (writer == null)
+                throw new ArgumentNullException("writer", "A valid JSON writer object is required");
+
+            writer.WriteStartArray();
+            writer.WriteValue(coordinate.X);
+            writer.WriteValue(coordinate.Y);
+            writer.WriteEndArray();
+        }
+
+        public static void WriteCoord(Point coordinate, TextWriter writer)
+        {
+            if (coordinate == null)
+                return;
+            if (writer == null)
+                throw new ArgumentNullException("writer", "A valid text writer object is required");
+
+            JsonTextWriter jwriter = CreateWriter(writer);
+            WriteCoord(coordinate, jwriter);
+        }
+
+        public static void WriteCoord(IEnumerable<Point> coordinates, JsonTextWriter writer)
+        {
+            if (coordinates == null)
+                return;
+            if (writer == null)
+                throw new ArgumentNullException("writer", "A valid JSON writer object is required");
+
+            writer.WriteStartArray();
+            foreach (Point entry in coordinates)
+                WriteCoord(entry, writer);
+            writer.WriteEndArray();
+        }
+
+        public static void WriteCoord(IEnumerable<Point> coordinates, TextWriter writer)
+        {
+            if (coordinates == null)
+                return;
+            if (writer == null)
+                throw new ArgumentNullException("writer", "A valid text writer object is required");
+
+            JsonTextWriter jwriter = CreateWriter(writer);
+            WriteCoord(coordinates, jwriter);
+        }
+
         public static void Write(Geometry geometry, JsonTextWriter writer)
         {
             if (geometry == null)
@@ -85,55 +133,6 @@ namespace SharpMap.Rendering.GeoJSON
                 throw new ArgumentNullException("writer", "A valid text writer object is required");
 
             Write(geometry, CreateWriter(writer));
-        }
-
-        public static void WriteCoord(Point coordinate, JsonTextWriter writer)
-        {
-            if (coordinate == null)
-                return;
-            if (writer == null)
-                throw new ArgumentNullException("writer", "A valid JSON writer object is required");
-
-            writer.WriteStartArray();
-            writer.WriteValue(coordinate.X);
-            writer.WriteValue(coordinate.Y);
-            writer.WriteEndArray();
-        }
-
-        public static void WriteCoord(Point coordinate, TextWriter writer)
-        {
-            if (coordinate == null)
-                return;
-            if (writer == null)
-                throw new ArgumentNullException("writer", "A valid text writer object is required");
-
-            JsonTextWriter jwriter = CreateWriter(writer);
-            Write(coordinate, jwriter);
-        }
-
-        public static void WriteCoord(IEnumerable<Point> coordinates, JsonTextWriter writer)
-        {
-
-            if (coordinates == null)
-                return;
-            if (writer == null)
-                throw new ArgumentNullException("writer", "A valid JSON writer object is required");
-
-            writer.WriteStartArray();
-            foreach (Point entry in coordinates)
-                Write(entry, writer);
-            writer.WriteEndArray();
-        }
-
-        public static void WriteCoord(IEnumerable<Point> coordinates, TextWriter writer)
-        {
-            if (coordinates == null)
-                return;
-            if (writer == null)
-                throw new ArgumentNullException("writer", "A valid text writer object is required");
-
-            JsonTextWriter jwriter = CreateWriter(writer);
-            WriteCoord(coordinates, jwriter);
         }
 
         public static void Write(Point point, JsonTextWriter writer)
@@ -180,8 +179,8 @@ namespace SharpMap.Rendering.GeoJSON
             writer.WriteValue("MultiPoint");
             writer.WritePropertyName("coordinates");
             writer.WriteStartArray();
-            foreach (Geometry entry in points)
-                Write(entry, writer);
+            foreach (Point entry in points)
+                WriteCoord(entry, writer);
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
@@ -210,7 +209,7 @@ namespace SharpMap.Rendering.GeoJSON
             writer.WritePropertyName("coordinates");
             writer.WriteStartArray();
             foreach (Point entry in line.Vertices)
-                Write(entry, writer);
+                WriteCoord(entry, writer);
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
@@ -238,7 +237,11 @@ namespace SharpMap.Rendering.GeoJSON
             writer.WritePropertyName("coordinates");
             writer.WriteStartArray();
             foreach (LineString line in lines)
-                Write(line, writer);
+            {
+                writer.WriteStartArray();
+                WriteCoord(line.Vertices, writer);
+                writer.WriteEndArray();
+            }
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
