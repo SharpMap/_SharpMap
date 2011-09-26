@@ -63,6 +63,7 @@ $(document).ready(function() {
             position: new OpenLayers.Pixel(2, 10)
         }));
         map.addControl(new OpenLayers.Control.MousePosition());
+        map.addControl(new OpenLayers.Control.LoadingPanel());
 
         sharpmap = new OpenLayers.Layer.WMS(
             'SharpMap WMS',
@@ -98,6 +99,7 @@ $(document).ready(function() {
                     url: [url, '&LAYERS=poi'].join(''),
                     format: new OpenLayers.Format.GeoJSON()
                 }),
+                styleMap: OpenLayers.Resources.Styles.Layers.editable,
                 visibility: false
             });
         roads = new OpenLayers.Layer.Vector(
@@ -107,6 +109,7 @@ $(document).ready(function() {
                     url: [url, '&LAYERS=tiger_roads'].join(''),
                     format: new OpenLayers.Format.GeoJSON()
                 }),
+                styleMap: OpenLayers.Resources.Styles.Layers.editable,
                 visibility: false
             });
         landmarks = new OpenLayers.Layer.Vector(
@@ -116,6 +119,7 @@ $(document).ready(function() {
                     url: [url, '&LAYERS=poly_landmarks'].join(''),
                     format: new OpenLayers.Format.GeoJSON()
                 }),
+                styleMap: OpenLayers.Resources.Styles.Layers.editable,
                 visibility: false
             });
         map.addLayers([poi, roads, landmarks]);
@@ -123,13 +127,8 @@ $(document).ready(function() {
         highlight = new OpenLayers.Control.SelectFeatureEx([poi, roads, landmarks], {
             hover: true,
             highlightOnly: true,
-            renderIntent: "temporary"
-        });
-        highlight.events
-            .toObservable("clickFeature")
-            .Subscribe(function(e) {
-                alert(e);
-            });
+            renderIntent: 'temporary'
+        });       
         map.addControl(highlight);
         highlight.activate();
 

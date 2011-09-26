@@ -62,6 +62,7 @@ $(document).ready(function() {
             position: new OpenLayers.Pixel(2, 10)
         }));
         map.addControl(new OpenLayers.Control.MousePosition());
+        map.addControl(new OpenLayers.Control.LoadingPanel());
 
         sharpmap = new OpenLayers.Layer.WMS(
             'SharpMap WMS', 
