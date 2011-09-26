@@ -19,6 +19,7 @@ namespace SharpMap.Web.Wms
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.Globalization;
@@ -609,6 +610,7 @@ namespace SharpMap.Web.Wms
                         FeatureDataSet ds = new FeatureDataSet();
                         layer.ExecuteIntersectionQuery(bbox, ds);
                         IEnumerable<GeoJSON> data = GeoJSONHelper.GetData(ds);
+                        Debug.WriteLine(String.Format("BBOX: {0}, QUERY ITEMS: {1}", bbox, data.Count()));
 
                         //Reproject geometries if needed
                         IMathTransform transform = null;
