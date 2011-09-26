@@ -428,6 +428,11 @@
     <Content Include="lib\OpenLayers\Util.js" />
     <Content Include="lib\Rico\Color.js" />
     <Content Include="lib\Rico\Corner.js" />
+    <Content Include="Scripts\ol\SelectFeatureEx.js" />
+    <Content Include="Scripts\rx.aggregates.js" />
+    <Content Include="Scripts\rx.jQuery.js" />
+    <Content Include="Scripts\rx.js" />
+    <Content Include="Scripts\rx.OpenLayers.js" />
     <Content Include="Scripts\script_geojs.js" />
     <Content Include="Scripts\globalmaptiles.js" />
     <Content Include="Scripts\polymaps.js" />

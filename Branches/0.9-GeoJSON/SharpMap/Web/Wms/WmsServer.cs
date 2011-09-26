@@ -620,11 +620,11 @@ namespace SharpMap.Web.Wms
                         if (transform != null)
                         {
                             data = data.Select(d =>
-                                {
-                                    Geometry converted = GeometryTransform.TransformGeometry(d.Geometry, transform);
-                                    d.SetGeometry(converted);
-                                    return d;
-                                });
+                            {
+                                Geometry converted = GeometryTransform.TransformGeometry(d.Geometry, transform);
+                                d.SetGeometry(converted);
+                                return d;
+                            });
                         }
 
                         //Write to stream                        
