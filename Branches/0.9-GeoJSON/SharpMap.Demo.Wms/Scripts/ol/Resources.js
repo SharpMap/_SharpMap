@@ -69,21 +69,22 @@
                                     pointRadius: 5,
                                     graphicName: 'square',
                                     fillColor: 'white',
-                                    fillOpacity: 0.25,
+                                    fillOpacity: 0.5,
                                     strokeWidth: 1,
-                                    strokeOpacity: 1,
+                                    strokeOpacity: 2,
                                     strokeColor: '#ff0000'
                                 },
                                 Line: {
                                     strokeWidth: 3,
-                                    strokeOpacity: 1,
-                                    strokeColor: '#6666aa'
+                                    strokeOpacity: 0.75,
+                                    strokeColor: '#339900'
                                 },
                                 Polygon: {
+                                    fillColor: '#909090',
+                                    fillOpacity: 0.5,
                                     strokeWidth: 1,
                                     strokeOpacity: 1,
-                                    fillColor: '#9999aa',
-                                    strokeColor: '#6666aa'
+                                    strokeColor: '#000000'
                                 }
                             }
                         })

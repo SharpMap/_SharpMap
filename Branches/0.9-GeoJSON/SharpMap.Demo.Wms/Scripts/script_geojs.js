@@ -11,7 +11,6 @@ $(document).ready(function() {
 
     options = {
         wms: 'WMS',
-        wmslayers: ['poly_landmarks', 'tiger_roads', 'poi'].join(),
         controls: [],
         maxExtent: new OpenLayers.Bounds(-2.003750834E7, -2.003750834E7, 2.003750834E7, 2.003750834E7),
         resolutions: [
@@ -46,15 +45,14 @@ $(document).ready(function() {
         projection: new OpenLayers.Projection('EPSG:900913'),
         displayProjection: new OpenLayers.Projection('EPSG:4326'),
         units: 'meters',
-        format: 'image/png',
-        jsonFormat: 'text/geojson'
+        format: 'text/json'
     };
 
     init = function() {
         var lon = -73.9529;
         var lat = 40.7723;
         var zoom = 10;
-        var map, sharpmap, url, poi, landmarks, roads, center, highlight;
+        var map, url, layers = [], center, highlight;
 
         map = new OpenLayers.Map('map', options);
         map.addControl(new OpenLayers.Control.LayerSwitcher());
@@ -64,71 +62,56 @@ $(document).ready(function() {
         }));
         map.addControl(new OpenLayers.Control.MousePosition());
         map.addControl(new OpenLayers.Control.LoadingPanel());
-
-        sharpmap = new OpenLayers.Layer.WMS(
-            'SharpMap WMS',
-            '/wms.ashx', {
-                layers: options.wmslayers,
-                service: options.wms,
-                version: '1.3.0',
-                format: options.format,
-                transparent: true
-            }, {
-                isBaseLayer: false,
-                transparent: true,
-                visibility: true,
-                buffer: 0,
-                singleTile: false,
-                ratio: 1.5,
-                yx: []
-            });
-        map.addLayers([new OpenLayers.Layer.OSM(), sharpmap]);
+        map.addLayer(new OpenLayers.Layer.OSM());
 
         url = [
             '/wms.ashx',
             '?SERVICE=', options.wms,
-            '&FORMAT=', options.jsonFormat,
+            '&FORMAT=', options.format,
             '&CRS=', options.projection.getCode(),
             '&REQUEST=GETMAP&VERSION=1.3.0&STYLES=&WIDTH=0&HEIGHT=0'
         ].join('')
 
-        poi = new OpenLayers.Layer.Vector(
-            'POI', {
-                strategies: [new OpenLayers.Strategy.BBOX()],
-                protocol: new OpenLayers.Protocol.HTTP({
-                    url: [url, '&LAYERS=poi'].join(''),
-                    format: new OpenLayers.Format.GeoJSON()
-                }),
-                styleMap: OpenLayers.Resources.Styles.Layers.editable,
-                visibility: false
-            });
-        roads = new OpenLayers.Layer.Vector(
-            'Roads', {
-                strategies: [new OpenLayers.Strategy.BBOX()],
-                protocol: new OpenLayers.Protocol.HTTP({
-                    url: [url, '&LAYERS=tiger_roads'].join(''),
-                    format: new OpenLayers.Format.GeoJSON()
-                }),
-                styleMap: OpenLayers.Resources.Styles.Layers.editable,
-                visibility: false
-            });
-        landmarks = new OpenLayers.Layer.Vector(
-            'Landmarks', {
-                strategies: [new OpenLayers.Strategy.BBOX()],
-                protocol: new OpenLayers.Protocol.HTTP({
-                    url: [url, '&LAYERS=poly_landmarks'].join(''),
-                    format: new OpenLayers.Format.GeoJSON()
-                }),
-                styleMap: OpenLayers.Resources.Styles.Layers.editable,
-                visibility: false
-            });
-        map.addLayers([poi, roads, landmarks]);
+        layers.push(
+            new OpenLayers.Layer.Vector(
+                'POI', {
+                    strategies: [new OpenLayers.Strategy.BBOX()],
+                    protocol: new OpenLayers.Protocol.HTTP({
+                        url: [url, '&LAYERS=poi'].join(''),
+                        format: new OpenLayers.Format.GeoJSON()
+                    }),
+                    styleMap: OpenLayers.Resources.Styles.Layers.editable,
+                    visibility: false
+                }));
+        layers.push(
+            new OpenLayers.Layer.Vector(
+                'Roads', {
+                    strategies: [new OpenLayers.Strategy.BBOX()],
+                    protocol: new OpenLayers.Protocol.HTTP({
+                        url: [url, '&LAYERS=tiger_roads'].join(''),
+                        format: new OpenLayers.Format.GeoJSON()
+                    }),
+                    styleMap: OpenLayers.Resources.Styles.Layers.editable,
+                    visibility: false
+                }));
+        layers.push(
+            new OpenLayers.Layer.Vector(
+                'Landmarks', {
+                    strategies: [new OpenLayers.Strategy.BBOX()],
+                    protocol: new OpenLayers.Protocol.HTTP({
+                        url: [url, '&LAYERS=poly_landmarks'].join(''),
+                        format: new OpenLayers.Format.GeoJSON()
+                    }),
+                    styleMap: OpenLayers.Resources.Styles.Layers.editable,
+                    visibility: false
+                }));
+        map.addLayers(layers.reverse());
 
-        highlight = new OpenLayers.Control.SelectFeatureEx([poi, roads, landmarks], {
+        highlight = new OpenLayers.Control.SelectFeatureEx(layers, {
             hover: true,
             highlightOnly: true,
             renderIntent: 'temporary'
-        });       
+        });
         map.addControl(highlight);
         highlight.activate();
 

@@ -218,6 +218,13 @@
     <Compile Include="Web\Wfs\Client.cs" />
     <Compile Include="Web\Wms\Capabilities.cs" />
     <Compile Include="Web\Wms\Client.cs" />
+    <Compile Include="Web\Wms\Handlers\AbstractHandler.cs" />
+    <Compile Include="Web\Wms\Handlers\GetCapabilities.cs" />
+    <Compile Include="Web\Wms\Handlers\GetFeatureInfo.cs" />
+    <Compile Include="Web\Wms\Handlers\GetFeatureInfoParams.cs" />
+    <Compile Include="Web\Wms\Handlers\GetMap.cs" />
+    <Compile Include="Web\Wms\Handlers\HandlerParams.cs" />
+    <Compile Include="Web\Wms\Handlers\IWmsHandler.cs" />
     <Compile Include="Web\Wms\SpatialReferencedBoundingBox.cs" />
     <Compile Include="Web\Wms\Tiling\ITileCache.cs" />
     <Compile Include="Web\Wms\Tiling\TileCacheFileStorage.cs" />
