@@ -554,7 +554,6 @@ namespace SharpMap
             for (int i = 0; i < _Layers.Count; i++)
                 if (String.Equals(_Layers[i].LayerName, name, StringComparison.InvariantCultureIgnoreCase))
                     return _Layers[i];
-
             return null;
         }
 

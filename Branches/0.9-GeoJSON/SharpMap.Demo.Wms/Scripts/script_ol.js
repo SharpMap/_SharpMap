@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var options, init;
+    var options, init, showInfo;
 
     OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
@@ -8,7 +8,7 @@ $(document).ready(function() {
         this.src = '/Content/Images/sorry.jpg';
         this.style.backgroundColor = OpenLayers.Util.onImageLoadErrorColor;
     };
-    
+
     options = {
         wms: 'WMS',
         wmslayers: ['poly_landmarks', 'tiger_roads', 'poi'].join(),
@@ -53,7 +53,7 @@ $(document).ready(function() {
         var lon = -73.9529;
         var lat = 40.7723;
         var zoom = 10;
-        var map, sharpmap, center;
+        var map, sharpmap, center, click;
 
         map = new OpenLayers.Map('map', options);
         map.addControl(new OpenLayers.Control.LayerSwitcher());
@@ -65,7 +65,7 @@ $(document).ready(function() {
         map.addControl(new OpenLayers.Control.LoadingPanel());
 
         sharpmap = new OpenLayers.Layer.WMS(
-            'SharpMap WMS', 
+            'SharpMap WMS',
             '/wms.ashx', {
                 layers: options.wmslayers,
                 service: options.wms,
@@ -82,6 +82,17 @@ $(document).ready(function() {
                 yx: []
             });
         map.addLayers([new OpenLayers.Layer.OSM(), sharpmap]);
+
+        click = new OpenLayers.Control.WMSGetFeatureInfo({
+            url: '/wms.ashx',
+            layers: [sharpmap],
+            queryVisible: true
+        });
+        click.events.register("getfeatureinfo", this, function(evt) {
+            alert(evt.text);
+        });
+        map.addControl(click);
+        click.activate();
 
         center = new OpenLayers.LonLat(lon, lat);
         center.transform(options.displayProjection, options.projection);

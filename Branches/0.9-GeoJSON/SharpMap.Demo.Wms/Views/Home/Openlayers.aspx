@@ -16,4 +16,6 @@
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <div id="map">
     </div>
+    <div id="responseText">
+    </div>
 </asp:Content>

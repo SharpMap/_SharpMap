@@ -24,12 +24,12 @@ namespace SharpMap.Web.Wms
     /// </summary>
     public class WmsException
     {
-        public static void ThrowWmsException(string Message)
+        public static void ThrowWmsException(string message)
         {
-            ThrowWmsException(WmsExceptionCode.NotApplicable, Message);
+            ThrowWmsException(WmsExceptionCode.NotApplicable, message);
         }
 
-        public static void ThrowWmsException(WmsExceptionCode code, string Message)
+        public static void ThrowWmsException(WmsExceptionCode code, string message)
         {
             HttpResponse Response = HttpContext.Current.Response;
             Response.Clear();
@@ -40,7 +40,7 @@ namespace SharpMap.Web.Wms
             Response.Write("<ServiceException");
             if (code != WmsExceptionCode.NotApplicable)
                 Response.Write(" code=\"" + code + "\"");
-            Response.Write(">" + Message + "</ServiceException>\n");
+            Response.Write(">" + message + "</ServiceException>\n");
             Response.Write("</ServiceExceptionReport>");
             Response.End();
         }
