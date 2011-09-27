@@ -53,11 +53,10 @@ $(document).ready(function() {
         var lon = -73.9529;
         var lat = 40.7723;
         var zoom = 10;
-        var map, sharpmap, center, click;
+        var map, sharpmap, click, toolbar, center;
 
         map = new OpenLayers.Map('map', options);
         map.addControl(new OpenLayers.Control.LayerSwitcher());
-        map.addControl(new OpenLayers.Control.NavToolbar());
         map.addControl(new OpenLayers.Control.PanZoom({
             position: new OpenLayers.Pixel(2, 10)
         }));
@@ -85,14 +84,21 @@ $(document).ready(function() {
 
         click = new OpenLayers.Control.WMSGetFeatureInfo({
             url: '/wms.ashx',
+            title: 'Identify features by clicking',
             layers: [sharpmap],
             queryVisible: true
         });
         click.events.register("getfeatureinfo", this, function(evt) {
             alert(evt.text);
         });
-        map.addControl(click);
-        click.activate();
+
+        toolbar = OpenLayers.Class(OpenLayers.Control.NavToolbar, {
+            initialize: function() {
+                OpenLayers.Control.NavToolbar.prototype.initialize.apply(this, [options]);
+                this.addControls([click]);
+            }
+        });
+        map.addControl(new toolbar());
 
         center = new OpenLayers.LonLat(lon, lat);
         center.transform(options.displayProjection, options.projection);

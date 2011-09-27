@@ -227,9 +227,9 @@
                                     vstr = String.Format("{0},\n", vstr);
                             }
                         }
-                        else vstr = vstr + "\nSearch returned no results on layer: " + item + " ";
+                        else vstr = String.Format("{0}\nSearch returned no results on layer: {1} ", vstr, item);
                     }
-                    else vstr = vstr + "\nSearch returned no results on layer: " + item;
+                    else vstr = String.Format("{0}\nSearch returned no results on layer: {1}", vstr, item);
                 }
                 if (found)
                     continue;

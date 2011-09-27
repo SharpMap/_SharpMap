@@ -96,19 +96,6 @@
             }
             else this.map.BackColor = Color.Transparent;
 
-            //Get the image format requested
-            ImageCodecInfo imageEncoder = null;
-            bool json = this.Check("text/json", format);
-            if (!json)
-            {
-                imageEncoder = this.GetEncoderInfo(format);
-                if (imageEncoder == null)
-                {
-                    WmsException.ThrowWmsException("Invalid MimeType specified in FORMAT parameter");
-                    return;
-                }
-            }
-
             //Parse map size
             int width;            
             if (!Int32.TryParse(queryWidth, out width))
@@ -179,7 +166,8 @@
                     lay.Enabled = true;
                 }
             }
-
+            
+            bool json = this.Check("text/json", format);
             if (json)
             {
                 //Only queryable data!
@@ -210,7 +198,6 @@
                         });
                     }
 
-                    //Write to stream                        
                     StringWriter writer = new StringWriter();
                     GeoJSONWriter.Write(data, writer);
                     string buffer = writer.ToString();
@@ -224,6 +211,14 @@
             }
             else
             {
+                //Get the image format requested
+                ImageCodecInfo imageEncoder = this.GetEncoderInfo(format);
+                if (imageEncoder == null)
+                {
+                    WmsException.ThrowWmsException("Invalid MimeType specified in FORMAT parameter");
+                    return;
+                }
+
                 //Render map
                 Image img = this.map.GetMap();
 
