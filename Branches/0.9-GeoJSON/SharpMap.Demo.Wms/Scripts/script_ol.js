@@ -46,7 +46,10 @@ $(document).ready(function() {
         projection: new OpenLayers.Projection('EPSG:900913'),
         displayProjection: new OpenLayers.Projection('EPSG:4326'),
         units: 'meters',
-        format: 'image/png'
+        format: 'image/png',
+        wmsparams: {
+            'MAP_TYPE': 'OL'
+        }
     };
 
     init = function() {
@@ -80,12 +83,14 @@ $(document).ready(function() {
                 ratio: 1.5,
                 yx: []
             });
+        sharpmap.mergeNewParams(options.wmsparams);
         map.addLayers([new OpenLayers.Layer.OSM(), sharpmap]);
 
         click = new OpenLayers.Control.WMSGetFeatureInfo({
             url: '/wms.ashx',
             title: 'Identify features by clicking',
             layers: [sharpmap],
+            vendorParams: options.wmsparams,
             queryVisible: true
         });
         click.events.register("getfeatureinfo", this, function(evt) {

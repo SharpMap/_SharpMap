@@ -69,7 +69,7 @@ $(document).ready(function() {
             '?SERVICE=', options.wms,
             '&FORMAT=', options.format,
             '&CRS=', options.projection.getCode(),
-            '&REQUEST=GETMAP&VERSION=1.3.0&STYLES=&WIDTH=0&HEIGHT=0'
+            '&REQUEST=GETMAP&VERSION=1.3.0&STYLES=&WIDTH=0&HEIGHT=0&MAP_TYPE=OL'
         ].join('')
 
         layers.push(
