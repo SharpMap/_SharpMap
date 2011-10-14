@@ -203,9 +203,12 @@ namespace SharpMap.Web.Wms
             else if (String.Compare(request, "GetMap", ignorecase) == 0)
                 handler = new GetMap(@params);
 
-            if (handler != null)
-                 handler.Handle();
-            else WmsException.ThrowWmsException(WmsException.WmsExceptionCode.OperationNotSupported, String.Format("Invalid request: {0}", request));
+            if (handler == null)
+            {
+                WmsException.ThrowWmsException(
+                    WmsException.WmsExceptionCode.OperationNotSupported, String.Format("Invalid request: {0}", request));
+            }
+            else handler.Handle();
         }
     }
 }

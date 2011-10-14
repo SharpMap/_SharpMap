@@ -24,7 +24,17 @@
                 else url = absoluteUri;
                 Capabilities.WmsServiceDescription description = GetDescription(url);
 
-                Map map = MapHelper.InitializeMap();                
+                Map map;
+                string type = request.Params["MAP_TYPE"];                
+                if (String.Equals(type, "OL", StringComparison.InvariantCultureIgnoreCase))
+                    map = MapHelper.OpenLayers();
+                else if (String.Equals(type, "PM", StringComparison.InvariantCultureIgnoreCase))
+                    map = MapHelper.PolyMaps();
+                else
+                {
+                    string format = String.Format("unsupported map type: '{0}'", type);
+                    throw new NotSupportedException(format);
+                }
                 WmsServer.ParseQueryString(map, description);
             }
             catch (Exception ex)

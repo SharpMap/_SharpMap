@@ -111,6 +111,7 @@
     <Content Include="Views\Shared\Site.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\colorbrewer.css" />
     <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\openlayers.css" />
     <Content Include="Content\Images\sorry.jpg" />

@@ -2,6 +2,8 @@
 
 <asp:Content ID="cssContent" ContentPlaceHolderID="CustomCssContent" runat="server">
     <link rel="stylesheet" href="<%=Url.Content("~/Content/polymaps.css?v=1")%>" />
+    <link rel="stylesheet" href="<%=Url.Content("~/Content/colorbrewer.css?v=1")%>" />
+    
 </asp:Content>
 <asp:Content ID="jsContent" ContentPlaceHolderID="CustomJsContent" runat="server">
 
