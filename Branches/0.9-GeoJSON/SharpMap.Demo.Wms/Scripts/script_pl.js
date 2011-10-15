@@ -9,26 +9,37 @@
         .zoom(10)
         .add(po.interact())
         .add(po.hash());
-    map.container().setAttribute("class", "PuBu");       
-    
+    map.container().setAttribute("class", "PuBu");
+
     map.add(po.image().url(
         po.url(['http://{S}tile.cloudmade.com', '/1a1b06b230af4efdbb989ea99e9841af', '/998/256/{Z}/{X}/{Y}.png'].join(''))
-        .hosts(['a.', 'b.', 'c.', ''])));
-    
+            .hosts(['a.', 'b.', 'c.', ''])));
+
     layer = po.geoJson().url(function(data) {
         var bounds, url;
         bounds = mercator.TileLatLonBounds(data.column, data.row, data.zoom)
         url = ['/wms.ashx?MAP_TYPE=PM&HEIGHT=256&WIDTH=256&STYLES=&',
             'CRS=EPSG%3A4326&FORMAT=text%2Fjson&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&',
             'EXCEPTIONS=application%2Fvnd.ogc.se_inimage&transparent=true&',
-            'LAYERS=poly_landmarks', '&BBOX=', bounds[1], ',', -bounds[2], ',', bounds[3], ',', -bounds[0]
+            'LAYERS=poly_landmarks,tiger_roads,poi', '&BBOX=', bounds[1], ',', -bounds[2], ',', bounds[3], ',', -bounds[0]
         ].join('');
         return url;
     }).on("load", function(e) {
-        var node, parent;
+        var type, node, parent;
         $.each(e.features, function() {
-            node = document.createTextNode(this.data.properties.LANAME);
-            this.element.setAttribute("class", "q3-4");
+            type = this.data.geometry.type;
+            if (type === 'Polygon' || type === 'MultiPolygon') {
+                this.element.setAttribute("class", "poly");
+                node = document.createTextNode(this.data.properties.LANAME);
+            }
+            else if (type === 'LineString' || type === 'MultiLineString') {
+                this.element.setAttribute("class", "line");
+                node = document.createTextNode(this.data.properties.NAME);
+            }
+            else if (type === 'Point' || type === 'MultiPoint') {
+                this.element.setAttribute("class", "point");
+                node = document.createTextNode(this.data.properties.NAME);
+            }
             parent = po.svg("title").appendChild(node).parentNode;
             this.element.appendChild(parent);
         });
