@@ -170,6 +170,8 @@
             bool json = this.Check("text/json", format);
             if (json)
             {
+                List<GeoJSON> items = new List<GeoJSON>();
+
                 //Only queryable data!
                 IQueryable<ICanQueryLayer> collection = this.map.Layers.AsQueryable()
                     .OfType<ICanQueryLayer>().Where(l => l.Enabled && l.IsQueryEnabled);
@@ -179,8 +181,7 @@
                     FeatureDataSet ds = new FeatureDataSet();
                     layer.ExecuteIntersectionQuery(bbox, ds);
                     IEnumerable<GeoJSON> data = GeoJSONHelper.GetData(ds);
-                    Debug.WriteLine(String.Format("BBOX: {0}, QUERY ITEMS: {1}", bbox, data.Count()));
-
+                    
                     //Reproject geometries if needed
                     IMathTransform transform = null;
                     if (layer is VectorLayer)
@@ -196,18 +197,20 @@
                             d.SetGeometry(converted);
                             return d;
                         });
-                    }
-
-                    StringWriter writer = new StringWriter();
-                    GeoJSONWriter.Write(data, writer);
-                    string buffer = writer.ToString();
-
-                    this.context.Response.Clear();
-                    this.context.Response.ContentType = "text/json";
-                    this.context.Response.BufferOutput = true;
-                    this.context.Response.Write(buffer);
-                    this.context.Response.End();
+                    } 
+                   
+                    items.AddRange(data);
                 }
+
+                StringWriter writer = new StringWriter();
+                GeoJSONWriter.Write(items, writer);
+                string buffer = writer.ToString();
+
+                this.context.Response.Clear();
+                this.context.Response.ContentType = "text/json";
+                this.context.Response.BufferOutput = true;
+                this.context.Response.Write(buffer);
+                this.context.Response.End();
             }
             else
             {

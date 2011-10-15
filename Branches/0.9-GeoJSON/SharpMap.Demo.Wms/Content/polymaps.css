@@ -75,12 +75,21 @@ svg
 	shape-rendering: crispEdges;
 }
 
-.poly_landmarks path
+.poly
 {
-	opacity: .8;
-	stroke: #000;
-	stroke-width: 2.5px;
+	fill: rgb(0,0,180);
+	opacity: .6;
+	stroke: #fff;
+	stroke-width: 1.5px;
 	vector-effect: non-scaling-stroke;
-	stroke-opacity: .6;
+	stroke-opacity: 0.9;
+}
+
+.line
+{
+	stroke: rgb(180,0,0);
+	stroke-width: 1px;
+	vector-effect: non-scaling-stroke;
+	stroke-opacity: 0.8;
 }
 
