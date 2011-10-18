@@ -5,7 +5,7 @@
 
     var map = new L.Map('map'), center, cloudmade;
     map.on('load', function(e) {
-        var bounds, url;
+        var bounds, url, options, layer, type;
         bounds = e.target.getBounds();
         url = [
            '/wms.ashx?MAP_TYPE=PM&HEIGHT=256&WIDTH=256&STYLES=&',
@@ -14,42 +14,38 @@
             'LAYERS=poly_landmarks,tiger_roads,poi',
             '&BBOX=', bounds._southWest.lng, ',', bounds._southWest.lat, ',', bounds._northEast.lng, ',', bounds._northEast.lat
         ].join('');
-        
+
+        options = {
+            radius: 8,
+            fillColor: "#ff7800",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
+        layer = new L.GeoJSON(null, {
+            pointToLayer: function(p) {
+                return new L.CircleMarker(p, options);
+            }
+        });
+        layer.on('featureparse', function(e) {
+            type = e.geometryType;
+            if (type === 'Polygon' || type === 'MultiPolygon') {
+                e.layer.setStyle({
+                    color: 'rgb(0,0,180)',
+                    weight: 4,
+                    opacity: 0.6
+                });
+            }
+            else if (type === 'LineString' || type === 'MultiLineString') {
+                e.layer.setStyle({
+                    color: 'rgb(180,0,0)',
+                    weight: 1,
+                    opacity: 0.9
+                });
+            }
+        });
         $.getJSON(url, function(e) {
-            var options, layer, type;
-            options = {
-                radius: 8,
-                fillColor: "#ff7800",
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
-            };
-            layer = new L.GeoJSON(null, {
-                pointToLayer: function(p) {
-                    return new L.CircleMarker(p, options);
-                }
-            });
-            layer.on('featureparse', function(e) {
-                type = e.geometryType;
-                if (type === 'Polygon' || type === 'MultiPolygon') {
-                    e.layer.setStyle({
-                        color: 'rgb(0,0,180)',
-                        weight: 4,
-                        opacity: 0.6
-                    });
-                }
-                else if (type === 'LineString' || type === 'MultiLineString') {
-                    e.layer.setStyle({
-                        color: 'rgb(180,0,0)',
-                        weight: 1,
-                        opacity: 0.9
-                    });
-                }
-                else if (type === 'Point' || type === 'MultiPoint') {
-                    // TODO
-                }
-            });
             $.each(e.features, function() {
                 layer.addGeoJSON(this);
             })
