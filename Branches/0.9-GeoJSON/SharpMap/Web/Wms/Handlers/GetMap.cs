@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.IO;
@@ -156,7 +155,7 @@
                     layer.Enabled = false;
                 foreach (string layer in layers)
                 {
-                    ILayer lay = map.GetLayerByName(layer);                    
+                    ILayer lay = this.map.GetLayerByName(layer);                    
                     if (lay == null)
                     {
                         WmsException.ThrowWmsException(WmsException.WmsExceptionCode.LayerNotDefined,
@@ -181,7 +180,17 @@
                     FeatureDataSet ds = new FeatureDataSet();
                     layer.ExecuteIntersectionQuery(bbox, ds);
                     IEnumerable<GeoJSON> data = GeoJSONHelper.GetData(ds);
-                    
+
+                    //Filter only visible items
+                    //double f = bbox.GetArea() / (width * height);
+                    //data = data.Where(i =>
+                    //{
+                    //    Geometry g = i.Geometry;
+                    //    BoundingBox p = g.GetBoundingBox();
+                    //    double area = p.GetArea();
+                    //    return area == 0 || area > f;
+                    //});
+
                     //Reproject geometries if needed
                     IMathTransform transform = null;
                     if (layer is VectorLayer)
