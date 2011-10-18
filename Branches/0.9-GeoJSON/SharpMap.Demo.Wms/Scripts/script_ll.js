@@ -3,28 +3,34 @@
     var lat = 40.7723;
     var zoom = 10;
 
-    var map, cloudmade, center, url;
-
-    map = new L.Map('map');
-    cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/997/256/{z}/{x}/{y}.png', { maxZoom: 18 });
-
-    center = new L.LatLng(lat, lon);
-    map.setView(center, zoom).addLayer(cloudmade);
-
-    url = ['/wms.ashx?MAP_TYPE=PM&HEIGHT=256&WIDTH=256&STYLES=&',
+    var map = new L.Map('map'), center, cloudmade;
+    map.on('load', function(e) {
+        var bounds, url;
+        bounds = e.target.getBounds();
+        url = [
+           '/wms.ashx?MAP_TYPE=PM&HEIGHT=256&WIDTH=256&STYLES=&',
             'CRS=EPSG%3A4326&FORMAT=text%2Fjson&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&',
             'EXCEPTIONS=application%2Fvnd.ogc.se_inimage&transparent=true&',
             'LAYERS=poly_landmarks,tiger_roads,poi',
-            '&BBOX=-74,40,-70,42'
-        ].join('')
-    $.getJSON(url,
-        function(e) {
-            var layer, type;
-            layer = new L.GeoJSON();
+            '&BBOX=', bounds._southWest.lng, ',', bounds._southWest.lat, ',', bounds._northEast.lng, ',', bounds._northEast.lat
+        ].join('');
+        
+        $.getJSON(url, function(e) {
+            var options, layer, type;
+            options = {
+                radius: 8,
+                fillColor: "#ff7800",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+            layer = new L.GeoJSON(null, {
+                pointToLayer: function(p) {
+                    return new L.CircleMarker(p, options);
+                }
+            });
             layer.on('featureparse', function(e) {
-                if (!e.layer.setStyle)
-                    return;
-
                 type = e.geometryType;
                 if (type === 'Polygon' || type === 'MultiPolygon') {
                     e.layer.setStyle({
@@ -41,6 +47,7 @@
                     });
                 }
                 else if (type === 'Point' || type === 'MultiPoint') {
+                    // TODO
                 }
             });
             $.each(e.features, function() {
@@ -48,6 +55,15 @@
             })
             map.addLayer(layer);
         });
+    });
+
+    center = new L.LatLng(lat, lon);
+    map.setView(center, zoom);
+
+    cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/997/256/{z}/{x}/{y}.png', { maxZoom: 18 });
+    map.addLayer(cloudmade);
+
+
 });
 
 
