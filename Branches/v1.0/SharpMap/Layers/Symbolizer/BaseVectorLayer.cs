@@ -242,7 +242,7 @@ namespace SharpMap.Layers.Symbolizer
         /// </summary>
         /// <param name="geometry">Geometry to intersect with</param>
         /// <param name="ds">FeatureDataSet to fill data into</param>
-        public void ExecuteIntersectionQuery(Geometry geometry, FeatureDataSet ds)
+        public void ExecuteIntersectionQuery(IGeometry geometry, FeatureDataSet ds)
         {
             if (CoordinateTransformation != null)
             {

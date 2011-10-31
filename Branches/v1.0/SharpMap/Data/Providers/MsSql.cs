@@ -20,8 +20,6 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using GeoAPI.Geometries;
-using SharpMap.Converters.WellKnownBinary;
-using SharpMap.Geometries;
 
 namespace SharpMap.Data.Providers
 {

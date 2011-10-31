@@ -20,7 +20,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using GeoAPI.Geometries;
 using SharpMap.Geometries;
-using Point = SharpMap.Geometries.Point;
+using Point = GeoAPI.Geometries.IPoint;
 
 namespace SharpMap.Rendering.Symbolizer    
 {

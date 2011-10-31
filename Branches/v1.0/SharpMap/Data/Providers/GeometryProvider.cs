@@ -19,8 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using GeoAPI.Geometries;
-using SharpMap.Converters.WellKnownBinary;
-using SharpMap.Converters.WellKnownText;
+
 using SharpMap.Geometries;
 
 namespace SharpMap.Data.Providers
@@ -107,27 +106,27 @@ namespace SharpMap.Data.Providers
         /// Initializes a new instance of the <see cref="GeometryProvider"/>
         /// </summary>
         /// <param name="geometry">Geometry to be in this datasource</param>
-        public GeometryProvider(Geometry geometry)
+        public GeometryProvider(IGeometry geometry)
         {
             _geometries = new Collection<IGeometry>();
             _geometries.Add(geometry);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GeometryProvider"/>
-        /// </summary>
-        /// <param name="wellKnownBinaryGeometry"><see cref="SharpMap.Geometries.Geometry"/> as Well-known Binary to be included in this datasource</param>
-        public GeometryProvider(byte[] wellKnownBinaryGeometry) : this(GeometryFromWKB.Parse(wellKnownBinaryGeometry))
-        {
-        }
+        ///// <summary>
+        ///// Initializes a new instance of the <see cref="GeometryProvider"/>
+        ///// </summary>
+        ///// <param name="wellKnownBinaryGeometry"><see cref="SharpMap.Geometries.Geometry"/> as Well-known Binary to be included in this datasource</param>
+        //public GeometryProvider(byte[] wellKnownBinaryGeometry) : this(GeometryFromWKB.Parse(wellKnownBinaryGeometry))
+        //{
+        //}
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GeometryProvider"/>
-        /// </summary>
-        /// <param name="wellKnownTextGeometry"><see cref="SharpMap.Geometries.Geometry"/> as Well-known Text to be included in this datasource</param>
-        public GeometryProvider(string wellKnownTextGeometry) : this(GeometryFromWKT.Parse(wellKnownTextGeometry))
-        {
-        }
+        ///// <summary>
+        ///// Initializes a new instance of the <see cref="GeometryProvider"/>
+        ///// </summary>
+        ///// <param name="wellKnownTextGeometry"><see cref="SharpMap.Geometries.Geometry"/> as Well-known Text to be included in this datasource</param>
+        //public GeometryProvider(string wellKnownTextGeometry) : this(GeometryFromWKT.Parse(wellKnownTextGeometry))
+        //{
+        //}
 
         #endregion
 

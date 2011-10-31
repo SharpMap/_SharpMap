@@ -6,6 +6,7 @@ using SharpMap.Geometries;
 
 namespace SharpMap.Rendering.Symbolizer
 {
+    using GeoAPI.Geometries;
 
     /// <summary>
     /// Interface for all classes providing Line symbolization handling routine
@@ -117,7 +118,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map"></param>
         /// <param name="lineString"></param>
         /// <param name="g"></param>
-        protected override void OnRenderInternal(Map map, LineString lineString, Graphics g)
+        protected override void OnRenderInternal(Map map, ILineString lineString, Graphics g)
         {
             var gp = new GraphicsPath();
             gp.AddLines(/*LimitValues(*/lineString.TransformToImage(map)/*)*/);

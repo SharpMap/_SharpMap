@@ -23,11 +23,12 @@ using System.Reflection;
 using SharpMap.Geometries;
 using SharpMap.Rendering.Symbolizer;
 using SharpMap.Utilities;
-using Point=SharpMap.Geometries.Point;
 using System.Runtime.CompilerServices;
 
 namespace SharpMap.Rendering
 {
+    using GeoAPI.Geometries;
+
     /// <summary>
     /// This class renders individual geometry features to a graphics object using the settings of a map object.
     /// </summary>
@@ -55,10 +56,11 @@ namespace SharpMap.Rendering
         /// <param name="map">Map reference</param>
         /// <param name="offset">Offset by which line will be moved to right</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawMultiLineString(Graphics g, MultiLineString lines, Pen pen, Map map, float offset)
+        public static void DrawMultiLineString(Graphics g, IMultiLineString lines, Pen pen, Map map, float offset)
         {
-            for (int i = 0; i < lines.LineStrings.Count; i++)
-                DrawLineString(g, lines.LineStrings[i], pen, map, offset);
+            var lineStrings = lines.Geometries;
+            for (int i = 0; i < lineStrings.Length; i++)
+                DrawLineString(g, (ILineString)lineStrings[i], pen, map, offset);
         }
 
         /// <summary>
@@ -120,7 +122,7 @@ namespace SharpMap.Rendering
         /// <param name="pen">Pen style used for rendering</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawLineString(Graphics g, LineString line, Pen pen, Map map)
+        public static void DrawLineString(Graphics g, ILineString line, Pen pen, Map map)
         {
             DrawLineString(g, line, pen, map, 0);
         }
@@ -132,9 +134,9 @@ namespace SharpMap.Rendering
         /// <param name="pen">Pen style used for rendering</param>
         /// <param name="map">Map reference</param>
         /// <param name="offset">Offset by which line will be moved to right</param>
-        public static void DrawLineString(Graphics g, LineString line, Pen pen, Map map, float offset)
+        public static void DrawLineString(Graphics g, ILineString line, Pen pen, Map map, float offset)
         {
-            if (line.Vertices.Count > 1)
+            if (line.CoordinateSequence.Count > 1)
             {
                 GraphicsPath gp = new GraphicsPath();
                 if (offset == 0)
@@ -156,10 +158,11 @@ namespace SharpMap.Rendering
         /// <param name="clip">Specifies whether polygon clipping should be applied</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawMultiPolygon(Graphics g, MultiPolygon pols, Brush brush, Pen pen, bool clip, Map map)
+        public static void DrawMultiPolygon(Graphics g, IMultiPolygon pols, Brush brush, Pen pen, bool clip, Map map)
         {
-            for (int i = 0; i < pols.Polygons.Count; i++)
-                DrawPolygon(g, pols.Polygons[i], brush, pen, clip, map);
+            var polygons = pols.Geometries;
+            for (int i = 0; i < polygons.Length; i++)
+                DrawPolygon(g, (IPolygon)polygons[i], brush, pen, clip, map);
         }
 
         /// <summary>
@@ -172,11 +175,11 @@ namespace SharpMap.Rendering
         /// <param name="clip">Specifies whether polygon clipping should be applied</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawPolygon(Graphics g, Polygon pol, Brush brush, Pen pen, bool clip, Map map)
+        public static void DrawPolygon(Graphics g, IPolygon pol, Brush brush, Pen pen, bool clip, Map map)
         {
             if (pol.ExteriorRing == null)
                 return;
-            if (pol.ExteriorRing.Vertices.Count > 2)
+            if (pol.ExteriorRing.CoordinateSequence.Count > 2)
             {
                 //Use a graphics path instead of DrawPolygon. DrawPolygon has a problem with several interior holes
                 GraphicsPath gp = new GraphicsPath();
@@ -188,11 +191,12 @@ namespace SharpMap.Rendering
                     DrawPolygonClipped(gp, pol.ExteriorRing.TransformToImage(map), map.Size.Width, map.Size.Height);
 
                 //Add the interior polygons (holes)
-                for (int i = 0; i < pol.InteriorRings.Count; i++)
+                var interiorRings = pol.InteriorRings;
+                for (int i = 0; i < interiorRings.Length; i++)
                     if (!clip)
-                        gp.AddPolygon(/*LimitValues(*/pol.InteriorRings[i].TransformToImage(map)/*, ExtremeValueLimit)*/);
+                        gp.AddPolygon(/*LimitValues(*/interiorRings[i].TransformToImage(map)/*, ExtremeValueLimit)*/);
                     else
-                        DrawPolygonClipped(gp, pol.InteriorRings[i].TransformToImage(map), map.Size.Width,
+                        DrawPolygonClipped(gp, interiorRings[i].TransformToImage(map), map.Size.Width,
                                            map.Size.Height);
 
                 // Only render inside of polygon if the brush isn't null or isn't transparent
@@ -500,7 +504,7 @@ namespace SharpMap.Rendering
         /// <param name="offset">Symbol offset af scale=1</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawPoint(Graphics g, Point point, Brush b, float size, PointF offset, Map map)
+        public static void DrawPoint(Graphics g, Coordinate point, Brush b, float size, PointF offset, Map map)
         {
             if (point == null)
                 return;
@@ -524,7 +528,7 @@ namespace SharpMap.Rendering
         /// <param name="symbolizer">Symbolizer to decorate point</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawPoint(IPointSymbolizer symbolizer, Graphics g, Point point, Map map)
+        public static void DrawPoint(IPointSymbolizer symbolizer, Graphics g, IPoint point, Map map)
         {
             if (point == null)
                 return; 
@@ -543,7 +547,7 @@ namespace SharpMap.Rendering
         /// <param name="rotation">Symbol rotation in degrees</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawPoint(Graphics g, Point point, Image symbol, float symbolscale, PointF offset,
+        public static void DrawPoint(Graphics g, Coordinate point, Image symbol, float symbolscale, PointF offset,
                                      float rotation, Map map)
         {
             if (point == null)
@@ -612,11 +616,12 @@ namespace SharpMap.Rendering
         /// <param name="rotation">Symbol rotation in degrees</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawMultiPoint(Graphics g, MultiPoint points, Image symbol, float symbolscale, PointF offset,
+        public static void DrawMultiPoint(Graphics g, IMultiPoint points, Image symbol, float symbolscale, PointF offset,
                                           float rotation, Map map)
         {
-            for (int i = 0; i < points.Points.Count; i++)
-                DrawPoint(g, points.Points[i], symbol, symbolscale, offset, rotation, map);
+            var pts = points.Coordinates;
+            for (int i = 0; i < pts.Length; i++)
+                DrawPoint(g, pts[i], symbol, symbolscale, offset, rotation, map);
         }
 
         /// <summary>
@@ -627,7 +632,7 @@ namespace SharpMap.Rendering
         /// <param name="symbolizer">Symbolizer to decorate point</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawMultiPoint(IPointSymbolizer symbolizer, Graphics g, MultiPoint points, Map map)
+        public static void DrawMultiPoint(IPointSymbolizer symbolizer, Graphics g, IMultiPoint points, Map map)
         {
             symbolizer.Render(map, points, g);
         }
@@ -642,10 +647,11 @@ namespace SharpMap.Rendering
         /// <param name="offset">Symbol offset af scale=1</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawMultiPoint(Graphics g, MultiPoint points, Brush brush, float size, PointF offset, Map map)
+        public static void DrawMultiPoint(Graphics g, IMultiPoint points, Brush brush, float size, PointF offset, Map map)
         {
-            for (int i = 0; i < points.Points.Count; i++)
-                DrawPoint(g, points.Points[i], brush, size, offset, map);
+            var pts = points.Coordinates;
+            for (int i = 0; i < pts.Length; i++)
+                DrawPoint(g, pts[i], brush, size, offset, map);
         }
 
         #region Nested type: ClipState
