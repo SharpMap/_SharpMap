@@ -115,6 +115,7 @@
     <Compile Include="Data\Providers\SqlServer2008.cs" />
     <Compile Include="Data\Providers\WFSClient.cs" />
     <Compile Include="Geometries\GeometryHelper.cs" />
+    <Compile Include="Geometries\SpatialPredicate.cs" />
     <Compile Include="Layers\DuplicateLayerException.cs" />
     <Compile Include="Layers\IAsyncLayer.cs" />
     <Compile Include="Layers\iLayer.cs" />
