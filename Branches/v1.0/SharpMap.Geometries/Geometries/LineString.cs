@@ -39,14 +39,14 @@ namespace SharpMap.Geometries
         /// <param name="vertices"></param>
         public LineString(IList<Coordinate> vertices)
         {
-            _vertices = SharpMapCoordinateSequenceFactory.Instance.Create(vertices.ToArray());
+            _vertices = SharpMapCoordinateSequenceFactory.Instance.Create(vertices);
         }
 
         /// <summary>
         /// Initializes an instance of a LineString
         /// </summary>
         public LineString()
-            : this(SharpMapCoordinateSequenceFactory.Instance.Create(0, 2))
+            : this((SharpMapCoordinateSequence)SharpMapCoordinateSequenceFactory.Instance.Create(0, 2))
         {
         }
 
@@ -61,7 +61,7 @@ namespace SharpMap.Geometries
             foreach (var point in points)
                 vertices.Add(new Coordinate(point[0], point[1]));
 
-            _vertices = vertices;
+            _vertices = SharpMapCoordinateSequenceFactory.Instance.Create(vertices);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace SharpMap.Geometries
             {
                 if (_vertices.Count == 0)
                     throw new ApplicationException("No startpoint found: LineString has no vertices.");
-                return new Point(_vertices[0]);
+                return new Point(_vertices.GetCoordinate(0));
             }
         }
 
@@ -97,7 +97,7 @@ namespace SharpMap.Geometries
             {
                 if (_vertices.Count == 0)
                     throw new ApplicationException("No endpoint found: LineString has no vertices.");
-                return new Point(_vertices[_vertices.Count - 1]);
+                return new Point(_vertices.GetCoordinate(_vertices.Count - 1));
             }
         }
 
@@ -138,7 +138,7 @@ namespace SharpMap.Geometries
 
         public override Coordinate[] Coordinates
         {
-            get { return _vertices.ToArray(); }
+            get { return _vertices.ToCoordinateArray(); }
         }
 
         public override IPoint PointOnSurface
@@ -154,7 +154,7 @@ namespace SharpMap.Geometries
         /// <returns></returns>
         public IPoint Point(int n)
         {
-            return new Point(_vertices[n]);
+            return new Point(_vertices.GetCoordinate(n));
         }
 
         #endregion
@@ -266,8 +266,8 @@ namespace SharpMap.Geometries
 
             for (int i = 0; i < _vertices.Count; i++)
                 //if (!verts.Exists(delegate(SharpMap.Geometries.Point p) { return p.Equals(_Vertices[i]); }))
-                if (0 != verts.IndexOf(_vertices[i]))
-                    verts.Add(_vertices[i]);
+                if (0 != verts.IndexOf(_vertices.GetCoordinate(i)))
+                    verts.Add(_vertices.GetCoordinate(i));
 
             return (verts.Count == _vertices.Count - (IsClosed ? 1 : 0));
         }
