@@ -38,6 +38,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
 namespace SharpMap.Converters.WellKnownBinary
@@ -46,10 +47,10 @@ namespace SharpMap.Converters.WellKnownBinary
     ///  Converts Well-known Binary representations to a <see cref="SharpMap.Geometries.Geometry"/> instance.
     /// </summary>
     /// <remarks>
-    /// <para>The Well-known Binary Representation for <see cref="SharpMap.Geometries.Geometry"/> (WKBGeometry) provides a portable 
-    /// representation of a <see cref="SharpMap.Geometries.Geometry"/> value as a contiguous stream of bytes. It permits <see cref="SharpMap.Geometries.Geometry"/> 
+    /// <para>The Well-known Binary Representation for <see cref="IGeometry"/> (WKBGeometry) provides a portable 
+    /// representation of a <see cref="IGeometry"/> value as a contiguous stream of bytes. It permits <see cref="IGeometry"/> 
     /// values to be exchanged between an ODBC client and an SQL database in binary form.</para>
-    /// <para>The Well-known Binary Representation for <see cref="SharpMap.Geometries.Geometry"/> is obtained by serializing a <see cref="SharpMap.Geometries.Geometry"/>
+    /// <para>The Well-known Binary Representation for <see cref="IGeometry"/> is obtained by serializing a <see cref="SharpMap.Geometries.Geometry"/>
     /// instance as a sequence of numeric types drawn from the set {Unsigned Integer, Double} and
     /// then serializing each numeric type as a sequence of bytes using one of two well defined,
     /// standard, binary representations for numeric types (NDR, XDR). The specific binary encoding
@@ -60,11 +61,11 @@ namespace SharpMap.Converters.WellKnownBinary
     public class GeometryFromWKB
     {
         /// <summary>
-        /// Creates a <see cref="SharpMap.Geometries.Geometry"/> from the supplied byte[] containing the Well-known Binary representation.
+        /// Creates a <see cref="IGeometry"/> from the supplied byte[] containing the Well-known Binary representation.
         /// </summary>
         /// <param name="bytes">byte[] containing the Well-known Binary representation.</param>
-        /// <returns>A <see cref="SharpMap.Geometries.Geometry"/> bases on the supplied Well-known Binary representation.</returns>
-        public static Geometry Parse(byte[] bytes)
+        /// <returns>A <see cref="IGeometry"/> bases on the supplied Well-known Binary representation.</returns>
+        public static IGeometry Parse(byte[] bytes)
         {
             // Create a memory stream using the suppiled byte array.
             using (MemoryStream ms = new MemoryStream(bytes))

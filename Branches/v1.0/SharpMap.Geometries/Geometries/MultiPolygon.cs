@@ -16,138 +16,98 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using GeoAPI.Geometries;
 
 namespace SharpMap.Geometries
 {
     /// <summary>
-    /// A GeometryCollection is a geometry that is a collection of 1 or more geometries.
+    /// A MultiPolygon is a MultiSurface whose elements are Polygons.
     /// </summary>
-    /// <remarks>
-    /// All the elements in a GeometryCollection must be in the same Spatial Reference. This is also the Spatial
-    /// Reference for the GeometryCollection.<br/>
-    /// GeometryCollection places no other constraints on its elements. Subclasses of GeometryCollection may
-    /// restrict membership based on dimension and may also place other constraints on the degree of spatial overlap
-    /// between elements.
-    /// </remarks>
-    public class GeometryCollection : Geometry, IGeometryCollection, IEnumerable<Geometry>
+    [Serializable]
+    public class MultiPolygon : MultiSurface, IMultiPolygon
     {
-        private IList<Geometry> _Geometries;
+        private IList<Polygon> _Polygons;
 
         /// <summary>
-        /// Initializes a new GeometryCollection
+        /// Instantiates a MultiPolygon
         /// </summary>
-        public GeometryCollection()
+        public MultiPolygon()
         {
-            _Geometries = new Collection<Geometry>();
+            _Polygons = new Collection<Polygon>();
+        }
+
+        /// <summary>
+        /// Collection of polygons in the multipolygon
+        /// </summary>
+        public IList<Polygon> Polygons
+        {
+            get { return _Polygons; }
+            set { _Polygons = value; }
         }
 
         /// <summary>
         /// Returns an indexed geometry in the collection
         /// </summary>
         /// <param name="index">Geometry index</param>
-        /// <returns>Geometry</returns>
-        public virtual Geometry this[int index]
+        /// <returns>Geometry at index</returns>
+        public new Polygon this[int index]
         {
-            get { return _Geometries[index]; }
+            get { return _Polygons[index]; }
         }
 
         /// <summary>
-        /// Gets or sets the GeometryCollection
+        /// Returns summed area of the Polygons in the MultiPolygon collection
         /// </summary>
-        public virtual IList<Geometry> Collection
-        {
-            get { return _Geometries; }
-            set { _Geometries = value; }
-        }
-
-        #region IEnumerable<Geometry> Members
-
-        /// <summary>
-        /// Gets an enumerator for enumerating the geometries in the GeometryCollection
-        /// </summary>
-        /// <returns></returns>
-        public virtual IEnumerator<Geometry> GetEnumerator()
-        {
-            foreach (Geometry g in Collection)
-                yield return g;
-        }
-
-        /// <summary>
-        /// Gets an enumerator for enumerating the geometries in the GeometryCollection
-        /// </summary>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            foreach (Geometry g in Collection)
-                yield return g;
-        }
-
-        #endregion
-
-        #region IGeometryCollection Members
-
-        /// <summary>
-        /// Gets the number of geometries in the collection.
-        /// </summary>
-        public virtual int NumGeometries
-        {
-            get { return _Geometries.Count; }
-        }
-
-        /// <summary>
-        /// Returns an indexed geometry in the collection
-        /// </summary>
-        /// <param name="N">Geometry index</param>
-        /// <returns>Geometry at index N</returns>
-        public virtual Geometry Geometry(int N)
-        {
-            return _Geometries[N];
-        }
-
-        /// <summary>
-        /// Returns empty of all the geometries are empty or the collection is empty
-        /// </summary>
-        /// <returns>true of collection is empty</returns>
-        public override bool IsEmpty()
-        {
-            if (_Geometries == null)
-                return true;
-            for (int i = 0; i < _Geometries.Count; i++)
-                if (!_Geometries[i].IsEmpty())
-                    return false;
-            return true;
-        }
-
-        /// <summary>
-        ///  The inherent dimension of this Geometry object, which must be less than or equal
-        ///  to the coordinate dimension.
-        /// </summary>
-        /// <remarks>This specification is restricted to geometries in two-dimensional coordinate space.</remarks>
-        public override int Dimension
+        public override double Area
         {
             get
             {
-                int dim = 0;
-                for (int i = 0; i < Collection.Count; i++)
-                    dim = (dim < Collection[i].Dimension ? Collection[i].Dimension : dim);
-                return dim;
+                double result = 0;
+                for (int i = 0; i < _Polygons.Count; i++)
+                    result += _Polygons[i].Area;
+                return result;
             }
         }
 
         /// <summary>
-        /// The minimum bounding box for this Geometry, returned as a BoundingBox.
+        /// The mathematical centroid for the surfaces as a Point.
+        /// The result is not guaranteed to be on any of the surfaces.
         /// </summary>
-        /// <returns></returns>
-        public override BoundingBox GetBoundingBox()
+        public override Point Centroid
         {
-            if (Collection.Count == 0)
-                return null;
-            BoundingBox b = this[0].GetBoundingBox();
-            for (int i = 0; i < Collection.Count; i++)
-                b = b.Join(Collection[i].GetBoundingBox());
-            return b;
+            get { throw new NotImplementedException(); }
+        }
+
+        /// <summary>
+        /// A point guaranteed to be on this Surface.
+        /// </summary>
+        public override Point PointOnSurface
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        /// <summary>
+        /// Returns the number of geometries in the collection.
+        /// </summary>
+        public override int NumGeometries
+        {
+            get { return _Polygons.Count; }
+        }
+
+        /// <summary>
+        /// If true, then this Geometry represents the empty point set, Ø, for the coordinate space. 
+        /// </summary>
+        /// <returns>Returns 'true' if this Geometry is the empty geometry</returns>
+        public override bool IsEmpty()
+        {
+            if (_Polygons == null || _Polygons.Count == 0)
+                return true;
+            for (int i = 0; i < _Polygons.Count; i++)
+                if (!_Polygons[i].IsEmpty())
+                    return false;
+            return true;
         }
 
         /// <summary>
@@ -179,7 +139,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to calculate distance to</param>
         /// <returns>Shortest distance between any two points in the two geometries</returns>
-        public override double Distance(Geometry geom)
+        public override double Distance(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -191,7 +151,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="d">Buffer distance</param>
         /// <returns>Buffer around geometry</returns>
-        public override Geometry Buffer(double d)
+        public override IGeometry Buffer(double d)
         {
             throw new NotImplementedException();
         }
@@ -200,7 +160,7 @@ namespace SharpMap.Geometries
         /// Geometry—Returns a geometry that represents the convex hull of this Geometry.
         /// </summary>
         /// <returns>The convex hull</returns>
-        public override Geometry ConvexHull()
+        public override IGeometry ConvexHull()
         {
             throw new NotImplementedException();
         }
@@ -211,7 +171,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to intersect with</param>
         /// <returns>Returns a geometry that represents the point set intersection of this Geometry with anotherGeometry.</returns>
-        public override Geometry Intersection(Geometry geom)
+        public override IGeometry Intersection(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -221,7 +181,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to union with</param>
         /// <returns>Unioned geometry</returns>
-        public override Geometry Union(Geometry geom)
+        public override IGeometry Union(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -231,7 +191,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to compare to</param>
         /// <returns>Geometry</returns>
-        public override Geometry Difference(Geometry geom)
+        public override IGeometry Difference(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -241,61 +201,64 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to compare to</param>
         /// <returns>Geometry</returns>
-        public override Geometry SymDifference(Geometry geom)
+        public override IGeometry SymmetricDifference(IGeometry geom)
         {
             throw new NotImplementedException();
         }
 
-        #endregion
-
         /// <summary>
-        /// Determines whether this GeometryCollection is spatially equal to the GeometryCollection 'g'
+        /// Returns an indexed geometry in the collection
         /// </summary>
-        /// <param name="g"></param>
-        /// <returns>True if the GeometryCollections are equals</returns>
-        public bool Equals(GeometryCollection g)
+        /// <param name="N">Geometry index</param>
+        /// <returns>Geometry at index N</returns>
+        public override Geometry Geometry(int N)
         {
-            if (g == null)
-                return false;
-            if (g.Collection.Count != Collection.Count)
-                return false;
-            for (int i = 0; i < g.Collection.Count; i++)
-                if (!g.Collection[i].Equals((Geometry) Collection[i]))
-                    return false;
-            return true;
+            return _Polygons[N];
         }
 
         /// <summary>
-        /// Serves as a hash function for a particular type. <see cref="GetHashCode"/> is suitable for use 
-        /// in hashing algorithms and data structures like a hash table.
+        /// Returns the bounding box of the object
         /// </summary>
-        /// <returns>A hash code for the current <see cref="GetHashCode"/>.</returns>
-        public override int GetHashCode()
+        /// <returns>bounding box</returns>
+        public override GeoAPI.Geometries.Envelope GetBoundingBox()
         {
-            int hash = 0;
-            for (int i = 0; i < _Geometries.Count; i++)
-                hash = hash ^ _Geometries[i].GetHashCode();
-            return hash;
+            if (_Polygons == null || _Polygons.Count == 0)
+                return null;
+            GeoAPI.Geometries.Envelope bbox = Polygons[0].GetBoundingBox();
+            for (int i = 1; i < Polygons.Count; i++)
+                bbox = bbox.Join(Polygons[i].GetBoundingBox());
+            return bbox;
         }
 
         /// <summary>
         /// Return a copy of this geometry
         /// </summary>
         /// <returns>Copy of Geometry</returns>
-        public new GeometryCollection Clone()
+        public new MultiPolygon Clone()
         {
-            GeometryCollection geoms = new GeometryCollection();
-            for (int i = 0; i < _Geometries.Count; i++)
-                geoms.Collection.Add((Geometry) _Geometries[i].Clone());
+            MultiPolygon geoms = new MultiPolygon();
+            for (int i = 0; i < _Polygons.Count; i++)
+                geoms.Polygons.Add(_Polygons[i].Clone());
             return geoms;
+        }
+
+        /// <summary>
+        /// Gets an enumerator for enumerating the geometries in the GeometryCollection
+        /// </summary>
+        /// <returns></returns>
+        public override IEnumerator<Geometry> GetEnumerator()
+        {
+            foreach (Polygon p in _Polygons)
+                yield return p;
         }
 
         public override GeometryType2 GeometryType
         {
             get
             {
-                return GeometryType2.GeometryCollection;
+                return GeometryType2.MultiPolygon;
             }
         }
+
     }
 }

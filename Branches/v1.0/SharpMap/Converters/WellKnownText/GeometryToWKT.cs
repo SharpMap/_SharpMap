@@ -37,6 +37,7 @@
 
 using System;
 using System.IO;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
 namespace SharpMap.Converters.WellKnownText
@@ -77,7 +78,7 @@ namespace SharpMap.Converters.WellKnownText
         ///  Features Specification)</returns>
         public static string Write(IGeometry geometry)
         {
-            StringWriter sw = new StringWriter();
+            var sw = new StringWriter();
             Write(geometry, sw);
             return sw.ToString();
         }

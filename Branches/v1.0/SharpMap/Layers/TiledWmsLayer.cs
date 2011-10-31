@@ -28,6 +28,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 using SharpMap.Rendering.Exceptions;
 using SharpMap.Utilities;
@@ -41,7 +42,7 @@ namespace SharpMap.Layers
     /// </summary>
     /// <remarks>
     /// Initialize the TiledWmsLayer with the url to the capabilities documtent
-    /// and it will set the remaining BoundingBox property and proper requests that changes between the requests.
+    /// and it will set the remaining GeoAPI.Geometries.Envelope property and proper requests that changes between the requests.
     /// See the example below.
     /// </remarks>
     /// <example>
@@ -52,7 +53,7 @@ namespace SharpMap.Layers
     /// TiledWmsLayer tiledWmsLayer = new TiledWmsLayer("Metacarta", url);
     /// tiledWmsLayer.TileSetsActive.Add(tiledWmsLayer.TileSets["satellite"].Name);
     /// map.Layers.Add(tiledWmsLayer);
-    /// map.ZoomToBox(new SharpMap.Geometries.BoundingBox(-180.0, -90.0, 180.0, 90.0));
+    /// map.ZoomToBox(new SharpMap.Geometries.GeoAPI.Geometries.Envelope(-180.0, -90.0, 180.0, 90.0));
     /// </code>
     /// </example>
     [Obsolete("use TileLayer instead") ]
@@ -220,12 +221,12 @@ namespace SharpMap.Layers
 
                     tileSet.Verify();
 
-                    List<BoundingBox> tileExtents = TileExtents.GetTileExtents(tileSet, map.Envelope, map.PixelSize);
+                    List<GeoAPI.Geometries.Envelope> tileExtents = TileExtents.GetTileExtents(tileSet, map.Envelope, map.PixelSize);
 
                     Console.WriteLine("TileCount: " + tileExtents.Count);
 
                     //TODO: Retrieve several tiles at the same time asynchronously to improve performance. PDD.
-                    foreach (BoundingBox tileExtent in tileExtents)
+                    foreach (GeoAPI.Geometries.Envelope tileExtent in tileExtents)
                     {
                         if (bitmap != null)
                         {
@@ -247,8 +248,8 @@ namespace SharpMap.Layers
 
                         if (bitmap != null)
                         {
-                            PointF destMin = Transform.WorldtoMap(tileExtent.Min, map);
-                            PointF destMax = Transform.WorldtoMap(tileExtent.Max, map);
+                            PointF destMin = Transform.WorldtoMap(tileExtent.BottomLeft(), map);
+                            PointF destMax = Transform.WorldtoMap(tileExtent.TopRight(), map);
 
                             double minX = (int) Math.Round(destMin.X);
                             double minY = (int) Math.Round(destMax.Y);
@@ -276,7 +277,7 @@ namespace SharpMap.Layers
         /// Returns the extent of the layer
         /// </summary>
         /// <returns>Bounding box corresponding to the extent of the features in the layer</returns>
-        public override BoundingBox Envelope
+        public override GeoAPI.Geometries.Envelope Envelope
         {
             get { return _WmsClient.Layer.LatLonBoundingBox; //TODO: no box is allowed in capabilities so check for it
             }
@@ -313,7 +314,7 @@ namespace SharpMap.Layers
             _CustomParameters.Clear();
         }
 
-        private string GetRequestUrl(BoundingBox box, TileSet tileSet)
+        private string GetRequestUrl(GeoAPI.Geometries.Envelope box, TileSet tileSet)
         {
             Client.WmsOnlineResource resource = GetPreferredMethod();
             StringBuilder strReq = new StringBuilder(resource.OnlineResource);
@@ -323,7 +324,7 @@ namespace SharpMap.Layers
                 strReq.Append("&");
 
             strReq.AppendFormat(Map.NumberFormatEnUs, "&REQUEST=GetMap&BBOX={0},{1},{2},{3}",
-                                box.Min.X, box.Min.Y, box.Max.X, box.Max.Y);
+                                box.MinX, box.MinY, box.MaxX, box.MaxY);
             strReq.AppendFormat("&WIDTH={0}&Height={1}", tileSet.Width, tileSet.Height);
             strReq.Append("&LAYERS=");
                 // LAYERS is set in caps because the current version of tilecache.py does not accept mixed case (a little bug)
@@ -361,7 +362,7 @@ namespace SharpMap.Layers
             return strReq.ToString();
         }
 
-        private Bitmap WmsGetMap(BoundingBox extent, TileSet tileSet)
+        private Bitmap WmsGetMap(GeoAPI.Geometries.Envelope extent, TileSet tileSet)
         {
             Stream responseStream = null;
             Bitmap bitmap = null;

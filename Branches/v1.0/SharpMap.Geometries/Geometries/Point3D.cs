@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
+using GeoAPI.Geometries;
 
 namespace SharpMap.Geometries
 {
@@ -191,13 +192,11 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom"></param>
         /// <returns></returns>
-        public override double Distance(Geometry geom)
+        public override double Distance(IGeometry geom)
         {
-            if (geom.GetType() == typeof (Point3D))
-            {
-                Point3D p = geom as Point3D;
+            var p = geom as Point3D;
+            if (p != null)
                 return Math.Sqrt(Math.Pow(X - p.X, 2) + Math.Pow(Y - p.Y, 2) + Math.Pow(Z - p.Z, 2));
-            }
             return base.Distance(geom);
         }
 

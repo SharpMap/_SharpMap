@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Web;
 using System.Xml;
 using System.Xml.Schema;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 using SharpMap.Layers;
 
@@ -311,13 +312,13 @@ namespace SharpMap.Web.Wms
             return "0";
         }
 
-        private static XmlElement GenerateBoundingBoxElement(BoundingBox bbox, int SRID, XmlDocument doc)
+        private static XmlElement GenerateBoundingBoxElement(GeoAPI.Geometries.Envelope bbox, int SRID, XmlDocument doc)
         {
             XmlElement xmlBbox = doc.CreateElement("BoundingBox", wmsNamespaceURI);
-            xmlBbox.Attributes.Append(CreateAttribute("minx", bbox.Left.ToString(Map.NumberFormatEnUs), doc));
-            xmlBbox.Attributes.Append(CreateAttribute("miny", bbox.Bottom.ToString(Map.NumberFormatEnUs), doc));
-            xmlBbox.Attributes.Append(CreateAttribute("maxx", bbox.Right.ToString(Map.NumberFormatEnUs), doc));
-            xmlBbox.Attributes.Append(CreateAttribute("maxy", bbox.Top.ToString(Map.NumberFormatEnUs), doc));
+            xmlBbox.Attributes.Append(CreateAttribute("minx", bbox.Left().ToString(Map.NumberFormatEnUs), doc));
+            xmlBbox.Attributes.Append(CreateAttribute("miny", bbox.Bottom().ToString(Map.NumberFormatEnUs), doc));
+            xmlBbox.Attributes.Append(CreateAttribute("maxx", bbox.Right().ToString(Map.NumberFormatEnUs), doc));
+            xmlBbox.Attributes.Append(CreateAttribute("maxy", bbox.Top().ToString(Map.NumberFormatEnUs), doc));
             xmlBbox.Attributes.Append(CreateAttribute("CRS", "EPSG:" + SRID, doc));
             return xmlBbox;
         }

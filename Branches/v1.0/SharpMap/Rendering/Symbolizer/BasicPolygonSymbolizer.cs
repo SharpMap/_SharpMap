@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
 namespace SharpMap.Rendering.Symbolizer
@@ -23,7 +24,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         public Pen Outline { get; set; }
 
-        protected override void OnRenderInternal(Map map, Polygon polygon, Graphics g)
+        protected override void OnRenderInternal(Map map, IPolygon polygon, Graphics g)
         {
             // convert points
             var pts = /*LimitValues(*/polygon.TransformToImage(map)/*)*/;
@@ -60,7 +61,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         public LineSymbolizer Outline { get; set; }
 
-        protected override void OnRenderInternal(Map map, Polygon polygon, Graphics g)
+        protected override void OnRenderInternal(Map map, IPolygon polygon, Graphics g)
         {
             // convert points
             var pts = /*LimitValues(*/polygon.TransformToImage(map)/*)*/;

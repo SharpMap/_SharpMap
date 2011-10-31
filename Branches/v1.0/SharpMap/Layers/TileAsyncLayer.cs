@@ -39,7 +39,7 @@ namespace SharpMap.Layers
         public override void Render(Graphics graphics, Map map)
         {
 
-            Extent extent = new Extent(map.Envelope.Min.X, map.Envelope.Min.Y, map.Envelope.Max.X, map.Envelope.Max.Y);
+            Extent extent = new Extent(map.Envelope.MinX, map.Envelope.MinY, map.Envelope.MaxX, map.Envelope.MaxY);
             int level = BruTile.Utilities.GetNearestLevel(_source.Schema.Resolutions, map.PixelSize);
             IList<TileInfo> tiles = _source.Schema.GetTilesInView(extent, level);
 
@@ -120,7 +120,7 @@ namespace SharpMap.Layers
         {
             if (this.MapNewTileAvaliable != null)
             {
-                BoundingBox bb = new BoundingBox(tileInfo.Extent.MinX, tileInfo.Extent.MinY, tileInfo.Extent.MaxX, tileInfo.Extent.MaxY);
+                GeoAPI.Geometries.Envelope bb = new GeoAPI.Geometries.Envelope(tileInfo.Extent.MinX, tileInfo.Extent.MinY, tileInfo.Extent.MaxX, tileInfo.Extent.MaxY);
                 this.MapNewTileAvaliable(this, bb, bitmap, _source.Schema.Width, _source.Schema.Height, _imageAttributes);
             }
         }

@@ -18,7 +18,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
+using System.Diagnostics;
+using System.Linq;
+using GeoAPI.Geometries;
 using SharpMap.Utilities;
 
 namespace SharpMap.Geometries
@@ -31,10 +33,10 @@ namespace SharpMap.Geometries
     /// Vertices of rings defining holes in polygons are in the opposite direction of the exterior ring.
     /// </remarks>
     [Serializable]
-    public class Polygon : Surface
+    public class Polygon : Surface, IPolygon
     {
-        private LinearRing _ExteriorRing;
-        private IList<LinearRing> _InteriorRings;
+        private LinearRing _exteriorRing;
+        private IList<LinearRing> _interiorRings;
 
         /// <summary>
         /// Instatiates a polygon based on one extorier ring and a collection of interior rings.
@@ -43,15 +45,16 @@ namespace SharpMap.Geometries
         /// <param name="interiorRings">Interior rings</param>
         public Polygon(LinearRing exteriorRing, IList<LinearRing> interiorRings)
         {
-            _ExteriorRing = exteriorRing;
-            _InteriorRings = interiorRings ?? new Collection<LinearRing>();
+            _exteriorRing = exteriorRing;
+            _interiorRings = interiorRings ?? new Collection<LinearRing>();
         }
 
         /// <summary>
         /// Instatiates a polygon based on one extorier ring.
         /// </summary>
         /// <param name="exteriorRing">Exterior ring</param>
-        public Polygon(LinearRing exteriorRing) : this(exteriorRing, new Collection<LinearRing>())
+        public Polygon(LinearRing exteriorRing)
+            : this(exteriorRing, new Collection<LinearRing>())
         {
         }
 
@@ -62,23 +65,62 @@ namespace SharpMap.Geometries
         {
         }
 
+        public ILineString GetInteriorRingN(int n)
+        {
+            return _interiorRings[n];
+        }
+
         /// <summary>
         /// Gets or sets the exterior ring of this Polygon
         /// </summary>
         /// <remarks>This method is supplied as part of the OpenGIS Simple Features Specification</remarks>
-        public LinearRing ExteriorRing
+        public ILineString ExteriorRing
         {
-            get { return _ExteriorRing; }
-            set { _ExteriorRing = value; }
+            get { return _exteriorRing; }
+            set
+            {
+                _exteriorRing = ToLinearRing(value);
+            }
+        }
+
+        public ILinearRing Shell
+        {
+            get { return _exteriorRing; }
+        }
+
+        public int NumInteriorRings
+        {
+            get { return _interiorRings.Count; }
+        }
+
+        private static LinearRing ToLinearRing(ILineString lineString)
+        {
+            if (lineString == null)
+                return null;
+            if (lineString is LinearRing)
+                return lineString as LinearRing;
+            return new LinearRing(lineString.Coordinates);
         }
 
         /// <summary>
         /// Gets or sets the interior rings of this Polygon
         /// </summary>
-        public IList<LinearRing> InteriorRings
+        public ILineString[] InteriorRings
         {
-            get { return _InteriorRings; }
-            set { _InteriorRings = value; }
+            get { return _interiorRings.ToArray(); }
+            set
+            {
+                _interiorRings = new Collection<LinearRing>();
+                if (value == null)
+                    return;
+                foreach (var lineString in value)
+                    _interiorRings.Add(ToLinearRing(lineString));
+            }
+        }
+
+        public ILinearRing[] Holes
+        {
+            get { return _interiorRings.ToArray(); }
         }
 
         /// <summary>
@@ -88,7 +130,7 @@ namespace SharpMap.Geometries
         /// <returns></returns>
         public int NumInteriorRing
         {
-            get { return _InteriorRings.Count; }
+            get { return _interiorRings.Count; }
         }
 
         /// <summary>
@@ -99,14 +141,14 @@ namespace SharpMap.Geometries
             get
             {
                 double area = 0.0;
-                area += _ExteriorRing.Area;
-                bool extIsClockwise = _ExteriorRing.IsCCW();
-                for (int i = 0; i < _InteriorRings.Count; i++)
+                area += _exteriorRing.Area;
+                bool extIsClockwise = _exteriorRing.IsCCW();
+                for (int i = 0; i < _interiorRings.Count; i++)
                     //opposite direction of exterior subtracts area
-                    if (_InteriorRings[i].IsCCW() != extIsClockwise)
-                        area -= _InteriorRings[i].Area;
+                    if (_interiorRings[i].IsCCW() != extIsClockwise)
+                        area -= _interiorRings[i].Area;
                     else
-                        area += _InteriorRings[i].Area;
+                        area += _interiorRings[i].Area;
                 return area;
             }
         }
@@ -117,66 +159,52 @@ namespace SharpMap.Geometries
         /// </summary>
         public override Point Centroid
         {
-            get { return ExteriorRing.GetBoundingBox().GetCentroid(); }
+            get { return _exteriorRing.GetBoundingBox().GetCentroid(); }
+        }
+
+        public override Coordinate[] Coordinates
+        {
+            get { throw new NotSupportedException(); }
         }
 
         /// <summary>
         /// A point guaranteed to be on this Surface.
         /// </summary>
-        public override Point PointOnSurface
+        public override IPoint PointOnSurface
         {
-            get { throw new NotImplementedException(); }
+            get { throw new NotSupportedException(); }
         }
 
         /// <summary>
         /// Returns the Nth interior ring for this Polygon as a LineString
         /// </summary>
         /// <remarks>This method is supplied as part of the OpenGIS Simple Features Specification</remarks>
-        /// <param name="N"></param>
+        /// <param name="n"></param>
         /// <returns></returns>
-        public LinearRing InteriorRing(int N)
+        public LinearRing InteriorRing(int n)
         {
-            return _InteriorRings[N];
-        }
-
-        /// <summary>
-        /// Transforms the polygon to image coordinates, based on the map
-        /// </summary>
-        /// <param name="map">Map to base coordinates on</param>
-        /// <returns>Polygon in image coordinates</returns>
-        public PointF[] TransformToImage(Map map)
-        {
-            int vertices = _ExteriorRing.Vertices.Count;
-            for (int i = 0; i < _InteriorRings.Count; i++)
-                vertices += _InteriorRings[i].Vertices.Count;
-
-            PointF[] v = new PointF[vertices];
-            for (int i = 0; i < _ExteriorRing.Vertices.Count; i++)
-                v[i] = Transform.WorldtoMap(_ExteriorRing.Vertices[i], map);
-            int j = _ExteriorRing.Vertices.Count;
-            for (int k = 0; k < _InteriorRings.Count; k++)
-            {
-                for (int i = 0; i < _InteriorRings[k].Vertices.Count; i++)
-                    v[j + i] = Transform.WorldtoMap(_InteriorRings[k].Vertices[i], map);
-                j += _InteriorRings[k].Vertices.Count;
-            }
-            return v;
+            return _interiorRings[n];
         }
 
         /// <summary>
         /// Returns the bounding box of the object
         /// </summary>
         /// <returns>bounding box</returns>
-        public override BoundingBox GetBoundingBox()
+        public override GeoAPI.Geometries.Envelope GetBoundingBox()
         {
-            if (_ExteriorRing == null || _ExteriorRing.Vertices.Count == 0) return null;
-            BoundingBox bbox = new BoundingBox(_ExteriorRing.Vertices[0], _ExteriorRing.Vertices[0]);
-            for (int i = 1; i < _ExteriorRing.Vertices.Count; i++)
+            if (_exteriorRing == null || _exteriorRing.Vertices.Count == 0) return null;
+            GeoAPI.Geometries.Envelope bbox = new GeoAPI.Geometries.Envelope(_exteriorRing.Vertices[0].X, _exteriorRing.Vertices[0].Y,
+                _exteriorRing.Vertices[0].X, _exteriorRing.Vertices[0].Y);
+            //GeoAPI.Geometries.Envelope bbox = new GeoAPI.Geometries.Envelope(_ExteriorRing.Vertices[0], _ExteriorRing.Vertices[0]);
+            for (int i = 1; i < _exteriorRing.Vertices.Count; i++)
             {
+                bbox.ExpandToInclude(_exteriorRing.Vertices[i].X, _exteriorRing.Vertices[i].Y);
+                /*
                 bbox.Min.X = Math.Min(_ExteriorRing.Vertices[i].X, bbox.Min.X);
                 bbox.Min.Y = Math.Min(_ExteriorRing.Vertices[i].Y, bbox.Min.Y);
                 bbox.Max.X = Math.Max(_ExteriorRing.Vertices[i].X, bbox.Max.X);
                 bbox.Max.Y = Math.Max(_ExteriorRing.Vertices[i].Y, bbox.Max.Y);
+                 */
             }
             return bbox;
         }
@@ -187,10 +215,10 @@ namespace SharpMap.Geometries
         /// <returns>Copy of Geometry</returns>
         public new Polygon Clone()
         {
-            Polygon p = new Polygon();
-            p.ExteriorRing = (LinearRing) _ExteriorRing.Clone();
-            for (int i = 0; i < _InteriorRings.Count; i++)
-                p.InteriorRings.Add(_InteriorRings[i].Clone() as LinearRing);
+            var p = new Polygon();
+            p.ExteriorRing = _exteriorRing.Clone();
+            for (int i = 0; i < _interiorRings.Count; i++)
+                p._interiorRings.Add(_interiorRings[i].Clone());
             return p;
         }
 
@@ -214,10 +242,10 @@ namespace SharpMap.Geometries
                 return false;
             if (!p.ExteriorRing.Equals(ExteriorRing))
                 return false;
-            if (p.InteriorRings.Count != InteriorRings.Count)
+            if (p._interiorRings.Count != _interiorRings.Count)
                 return false;
-            for (int i = 0; i < p.InteriorRings.Count; i++)
-                if (!p.InteriorRings[i].Equals(InteriorRings[i]))
+            for (int i = 0; i < p._interiorRings.Count; i++)
+                if (!p._interiorRings[i].Equals(_interiorRings[i]))
                     return false;
             return true;
         }
@@ -229,9 +257,9 @@ namespace SharpMap.Geometries
         /// <returns>A hash code for the current <see cref="GetHashCode"/>.</returns>
         public override int GetHashCode()
         {
-            int hash = ExteriorRing.GetHashCode();
-            ;
-            for (int i = 0; i < InteriorRings.Count; i++)
+            var hash = _exteriorRing.GetHashCode();
+            
+            for (int i = 0; i < _interiorRings.Count; i++)
                 hash = hash ^ InteriorRings[i].GetHashCode();
             return hash;
         }
@@ -242,7 +270,7 @@ namespace SharpMap.Geometries
         /// <returns>Returns 'true' if this Geometry is the empty geometry</returns>
         public override bool IsEmpty()
         {
-            return (ExteriorRing == null) || (ExteriorRing.Vertices.Count == 0);
+            return (_exteriorRing == null) || (_exteriorRing.Vertices.Count == 0);
         }
 
         /// <summary>
@@ -252,7 +280,7 @@ namespace SharpMap.Geometries
         /// </summary>
         public override bool IsSimple()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -263,16 +291,16 @@ namespace SharpMap.Geometries
         /// </summary>
         public override Geometry Boundary()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
         /// Returns the shortest distance between any two points in the two geometries
         /// as calculated in the spatial reference system of this Geometry.
         /// </summary>
-        public override double Distance(Geometry geom)
+        public override double Distance(IGeometry geom)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -280,50 +308,50 @@ namespace SharpMap.Geometries
         /// is less than or equal to distance. Calculations are in the Spatial Reference
         /// System of this Geometry.
         /// </summary>
-        public override Geometry Buffer(double d)
+        public override IGeometry Buffer(double d)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
         /// Geometry—Returns a geometry that represents the convex hull of this Geometry.
         /// </summary>
-        public override Geometry ConvexHull()
+        public override IGeometry ConvexHull()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
         /// Returns a geometry that represents the point set intersection of this Geometry
         /// with anotherGeometry.
         /// </summary>
-        public override Geometry Intersection(Geometry geom)
+        public override IGeometry Intersection(IGeometry geom)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
         /// Returns a geometry that represents the point set union of this Geometry with anotherGeometry.
         /// </summary>
-        public override Geometry Union(Geometry geom)
+        public override IGeometry Union(IGeometry geom)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
         /// Returns a geometry that represents the point set difference of this Geometry with anotherGeometry.
         /// </summary>
-        public override Geometry Difference(Geometry geom)
+        public override IGeometry Difference(IGeometry geom)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
         /// Returns a geometry that represents the point set symmetric difference of this Geometry with anotherGeometry.
         /// </summary>
-        public override Geometry SymDifference(Geometry geom)
+        public override IGeometry SymmetricDifference(IGeometry geom)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         #endregion

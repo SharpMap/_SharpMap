@@ -15,20 +15,25 @@
 // along with SharpMap; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
+using GeoAPI.Geometries;
+
 namespace SharpMap.Geometries
 {
     /// <summary>
     /// A Curve is a one-dimensional geometric object usually stored as a sequence of points,
     /// with the subtype of Curve specifying the form of the interpolation between points.
     /// </summary>
-    public abstract class Curve : Geometry, ILineal
+    public abstract class Curve : Geometry, ILineal, ICurve
     {
+        private SharpMapCoordinateSequence _coordinateSequence;
+        
         /// <summary>
         ///  The inherent dimension of this Geometry object, which must be less than or equal to the coordinate dimension.
         /// </summary>
-        public override int Dimension
+        public override Dimension Dimension
         {
-            get { return 1; }
+            get { return Dimension.Curve; }
+            set {}
         }
 
         /// <summary>
@@ -36,15 +41,26 @@ namespace SharpMap.Geometries
         /// </summary>
         public abstract double Length { get; }
 
+        public ICoordinateSequence CoordinateSequence 
+        { 
+            get { return _coordinateSequence; }
+            set
+            {
+                if (!(value is SharpMapCoordinateSequence))
+                    value = (SharpMapCoordinateSequence)SharpMapCoordinateSequenceFactory.Instance.Create(value);
+                _coordinateSequence = (SharpMapCoordinateSequence)value;
+            } 
+        }
+
         /// <summary>
         /// The start point of this Curve.
         /// </summary>
-        public abstract Point StartPoint { get; }
+        public abstract IPoint StartPoint { get; }
 
         /// <summary>
         /// The end point of this Curve.
         /// </summary>
-        public abstract Point EndPoint { get; }
+        public abstract IPoint EndPoint { get; }
 
         /// <summary>
         /// Returns true if this Curve is closed (StartPoint = EndPoint).

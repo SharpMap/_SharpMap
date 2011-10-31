@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
 namespace SharpMap.Utilities.SpatialIndexing
@@ -56,7 +57,7 @@ namespace SharpMap.Utilities.SpatialIndexing
     /// </summary>
     public class QuadTree : IDisposable
     {
-        private BoundingBox _box;
+        private GeoAPI.Geometries.Envelope _box;
         
         private QuadTree _child0;
         private QuadTree _child1;
@@ -115,17 +116,17 @@ namespace SharpMap.Utilities.SpatialIndexing
                 objBuckets[0] = new List<BoxObjects>();
                 objBuckets[1] = new List<BoxObjects>();
 
-                uint longaxis = _box.LongestAxis; // longest axis
+                var longaxis = _box.LongestAxis(); // longest axis
                 double geoavg = 0; // geometric average - midpoint of ALL the objects
 
                 // go through all bbox and calculate the average of the midpoints
                 double frac = 1.0f/objList.Count;
                 for (int i = 0; i < objList.Count; i++)
-                    geoavg += objList[i].Box.GetCentroid()[longaxis]*frac;
+                    geoavg += objList[i].Box.GetCentroid()[(uint)longaxis]*frac;
 
                 // bucket bbox based on their midpoint's side of the geo average in the longest axis
                 for (int i = 0; i < objList.Count; i++)
-                    objBuckets[geoavg > objList[i].Box.GetCentroid()[longaxis] ? 1 : 0].Add(objList[i]);
+                    objBuckets[geoavg > objList[i].Box.GetCentroid()[(uint)longaxis] ? 1 : 0].Add(objList[i]);
 
                 //If objects couldn't be splitted, just store them at the leaf
                 //TODO: Try splitting on another axis
@@ -162,7 +163,7 @@ namespace SharpMap.Utilities.SpatialIndexing
         /// </summary>
         private const double SplitRatio = 0.55d;
 
-        private static void SplitBoundingBox(BoundingBox input, out BoundingBox out1, out BoundingBox out2)
+        private static void SplitBoundingBox(GeoAPI.Geometries.Envelope input, out GeoAPI.Geometries.Envelope out1, out GeoAPI.Geometries.Envelope out2)
         {
             double range;
 
@@ -173,8 +174,8 @@ namespace SharpMap.Utilities.SpatialIndexing
             {
                 range = input.Width*SplitRatio;
 
-                out1 = new BoundingBox(input.BottomLeft.Clone(), new Point(input.Left + range, input.Top));
-                out2 = new BoundingBox(new Point(input.Right - range, input.Bottom), input.TopRight.Clone());
+                out1 = new GeoAPI.Geometries.Envelope(input.MinX, input.MinY, input.MinX + range, input.MaxY);
+                out2 = new GeoAPI.Geometries.Envelope(input.MaxX - range, input.MinY, input.MaxX, input.MaxY);
             }
 
                 /* -------------------------------------------------------------------- */
@@ -184,8 +185,8 @@ namespace SharpMap.Utilities.SpatialIndexing
             {
                 range = input.Height*SplitRatio;
 
-                out1 = new BoundingBox(input.BottomLeft.Clone(), new Point(input.Right, input.Bottom + range));
-                out2 = new BoundingBox(new Point(input.Left, input.Top - range), input.TopRight.Clone());
+                out1 = new GeoAPI.Geometries.Envelope(input.BottomLeft(), new Coordinate(input.Right(), input.Bottom() + range));
+                out2 = new GeoAPI.Geometries.Envelope(new Coordinate(input.Left(), input.Top() - range), input.TopRight());
             }
             //Debug.Assert(out1.Intersects(out2));
         }
@@ -197,15 +198,16 @@ namespace SharpMap.Utilities.SpatialIndexing
         /// <param name="h">The child node creation heuristic</param>
         public void AddNode(BoxObjects o, Heuristic h)
         {
-          /* -------------------------------------------------------------------- */
+            var c = o.Box.GetCentroid();
+            /* -------------------------------------------------------------------- */
           /*      If there are subnodes, then consider whether this object        */
           /*      will fit in them.                                               */
           /* -------------------------------------------------------------------- */
             if (_child0 != null && _depth < h.maxdepth)
             {
-                if (_child0.Box.Contains(o.Box.GetCentroid()))
+                if (_child0.Box.Contains(c.X, c.Y))
                     _child0.AddNode(o, h);
-                else if (_child1.Box.Contains(o.Box.GetCentroid()))
+                else if (_child1.Box.Contains(c.X, c.Y))
                     _child1.AddNode(o, h);
                 return;
             }
@@ -216,18 +218,18 @@ namespace SharpMap.Utilities.SpatialIndexing
             /* -------------------------------------------------------------------- */
             if( h.maxdepth > _depth && !IsLeaf )
             {
-                BoundingBox half1, half2;
+                GeoAPI.Geometries.Envelope half1, half2;
                 SplitBoundingBox(Box, out half1, out half2);
             
 
-                if( half1.Contains(o.Box.GetCentroid())) 
+                if( half1.Contains(c.X, c.Y)) 
                 {
                     _child0 = new QuadTree(half1, _depth + 1);
                     _child1 = new QuadTree(half2, _depth + 1);
                     _child0.AddNode(o, h);
                     return;
                 }    
-	            if(half2.Contains(o.Box.GetCentroid()))
+	            if(half2.Contains(c.X, c.Y))
 	            {
                     _child0 = new QuadTree(half1, _depth + 1);
                     _child1 = new QuadTree(half2, _depth + 1);
@@ -264,7 +266,7 @@ namespace SharpMap.Utilities.SpatialIndexing
         /// </summary>
         /// <param name="box">The initial bounding box</param>
         /// <param name="depth">The depth</param>
-        private QuadTree(BoundingBox box, uint depth)
+        private QuadTree(GeoAPI.Geometries.Envelope box, uint depth)
         {
             _box = box;
             _depth = depth;
@@ -304,7 +306,7 @@ namespace SharpMap.Utilities.SpatialIndexing
         /// <returns></returns>
         private static QuadTree ReadNode(uint depth, BinaryReader br)
         {
-            var bbox = new BoundingBox(br);
+            var bbox = EnvelopeEx.Read(br);
             var node = new QuadTree(bbox, depth);
             
             var isLeaf = br.ReadBoolean();
@@ -315,7 +317,7 @@ namespace SharpMap.Utilities.SpatialIndexing
                 for (int i = 0; i < featureCount; i++)
                 {
                     var box = new BoxObjects();
-                    box.Box = new BoundingBox(br);
+                    box.Box = EnvelopeEx.Read(br);
                     box.ID = (uint) br.ReadInt32();
                     node._objList.Add(box);
                 }
@@ -350,10 +352,10 @@ namespace SharpMap.Utilities.SpatialIndexing
         private static void SaveNode(QuadTree node, BinaryWriter sw)
         {
             //Write node boundingbox
-            sw.Write(node.Box.Min.X);
-            sw.Write(node.Box.Min.Y);
-            sw.Write(node.Box.Max.X);
-            sw.Write(node.Box.Max.Y);
+            sw.Write(node.Box.MinX);
+            sw.Write(node.Box.MinY);
+            sw.Write(node.Box.MaxX);
+            sw.Write(node.Box.MaxY);
             sw.Write(node.IsLeaf);
             if (node.IsLeaf || node.Child0 == null)
             {
@@ -366,10 +368,10 @@ namespace SharpMap.Utilities.SpatialIndexing
                 sw.Write(node._objList.Count); //Write number of features at node
                 for (int i = 0; i < node._objList.Count; i++) //Write each featurebox
                 {
-                    sw.Write(node._objList[i].Box.Min.X);
-                    sw.Write(node._objList[i].Box.Min.Y);
-                    sw.Write(node._objList[i].Box.Max.X);
-                    sw.Write(node._objList[i].Box.Max.Y);
+                    sw.Write(node._objList[i].Box.MinX);
+                    sw.Write(node._objList[i].Box.MinY);
+                    sw.Write(node._objList[i].Box.MaxX);
+                    sw.Write(node._objList[i].Box.MaxY);
                     sw.Write(node._objList[i].ID);
                 }
             }
@@ -385,7 +387,7 @@ namespace SharpMap.Utilities.SpatialIndexing
         /// </summary>
         /// <param name="b">The root bounding box</param>
         /// <returns>The root node for the quadtree</returns>
-        public static QuadTree CreateRootNode(BoundingBox b)
+        public static QuadTree CreateRootNode(GeoAPI.Geometries.Envelope b)
         {
             return new QuadTree(b, 0);
         }
@@ -424,7 +426,7 @@ namespace SharpMap.Utilities.SpatialIndexing
         /// <summary>
         /// Gets/sets the Axis Aligned Bounding Box
         /// </summary>
-        public BoundingBox Box
+        public GeoAPI.Geometries.Envelope Box
         {
             get { return _box; }
             set { _box = value; }
@@ -475,9 +477,9 @@ namespace SharpMap.Utilities.SpatialIndexing
         /// Calculate the floating point error metric 
         /// </summary>
         /// <returns></returns>
-        public static double ErrorMetric(BoundingBox box)
+        public static double ErrorMetric(GeoAPI.Geometries.Envelope box)
         {
-            Point temp = new Point(1, 1) + (box.Max - box.Min);
+            var temp = new Coordinate(1 + box.MaxX-box.MinX, 1+ box.MaxY-box.MinY);
             return temp.X*temp.Y;
         }
 
@@ -485,7 +487,7 @@ namespace SharpMap.Utilities.SpatialIndexing
         /// Searches the tree and looks for intersections with the boundingbox 'bbox'
         /// </summary>
         /// <param name="box">Boundingbox to intersect with</param>
-        public Collection<uint> Search(BoundingBox box)
+        public Collection<uint> Search(GeoAPI.Geometries.Envelope box)
         {
             Collection<uint> objectlist = new Collection<uint>();
             IntersectTreeRecursive(box, this, ref objectlist);
@@ -498,7 +500,7 @@ namespace SharpMap.Utilities.SpatialIndexing
         /// <param name="box">Boundingbox to intersect with</param>
         /// <param name="node">Node to search from</param>
         /// <param name="list">List of found intersections</param>
-        private static void IntersectTreeRecursive(BoundingBox box, QuadTree node, ref Collection<uint> list)
+        private static void IntersectTreeRecursive(GeoAPI.Geometries.Envelope box, QuadTree node, ref Collection<uint> list)
         {
             if (node.IsLeaf) //Leaf has been reached
             {
@@ -530,14 +532,14 @@ namespace SharpMap.Utilities.SpatialIndexing
         #region Nested type: BoxObjects
 
         /// <summary>
-        /// BoundingBox and Feature ID structure used for storing in the quadtree 
+        /// GeoAPI.Geometries.Envelope and Feature ID structure used for storing in the quadtree 
         /// </summary>
         public struct BoxObjects
         {
             /// <summary>
             /// Boundingbox
             /// </summary>
-            public BoundingBox Box;
+            public GeoAPI.Geometries.Envelope Box;
 
             /// <summary>
             /// Feature ID

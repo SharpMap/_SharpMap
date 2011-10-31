@@ -48,7 +48,7 @@ namespace SharpMap.Layers
         /// <summary>
         /// Gets the boundingbox of the entire layer
         /// </summary>
-        BoundingBox Envelope { get; }
+        GeoAPI.Geometries.Envelope Envelope { get; }
 
         //System.Collections.Generic.List<T> Features { get; }
 

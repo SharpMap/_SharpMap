@@ -16,10 +16,14 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
+using System.Globalization;
+using GeoAPI.CoordinateSystems;
+using GeoAPI.Geometries;
+using GeoAPI.Operations.Buffer;
 using SharpMap.Converters.WellKnownBinary;
 using SharpMap.Converters.WellKnownText;
 #if !DotSpatialProjections
-using ProjNet.CoordinateSystems;
+using GeoAPI.CoordinateSystems;
 #else
 using DotSpatial.Projections;
 #endif
@@ -75,17 +79,51 @@ namespace SharpMap.Geometries
 
         #region "Basic Methods on Geometry"
 
+        public abstract Coordinate[] Coordinates { get; }
+
         /// <summary>
         ///  The inherent dimension of this <see cref="Geometry"/> object, which must be less than or equal
         ///  to the coordinate dimension.
         /// </summary>
         /// <remarks>This specification is restricted to geometries in two-dimensional coordinate space.</remarks>
-        public abstract int Dimension { get; }
+        public abstract Dimension Dimension { get; set; }
+
+        public Envelope EnvelopeInternal
+        {
+            get { return GetBoundingBox(); }
+        }
+
+        IPoint IGeometry.InteriorPoint
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public abstract IPoint PointOnSurface { get; }
 
         /// <summary>
         /// User Data Associated with the geometry object
         /// </summary>
         public object UserData { get; set; }
+
+        bool IGeometry.IsEmpty
+        {
+            get { return IsEmpty(); }
+        }
+
+        bool IGeometry.IsRectangle
+        {
+            get { throw new NotSupportedException(); }
+        }
+
+        bool IGeometry.IsSimple
+        {
+            get { return IsSimple(); }
+        }
+
+        bool IGeometry.IsValid
+        {
+            get { return true; }
+        }
 
 
         /// <summary>
@@ -93,26 +131,24 @@ namespace SharpMap.Geometries
         /// polygon is defined by the corner points of the bounding box ((MINX, MINY), (MAXX, MINY), (MAXX,
         /// MAXY), (MINX, MAXY), (MINX, MINY)).
         /// </summary>
-        /// <remarks>The envelope is actually the <see cref="BoundingBox"/> converted into a polygon.</remarks>
+        /// <remarks>The envelope is actually the <see cref="GeoAPI.Geometries.Envelope"/> converted into a polygon.</remarks>
         /// <seealso cref="GetBoundingBox"/>
-        public Geometry Envelope()
+        public IGeometry Envelope
         {
-            BoundingBox box = GetBoundingBox();
-            Polygon envelope = new Polygon();
-            envelope.ExteriorRing.Vertices.Add(box.Min); //minx miny
-            envelope.ExteriorRing.Vertices.Add(new Point(box.Max.X, box.Min.Y)); //maxx minu
-            envelope.ExteriorRing.Vertices.Add(box.Max); //maxx maxy
-            envelope.ExteriorRing.Vertices.Add(new Point(box.Min.X, box.Max.Y)); //minx maxy
-            envelope.ExteriorRing.Vertices.Add(envelope.ExteriorRing.StartPoint); //close ring
-            return envelope;
+            get
+            {
+                var box = GetBoundingBox();
+
+                return SharpMapGeometryFactory.Instance.ToGeometry(box);
+            }
         }
 
 
         /// <summary>
-        /// The minimum bounding box for this <see cref="Geometry"/>, returned as a <see cref="BoundingBox"/>.
+        /// The minimum bounding box for this <see cref="Geometry"/>, returned as a <see cref="GeoAPI.Geometries.Envelope"/>.
         /// </summary>
         /// <returns></returns>
-        public abstract BoundingBox GetBoundingBox();
+        public abstract GeoAPI.Geometries.Envelope GetBoundingBox();
 
         /// <summary>
         /// Exports this <see cref="Geometry"/> to a specific well-known text representation of <see cref="Geometry"/>.
@@ -122,12 +158,183 @@ namespace SharpMap.Geometries
             return GeometryToWKT.Write(this);
         }
 
+        IntersectionMatrix IGeometry.Relate(IGeometry g)
+        {
+            throw new NotImplementedException();
+        }
+
+        IGeometry IGeometry.Buffer(double distance, int quadrantSegments)
+        {
+            throw new NotSupportedException();
+        }
+
+        IGeometry IGeometry.Buffer(double distance, BufferStyle endCapStyle)
+        {
+            throw new NotSupportedException();
+        }
+
+        IGeometry IGeometry.Buffer(double distance, int quadrantSegments, BufferStyle endCapStyle)
+        {
+            throw new NotSupportedException();
+        }
+
+        IGeometry IGeometry.Buffer(double distance, int quadrantSegments, EndCapStyle endCapStyle)
+        {
+            throw new NotSupportedException();
+        }
+
+        IGeometry IGeometry.Buffer(double distance, IBufferParameters bufferParameters)
+        {
+            throw new NotSupportedException();
+        }
+
+        IGeometry IGeometry.Union()
+        {
+            throw new NotSupportedException();
+        }
+
+        bool IGeometry.EqualsExact(IGeometry other)
+        {
+            throw new NotSupportedException();
+        }
+
+        bool IGeometry.EqualsExact(IGeometry other, double tolerance)
+        {
+            throw new NotSupportedException();
+        }
+
+        bool IGeometry.IsWithinDistance(IGeometry geom, double distance)
+        {
+            throw new NotSupportedException();
+        }
+
+        bool IGeometry.CoveredBy(IGeometry g)
+        {
+            throw new NotSupportedException();
+        }
+
+        IGeometry IGeometry.Reverse()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IGeometry.Apply(ICoordinateFilter filter)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IGeometry.Apply(ICoordinateSequenceFilter filter)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IGeometry.Apply(IGeometryFilter filter)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IGeometry.Apply(IGeometryComponentFilter filter)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IGeometry.GeometryChanged()
+        {
+            //throw new NotImplementedException();
+        }
+
+        void IGeometry.GeometryChangedAction()
+        {
+            //throw new NotImplementedException();
+        }
+
+        IGeometryFactory IGeometry.Factory
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        IPrecisionModel IGeometry.PrecisionModel
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        int IGeometry.SRID
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        string IGeometry.GeometryType
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        double IGeometry.Area
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        double IGeometry.Length
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        int IGeometry.NumGeometries
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        int IGeometry.NumPoints
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        IGeometry IGeometry.Boundary
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        Dimension IGeometry.BoundaryDimension
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        IPoint IGeometry.Centroid
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        Coordinate IGeometry.Coordinate
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        IGeometry IGeometry.GetGeometryN(int n)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IGeometry.Normalize()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Exports this <see cref="Geometry"/> to a specific well-known binary representation of <see cref="Geometry"/>.
         /// </summary>
         public byte[] AsBinary()
         {
             return GeometryToWKB.Write(this);
+        }
+
+        int IComparable<IGeometry>.CompareTo(IGeometry other)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IEquatable<IGeometry>.Equals(IGeometry other)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -195,7 +402,7 @@ namespace SharpMap.Geometries
         /// <summary>
         /// Returns 'true' if this Geometry is ‘spatially disjoint’ from another <see cref="Geometry"/>.
         /// </summary>
-        public virtual bool Disjoint(Geometry geom)
+        public virtual bool Disjoint(IGeometry geom)
         {
             return SpatialRelations.Disjoint(this, geom);
         }
@@ -203,7 +410,7 @@ namespace SharpMap.Geometries
         /// <summary>
         /// Returns 'true' if this <see cref="Geometry"/> ‘spatially intersects’ another <see cref="Geometry"/>.
         /// </summary>
-        public virtual bool Intersects(Geometry geom)
+        public virtual bool Intersects(IGeometry geom)
         {
             return SpatialRelations.Intersects(this, geom);
         }
@@ -211,15 +418,23 @@ namespace SharpMap.Geometries
         /// <summary>
         /// Returns 'true' if this <see cref="Geometry"/> ‘spatially touches’ another <see cref="Geometry"/>.
         /// </summary>
-        public virtual bool Touches(Geometry geom)
+        public virtual bool Touches(IGeometry geom)
         {
             return SpatialRelations.Touches(this, geom);
         }
 
         /// <summary>
+        /// Returns 'true' if this <see cref="Geometry"/> ‘spatially covers’ another <see cref="Geometry"/>.
+        /// </summary>
+        public virtual bool Covers(IGeometry geom)
+        {
+            return SpatialRelations.Covers(this, geom);
+        }
+
+        /// <summary>
         /// Returns 'true' if this <see cref="Geometry"/> ‘spatially crosses’ another <see cref="Geometry"/>.
         /// </summary>
-        public virtual bool Crosses(Geometry geom)
+        public virtual bool Crosses(IGeometry geom)
         {
             return SpatialRelations.Crosses(this, geom);
         }
@@ -227,7 +442,7 @@ namespace SharpMap.Geometries
         /// <summary>
         /// Returns 'true' if this <see cref="Geometry"/> is ‘spatially within’ another <see cref="Geometry"/>.
         /// </summary>
-        public virtual bool Within(Geometry geom)
+        public virtual bool Within(IGeometry geom)
         {
             return SpatialRelations.Within(this, geom);
         }
@@ -235,7 +450,7 @@ namespace SharpMap.Geometries
         /// <summary>
         /// Returns 'true' if this <see cref="Geometry"/> ‘spatially contains’ another <see cref="Geometry"/>.
         /// </summary>
-        public virtual bool Contains(Geometry geom)
+        public virtual bool Contains(IGeometry geom)
         {
             return SpatialRelations.Contains(this, geom);
         }
@@ -243,7 +458,7 @@ namespace SharpMap.Geometries
         /// <summary>
         /// Returns 'true' if this <see cref="Geometry"/> 'spatially overlaps' another <see cref="Geometry"/>.
         /// </summary>
-        public virtual bool Overlaps(Geometry geom)
+        public virtual bool Overlaps(IGeometry geom)
         {
             return SpatialRelations.Overlaps(this, geom);
         }
@@ -257,9 +472,9 @@ namespace SharpMap.Geometries
         /// <param name="other"><see cref="Geometry"/> to relate to</param>
         /// <param name="intersectionPattern">Intersection Pattern</param>
         /// <returns>True if spatially related</returns>
-        public bool Relate(Geometry other, string intersectionPattern)
+        public bool Relate(IGeometry other, string intersectionPattern)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         #endregion
@@ -270,7 +485,7 @@ namespace SharpMap.Geometries
         /// Returns the shortest distance between any two points in the two geometries
         /// as calculated in the spatial reference system of this Geometry.
         /// </summary>
-        public abstract double Distance(Geometry geom);
+        public abstract double Distance(IGeometry geom);
 
         /// <summary>
         /// Returns a geometry that represents all points whose distance from this Geometry
@@ -278,34 +493,34 @@ namespace SharpMap.Geometries
         /// System of this Geometry.
         /// </summary>
         /// <param name="d">Buffer distance</param>
-        public abstract Geometry Buffer(double d);
+        public abstract IGeometry Buffer(double d);
 
 
         /// <summary>
         /// Geometry—Returns a geometry that represents the convex hull of this Geometry.
         /// </summary>
-        public abstract Geometry ConvexHull();
+        public abstract IGeometry ConvexHull();
 
         /// <summary>
         /// Returns a geometry that represents the point set intersection of this Geometry
         /// with anotherGeometry.
         /// </summary>
-        public abstract Geometry Intersection(Geometry geom);
+        public abstract IGeometry Intersection(IGeometry geom);
 
         /// <summary>
         /// Returns a geometry that represents the point set union of this Geometry with anotherGeometry.
         /// </summary>
-        public abstract Geometry Union(Geometry geom);
+        public abstract IGeometry Union(IGeometry geom);
 
         /// <summary>
         /// Returns a geometry that represents the point set difference of this Geometry with anotherGeometry.
         /// </summary>
-        public abstract Geometry Difference(Geometry geom);
+        public abstract IGeometry Difference(IGeometry geom);
 
         /// <summary>
         /// Returns a geometry that represents the point set symmetric difference of this Geometry with anotherGeometry.
         /// </summary>
-        public abstract Geometry SymDifference(Geometry geom);
+        public abstract IGeometry SymmetricDifference(IGeometry geom);
 
         #endregion
 
@@ -327,14 +542,9 @@ namespace SharpMap.Geometries
         {
             if (obj == null)
                 return false;
-            else
-            {
-                Geometry g = obj as Geometry;
-                if (g == null)
-                    return false;
-                else
-                    return Equals(g);
-            }
+            
+            var g = obj as Geometry;
+            return g != null && Equals(g);
         }
 
         /// <summary>
@@ -345,6 +555,16 @@ namespace SharpMap.Geometries
         public override int GetHashCode()
         {
             return AsBinary().GetHashCode();
+        }
+
+        int IComparable.CompareTo(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
         }
     }
 }

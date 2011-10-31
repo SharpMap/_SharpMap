@@ -142,7 +142,7 @@ namespace SharpMap.Layers
         /// Returns the extent of the layer
         /// </summary>
         /// <returns>Bounding box corresponding to the extent of the features in the layer</returns>
-        public abstract BoundingBox Envelope { get; }
+        public abstract GeoAPI.Geometries.Envelope Envelope { get; }
 
         #endregion
 

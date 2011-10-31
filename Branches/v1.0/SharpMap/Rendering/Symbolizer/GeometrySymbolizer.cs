@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using SharpMap.Data;
-using SharpMap.Geometries;
-using SharpMap.Rendering.Thematics;
+using GeoAPI.Geometries;
 
 namespace SharpMap.Rendering.Symbolizer
 {
@@ -10,12 +8,15 @@ namespace SharpMap.Rendering.Symbolizer
     /// Multi geometry symbolizer class
     /// </summary>
     [Serializable]
-    public class GeometrySymbolizer : ISymbolizer<Geometry>
+    public class GeometrySymbolizer : ISymbolizer<IGeometry>
     {
         private IPointSymbolizer _pointSymbolizer;
         private ILineSymbolizer _lineSymbolizer;
         private IPolygonSymbolizer _polygonSymbolizer;
 
+        /// <summary>
+        /// Creates an instance of this class
+        /// </summary>
         public GeometrySymbolizer()
         {
             _pointSymbolizer = new RasterPointSymbolizer();
@@ -59,8 +60,38 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map">The map object, mainly needed for transformation purposes.</param>
         /// <param name="geometry">The geometry to symbolize.</param>
         /// <param name="graphics">The graphics object to use.</param>
-        public void Render(Map map, Geometry geometry, Graphics graphics)
+        public void Render(Map map, IGeometry geometry, Graphics graphics)
         {
+            if (geometry is IPuntal)
+            {
+                _pointSymbolizer.Render(map, geometry, graphics);
+                return;
+            }
+            
+            if (geometry is ILineal)
+            {
+                _lineSymbolizer.Render(map, geometry, graphics);
+                return;
+            }
+
+            if (geometry is IPolygonal)
+            {
+                _polygonSymbolizer.Render(map, geometry, graphics);
+                return;
+            }
+
+            // geometry must be a GeometryCollection
+            var gc = geometry as IGeometryCollection;
+            if (gc != null)
+            {
+                foreach (var tmp in gc)
+                {
+                    Render(map, tmp, graphics);
+                }
+                return;
+            }
+
+            /*
             switch (geometry.GeometryType)
             {
                 case GeometryType2.Point:
@@ -86,8 +117,8 @@ namespace SharpMap.Rendering.Symbolizer
                     return;
 
             }
-
-            throw new Exception("Unknown geometry type");
+            */
+            throw new ArgumentException("Unknown geometry type", "geometry");
         }
 
         public void Begin(Graphics g, Map map, int aproximateNumberOfGeometries)

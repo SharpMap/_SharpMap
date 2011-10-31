@@ -18,73 +18,67 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using GeoAPI.Geometries;
 
 namespace SharpMap.Geometries
 {
     /// <summary>
-    /// A MultiPolygon is a MultiSurface whose elements are Polygons.
+    /// A MultiPoint is a 0 dimensional geometric collection. The elements of a MultiPoint are
+    /// restricted to Points. The points are not connected or ordered.
     /// </summary>
-    [Serializable]
-    public class MultiPolygon : MultiSurface
+    public class MultiPoint : GeometryCollection, IMultiPoint
     {
-        private IList<Polygon> _Polygons;
+        private IList<Point> _Points;
 
         /// <summary>
-        /// Instantiates a MultiPolygon
+        /// Initializes a new MultiPoint collection
         /// </summary>
-        public MultiPolygon()
+        public MultiPoint()
         {
-            _Polygons = new Collection<Polygon>();
+            _Points = new Collection<Point>();
         }
 
         /// <summary>
-        /// Collection of polygons in the multipolygon
+        /// Initializes a new MultiPoint collection
         /// </summary>
-        public IList<Polygon> Polygons
+        /// <param name="coordinates"></param>
+        public MultiPoint(IEnumerable<Coordinate> coordinates)
         {
-            get { return _Polygons; }
-            set { _Polygons = value; }
-        }
-
-        /// <summary>
-        /// Returns an indexed geometry in the collection
-        /// </summary>
-        /// <param name="index">Geometry index</param>
-        /// <returns>Geometry at index</returns>
-        public new Polygon this[int index]
-        {
-            get { return _Polygons[index]; }
-        }
-
-        /// <summary>
-        /// Returns summed area of the Polygons in the MultiPolygon collection
-        /// </summary>
-        public override double Area
-        {
-            get
+            _Points = new Collection<Point>();
+            foreach (var coordinate in coordinates)
             {
-                double result = 0;
-                for (int i = 0; i < _Polygons.Count; i++)
-                    result += _Polygons[i].Area;
-                return result;
+                _Points.Add(new Point(coordinate));
             }
         }
 
+
         /// <summary>
-        /// The mathematical centroid for the surfaces as a Point.
-        /// The result is not guaranteed to be on any of the surfaces.
-        /// </summary>
-        public override Point Centroid
+        /// Initializes a new MultiPoint collection
+        /// </summary>		
+        public MultiPoint(IEnumerable<double[]> points)
         {
-            get { throw new NotImplementedException(); }
+            _Points = new Collection<Point>();
+            foreach (double[] point in points)
+                _Points.Add(new Point(point[0], point[1]));
         }
 
         /// <summary>
-        /// A point guaranteed to be on this Surface.
+        /// Gets the n'th point in the MultiPoint collection
         /// </summary>
-        public override Point PointOnSurface
+        /// <param name="n">Index in collection</param>
+        /// <returns>Point</returns>
+        public new Point this[int n]
         {
-            get { throw new NotImplementedException(); }
+            get { return _Points[n]; }
+        }
+
+        /// <summary>
+        /// Gets or sets the MultiPoint collection
+        /// </summary>
+        public IList<Point> Points
+        {
+            get { return _Points; }
+            set { _Points = value; }
         }
 
         /// <summary>
@@ -92,7 +86,26 @@ namespace SharpMap.Geometries
         /// </summary>
         public override int NumGeometries
         {
-            get { return _Polygons.Count; }
+            get { return _Points.Count; }
+        }
+
+        /// <summary>
+        ///  The inherent dimension of this Geometry object, which must be less than or equal to the coordinate dimension.
+        /// </summary>
+        public override Dimension Dimension
+        {
+            get { return Dimension.Point; }
+            set {}
+        }
+
+        /// <summary>
+        /// Returns an indexed geometry in the collection
+        /// </summary>
+        /// <param name="n">Geometry index</param>
+        /// <returns>Geometry at index N</returns>
+        public new Point Geometry(int n)
+        {
+            return _Points[n];
         }
 
         /// <summary>
@@ -101,12 +114,7 @@ namespace SharpMap.Geometries
         /// <returns>Returns 'true' if this Geometry is the empty geometry</returns>
         public override bool IsEmpty()
         {
-            if (_Polygons == null || _Polygons.Count == 0)
-                return true;
-            for (int i = 0; i < _Polygons.Count; i++)
-                if (!_Polygons[i].IsEmpty())
-                    return false;
-            return true;
+            return (_Points != null && _Points.Count == 0);
         }
 
         /// <summary>
@@ -121,15 +129,12 @@ namespace SharpMap.Geometries
         }
 
         /// <summary>
-        /// Returns the closure of the combinatorial boundary of this Geometry. The
-        /// combinatorial boundary is defined as described in section 3.12.3.2 of [1]. Because the result of this function
-        /// is a closure, and hence topologically closed, the resulting boundary can be represented using
-        /// representational geometry primitives
+        /// The boundary of a MultiPoint is the empty set (null).
         /// </summary>
-        /// <returns>Closure of the combinatorial boundary of this Geometry</returns>
+        /// <returns></returns>
         public override Geometry Boundary()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         /// <summary>
@@ -138,7 +143,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to calculate distance to</param>
         /// <returns>Shortest distance between any two points in the two geometries</returns>
-        public override double Distance(Geometry geom)
+        public override double Distance(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -150,7 +155,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="d">Buffer distance</param>
         /// <returns>Buffer around geometry</returns>
-        public override Geometry Buffer(double d)
+        public override IGeometry Buffer(double d)
         {
             throw new NotImplementedException();
         }
@@ -159,7 +164,7 @@ namespace SharpMap.Geometries
         /// Geometry—Returns a geometry that represents the convex hull of this Geometry.
         /// </summary>
         /// <returns>The convex hull</returns>
-        public override Geometry ConvexHull()
+        public override IGeometry ConvexHull()
         {
             throw new NotImplementedException();
         }
@@ -170,7 +175,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to intersect with</param>
         /// <returns>Returns a geometry that represents the point set intersection of this Geometry with anotherGeometry.</returns>
-        public override Geometry Intersection(Geometry geom)
+        public override IGeometry Intersection(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -180,7 +185,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to union with</param>
         /// <returns>Unioned geometry</returns>
-        public override Geometry Union(Geometry geom)
+        public override IGeometry Union(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -190,7 +195,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to compare to</param>
         /// <returns>Geometry</returns>
-        public override Geometry Difference(Geometry geom)
+        public override IGeometry Difference(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -200,32 +205,31 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to compare to</param>
         /// <returns>Geometry</returns>
-        public override Geometry SymDifference(Geometry geom)
+        public override IGeometry SymmetricDifference(IGeometry geom)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Returns an indexed geometry in the collection
+        /// The minimum bounding box for this Geometry.
         /// </summary>
-        /// <param name="N">Geometry index</param>
-        /// <returns>Geometry at index N</returns>
-        public override Geometry Geometry(int N)
+        /// <returns></returns>
+        public override GeoAPI.Geometries.Envelope GetBoundingBox()
         {
-            return _Polygons[N];
-        }
-
-        /// <summary>
-        /// Returns the bounding box of the object
-        /// </summary>
-        /// <returns>bounding box</returns>
-        public override BoundingBox GetBoundingBox()
-        {
-            if (_Polygons == null || _Polygons.Count == 0)
+            if (_Points == null || _Points.Count == 0)
                 return null;
-            BoundingBox bbox = Polygons[0].GetBoundingBox();
-            for (int i = 1; i < Polygons.Count; i++)
-                bbox = bbox.Join(Polygons[i].GetBoundingBox());
+            GeoAPI.Geometries.Envelope bbox = new GeoAPI.Geometries.Envelope(_Points[0].X, _Points[0].Y, _Points[0].X, _Points[0].Y);
+            //GeoAPI.Geometries.Envelope bbox = new GeoAPI.Geometries.Envelope(_Points[0], _Points[0]);
+            for (int i = 1; i < _Points.Count; i++)
+            {
+                bbox.ExpandToInclude(_Points[i].X, _Points[i].Y);
+                /*
+                bbox.Min.X = _Points[i].X < bbox.Min.X ? _Points[i].X : bbox.Min.X;
+                bbox.Min.Y = _Points[i].Y < bbox.Min.Y ? _Points[i].Y : bbox.Min.Y;
+                bbox.Max.X = _Points[i].X > bbox.Max.X ? _Points[i].X : bbox.Max.X;
+                bbox.Max.Y = _Points[i].Y > bbox.Max.Y ? _Points[i].Y : bbox.Max.Y;
+                 */
+            }
             return bbox;
         }
 
@@ -233,11 +237,11 @@ namespace SharpMap.Geometries
         /// Return a copy of this geometry
         /// </summary>
         /// <returns>Copy of Geometry</returns>
-        public new MultiPolygon Clone()
+        public new MultiPoint Clone()
         {
-            MultiPolygon geoms = new MultiPolygon();
-            for (int i = 0; i < _Polygons.Count; i++)
-                geoms.Polygons.Add(_Polygons[i].Clone());
+            MultiPoint geoms = new MultiPoint();
+            for (int i = 0; i < _Points.Count; i++)
+                geoms.Points.Add(_Points[i].Clone());
             return geoms;
         }
 
@@ -247,7 +251,7 @@ namespace SharpMap.Geometries
         /// <returns></returns>
         public override IEnumerator<Geometry> GetEnumerator()
         {
-            foreach (Polygon p in _Polygons)
+            foreach (Point p in _Points)
                 yield return p;
         }
 
@@ -255,7 +259,7 @@ namespace SharpMap.Geometries
         {
             get
             {
-                return GeometryType2.MultiPolygon;
+                return GeometryType2.MultiPoint;
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿namespace SharpMap.Geometries
 {
+    /*
     /// <summary>
     /// Interface for all classes that define
     /// </summary>
@@ -35,4 +36,5 @@
     public interface IPolygonal : IGeometryClassifier
     {
     }
+     */
 }

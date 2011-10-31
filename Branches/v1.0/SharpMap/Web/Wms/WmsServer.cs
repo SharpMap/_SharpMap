@@ -22,6 +22,7 @@ using System.Globalization;
 using System.IO;
 using System.Web;
 using System.Xml;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 using SharpMap.Layers;
 
@@ -35,7 +36,7 @@ namespace SharpMap.Web.Wms
         
 		#region Delegates
 
-        public delegate SharpMap.Data.FeatureDataTable InterSectDelegate(SharpMap.Data.FeatureDataTable featureDataTable, SharpMap.Geometries.BoundingBox box);
+        public delegate SharpMap.Data.FeatureDataTable InterSectDelegate(SharpMap.Data.FeatureDataTable featureDataTable, GeoAPI.Geometries.Envelope box);
 
         #endregion
 
@@ -291,7 +292,7 @@ namespace SharpMap.Web.Wms
                     return;
                 }
                 //sets the boundingbox to the boundingbox of the client in order to calculate the coordinates of the projection of the client
-                BoundingBox bbox = ParseBBOX(context.Request.Params["bbox"]);
+                var bbox = ParseBBOX(context.Request.Params["bbox"]);
                 if (bbox == null)
                 {
                     WmsException.ThrowWmsException("Invalid parameter BBOX");
@@ -299,7 +300,7 @@ namespace SharpMap.Web.Wms
                 }
                 map.ZoomToBox(bbox);
                 //sets the point clicked by the client
-                SharpMap.Geometries.Point p = new SharpMap.Geometries.Point();
+                var p = new Coordinate();
                 Single x = 0;
                 Single y = 0;
                 //tries to set the x to the Param I, if the client send an X, it will try the X, if both fail, exception is thrown
@@ -372,9 +373,9 @@ namespace SharpMap.Web.Wms
                                 Single queryBoxMinY = y - (_pixelSensitivity);
                                 Single queryBoxMaxX = x + (_pixelSensitivity);
                                 Single queryBoxMaxY = y + (_pixelSensitivity);
-                                SharpMap.Geometries.Point minXY = map.ImageToWorld(new System.Drawing.PointF(queryBoxMinX, queryBoxMinY));
-                                SharpMap.Geometries.Point maxXY = map.ImageToWorld(new System.Drawing.PointF(queryBoxMaxX, queryBoxMaxY));
-                                BoundingBox queryBox = new BoundingBox(minXY, maxXY);
+                                var minXY = map.ImageToWorld(new System.Drawing.PointF(queryBoxMinX, queryBoxMinY));
+                                var maxXY = map.ImageToWorld(new System.Drawing.PointF(queryBoxMaxX, queryBoxMaxY));
+                                Envelope queryBox = new Envelope(minXY, maxXY);
                                 SharpMap.Data.FeatureDataSet fds = new SharpMap.Data.FeatureDataSet();
                                 queryLayer.ExecuteIntersectionQuery(queryBox, fds);
 								if (_intersectDelegate != null)
@@ -539,7 +540,7 @@ namespace SharpMap.Web.Wms
                 }
                 map.Size = new Size(width, height);
 
-                BoundingBox bbox = ParseBBOX(context.Request.Params["bbox"]);
+                var bbox = ParseBBOX(context.Request.Params["bbox"]);
                 if (bbox == null)
                 {
                     WmsException.ThrowWmsException("Invalid parameter BBOX");
@@ -619,7 +620,7 @@ namespace SharpMap.Web.Wms
         /// </summary>
         /// <param name="strBBOX">string representation of a boundingbox</param>
         /// <returns>Boundingbox or null if invalid parameter</returns>
-        public static BoundingBox ParseBBOX(string strBBOX)
+        public static Envelope ParseBBOX(string strBBOX)
         {
             string[] strVals = strBBOX.Split(new[] { ',' });
             if (strVals.Length != 4)
@@ -642,7 +643,7 @@ namespace SharpMap.Web.Wms
             if (maxy < miny)
                 return null;
 
-            return new BoundingBox(minx, miny, maxx, maxy);
+            return new Envelope(minx, miny, maxx, maxy);
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading;
 using BruTile;
 using BruTile.Cache;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
 namespace SharpMap.Layers
@@ -35,11 +36,11 @@ namespace SharpMap.Layers
         /// <summary>
         /// Gets the boundingbox of the entire layer
         /// </summary>
-        public override BoundingBox Envelope
+        public override GeoAPI.Geometries.Envelope Envelope
         {
             get 
             {
-                return new BoundingBox(
+                return new GeoAPI.Geometries.Envelope(
                     _source.Schema.Extent.MinX, 
                     _source.Schema.Extent.MinY, 
                     _source.Schema.Extent.MaxX, 
@@ -116,7 +117,7 @@ namespace SharpMap.Layers
             g.InterpolationMode = InterpolationMode;
             g.Transform = graphics.Transform.Clone();
 
-            Extent extent = new Extent(map.Envelope.Min.X, map.Envelope.Min.Y, map.Envelope.Max.X, map.Envelope.Max.Y);
+            Extent extent = new Extent(map.Envelope.MinX, map.Envelope.MinY, map.Envelope.MaxX, map.Envelope.MaxY);
             int level = BruTile.Utilities.GetNearestLevel(_source.Schema.Resolutions, map.PixelSize);
             IList<TileInfo> tiles = _source.Schema.GetTilesInView(extent, level);
             
@@ -144,8 +145,8 @@ namespace SharpMap.Layers
                 Bitmap bitmap = _bitmaps.Find(info.Index);
                 if (bitmap == null) continue;
 
-                PointF min = map.WorldToImage(new Geometries.Point(info.Extent.MinX, info.Extent.MinY));
-                PointF max = map.WorldToImage(new Geometries.Point(info.Extent.MaxX, info.Extent.MaxY));
+                PointF min = map.WorldToImage(new Coordinate(info.Extent.MinX, info.Extent.MinY));
+                PointF max = map.WorldToImage(new Coordinate(info.Extent.MaxX, info.Extent.MaxY));
 
                 min = new PointF((float)Math.Round(min.X), (float)Math.Round(min.Y));
                 max = new PointF((float)Math.Round(max.X), (float)Math.Round(max.Y));

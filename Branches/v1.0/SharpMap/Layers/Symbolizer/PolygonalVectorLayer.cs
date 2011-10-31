@@ -1,3 +1,4 @@
+using GeoAPI.Geometries;
 using SharpMap.Data.Providers;
 using SharpMap.Geometries;
 using SharpMap.Rendering.Symbolizer;

@@ -15,19 +15,22 @@
 // along with SharpMap; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
+using System.Collections.Generic;
+using GeoAPI.Geometries;
+
 namespace SharpMap.Geometries
 {
     /// <summary>
     /// A MultiCurve is a one-dimensional GeometryCollection whose elements are Curves
     /// </summary>
-    public abstract class MultiCurve : GeometryCollection, ILineal
+    public abstract class MultiCurve : GeometryCollection, ILineal, IMultiCurve
     {
         /// <summary>
         ///  The inherent dimension of this Geometry object, which must be less than or equal to the coordinate dimension.
         /// </summary>
-        public override int Dimension
+        public override Dimension Dimension
         {
-            get { return 1; }
+            get { return Dimension.Curve; }
         }
 
         /// <summary>
@@ -48,9 +51,9 @@ namespace SharpMap.Geometries
         /// <summary>
         /// Returns an indexed geometry in the collection
         /// </summary>
-        /// <param name="N">Geometry index</param>
+        /// <param name="n">Geometry index</param>
         /// <returns>Geometry at index N</returns>
-        public new abstract Geometry Geometry(int N);
+        public new abstract Geometry Geometry(int n);
 
         public override GeometryType2 GeometryType
         {
@@ -60,5 +63,25 @@ namespace SharpMap.Geometries
             }
         }
 
+        #region Implementation of IEnumerable<out IGeometry>
+
+        IEnumerator<IGeometry> IEnumerable<IGeometry>.GetEnumerator()
+        {
+            foreach (ICurve geometry in Geometries)
+            {
+                yield return geometry;
+            }
+        }
+
+        #endregion
+
+        #region Implementation of IGeometryCollection
+
+        public override bool IsHomogeneous
+        {
+            get { return true; }
+        }
+
+        #endregion
     }
 }

@@ -19,6 +19,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 using SharpMap.Utilities;
 using Point = SharpMap.Geometries.Point;
@@ -85,15 +86,16 @@ namespace SharpMap.Rendering.Symbolizer
         /// Function to render the symbol
         /// </summary>
         /// <param name="map">The map</param>
-        /// <param name="point">The point to symbolize</param>
+        /// <param name="geometry">The point to symbolize</param>
         /// <param name="g">The graphics object</param>
-        protected void RenderPoint(Map map, Point point, Graphics g)
+        protected void RenderPoint(Map map, IGeometry geometry, Graphics g)
         {
+            var point = geometry as IPoint;
             if (point == null)
                 return;
 
 
-            PointF pp = Transform.WorldtoMap(point, map);
+            var pp = Transform.WorldtoMap(point.Coordinate, map);
             pp = PointF.Add(pp, GetOffset());
 
             if (Rotation != 0f && !Single.IsNaN(Rotation))
@@ -123,12 +125,12 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="points">Locations where to render the Symbol</param>
         /// <param name="g">The graphics object to use.</param>
         [Obsolete]
-        public void Render(Map map, MultiPoint points, Graphics g)
+        public void Render(Map map, IMultiPoint points, Graphics g)
         {
             if (points == null)
                 return;
             
-            foreach (Point point in points)
+            foreach (IPoint point in points)
                 Render(map, point, g);
         }
 
@@ -162,16 +164,16 @@ namespace SharpMap.Rendering.Symbolizer
                        };
         }
 
-        public void Render(Map map, IPuntal geometry, Graphics graphics)
+        public void Render(Map map, IGeometry geometry, Graphics graphics)
         {
-            var mp = geometry as MultiPoint;
+            var mp = geometry as IMultiPoint;
             if (mp != null)
             {
-                foreach (Point point in mp.Points)
+                foreach (IPoint point in mp.Geometries)
                     RenderPoint(map, point, graphics);
                 return;
             }
-            RenderPoint(map, geometry as Point, graphics);
+            RenderPoint(map, geometry as IPoint, graphics);
 
         }
 

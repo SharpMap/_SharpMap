@@ -22,6 +22,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
   
@@ -271,10 +272,10 @@ namespace SharpMap.Data.Providers
        /// </summary>   
        /// <param name="bbox"></param>   
        /// <returns></returns>   
-       public Collection<Geometry> GetGeometriesInView(BoundingBox bbox)   
+       public Collection<IGeometry> GetGeometriesInView(Envelope bbox)   
        {   
-           Collection<Geometry> features = new Collection<Geometry>();   
-           using (SqlConnection conn = new SqlConnection(_connectionString))   
+           var features = new Collection<IGeometry>();   
+           using (var conn = new SqlConnection(_connectionString))   
            {   
                //Get bounding box string   
                string strBbox = GetBoxFilterStr(bbox);   
@@ -287,7 +288,7 @@ namespace SharpMap.Data.Providers
  
                strSQL += strBbox;   
  
-               using (SqlCommand command = new SqlCommand(strSQL, conn))   
+               using (var command = new SqlCommand(strSQL, conn))   
                {   
                    conn.Open();   
                    using (SqlDataReader dr = command.ExecuteReader())   
@@ -313,16 +314,16 @@ namespace SharpMap.Data.Providers
        /// </summary>   
        /// <param name="oid">Object ID</param>   
        /// <returns>geometry</returns>   
-       public Geometry GetGeometryByID(uint oid)   
+       public IGeometry GetGeometryByID(uint oid)   
        {   
            Geometry geom = null;   
-           using (SqlConnection conn = new SqlConnection(_connectionString))   
+           using (var conn = new SqlConnection(_connectionString))   
            {   
                string strSQL = "SELECT g." + GeometryColumn + ".STAsBinary() FROM " + Table + " g WHERE " + ObjectIdColumn + "='" + oid + "'";   
                conn.Open();   
-               using (SqlCommand command = new SqlCommand(strSQL, conn))   
+               using (var command = new SqlCommand(strSQL, conn))   
                {   
-                   using (SqlDataReader dr = command.ExecuteReader())   
+                   using (var dr = command.ExecuteReader())   
                    {   
                        while (dr.Read())   
                        {   
@@ -340,7 +341,7 @@ namespace SharpMap.Data.Providers
        /// </summary>   
        /// <param name="bbox"></param>   
        /// <returns></returns>   
-       public Collection<uint> GetObjectIDsInView(BoundingBox bbox)   
+       public Collection<uint> GetObjectIDsInView(GeoAPI.Geometries.Envelope bbox)   
        {   
            Collection<uint> objectlist = new Collection<uint>();   
            using (SqlConnection conn = new SqlConnection(_connectionString))   
@@ -382,18 +383,18 @@ namespace SharpMap.Data.Providers
        /// </summary>   
        /// <param name="bbox"></param>   
        /// <returns></returns>   
-       private string GetBoxFilterStr(BoundingBox bbox) {   
+       private string GetBoxFilterStr(Envelope bbox) {   
            //geography::STGeomFromText('LINESTRING(47.656 -122.360, 47.656 -122.343)', 4326);   
-           LinearRing lr = new LinearRing();   
-           lr.Vertices.Add(new Point(bbox.Left, bbox.Bottom));   
-           lr.Vertices.Add(new Point(bbox.Right, bbox.Bottom));   
-           lr.Vertices.Add(new Point(bbox.Right, bbox.Top));   
-           lr.Vertices.Add(new Point(bbox.Left, bbox.Top));   
-           lr.Vertices.Add(new Point(bbox.Left, bbox.Bottom));   
-           Polygon p = new Polygon(lr);   
-           string bboxText = Converters.WellKnownText.GeometryToWKT.Write(p); // "";   
+           var lr = new LinearRing();   
+           lr.Vertices.Add(new Coordinate(bbox.MinX, bbox.MinY));
+           lr.Vertices.Add(new Coordinate(bbox.MaxX, bbox.MinY));
+           lr.Vertices.Add(new Coordinate(bbox.MaxX, bbox.MaxY));
+           lr.Vertices.Add(new Coordinate(bbox.MinX, bbox.MaxY));
+           lr.Vertices.Add(new Coordinate(bbox.MinX, bbox.MinY));   
+           var p = new Polygon(lr);   
+           var bboxText = Converters.WellKnownText.GeometryToWKT.Write(p); // "";   
            //string whereClause = GeometryColumn + ".STIntersects(geometry::STGeomFromText('" + bboxText + "', " + SRID + ")" + MakeValidString + ") = 1";   
-           string whereClause = String.Format("{0}{1}.STIntersects({4}::STGeomFromText('{2}', {3})) = 1", 
+           var whereClause = String.Format("{0}{1}.STIntersects({4}::STGeomFromText('{2}', {3})) = 1", 
                GeometryColumn, MakeValidString, bboxText, SRID, _spatialObject);
            return whereClause; // strBbox;   
        }   
@@ -403,10 +404,10 @@ namespace SharpMap.Data.Providers
        /// </summary>   
        /// <param name="geom"></param>   
        /// <param name="ds">FeatureDataSet to fill data into</param>   
-       public void ExecuteIntersectionQuery(Geometry geom, FeatureDataSet ds)   
+       public void ExecuteIntersectionQuery(IGeometry geom, FeatureDataSet ds)   
        {   
            //List<Geometry> features = new List<Geometry>();   
-           using (SqlConnection conn = new SqlConnection(_connectionString))   
+           using (var conn = new SqlConnection(_connectionString))   
            {   
                //TODO: Convert to SQL Server   
                string strGeom = _spatialObject + "::STGeomFromText('" + geom.AsText() + "', #SRID#)";
@@ -421,20 +422,20 @@ namespace SharpMap.Data.Providers
  
                strSQL += strGeom;   
  
-               using (SqlDataAdapter adapter = new SqlDataAdapter(strSQL, conn))   
+               using (var adapter = new SqlDataAdapter(strSQL, conn))   
                {   
                    conn.Open();   
                    adapter.Fill(ds);   
                    conn.Close();   
                    if (ds.Tables.Count > 0)   
                    {   
-                       FeatureDataTable fdt = new FeatureDataTable(ds.Tables[0]);   
+                       var fdt = new FeatureDataTable(ds.Tables[0]);   
                        foreach (System.Data.DataColumn col in ds.Tables[0].Columns)   
                            if (col.ColumnName != GeometryColumn && col.ColumnName != "sharpmap_tempgeometry")   
                                fdt.Columns.Add(col.ColumnName, col.DataType, col.Expression);   
                        foreach (System.Data.DataRow dr in ds.Tables[0].Rows)   
                        {   
-                           FeatureDataRow fdr = fdt.NewRow();   
+                           var fdr = fdt.NewRow();   
                            foreach (System.Data.DataColumn col in ds.Tables[0].Columns)   
                                if (col.ColumnName != GeometryColumn && col.ColumnName != "sharpmap_tempgeometry")   
                                    fdr[col.ColumnName] = dr[col];   
@@ -474,12 +475,12 @@ namespace SharpMap.Data.Providers
        public int GetFeatureCount()   
        {   
            int count;   
-           using (SqlConnection conn = new SqlConnection(_connectionString))   
+           using (var conn = new SqlConnection(_connectionString))   
            {   
                string strSQL = "SELECT COUNT(*) FROM " + Table;   
                if (!String.IsNullOrEmpty(_defintionQuery))   
                    strSQL += " WHERE " + DefinitionQuery;   
-               using (SqlCommand command = new SqlCommand(strSQL, conn))   
+               using (var command = new SqlCommand(strSQL, conn))   
                {   
                    conn.Open();   
                    count = (int)command.ExecuteScalar();   
@@ -570,7 +571,7 @@ namespace SharpMap.Data.Providers
        /// Boundingbox of dataset   
        /// </summary>   
        /// <returns>boundingbox</returns>   
-       public BoundingBox GetExtents()   
+       public GeoAPI.Geometries.Envelope GetExtents()   
        {   
            using (SqlConnection conn = new SqlConnection(_connectionString))   
            {
@@ -582,11 +583,11 @@ namespace SharpMap.Data.Providers
                    {
                        conn.Open();
                        //Geometry geom = null;   
-                       BoundingBox bx = null;
+                       GeoAPI.Geometries.Envelope bx = null;
                         SqlDataReader dr = command.ExecuteReader();
                         if (dr.Read())
                         {
-                            bx = new BoundingBox(Convert.ToDouble(dr["bounding_box_xmin"]),
+                            bx = new GeoAPI.Geometries.Envelope(Convert.ToDouble(dr["bounding_box_xmin"]),
                                 Convert.ToDouble(dr["bounding_box_ymin"]),
                                 Convert.ToDouble(dr["bounding_box_xmax"]),
                                 Convert.ToDouble(dr["bounding_box_ymax"]));
@@ -607,13 +608,13 @@ namespace SharpMap.Data.Providers
                    {
                        conn.Open();
                        //Geometry geom = null;   
-                       BoundingBox bx = null;
+                       GeoAPI.Geometries.Envelope bx = null;
                        SqlDataReader dr = command.ExecuteReader();
                        while (dr.Read())
                        {
                            string wkt = dr.GetString(0); //[GeometryColumn];   
                            Geometry g = Converters.WellKnownText.GeometryFromWKT.Parse(wkt);
-                           BoundingBox bb = g.GetBoundingBox();
+                           GeoAPI.Geometries.Envelope bb = g.GetBoundingBox();
                            bx = bx == null ? bb : bx.Join(bb);
                        }
                        dr.Close();
@@ -641,7 +642,7 @@ namespace SharpMap.Data.Providers
        /// </summary>   
        /// <param name="bbox">view box</param>   
        /// <param name="ds">FeatureDataSet to fill data into</param>   
-       public void ExecuteIntersectionQuery(BoundingBox bbox, FeatureDataSet ds)   
+       public void ExecuteIntersectionQuery(GeoAPI.Geometries.Envelope bbox, FeatureDataSet ds)   
        {   
            //List<Geometry> features = new List<Geometry>();   
            using (SqlConnection conn = new SqlConnection(_connectionString))   
