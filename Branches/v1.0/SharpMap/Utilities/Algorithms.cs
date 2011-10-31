@@ -20,6 +20,8 @@ using SharpMap.Geometries;
 
 namespace SharpMap.Utilities
 {
+    using GeoAPI.Geometries;
+
     internal class Algorithms
     {
         // METHOD IsCCW() IS MODIFIED FROM ANOTHER WORK AND IS ORIGINALLY BASED ON GeoTools.NET:
@@ -47,16 +49,16 @@ namespace SharpMap.Utilities
         /// </summary>
         /// <param name="ring">Ring to test.</param>
         /// <returns>Returns true if ring is oriented counter-clockwise.</returns>
-        public static bool IsCCW(LinearRing ring)
+        public static bool IsCCW(ILinearRing ring)
         {
-            Point PrevPoint, NextPoint;
-            Point p;
+            Coordinate PrevPoint, NextPoint;
+            Coordinate p;
 
             // Check if the ring has enough vertices to be a ring
-            if (ring.Vertices.Count < 3) throw (new ArgumentException("Invalid LinearRing"));
+            if (ring.CoordinateSequence.Count < 3) throw (new ArgumentException("Invalid LinearRing"));
 
             // find the point with the largest Y coordinate
-            Point hip = ring.Vertices[0];
+            var hip = ring.CoordinateSequence.GetCoordinate(0);
             int hii = 0;
             for (int i = 1; i < ring.Vertices.Count; i++)
             {

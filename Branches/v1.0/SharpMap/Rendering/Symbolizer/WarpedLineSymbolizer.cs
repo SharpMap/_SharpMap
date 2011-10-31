@@ -7,6 +7,8 @@ using SharpMap.Rendering.Thematics;
 
 namespace SharpMap.Rendering.Symbolizer
 {
+    using GeoAPI.Geometries;
+
     /// <summary>
     /// Warps a Pattern to a linestrings
     /// </summary>
@@ -92,7 +94,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         public Brush Fill { get; set; }
 
-        protected override void OnRenderInternal(Map map, LineString linestring, Graphics g)
+        protected override void OnRenderInternal(Map map, ILineString linestring, Graphics g)
         {
             var clonedPattern = (GraphicsPath) Pattern.Clone();
             var graphicsPath = WarpPathToPath.Warp(LineStringToPath(linestring, map), clonedPattern, true, _interval);

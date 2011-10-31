@@ -30,7 +30,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map">The map</param>
         ///// <param name="useClipping">A value indicating whether clipping should be applied or not</param>
         /// <returns>A GraphicsPath</returns>
-        public static GraphicsPath LineStringToPath(LineString lineString, Map map)
+        public static GraphicsPath LineStringToPath(ILineString lineString, Map map)
         {
             var gp = new GraphicsPath(FillMode.Alternate);
             gp.AddLines(lineString.TransformToImage(map));

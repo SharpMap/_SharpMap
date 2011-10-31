@@ -27,7 +27,7 @@ using SharpMap.Layers;
 using SharpMap.Rendering;
 using SharpMap.Rendering.Decoration;
 using SharpMap.Utilities;
-using Point=SharpMap.Geometries.Point;
+using Point=GeoAPI.Geometries.IPoint;
 using System.Drawing.Imaging;
 
 namespace SharpMap
@@ -74,6 +74,8 @@ namespace SharpMap
         /// </summary>
         public static NumberFormatInfo NumberFormatEnUs = new CultureInfo("en-US", false).NumberFormat;
 
+        private IGeometryFactory _factory = GeometryServices.Instance.GeometryFactory;
+
         /// <summary>
         /// Initializes a new map
         /// </summary>
@@ -98,7 +100,7 @@ namespace SharpMap
             _MinimumZoom = 0;
             _MapTransform = new Matrix();
             MapTransformInverted = new Matrix();
-            _Center = new Point(0, 0);
+            _Center = _factory.CreatePoint(new Coordinate(0, 0));
             _Zoom = 1;
             _PixelAspectRatio = 1.0;
         }

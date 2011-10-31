@@ -85,11 +85,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DotSpatial.Projections.1.0.2011.52\lib\net35\DotSpatial.Projections.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Condition="'$(Configuration)' == 'Debug' Or '$(Configuration)' == 'Release'" Include="ProjNET, Version=1.0.2794.16965, Culture=neutral, PublicKeyToken=a1f5bdcd9c6f5740, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalReferences\ProjNET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -114,6 +118,7 @@
     <Compile Include="Data\Providers\ShapeFile.cs" />
     <Compile Include="Data\Providers\SqlServer2008.cs" />
     <Compile Include="Data\Providers\WFSClient.cs" />
+    <Compile Include="Geometries\EnvelopeEx.cs" />
     <Compile Include="Geometries\GeometryHelper.cs" />
     <Compile Include="Geometries\SpatialPredicate.cs" />
     <Compile Include="Layers\DuplicateLayerException.cs" />
@@ -135,6 +140,7 @@
     <Compile Include="Layers\VariableLayerCollection.cs" />
     <Compile Include="Layers\VectorLayer.cs" />
     <Compile Include="Layers\WmsLayer.cs" />
+    <Compile Include="Map\GeometryServices.cs" />
     <Compile Include="Rendering\Decoration\Disclaimer.cs" />
     <Compile Include="Rendering\Decoration\EyeOfSight.cs" />
     <Compile Include="Rendering\Decoration\GoogleMapsDisclamer.cs" />

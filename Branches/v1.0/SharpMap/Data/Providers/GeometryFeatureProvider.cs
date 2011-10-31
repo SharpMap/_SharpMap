@@ -68,12 +68,12 @@ namespace SharpMap.Data.Providers
         /// Initializes a new instance of the <see cref="GeometryProvider"/>
         /// </summary>
         /// <param name="geometries">Set of geometries that this datasource should contain</param>
-        public GeometryFeatureProvider(IEnumerable<Geometry> geometries)
+        public GeometryFeatureProvider(IEnumerable<IGeometry> geometries)
         {
             _features = new FeatureDataTable();
-            foreach (Geometry geom in geometries)
+            foreach (var geom in geometries)
             {
-                FeatureDataRow fdr = _features.NewRow();
+                var fdr = _features.NewRow();
                 fdr.Geometry = geom;
                 _features.AddRow(fdr);
             }
@@ -94,10 +94,10 @@ namespace SharpMap.Data.Providers
         /// Initializes a new instance of the <see cref="GeometryProvider"/>
         /// </summary>
         /// <param name="geometry">Geometry to be in this datasource</param>
-        public GeometryFeatureProvider(Geometry geometry)
+        public GeometryFeatureProvider(IGeometry geometry)
         {
             _features = new FeatureDataTable();
-            FeatureDataRow fdr = _features.NewRow();
+            var fdr = _features.NewRow();
             fdr.Geometry = geometry;
             _features.AddRow(fdr);
             _features.TableCleared += HandleFeaturesCleared;
@@ -192,7 +192,7 @@ namespace SharpMap.Data.Providers
             fdt = _features.Clone();
 
             foreach (FeatureDataRow fdr in _features)
-                if (fdr.Geometry.GetBoundingBox().Intersects(box))
+                if (fdr.Geometry.EnvelopeInternal.Intersects(box))
                 {
                     fdt.LoadDataRow(fdr.ItemArray, false);
                     (fdt.Rows[fdt.Rows.Count - 1] as FeatureDataRow).Geometry = fdr.Geometry;

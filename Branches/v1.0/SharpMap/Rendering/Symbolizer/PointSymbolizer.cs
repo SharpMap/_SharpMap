@@ -22,7 +22,7 @@ using System.Drawing.Imaging;
 using GeoAPI.Geometries;
 using SharpMap.Geometries;
 using SharpMap.Utilities;
-using Point = SharpMap.Geometries.Point;
+using Point = GeoAPI.Geometries.IPoint;
 
 namespace SharpMap.Rendering.Symbolizer
 {

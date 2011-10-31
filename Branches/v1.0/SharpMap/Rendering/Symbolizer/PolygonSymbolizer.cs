@@ -61,7 +61,7 @@ namespace SharpMap.Rendering.Symbolizer
             g.RenderingOrigin = _renderOrigin;
         }
 
-        protected static GraphicsPath PolygonToGraphicsPath(Map map, Polygon polygon)
+        protected static GraphicsPath PolygonToGraphicsPath(Map map, IPolygon polygon)
         {
             var gp = new GraphicsPath(FillMode.Alternate);
             gp.AddPolygon(polygon.TransformToImage(map));

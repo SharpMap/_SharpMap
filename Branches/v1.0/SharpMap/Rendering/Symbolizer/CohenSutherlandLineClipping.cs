@@ -4,6 +4,8 @@ using SharpMap.Geometries;
 
 namespace SharpMap.Rendering.Symbolizer
 {
+    using GeoAPI.Geometries;
+
     public class CohenSutherlandLineClipping
     {
         [Flags]
@@ -33,7 +35,7 @@ namespace SharpMap.Rendering.Symbolizer
             _ymax = ymax;
         }
 
-        private OutsideClipCodes ComputeClipCode(Point point, out double x, out double y)
+        private OutsideClipCodes ComputeClipCode(Coordinate point, out double x, out double y)
         {
             x = point.X;
             y = point.Y;
@@ -55,17 +57,17 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="lineString"></param>
         /// <returns></returns>
-        public MultiLineString ClipLineString(LineString lineString)
+        public IMultiLineString ClipLineString(ILineString lineString)
         {
             //List of line strings that make up the multi line string result
-            var lineStrings = new List<LineString>();
+            var lineStrings = new List<ILineString>();
 
             //list of clipped vertices for current pass
-            var clippedVertices = new List<Point>();
+            var clippedVertices = new List<Coordinate>();
 
             //vertices of current line string
-            var vertices = lineString.Vertices;
-            var count = vertices.Count;
+            var vertices = lineString.Coordinates;
+            var count = vertices.Length;
 
             //Compute starting clipcode
             double x0, y0;
@@ -155,17 +157,17 @@ namespace SharpMap.Rendering.Symbolizer
                 if (accept)
                 {
                     if (oc0Initial != oc0)
-                        clippedVertices.Add(new Point(x0, y0));
+                        clippedVertices.Add(new Coordinate(x0, y0));
                     
                     if (x1old != x1 || y1old != y1)
-                        clippedVertices.Add(new Point(x1, y1));
+                        clippedVertices.Add(new Coordinate(x1, y1));
 
                     if (oc1Initial != OutsideClipCodes.Inside)
                     {
                         if (clippedVertices.Count > 0)
                         {
-                            lineStrings.Add(new LineString(clippedVertices));
-                            clippedVertices = new List<Point>();
+                            lineStrings.Add(lineString.Factory.CreateLineString(clippedVertices.ToArray()));
+                            clippedVertices = new List<Coordinate>();
                         }
                     }
                 }
@@ -175,9 +177,9 @@ namespace SharpMap.Rendering.Symbolizer
             }
 
             if (clippedVertices.Count > 0)
-                lineStrings.Add(new LineString(clippedVertices));
+                lineStrings.Add(lineString.Factory.CreateLineString(clippedVertices.ToArray()));
 
-            return new MultiLineString {LineStrings = lineStrings};
+            return lineString.Factory.CreateMultiLineString(lineStrings.ToArray());
         }
 
 
@@ -186,16 +188,17 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="lineStrings"></param>
         /// <returns></returns>
-        public MultiLineString ClipLineString(MultiLineString lineStrings)
+        public IMultiLineString ClipLineString(IMultiLineString lineStrings)
         {
-            var clippedLineStrings = new List<LineString>();
+            var clippedLineStrings = new List<ILineString>();
 
 
-            foreach (LineString s in lineStrings)
-                clippedLineStrings.AddRange(ClipLineString(s).LineStrings);
+            foreach (ILineString s in lineStrings)
+                foreach (ILineString clippedLineString in ClipLineString(s))
+                    clippedLineStrings.Add(clippedLineString);
 
 
-            return new MultiLineString { LineStrings = clippedLineStrings };
+            return lineStrings.Factory.CreateMultiLineString(clippedLineStrings.ToArray());
         }
 
     }

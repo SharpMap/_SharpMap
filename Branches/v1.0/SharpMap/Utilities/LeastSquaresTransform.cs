@@ -21,21 +21,23 @@ using SharpMap.Geometries;
 
 namespace SharpMap.Utilities
 {
+    using GeoAPI.Geometries;
+
     /// <summary>
     /// Calculates Affine and Helmert transformation using Least-Squares Regression of input and output points
     /// </summary>
     public class LeastSquaresTransform
     {
-        private readonly List<Point> inputs;
-        private readonly List<Point> outputs;
+        private readonly List<Coordinate> inputs;
+        private readonly List<Coordinate> outputs;
 
         /// <summary>
         /// Initialize Least Squares transformations
         /// </summary>
         public LeastSquaresTransform()
         {
-            inputs = new List<Point>();
-            outputs = new List<Point>();
+            inputs = new List<Coordinate>();
+            outputs = new List<Coordinate>();
         }
 
         /// <summary>
@@ -43,7 +45,7 @@ namespace SharpMap.Utilities
         /// </summary>
         /// <param name="input"></param>
         /// <param name="output"></param>
-        public void AddInputOutputPoint(Point input, Point output)
+        public void AddInputOutputPoint(Coordinate input, Coordinate output)
         {
             inputs.Add(input);
             outputs.Add(output);
@@ -64,7 +66,7 @@ namespace SharpMap.Utilities
         /// </summary>
         /// <param name="i">index</param>
         /// <returns>Input point value a index 'i'</returns>
-        public Point GetInputPoint(int i)
+        public Coordinate GetInputPoint(int i)
         {
             return inputs[i];
         }
@@ -74,7 +76,7 @@ namespace SharpMap.Utilities
         /// </summary>
         /// <param name="p">Point value</param>
         /// <param name="i">index</param>
-        public void SetInputPointAt(Point p, int i)
+        public void SetInputPointAt(Coordinate p, int i)
         {
             inputs[i] = p;
         }
@@ -84,7 +86,7 @@ namespace SharpMap.Utilities
         /// </summary>
         /// <param name="i">index</param>
         /// <returns>Output point value a index 'i'</returns>
-        public Point GetOutputPoint(int i)
+        public Coordinate GetOutputPoint(int i)
         {
             return outputs[i];
         }
@@ -94,7 +96,7 @@ namespace SharpMap.Utilities
         /// </summary>
         /// <param name="p">Point value</param>
         /// <param name="i">index</param>
-        public void SetOutputPointAt(Point p, int i)
+        public void SetOutputPointAt(Coordinate p, int i)
         {
             outputs[i] = p;
         }
@@ -122,8 +124,8 @@ namespace SharpMap.Utilities
             //double precision isn't always enough when transforming large numbers.
             //Lets subtract some mean values and add them later again:
             //Find approximate center values:
-            Point meanInput = new Point(0, 0);
-            Point meanOutput = new Point(0, 0);
+            Coordinate meanInput = new Coordinate(0, 0);
+            Coordinate meanOutput = new Coordinate(0, 0);
             for (int i = 0; i < inputs.Count; i++)
             {
                 meanInput.X += inputs[i].X;
@@ -234,8 +236,8 @@ namespace SharpMap.Utilities
 
             //double precision isn't always enough. Lets subtract some mean values and add them later again:
             //Find approximate center values:
-            Point meanInput = new Point(0, 0);
-            Point meanOutput = new Point(0, 0);
+            Coordinate meanInput = new Coordinate(0, 0);
+            Coordinate meanOutput = new Coordinate(0, 0);
             for (int i = 0; i < inputs.Count; i++)
             {
                 meanInput.X += inputs[i].X;
