@@ -143,13 +143,13 @@ namespace SharpMap.Layers
         /// Returns the extent of the layer
         /// </summary>
         /// <returns>Bounding box corresponding to the extent of the features in the layer</returns>
-        public override BoundingBox Envelope
+        public override GeoAPI.Geometries.Envelope Envelope
         {
             get
             {
                 if (DataSource == null)
                     throw (new ApplicationException("DataSource property not set on layer '" + LayerName + "'"));
-                BoundingBox box = null;
+                GeoAPI.Geometries.Envelope box = null;
                 lock (_dataSource)
                 {
                     bool wasOpen = DataSource.IsOpen;
@@ -209,7 +209,7 @@ namespace SharpMap.Layers
                 throw (new ApplicationException("Cannot render map. View center not specified"));
 
             g.SmoothingMode = SmoothingMode;
-            BoundingBox envelope = map.Envelope; //View to render
+            GeoAPI.Geometries.Envelope envelope = map.Envelope; //View to render
             if (CoordinateTransformation != null)
             {
 #if !DotSpatialProjections
@@ -247,7 +247,7 @@ namespace SharpMap.Layers
             base.Render(g, map);
         }
 
-        protected void RenderInternal(Graphics g, Map map, BoundingBox envelope, ITheme theme)
+        protected void RenderInternal(Graphics g, Map map, GeoAPI.Geometries.Envelope envelope, ITheme theme)
         {
             FeatureDataSet ds = new FeatureDataSet();
             lock (_dataSource)
@@ -313,7 +313,7 @@ namespace SharpMap.Layers
             }
         }
 
-        protected void RenderInternal(Graphics g, Map map, BoundingBox envelope)
+        protected void RenderInternal(Graphics g, Map map, GeoAPI.Geometries.Envelope envelope)
         {
             //if style is not enabled, we don't need to render anything
             if (!Style.Enabled) return;
@@ -460,7 +460,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="box">Geometry to intersect with</param>
         /// <param name="ds">FeatureDataSet to fill data into</param>
-        public void ExecuteIntersectionQuery(BoundingBox box, FeatureDataSet ds)
+        public void ExecuteIntersectionQuery(GeoAPI.Geometries.Envelope box, FeatureDataSet ds)
         {
             if (CoordinateTransformation != null)
             {

@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using GeoAPI.Geometries;
 using SharpMap.Utilities;
 
 namespace SharpMap.Geometries
@@ -26,7 +27,7 @@ namespace SharpMap.Geometries
     /// A MultiLineString is a MultiCurve whose elements are LineStrings.
     /// </summary>
     [Serializable]
-    public class MultiLineString : MultiCurve
+    public class MultiLineString : MultiCurve, IMultiLineString
     {
         private IList<LineString> _LineStrings;
 
@@ -132,22 +133,27 @@ namespace SharpMap.Geometries
             throw new NotImplementedException();
         }
 
+        public IMultiLineString Reverse()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Returns the shortest distance between any two points in the two geometries
         /// as calculated in the spatial reference system of this Geometry.
         /// </summary>
         /// <param name="geom">Geometry to calculate distance to</param>
         /// <returns>Shortest distance between any two points in the two geometries</returns>
-        public override double Distance(Geometry geom)
+        public override double Distance(IGeometry geom)
         {
             if (geom is Point)
             {
-                Point coord = geom as Point;
+                var coord = (geom as IPoint).Coordinate;
                 // brute force approach!
                 double minDist = double.MaxValue;
                 foreach (var ls in _LineStrings)
                 {
-                    IList<Point> coord0 = ls.Vertices;
+                    var coord0 = ls.Vertices;
                     for (int i = 0; i < coord0.Count - 1; i++)
                     {
                         double dist = CGAlgorithms.DistancePointLine(coord, coord0[i], coord0[i + 1]);
@@ -161,12 +167,12 @@ namespace SharpMap.Geometries
             }
             else if (geom is LineString)
             {
-                IList<Point> coord1 = (geom as LineString).Vertices;
+                var coord1 = (geom as LineString).Vertices;
                 // brute force approach!
                 double _minDistance = double.MaxValue;
                 foreach (var ls in _LineStrings)
                 {
-                    IList<Point> coord0 = ls.Vertices;
+                    var coord0 = ls.Vertices;
                     for (int i = 0; i < coord0.Count - 1; i++)
                     {
                         for (int j = 0; j < coord1.Count - 1; j++)
@@ -184,7 +190,7 @@ namespace SharpMap.Geometries
                 return _minDistance;
             }
 
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -194,18 +200,18 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="d">Buffer distance</param>
         /// <returns>Buffer around geometry</returns>
-        public override Geometry Buffer(double d)
+        public override IGeometry Buffer(double d)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
         /// Geometry—Returns a geometry that represents the convex hull of this Geometry.
         /// </summary>
         /// <returns>The convex hull</returns>
-        public override Geometry ConvexHull()
+        public override IGeometry ConvexHull()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -214,9 +220,9 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to intersect with</param>
         /// <returns>Returns a geometry that represents the point set intersection of this Geometry with anotherGeometry.</returns>
-        public override Geometry Intersection(Geometry geom)
+        public override IGeometry Intersection(IGeometry geom)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -224,9 +230,9 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to union with</param>
         /// <returns>Unioned geometry</returns>
-        public override Geometry Union(Geometry geom)
+        public override IGeometry Union(IGeometry geom)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -234,9 +240,9 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to compare to</param>
         /// <returns>Geometry</returns>
-        public override Geometry Difference(Geometry geom)
+        public override IGeometry Difference(IGeometry geom)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -244,30 +250,30 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to compare to</param>
         /// <returns>Geometry</returns>
-        public override Geometry SymDifference(Geometry geom)
+        public override IGeometry SymmetricDifference(IGeometry geom)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
         /// Returns an indexed geometry in the collection
         /// </summary>
-        /// <param name="N">Geometry index</param>
+        /// <param name="n">Geometry index</param>
         /// <returns>Geometry at index N</returns>
-        public override Geometry Geometry(int N)
+        public override Geometry Geometry(int n)
         {
-            return _LineStrings[N];
+            return _LineStrings[n];
         }
 
         /// <summary>
         /// The minimum bounding box for this Geometry.
         /// </summary>
         /// <returns></returns>
-        public override BoundingBox GetBoundingBox()
+        public override GeoAPI.Geometries.Envelope GetBoundingBox()
         {
             if (_LineStrings == null || _LineStrings.Count == 0)
                 return null;
-            BoundingBox bbox = _LineStrings[0].GetBoundingBox();
+            GeoAPI.Geometries.Envelope bbox = _LineStrings[0].GetBoundingBox();
             for (int i = 1; i < _LineStrings.Count; i++)
                 bbox = bbox.Join(_LineStrings[i].GetBoundingBox());
             return bbox;

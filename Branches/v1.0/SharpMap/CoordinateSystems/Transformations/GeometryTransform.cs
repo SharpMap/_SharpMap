@@ -19,6 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
 namespace ProjNet.CoordinateSystems.Transformations
@@ -29,22 +31,22 @@ namespace ProjNet.CoordinateSystems.Transformations
     public class GeometryTransform
     {
         /// <summary>
-        /// Transforms a <see cref="SharpMap.Geometries.BoundingBox"/>.
+        /// Transforms a <see cref="Envelope"/>.
         /// </summary>
-        /// <param name="box">BoundingBox to transform</param>
+        /// <param name="box">GeoAPI.Envelope to transform</param>
         /// <param name="transform">Math Transform</param>
         /// <returns>Transformed object</returns>
-        public static BoundingBox TransformBox(BoundingBox box, IMathTransform transform)
+        public static Envelope TransformBox(Envelope box, IMathTransform transform)
         {
             if (box == null)
                 return null;
             Point[] corners = new Point[4];
-            corners[0] = new Point(transform.Transform(box.Min.ToDoubleArray())); //LL
-            corners[1] = new Point(transform.Transform(box.Max.ToDoubleArray())); //UR
-            corners[2] = new Point(transform.Transform(new Point(box.Min.X, box.Max.Y).ToDoubleArray())); //UL
-            corners[3] = new Point(transform.Transform(new Point(box.Max.X, box.Min.Y).ToDoubleArray())); //LR
+            corners[0] = new Point(transform.Transform(box.BottomLeft().ToDoubleArray())); //LL
+            corners[1] = new Point(transform.Transform(box.TopRight().ToDoubleArray())); //UR
+            corners[2] = new Point(transform.Transform(new Point(box.MinX, box.MaxY).ToDoubleArray())); //UL
+            corners[3] = new Point(transform.Transform(new Point(box.MaxX, box.MinY).ToDoubleArray())); //LR
 
-            BoundingBox result = corners[0].GetBoundingBox();
+            GeoAPI.Geometries.Envelope result = corners[0].GetBoundingBox();
             for (int i = 1; i < 4; i++)
                 result = result.Join(corners[i].GetBoundingBox());
             return result;
@@ -56,34 +58,34 @@ namespace ProjNet.CoordinateSystems.Transformations
         /// <param name="g">Geometry to transform</param>
         /// <param name="transform">MathTransform</param>
         /// <returns>Transformed Geometry</returns>
-        public static Geometry TransformGeometry(Geometry g, IMathTransform transform)
+        public static IGeometry TransformGeometry(IGeometry g, IMathTransform transform)
         {
             if (g == null)
                 return null;
-            if (g is Point)
-                return TransformPoint(g as Point, transform);
-            if (g is LineString)
-                return TransformLineString(g as LineString, transform);
-            if (g is Polygon)
-                return TransformPolygon(g as Polygon, transform);
-            if (g is MultiPoint)
-                return TransformMultiPoint(g as MultiPoint, transform);
-            if (g is MultiLineString)
-                return TransformMultiLineString(g as MultiLineString, transform);
-            if (g is MultiPolygon)
-                return TransformMultiPolygon(g as MultiPolygon, transform);
-            if (g is GeometryCollection)
-                return TransformGeometryCollection(g as GeometryCollection, transform);
+            if (g is IPoint)
+                return TransformPoint(g as IPoint, transform);
+            if (g is ILineString)
+                return TransformLineString(g as ILineString, transform);
+            if (g is IPolygon)
+                return TransformPolygon(g as IPolygon, transform);
+            if (g is IMultiPoint)
+                return TransformMultiPoint(g as IMultiPoint, transform);
+            if (g is IMultiLineString)
+                return TransformMultiLineString(g as IMultiLineString, transform);
+            if (g is IMultiPolygon)
+                return TransformMultiPolygon(g as IMultiPolygon, transform);
+            if (g is IGeometryCollection)
+                return TransformGeometryCollection(g as IGeometryCollection, transform);
             throw new ArgumentException("Could not transform geometry type '" + g.GetType() + "'");
         }
 
         /// <summary>
-        /// Transforms a <see cref="SharpMap.Geometries.Point"/>.
+        /// Transforms a <see cref="GeoAPI.Geometries.IPoint"/>.
         /// </summary>
         /// <param name="p">Point to transform</param>
         /// <param name="transform">MathTransform</param>
         /// <returns>Transformed Point</returns>
-        public static Point TransformPoint(Point p, IMathTransform transform)
+        public static IPoint TransformPoint(IPoint p, IMathTransform transform)
         {
             try
             {
@@ -96,12 +98,12 @@ namespace ProjNet.CoordinateSystems.Transformations
         }
 
         /// <summary>
-        /// Transforms a <see cref="SharpMap.Geometries.LineString"/>.
+        /// Transforms a <see cref="ILineString"/>.
         /// </summary>
         /// <param name="l">LineString to transform</param>
         /// <param name="transform">MathTransform</param>
         /// <returns>Transformed LineString</returns>
-        public static LineString TransformLineString(LineString l, IMathTransform transform)
+        public static ILineString TransformLineString(ILineString l, IMathTransform transform)
         {
             try
             {
@@ -119,12 +121,12 @@ namespace ProjNet.CoordinateSystems.Transformations
         }
 
         /// <summary>
-        /// Transforms a <see cref="SharpMap.Geometries.LinearRing"/>.
+        /// Transforms a <see cref="ILinearRing"/>.
         /// </summary>
         /// <param name="r">LinearRing to transform</param>
         /// <param name="transform">MathTransform</param>
         /// <returns>Transformed LinearRing</returns>
-        public static LinearRing TransformLinearRing(LinearRing r, IMathTransform transform)
+        public static ILinearRing TransformLinearRing(ILinearRing r, IMathTransform transform)
         {
             try
             {
@@ -142,14 +144,14 @@ namespace ProjNet.CoordinateSystems.Transformations
         }
 
         /// <summary>
-        /// Transforms a <see cref="SharpMap.Geometries.Polygon"/>.
+        /// Transforms a <see cref="IPolygon"/>.
         /// </summary>
         /// <param name="p">Polygon to transform</param>
         /// <param name="transform">MathTransform</param>
         /// <returns>Transformed Polygon</returns>
-        public static Polygon TransformPolygon(Polygon p, IMathTransform transform)
+        public static IPolygon TransformPolygon(IPolygon p, IMathTransform transform)
         {
-            Polygon pOut = new Polygon(TransformLinearRing(p.ExteriorRing, transform));
+            IPolygon pOut = new Polygon(TransformLinearRing(p.ExteriorRing, transform));
             //pOut.InteriorRings = new Collection<LinearRing>(p.InteriorRings.Count); //Pre-inialize array size for better performance
             pOut.InteriorRings = new Collection<LinearRing>();
             for (int i = 0; i < p.InteriorRings.Count; i++)
@@ -158,12 +160,12 @@ namespace ProjNet.CoordinateSystems.Transformations
         }
 
         /// <summary>
-        /// Transforms a <see cref="SharpMap.Geometries.MultiPoint"/>.
+        /// Transforms a <see cref="IMultiPoint"/>.
         /// </summary>
         /// <param name="points">MultiPoint to transform</param>
         /// <param name="transform">MathTransform</param>
         /// <returns>Transformed MultiPoint</returns>
-        public static MultiPoint TransformMultiPoint(MultiPoint points, IMathTransform transform)
+        public static IMultiPoint TransformMultiPoint(IMultiPoint points, IMathTransform transform)
         {
             List<double[]> pts = new List<double[]>();
             for (int i = 0; i < points.NumGeometries; i++)
@@ -173,12 +175,12 @@ namespace ProjNet.CoordinateSystems.Transformations
         }
 
         /// <summary>
-        /// Transforms a <see cref="SharpMap.Geometries.MultiLineString"/>.
+        /// Transforms a <see cref="IMultiLineString"/>.
         /// </summary>
         /// <param name="lines">MultiLineString to transform</param>
         /// <param name="transform">MathTransform</param>
         /// <returns>Transformed MultiLineString</returns>
-        public static MultiLineString TransformMultiLineString(MultiLineString lines, IMathTransform transform)
+        public static IMultiLineString TransformMultiLineString(IMultiLineString lines, IMathTransform transform)
         {
             MultiLineString lOut = new MultiLineString();
             //lOut.LineStrings = new Collection<LineString>(lines.LineStrings.Count); //Pre-inialize array size for better performance
@@ -189,12 +191,12 @@ namespace ProjNet.CoordinateSystems.Transformations
         }
 
         /// <summary>
-        /// Transforms a <see cref="SharpMap.Geometries.MultiPolygon"/>.
+        /// Transforms a <see cref="IMultiPolygon"/>.
         /// </summary>
         /// <param name="polys">MultiPolygon to transform</param>
         /// <param name="transform">MathTransform</param>
         /// <returns>Transformed MultiPolygon</returns>
-        public static MultiPolygon TransformMultiPolygon(MultiPolygon polys, IMathTransform transform)
+        public static IMultiPolygon TransformMultiPolygon(IMultiPolygon polys, IMathTransform transform)
         {
             MultiPolygon pOut = new MultiPolygon();
             //pOut.Polygons = new Collection<Polygon>(polys.Polygons.Count); //Pre-inialize array size for better performance
@@ -205,12 +207,12 @@ namespace ProjNet.CoordinateSystems.Transformations
         }
 
         /// <summary>
-        /// Transforms a <see cref="SharpMap.Geometries.GeometryCollection"/>.
+        /// Transforms a <see cref="IGeometryCollection"/>.
         /// </summary>
         /// <param name="geoms">GeometryCollection to transform</param>
         /// <param name="transform">MathTransform</param>
         /// <returns>Transformed GeometryCollection</returns>
-        public static GeometryCollection TransformGeometryCollection(GeometryCollection geoms, IMathTransform transform)
+        public static IGeometryCollection TransformGeometryCollection(IGeometryCollection geoms, IMathTransform transform)
         {
             GeometryCollection gOut = new GeometryCollection();
             //gOut.Collection = new Collection<Geometry>(geoms.Collection.Count); //Pre-inialize array size for better performance

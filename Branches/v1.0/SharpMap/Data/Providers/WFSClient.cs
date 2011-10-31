@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Net;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 using SharpMap.Utilities.Wfs;
 
@@ -441,11 +442,11 @@ namespace SharpMap.Data.Providers
 
         #region IProvider Member
 
-        public Collection<Geometry> GetGeometriesInView(BoundingBox bbox)
+        public Collection<IGeometry> GetGeometriesInView(Envelope bbox)
         {
             if (_FeatureTypeInfo == null) return null;
 
-            Collection<Geometry> geoms = new Collection<Geometry>();
+            var geoms = new Collection<IGeometry>();
 
             string geometryTypeString = _FeatureTypeInfo.Geometry._GeometryType;
 
@@ -543,13 +544,13 @@ namespace SharpMap.Data.Providers
                         geomFactory = new UnspecifiedGeometryFactory_WFS1_0_0_GML2(_HttpClientUtil, _FeatureTypeInfo,
                                                                                    _MultiGeometries, _QuickGeometries,
                                                                                    _LabelInfo);
-                        geoms = geomFactory.createGeometries();
+                        geoms = geomFactory.CreateGeometries();
                         return geoms;
                 }
 
                 geoms = _QuickGeometries
-                            ? geomFactory.createQuickGeometries(geometryTypeString)
-                            : geomFactory.createGeometries();
+                            ? geomFactory.CreateQuickGeometries(geometryTypeString)
+                            : geomFactory.CreateGeometries();
                 geomFactory.Dispose();
 
                 return geoms;
@@ -561,17 +562,17 @@ namespace SharpMap.Data.Providers
             }
         }
 
-        public Collection<uint> GetObjectIDsInView(BoundingBox bbox)
+        public Collection<uint> GetObjectIDsInView(GeoAPI.Geometries.Envelope bbox)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public Geometry GetGeometryByID(uint oid)
+        public IGeometry GetGeometryByID(uint oid)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public void ExecuteIntersectionQuery(Geometry geom, FeatureDataSet ds)
+        public void ExecuteIntersectionQuery(IGeometry geom, FeatureDataSet ds)
         {
             if (_LabelInfo == null) return;
             ds.Tables.Add(_LabelInfo);
@@ -579,7 +580,7 @@ namespace SharpMap.Data.Providers
             _LabelInfo = null;
         }
 
-        public void ExecuteIntersectionQuery(BoundingBox box, FeatureDataSet ds)
+        public void ExecuteIntersectionQuery(Envelope box, FeatureDataSet ds)
         {
             if (_LabelInfo == null) return;
             ds.Tables.Add(_LabelInfo);
@@ -597,9 +598,9 @@ namespace SharpMap.Data.Providers
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public BoundingBox GetExtents()
+        public Envelope GetExtents()
         {
-            return new BoundingBox(_FeatureTypeInfo.BBox._MinLong,
+            return new Envelope(_FeatureTypeInfo.BBox._MinLong,
                                    _FeatureTypeInfo.BBox._MinLat,
                                    _FeatureTypeInfo.BBox._MaxLong,
                                    _FeatureTypeInfo.BBox._MaxLat);
@@ -1062,7 +1063,7 @@ namespace SharpMap.Data.Providers
             /// </summary>
             internal HttpClientUtil configureForWfsGetFeatureRequest(HttpClientUtil httpClientUtil,
                                                                      WfsFeatureTypeInfo featureTypeInfo,
-                                                                     string labelProperty, BoundingBox boundingBox,
+                                                                     string labelProperty, GeoAPI.Geometries.Envelope boundingBox,
                                                                      IFilter filter, bool GET)
             {
                 httpClientUtil.Reset();

@@ -31,7 +31,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;UseMapBox</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;UseMapBox; GeoAPI</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
@@ -78,6 +78,9 @@
     <Reference Include="BruTile, Version=0.5.1.0, Culture=neutral, PublicKeyToken=00e75fd79e391f40, processorArchitecture=MSIL">
       <HintPath>..\packages\BruTile.0.5.1\lib\net35\BruTile.dll</HintPath>
     </Reference>
+    <Reference Include="GeoAPI">
+      <HintPath>..\ExternalReferences\GeoAPI.dll</HintPath>
+    </Reference>
     <Reference Condition="'$(Configuration)' == 'DebugDSProjection' Or '$(Configuration)' == 'ReleaseDSProjection'" Include="DotSpatial.Projections, Version=1.0.2011.52, Culture=neutral, PublicKeyToken=272632bddd08a38b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DotSpatial.Projections.1.0.2011.52\lib\net35\DotSpatial.Projections.dll</HintPath>
@@ -93,16 +96,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\WellKnownBinary\GeometryFromWKB.cs" />
-    <Compile Include="Converters\WellKnownBinary\GeometryToWKB.cs" />
-    <Compile Include="Converters\WellKnownBinary\WKBByteOrder.cs" />
-    <Compile Include="Converters\WellKnownBinary\WKBGeometryType.cs" />
-    <Compile Include="Converters\WellKnownText\GeometryFromWKT.cs" />
-    <Compile Include="Converters\WellKnownText\GeometryToWKT.cs" />
-    <Compile Include="Converters\WellKnownText\SpatialReference.cs" />
-    <Compile Include="Converters\WellKnownText\StreamTokenizer.cs" />
-    <Compile Include="Converters\WellKnownText\TokenType.cs" />
-    <Compile Include="Converters\WellKnownText\WKTStreamTokenizer.cs" />
     <Compile Include="CoordinateSystems\Transformations\GeometryTransform.cs" />
     <Compile Include="CoordinateSystems\Transformations\GeometryTransformDotSpatial.cs" />
     <Compile Include="Data\FeatureDataSet.cs">
@@ -112,6 +105,7 @@
     <Compile Include="Data\Providers\GeometryFeatureProvider.cs" />
     <Compile Include="Data\Providers\GeometryProvider.cs" />
     <Compile Include="Data\Providers\iProvider.cs" />
+    <Compile Include="Data\Providers\IUpdateableProvider.cs" />
     <Compile Include="Data\Providers\MsSql.cs" />
     <Compile Include="Data\Providers\MsSqlSpatial.cs" />
     <Compile Include="Data\Providers\OleDbPoint.cs" />
@@ -120,27 +114,7 @@
     <Compile Include="Data\Providers\ShapeFile.cs" />
     <Compile Include="Data\Providers\SqlServer2008.cs" />
     <Compile Include="Data\Providers\WFSClient.cs" />
-    <Compile Include="Geometries\BoundingBox.cs" />
-    <Compile Include="Geometries\Curve.cs" />
-    <Compile Include="Geometries\Geometry.cs" />
-    <Compile Include="Geometries\GeometryCollection.cs" />
-    <Compile Include="Geometries\GeometryType.cs" />
-    <Compile Include="Geometries\IGeometry.cs" />
-    <Compile Include="Geometries\IGeometryCollection.cs" />
-    <Compile Include="Geometries\IPuntal.cs" />
-    <Compile Include="Geometries\ISpatialReference.cs" />
-    <Compile Include="Geometries\LinearRing.cs" />
-    <Compile Include="Geometries\LineString.cs" />
-    <Compile Include="Geometries\MultiCurve.cs" />
-    <Compile Include="Geometries\MultiLineString.cs" />
-    <Compile Include="Geometries\MultiPoint.cs" />
-    <Compile Include="Geometries\MultiPolygon.cs" />
-    <Compile Include="Geometries\MultiSurface.cs" />
-    <Compile Include="Geometries\Point.cs" />
-    <Compile Include="Geometries\Point3D.cs" />
-    <Compile Include="Geometries\Polygon.cs" />
-    <Compile Include="Geometries\SpatialRelations.cs" />
-    <Compile Include="Geometries\Surface.cs" />
+    <Compile Include="Geometries\GeometryHelper.cs" />
     <Compile Include="Layers\DuplicateLayerException.cs" />
     <Compile Include="Layers\IAsyncLayer.cs" />
     <Compile Include="Layers\iLayer.cs" />

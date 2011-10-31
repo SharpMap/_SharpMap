@@ -16,13 +16,14 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 #if !DotSpatialProjections
-using ProjNet.CoordinateSystems;
+using GeoAPI.CoordinateSystems;
 #else
 using DotSpatial.Projections;
 #endif
 
 namespace SharpMap.Geometries
 {
+    /*
     /// <summary>
     /// Defines basic interface for a Geometry
     /// </summary>
@@ -53,10 +54,10 @@ namespace SharpMap.Geometries
         Geometry Envelope();
 
         /// <summary>
-        /// The minimum <see cref="BoundingBox"/> for this <see cref="Geometry"/>.
+        /// The minimum <see cref="GeoAPI.Geometries.Envelope"/> for this <see cref="Geometry"/>.
         /// </summary>
-        /// <returns><see cref="BoundingBox"/> for this <see cref="Geometry"/></returns>
-        BoundingBox GetBoundingBox();
+        /// <returns><see cref="GeoAPI.Geometries.Envelope"/> for this <see cref="Geometry"/></returns>
+        GeoAPI.Geometries.Envelope GetBoundingBox();
 
         /// <summary>
         /// Exports this <see cref="Geometry"/> to a specific well-known text representation of <see cref="Geometry"/>.
@@ -210,4 +211,5 @@ namespace SharpMap.Geometries
 
         #endregion
     }
+     */
 }

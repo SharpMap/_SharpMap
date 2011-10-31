@@ -17,19 +17,20 @@
 
 using System;
 using System.Collections.Generic;
+using GeoAPI.Geometries;
 
 namespace SharpMap.Geometries
 {
     /// <summary>
     /// A LinearRing is a LineString that is both closed and simple.
     /// </summary>
-    public class LinearRing : LineString
+    public class LinearRing : LineString, ILinearRing
     {
         /// <summary>
         /// Initializes an instance of a LinearRing from a set of vertices
         /// </summary>
         /// <param name="vertices"></param>
-        public LinearRing(IList<Point> vertices)
+        public LinearRing(IList<Coordinate> vertices)
             : base(vertices)
         {
         }
@@ -37,7 +38,7 @@ namespace SharpMap.Geometries
         /// <summary>
         /// Initializes an instance of a LinearRing
         /// </summary>
-        public LinearRing() : base()
+        public LinearRing()
         {
         }
 
@@ -82,9 +83,9 @@ namespace SharpMap.Geometries
         /// <returns>Copy of Geometry</returns>
         public new LinearRing Clone()
         {
-            LinearRing l = new LinearRing();
-            for (int i = 0; i < Vertices.Count; i++)
-                l.Vertices.Add(Vertices[i].Clone());
+            var l = new LinearRing();
+            for (var i = 0; i < Vertices.Count; i++)
+                l.Vertices.Add((Coordinate)Vertices[i].Clone());
             return l;
         }
 
@@ -94,20 +95,19 @@ namespace SharpMap.Geometries
         /// <returns>Returns true if ring is oriented counter-clockwise.</returns>
         public bool IsCCW()
         {
-            Point hip, p, prev, next;
-            int hii, i;
-            int nPts = Vertices.Count;
+            int i;
+            var nPts = Vertices.Count;
 
             // check that this is a valid ring - if not, simply return a dummy value
             if (nPts < 4) return false;
 
             // algorithm to check if a Ring is stored in CCW order
             // find highest point
-            hip = Vertices[0];
-            hii = 0;
+            var hip = Vertices[0];
+            var hii = 0;
             for (i = 1; i < nPts; i++)
             {
-                p = Vertices[i];
+                var p = Vertices[i];
                 if (p.Y > hip.Y)
                 {
                     hip = p;
@@ -115,23 +115,23 @@ namespace SharpMap.Geometries
                 }
             }
             // find points on either side of highest
-            int iPrev = hii - 1;
+            var iPrev = hii - 1;
             if (iPrev < 0) iPrev = nPts - 2;
-            int iNext = hii + 1;
+            var iNext = hii + 1;
             if (iNext >= nPts) iNext = 1;
-            prev = Vertices[iPrev];
-            next = Vertices[iNext];
+            var prev = Vertices[iPrev];
+            var next = Vertices[iNext];
             // translate so that hip is at the origin.
             // This will not affect the area calculation, and will avoid
             // finite-accuracy errors (i.e very small vectors with very large coordinates)
             // This also simplifies the discriminant calculation.
-            double prev2x = prev.X - hip.X;
-            double prev2y = prev.Y - hip.Y;
-            double next2x = next.X - hip.X;
-            double next2y = next.Y - hip.Y;
+            var prev2X = prev.X - hip.X;
+            var prev2Y = prev.Y - hip.Y;
+            var next2X = next.X - hip.X;
+            var next2Y = next.Y - hip.Y;
             // compute cross-product of vectors hip->next and hip->prev
             // (e.g. area of parallelogram they enclose)
-            double disc = next2x*prev2y - next2y*prev2x;
+            var disc = next2X*prev2Y - next2Y*prev2X;
             // If disc is exactly 0, lines are collinear.  There are two possible cases:
             //	(1) the lines lie along the x axis in opposite directions
             //	(2) the line lie on top of one another
@@ -144,11 +144,8 @@ namespace SharpMap.Geometries
                 // poly is CCW if prev x is right of next x
                 return (prev.X > next.X);
             }
-            else
-            {
-                // if area is positive, points are ordered CCW
-                return (disc > 0.0);
-            }
+            // if area is positive, points are ordered CCW
+            return (disc > 0.0);
         }
 
         /// <summary>

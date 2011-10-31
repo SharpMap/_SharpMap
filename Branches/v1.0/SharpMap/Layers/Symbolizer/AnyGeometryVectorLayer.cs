@@ -1,3 +1,4 @@
+using GeoAPI.Geometries;
 using SharpMap.Data.Providers;
 using SharpMap.Geometries;
 using SharpMap.Rendering.Symbolizer;
@@ -7,7 +8,7 @@ namespace SharpMap.Layers.Symbolizer
     /// <summary>
     /// Vector layer class than can symbolize any type of geometry
     /// </summary>
-    public class AnyGeometryVectorLayer : BaseVectorLayer<Geometry>
+    public class AnyGeometryVectorLayer : BaseVectorLayer<IGeometry>
     {
         /// <summary>
         /// Creates an instance of this class

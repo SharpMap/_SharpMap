@@ -14,19 +14,19 @@ namespace DotSpatial.Projections
     public static class GeometryTransform
     {
         /// <summary>
-        /// Transforms a <see cref="SharpMap.Geometries.BoundingBox"/>
+        /// Transforms a <see cref="SharpMap.Geometries.GeoAPI.Envelope"/>
         /// </summary>
         /// <param name="box">Geometry to transform</param>
         /// <param name="from">Source Projection</param>
         /// <param name="to">Target Projection</param>
-        /// <returns>Transformed BoundingBox</returns>
-        public static BoundingBox TransformBox(BoundingBox box, ProjectionInfo from, ProjectionInfo to)
+        /// <returns>Transformed GeoAPI.Envelope</returns>
+        public static GeoAPI.Envelope TransformBox(GeoAPI.Envelope box, ProjectionInfo from, ProjectionInfo to)
         {
             var corners = new[] { box.Left, box.Bottom, box.Left, box.Top, box.Right, box.Top, box.Right, box.Bottom };
             Reproject.ReprojectPoints(corners, null, from, to, 0, 4);
 
-            return new BoundingBox(corners[0], corners[1], corners[4], corners[5]).Join(
-                   new BoundingBox(corners[2], corners[3], corners[6], corners[7]));
+            return new GeoAPI.Envelope(corners[0], corners[1], corners[4], corners[5]).Join(
+                   new GeoAPI.Envelope(corners[2], corners[3], corners[6], corners[7]));
         }
 
         /// <summary>

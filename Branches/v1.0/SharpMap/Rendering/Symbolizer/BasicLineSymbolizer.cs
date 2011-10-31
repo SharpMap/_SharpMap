@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using GeoAPI.Geometries;
 using SharpMap.Data;
 using SharpMap.Geometries;
 using SharpMap.Rendering.Thematics;
@@ -13,7 +14,7 @@ namespace SharpMap.Rendering.Symbolizer
     [Serializable]
     public class BasicLineSymbolizer : LineSymbolizer
     {
-        protected override void OnRenderInternal(Map map, LineString linestring, Graphics g)
+        protected override void OnRenderInternal(Map map, ILineString linestring, Graphics g)
         {
             g.DrawLines(Line, /*LimitValues(*/linestring.TransformToImage(map)/*)*/);
         }
@@ -32,7 +33,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         public float Offset { get; set; }
 
-        protected override void OnRenderInternal(Map map, LineString linestring, Graphics g)
+        protected override void OnRenderInternal(Map map, ILineString linestring, Graphics g)
         {
             var pts = /*LimitValues(*/ linestring.TransformToImage(map) /*)*/;
             g.DrawLines(Line, pts);

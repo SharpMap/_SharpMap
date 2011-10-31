@@ -18,6 +18,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 using Point = SharpMap.Geometries.Point;
 
@@ -63,7 +64,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map">The map object</param>
         /// <param name="points">Location where to render the Symbol</param>
         /// <param name="g">The graphics object to use.</param>
-        public void Render(Map map, IPuntal points, Graphics g)
+        public void Render(Map map, IGeometry points, Graphics g)
         {
             foreach (var pointSymbolizer in Items)
                 pointSymbolizer.Render(map, points, g);

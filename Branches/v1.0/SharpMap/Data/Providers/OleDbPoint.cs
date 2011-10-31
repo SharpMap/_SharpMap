@@ -19,7 +19,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.OleDb;
-using SharpMap.Geometries;
+using GeoAPI.Geometries;
 
 namespace SharpMap.Data.Providers
 {
@@ -31,32 +31,40 @@ namespace SharpMap.Data.Providers
     /// and an integer-type column containing a unique identifier for each row.</para>
     /// <para>To get good performance, make sure you have applied indexes on ID, xColumn and yColumns in your datasource table.</para>
     /// </remarks>
-    public class OleDbPoint : IProvider, IDisposable
+    public class OleDbPoint : IProvider
     {
-        private string _ConnectionString;
+        private readonly IGeometryFactory _factory;
+        
+        private string _connectionString;
         private string _defintionQuery;
-        private bool _IsOpen;
-        private string _ObjectIdColumn;
-        private int _SRID = -1;
-        private string _Table;
-        private string _XColumn;
-        private string _YColumn;
+        private bool _isOpen;
+        private string _objectIdColumn;
+        private int _srid = -1;
+        private string _table;
+        private string _xColumn;
+        private string _yColumn;
+
+        private OleDbPoint()
+        {
+            _factory = SharpMap.Geometries.SharpMapGeometryFactory.Instance;
+        }
 
         /// <summary>
         /// Initializes a new instance of the OleDbPoint provider
         /// </summary>
-        /// <param name="ConnectionStr"></param>
+        /// <param name="connectionStr"></param>
         /// <param name="tablename"></param>
-        /// <param name="OID_ColumnName"></param>
+        /// <param name="oidColumnName"></param>
         /// <param name="xColumn"></param>
         /// <param name="yColumn"></param>
-        public OleDbPoint(string ConnectionStr, string tablename, string OID_ColumnName, string xColumn, string yColumn)
+        public OleDbPoint(string connectionStr, string tablename, string oidColumnName, string xColumn, string yColumn)
+            :this()
         {
             Table = tablename;
             XColumn = xColumn;
             YColumn = yColumn;
-            ObjectIdColumn = OID_ColumnName;
-            ConnectionString = ConnectionStr;
+            ObjectIdColumn = oidColumnName;
+            ConnectionString = connectionStr;
         }
 
         /// <summary>
@@ -64,8 +72,8 @@ namespace SharpMap.Data.Providers
         /// </summary>
         public string Table
         {
-            get { return _Table; }
-            set { _Table = value; }
+            get { return _table; }
+            set { _table = value; }
         }
 
 
@@ -74,8 +82,8 @@ namespace SharpMap.Data.Providers
         /// </summary>
         public string ObjectIdColumn
         {
-            get { return _ObjectIdColumn; }
-            set { _ObjectIdColumn = value; }
+            get { return _objectIdColumn; }
+            set { _objectIdColumn = value; }
         }
 
         /// <summary>
@@ -83,8 +91,8 @@ namespace SharpMap.Data.Providers
         /// </summary>
         public string XColumn
         {
-            get { return _XColumn; }
-            set { _XColumn = value; }
+            get { return _xColumn; }
+            set { _xColumn = value; }
         }
 
         /// <summary>
@@ -92,8 +100,8 @@ namespace SharpMap.Data.Providers
         /// </summary>
         public string YColumn
         {
-            get { return _YColumn; }
-            set { _YColumn = value; }
+            get { return _yColumn; }
+            set { _yColumn = value; }
         }
 
         /// <summary>
@@ -101,8 +109,8 @@ namespace SharpMap.Data.Providers
         /// </summary>
         public string ConnectionString
         {
-            get { return _ConnectionString; }
-            set { _ConnectionString = value; }
+            get { return _connectionString; }
+            set { _connectionString = value; }
         }
 
         /// <summary>
@@ -121,19 +129,19 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="bbox"></param>
         /// <returns></returns>
-        public Collection<Geometry> GetGeometriesInView(BoundingBox bbox)
+        public Collection<IGeometry> GetGeometriesInView(GeoAPI.Geometries.Envelope bbox)
         {
-            Collection<Geometry> features = new Collection<Geometry>();
-            using (OleDbConnection conn = new OleDbConnection(_ConnectionString))
+            Collection<IGeometry> features = new Collection<IGeometry>();
+            using (OleDbConnection conn = new OleDbConnection(_connectionString))
             {
                 string strSQL = "Select " + XColumn + ", " + YColumn + " FROM " + Table + " WHERE ";
                 if (!String.IsNullOrEmpty(_defintionQuery))
                     strSQL += _defintionQuery + " AND ";
                 //Limit to the points within the boundingbox
-                strSQL += XColumn + " BETWEEN " + bbox.Left.ToString(Map.NumberFormatEnUs) + " AND " +
-                          bbox.Right.ToString(Map.NumberFormatEnUs) + " AND " +
-                          YColumn + " BETWEEN " + bbox.Bottom.ToString(Map.NumberFormatEnUs) + " AND " +
-                          bbox.Top.ToString(Map.NumberFormatEnUs);
+                strSQL += XColumn + " BETWEEN " + bbox.MinX.ToString(Map.NumberFormatEnUs) + " AND " +
+                          bbox.MaxX.ToString(Map.NumberFormatEnUs) + " AND " +
+                          YColumn + " BETWEEN " + bbox.MinY.ToString(Map.NumberFormatEnUs) + " AND " +
+                          bbox.MaxY.ToString(Map.NumberFormatEnUs);
 
                 using (OleDbCommand command = new OleDbCommand(strSQL, conn))
                 {
@@ -157,19 +165,19 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="bbox"></param>
         /// <returns></returns>
-        public Collection<uint> GetObjectIDsInView(BoundingBox bbox)
+        public Collection<uint> GetObjectIDsInView(GeoAPI.Geometries.Envelope bbox)
         {
             Collection<uint> objectlist = new Collection<uint>();
-            using (OleDbConnection conn = new OleDbConnection(_ConnectionString))
+            using (OleDbConnection conn = new OleDbConnection(_connectionString))
             {
                 string strSQL = "Select " + ObjectIdColumn + " FROM " + Table + " WHERE ";
                 if (!String.IsNullOrEmpty(_defintionQuery))
                     strSQL += _defintionQuery + " AND ";
                 //Limit to the points within the boundingbox
-                strSQL += XColumn + " BETWEEN " + bbox.Left.ToString(Map.NumberFormatEnUs) + " AND " +
-                          bbox.Right.ToString(Map.NumberFormatEnUs) + " AND " + YColumn +
-                          " BETWEEN " + bbox.Bottom.ToString(Map.NumberFormatEnUs) + " AND " +
-                          bbox.Top.ToString(Map.NumberFormatEnUs);
+                strSQL += XColumn + " BETWEEN " + bbox.MinX.ToString(Map.NumberFormatEnUs) + " AND " +
+                          bbox.MaxX.ToString(Map.NumberFormatEnUs) + " AND " + YColumn +
+                          " BETWEEN " + bbox.MinY.ToString(Map.NumberFormatEnUs) + " AND " +
+                          bbox.MaxY.ToString(Map.NumberFormatEnUs);
 
                 using (OleDbCommand command = new OleDbCommand(strSQL, conn))
                 {
@@ -191,10 +199,10 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="oid">Object ID</param>
         /// <returns>geometry</returns>
-        public Geometry GetGeometryByID(uint oid)
+        public IGeometry GetGeometryByID(uint oid)
         {
-            Geometry geom = null;
-            using (OleDbConnection conn = new OleDbConnection(_ConnectionString))
+            IGeometry geom = null;
+            using (OleDbConnection conn = new OleDbConnection(_connectionString))
             {
                 string strSQL = "Select " + XColumn + ", " + YColumn + " FROM " + Table + " WHERE " + ObjectIdColumn +
                                 "=" + oid.ToString();
@@ -221,7 +229,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="geom"></param>
         /// <param name="ds">FeatureDataSet to fill data into</param>
-        public void ExecuteIntersectionQuery(Geometry geom, FeatureDataSet ds)
+        public void ExecuteIntersectionQuery(IGeometry geom, FeatureDataSet ds)
         {
             throw new NotSupportedException(
                 "ExecuteIntersectionQuery(Geometry) is not supported by the OleDbPointProvider.");
@@ -244,20 +252,20 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="bbox">view box</param>
         /// <param name="ds">FeatureDataSet to fill data into</param>
-        public void ExecuteIntersectionQuery(BoundingBox bbox, FeatureDataSet ds)
+        public void ExecuteIntersectionQuery(GeoAPI.Geometries.Envelope bbox, FeatureDataSet ds)
         {
-            //List<Geometries.Geometry> features = new List<SharpMap.Geometries.Geometry>();
-            using (OleDbConnection conn = new OleDbConnection(_ConnectionString))
+            //List<Geometries.IGeometry> features = new List<SharpMap.Geometries.IGeometry>();
+            using (OleDbConnection conn = new OleDbConnection(_connectionString))
             {
                 string strSQL = "Select * FROM " + Table + " WHERE ";
                 if (!String.IsNullOrEmpty(_defintionQuery))
                     //If a definition query has been specified, add this as a filter on the query
                     strSQL += _defintionQuery + " AND ";
                 //Limit to the points within the boundingbox
-                strSQL += XColumn + " BETWEEN " + bbox.Left.ToString(Map.NumberFormatEnUs) + " AND " +
-                          bbox.Right.ToString(Map.NumberFormatEnUs) + " AND " + YColumn +
-                          " BETWEEN " + bbox.Bottom.ToString(Map.NumberFormatEnUs) + " AND " +
-                          bbox.Top.ToString(Map.NumberFormatEnUs);
+                strSQL += XColumn + " BETWEEN " + bbox.MinX.ToString(Map.NumberFormatEnUs) + " AND " +
+                          bbox.MaxX.ToString(Map.NumberFormatEnUs) + " AND " + YColumn +
+                          " BETWEEN " + bbox.MinY.ToString(Map.NumberFormatEnUs) + " AND " +
+                          bbox.MaxY.ToString(Map.NumberFormatEnUs);
 
                 using (OleDbDataAdapter adapter = new OleDbDataAdapter(strSQL, conn))
                 {
@@ -292,7 +300,7 @@ namespace SharpMap.Data.Providers
         public int GetFeatureCount()
         {
             int count = 0;
-            using (OleDbConnection conn = new OleDbConnection(_ConnectionString))
+            using (OleDbConnection conn = new OleDbConnection(_connectionString))
             {
                 string strSQL = "Select Count(*) FROM " + Table;
                 if (!String.IsNullOrEmpty(_defintionQuery))
@@ -316,7 +324,7 @@ namespace SharpMap.Data.Providers
         /// <returns>datarow</returns>
         public FeatureDataRow GetFeature(uint rowId)
         {
-            using (OleDbConnection conn = new OleDbConnection(_ConnectionString))
+            using (OleDbConnection conn = new OleDbConnection(_connectionString))
             {
                 string strSQL = "select * from " + Table + " WHERE " + ObjectIdColumn + "=" + rowId.ToString();
 
@@ -354,10 +362,10 @@ namespace SharpMap.Data.Providers
         /// Boundingbox of dataset
         /// </summary>
         /// <returns>boundingbox</returns>
-        public BoundingBox GetExtents()
+        public GeoAPI.Geometries.Envelope GetExtents()
         {
-            BoundingBox box = null;
-            using (OleDbConnection conn = new OleDbConnection(_ConnectionString))
+            GeoAPI.Geometries.Envelope box = null;
+            using (OleDbConnection conn = new OleDbConnection(_connectionString))
             {
                 string strSQL = "Select Min(" + XColumn + ") as MinX, Min(" + YColumn + ") As MinY, " +
                                 "Max(" + XColumn + ") As MaxX, Max(" + YColumn + ") As MaxY FROM " + Table;
@@ -375,7 +383,7 @@ namespace SharpMap.Data.Providers
                             //If the read row is OK, create a point geometry from the XColumn and YColumn and return it
                             if (dr[0] != DBNull.Value && dr[1] != DBNull.Value && dr[2] != DBNull.Value &&
                                 dr[3] != DBNull.Value)
-                                box = new BoundingBox((double) dr[0], (double) dr[1], (double) dr[2], (double) dr[3]);
+                                box = new GeoAPI.Geometries.Envelope((double) dr[0], (double) dr[1], (double) dr[2], (double) dr[3]);
                         }
                     }
                     conn.Close();
@@ -389,7 +397,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         public string ConnectionID
         {
-            get { return _ConnectionString; }
+            get { return _connectionString; }
         }
 
         /// <summary>
@@ -398,7 +406,7 @@ namespace SharpMap.Data.Providers
         public void Open()
         {
             //Don't really do anything. OleDb's ConnectionPooling takes over here
-            _IsOpen = true;
+            _isOpen = true;
         }
 
         /// <summary>
@@ -407,7 +415,7 @@ namespace SharpMap.Data.Providers
         public void Close()
         {
             //Don't really do anything. OleDb's ConnectionPooling takes over here
-            _IsOpen = false;
+            _isOpen = false;
         }
 
         /// <summary>
@@ -415,7 +423,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         public bool IsOpen
         {
-            get { return _IsOpen; }
+            get { return _isOpen; }
         }
 
         /// <summary>
@@ -423,8 +431,8 @@ namespace SharpMap.Data.Providers
         /// </summary>
         public int SRID
         {
-            get { return _SRID; }
-            set { _SRID = value; }
+            get { return _srid; }
+            set { _srid = value; }
         }
 
         #endregion

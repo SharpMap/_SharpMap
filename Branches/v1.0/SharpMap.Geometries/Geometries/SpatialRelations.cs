@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
+using GeoAPI.Geometries;
 
 namespace SharpMap.Geometries
 {
@@ -31,7 +32,7 @@ namespace SharpMap.Geometries
         /// <param name="sourceGeometry"></param>
         /// <param name="otherGeometry"></param>
         /// <returns>True if otherGeometry is wholly contained within the source geometry.</returns>
-        public static bool Contains(Geometry sourceGeometry, Geometry otherGeometry)
+        public static bool Contains(IGeometry sourceGeometry, IGeometry otherGeometry)
         {
             return (otherGeometry.Within(sourceGeometry));
         }
@@ -44,10 +45,10 @@ namespace SharpMap.Geometries
         /// <param name="g1"></param>
         /// <param name="g2"></param>
         /// <returns></returns>
-        public static bool Crosses(Geometry g1, Geometry g2)
+        public static bool Crosses(IGeometry g1, IGeometry g2)
         {
-            Geometry g = g2.Intersection(g1);
-            return (g.Intersection(g1).Dimension < Math.Max(g1.Dimension, g2.Dimension) && !g.Equals(g1) &&
+            var g = g2.Intersection(g1);
+            return ((int)g.Intersection(g1).Dimension < Math.Max((int)g1.Dimension, (int)g2.Dimension) && !g.Equals(g1) &&
                     !g.Equals(g2));
         }
 
@@ -57,7 +58,7 @@ namespace SharpMap.Geometries
         /// <param name="g1"></param>
         /// <param name="g2"></param>
         /// <returns></returns>
-        public static bool Disjoint(Geometry g1, Geometry g2)
+        public static bool Disjoint(IGeometry g1, IGeometry g2)
         {
             return !g2.Intersects(g1);
         }
@@ -68,7 +69,7 @@ namespace SharpMap.Geometries
         /// <param name="g1">source geometry</param>
         /// <param name="g2">other Geometry</param>
         /// <returns></returns>
-        public static bool Equals(Geometry g1, Geometry g2)
+        public static bool Equals(IGeometry g1, IGeometry g2)
         {
             if (g1 == null && g2 == null)
                 return true;
@@ -98,9 +99,9 @@ namespace SharpMap.Geometries
         /// <param name="g1"></param>
         /// <param name="g2"></param>
         /// <returns></returns>
-        public static bool Intersects(Geometry g1, Geometry g2)
+        public static bool Intersects(IGeometry g1, IGeometry g2)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -110,9 +111,9 @@ namespace SharpMap.Geometries
         /// <param name="g1"></param>
         /// <param name="g2"></param>
         /// <returns></returns>
-        public static bool Overlaps(Geometry g1, Geometry g2)
+        public static bool Overlaps(IGeometry g1, IGeometry g2)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -121,9 +122,9 @@ namespace SharpMap.Geometries
         /// <param name="g1"></param>
         /// <param name="g2"></param>
         /// <returns></returns>
-        public static bool Touches(Geometry g1, Geometry g2)
+        public static bool Touches(IGeometry g1, IGeometry g2)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -132,9 +133,21 @@ namespace SharpMap.Geometries
         /// <param name="g1"></param>
         /// <param name="g2"></param>
         /// <returns></returns>
-        public static bool Within(Geometry g1, Geometry g2)
+        public static bool Within(IGeometry g1, IGeometry g2)
         {
-            return g1.Contains(g2);
+            return g2.Contains(g1);
+        }
+
+        /// <summary>
+        /// Returns true if the primary geometry totally covers the comparison geometry.
+        /// </summary>
+        /// <param name="geometry"></param>
+        /// <param name="geom"></param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        public static bool Covers(Geometry geometry, IGeometry geom)
+        {
+            throw new NotSupportedException();
         }
     }
 }

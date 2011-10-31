@@ -35,6 +35,7 @@ using SharpMap.Styles;
 using Point=SharpMap.Geometries.Point;
 using Transform = SharpMap.Utilities.Transform;
 using SharpMap.Rendering.Symbolizer;
+using GeoAPI.Geometries;
 
 namespace SharpMap.Layers
 {
@@ -301,14 +302,14 @@ namespace SharpMap.Layers
         /// <summary>
         /// Gets the boundingbox of the entire layer
         /// </summary>
-        public override BoundingBox Envelope
+        public override GeoAPI.Geometries.Envelope Envelope
         {
             get
             {
                 bool wasOpen = DataSource.IsOpen;
                 if (!wasOpen)
                     DataSource.Open();
-                BoundingBox box = DataSource.GetExtents();
+                GeoAPI.Geometries.Envelope box = DataSource.GetExtents();
                 if (!wasOpen) //Restore state
                     DataSource.Close();
                 if (CoordinateTransformation != null)
@@ -362,9 +363,9 @@ namespace SharpMap.Layers
                 g.TextRenderingHint = TextRenderingHint;
                 g.SmoothingMode = SmoothingMode;
 
-                BoundingBox envelope = map.Envelope; //View to render
-                var lineClipping = new CohenSutherlandLineClipping(envelope.Min.X, envelope.Min.Y,
-                                                                   envelope.Max.X, envelope.Max.Y);
+                GeoAPI.Geometries.Envelope envelope = map.Envelope; //View to render
+                var lineClipping = new CohenSutherlandLineClipping(envelope.MinX, envelope.MinY,
+                                                                   envelope.MaxX, envelope.MaxY);
 
                 if (CoordinateTransformation != null)
                 {
@@ -436,7 +437,7 @@ namespace SharpMap.Layers
                     if (!String.IsNullOrEmpty(text))
                     {
                         // for lineal geometries, try clipping to ensure proper labeling
-                        if (feature.Geometry is ILineal)
+                        if (feature.Geometry is Geometries.ILineal)
                         {
                             if (feature.Geometry is LineString)
                                 feature.Geometry = lineClipping.ClipLineString(feature.Geometry as LineString);
@@ -566,7 +567,7 @@ namespace SharpMap.Layers
 
             SizeF size = VectorRenderer.SizeOfString(g, text, style.Font);
 
-            if (feature is ILineal)
+            if (feature is Geometries.ILineal)
             {
                 var line = feature as LineString;
                 if (line != null)
@@ -765,7 +766,7 @@ namespace SharpMap.Layers
             }
             double tmpx = line.Vertices[midPoint].X + (dx*0.5);
             double tmpy = line.Vertices[midPoint].Y + (dy*0.5);
-            label.LabelPoint = map.WorldToImage(new Point(tmpx, tmpy));
+            label.Location = map.WorldToImage(new Coordinate(tmpx, tmpy));
         }
     }
 }

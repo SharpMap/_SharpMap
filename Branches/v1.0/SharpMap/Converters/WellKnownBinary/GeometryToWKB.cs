@@ -38,6 +38,7 @@
 
 using System;
 using System.IO;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
 namespace SharpMap.Converters.WellKnownBinary
@@ -66,7 +67,7 @@ namespace SharpMap.Converters.WellKnownBinary
         /// </summary>
         /// <param name="g">The geometry to write</param>
         /// <returns>WKB representation of the geometry</returns>
-        public static byte[] Write(Geometry g)
+        public static byte[] Write(IGeometry g)
         {
             return Write(g, WkbByteOrder.Ndr);
         }
@@ -77,7 +78,7 @@ namespace SharpMap.Converters.WellKnownBinary
         /// <param name="g">The geometry to write</param>
         /// <param name="wkbByteOrder">Byte order</param>
         /// <returns>WKB representation of the geometry</returns>
-        public static byte[] Write(Geometry g, WkbByteOrder wkbByteOrder)
+        public static byte[] Write(IGeometry g, WkbByteOrder wkbByteOrder)
         {
             MemoryStream ms = new MemoryStream();
             BinaryWriter bw = new BinaryWriter(ms);

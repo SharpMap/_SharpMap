@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 using Point = System.Drawing.Point;
 
@@ -30,19 +31,19 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         public bool UseClipping { get; set; }
 
-        public void Render(Map map, IPolygonal geometry, Graphics graphics)
+        public void Render(Map map, IGeometry geometry, Graphics graphics)
         {
-            var mp = geometry as MultiPolygon;
+            var mp = geometry as IMultiPolygon;
             if (mp != null)
             {
-                foreach (Polygon poly in mp.Polygons)
+                foreach (IPolygon poly in mp.Geometries)
                     OnRenderInternal(map, poly, graphics);
                 return;
             }
-            OnRenderInternal(map, (Polygon)geometry, graphics);
+            OnRenderInternal(map, (IPolygon)geometry, graphics);
         }
 
-        protected abstract void OnRenderInternal(Map mpa, Polygon polygon, Graphics g);
+        protected abstract void OnRenderInternal(Map mpa, IPolygon polygon, Graphics g);
 
         private Point _renderOrigin;
         public virtual void Begin(Graphics g, Map map, int aproximateNumberOfGeometries)

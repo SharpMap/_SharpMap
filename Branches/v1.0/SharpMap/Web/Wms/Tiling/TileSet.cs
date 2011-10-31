@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Xml;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
 namespace SharpMap.Web.Wms.Tiling
@@ -28,7 +29,7 @@ namespace SharpMap.Web.Wms.Tiling
     {
         #region Fields
 
-        private BoundingBox boundingBox = null;
+        private Envelope boundingBox = null;
         private string format;
         private int height = 0;
         private List<string> layers = new List<string>();
@@ -181,7 +182,7 @@ namespace SharpMap.Web.Wms.Tiling
                 {
                     throw new ArgumentException("Invalid LatLonBoundingBox on tileset '" + tileSet.Name + "'");
                 }
-                tileSet.BoundingBox = new BoundingBox(minx, miny, maxx, maxy);
+                tileSet.BoundingBox = new Envelope(minx, miny, maxx, maxy);
             }
 
             XmlNode xnResolutions = xnlTileSet.SelectSingleNode("sm:Resolutions", nsmgr);
@@ -226,7 +227,7 @@ namespace SharpMap.Web.Wms.Tiling
             set { srs = value; }
         }
 
-        public BoundingBox BoundingBox
+        public Envelope BoundingBox
         {
             get { return boundingBox; }
             set { boundingBox = value; }

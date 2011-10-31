@@ -21,6 +21,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 using SharpMap.Layers;
 using SharpMap.Rendering;
@@ -303,7 +304,7 @@ namespace SharpMap
         /// <param name="sourceWidth"></param>
         /// <param name="sourceHeight"></param>
         /// <param name="imageAttributes"></param>
-        public void MapNewTileAvaliableHandler(TileLayer sender, BoundingBox bbox, Bitmap bm, int sourceWidth, int sourceHeight, ImageAttributes imageAttributes)
+        public void MapNewTileAvaliableHandler(TileLayer sender, GeoAPI.Geometries.Envelope bbox, Bitmap bm, int sourceWidth, int sourceHeight, ImageAttributes imageAttributes)
         {
             var e = MapNewTileAvaliable;
             if (e != null)
@@ -608,7 +609,7 @@ namespace SharpMap
         /// the bounding box, thus making the resulting envelope larger!
         /// </remarks>
         /// <param name="bbox"></param>
-        public void ZoomToBox(BoundingBox bbox)
+        public void ZoomToBox(GeoAPI.Geometries.Envelope bbox)
         {
             if (bbox != null)
             {
@@ -626,14 +627,14 @@ namespace SharpMap
         /// <param name="p">Point in world coordinates</param>
         /// <param name="careAboutMapTransform">Indicates whether MapTransform should be taken into account</param>
         /// <returns>Point in image coordinates</returns>
-        public PointF WorldToImage(Point p, bool careAboutMapTransform)
+        public PointF WorldToImage(Coordinate p, bool careAboutMapTransform)
         {
-            PointF pTmp = Transform.WorldtoMap(p, this);
+            var pTmp = Transform.WorldtoMap(p, this);
             lock (MapTransform)
             {
                 if (careAboutMapTransform && !MapTransform.IsIdentity)
                 {
-                    PointF[] pts = new PointF[] { pTmp };
+                    var pts = new[] { pTmp };
                     MapTransform.TransformPoints(pts);
                     pTmp = pts[0];
                 }
@@ -647,7 +648,7 @@ namespace SharpMap
         /// </summary>
         /// <param name="p">Point in world coordinates</param>
         /// <returns>Point in image coordinates</returns>
-        public PointF WorldToImage(Point p)
+        public PointF WorldToImage(Coordinate p)
         {
             return WorldToImage(p, false);
         }
@@ -658,7 +659,7 @@ namespace SharpMap
         /// </summary>
         /// <param name="p">Point in image coordinates</param>
         /// <returns>Point in world coordinates</returns>
-        public Point ImageToWorld(PointF p)
+        public Coordinate ImageToWorld(PointF p)
         {
             return ImageToWorld(p, false);
         }
@@ -669,7 +670,7 @@ namespace SharpMap
         /// <param name="p">Point in image coordinates</param>
         /// <param name="careAboutMapTransform">Indicates whether MapTransform should be taken into account</param>
         /// <returns>Point in world coordinates</returns>
-        public Point ImageToWorld(PointF p, bool careAboutMapTransform)
+        public Coordinate ImageToWorld(PointF p, bool careAboutMapTransform)
         {
 
             if (careAboutMapTransform && !MapTransform.IsIdentity)
@@ -711,15 +712,15 @@ namespace SharpMap
         /// <summary>
         /// Gets the extents of the current map based on the current zoom, center and mapsize
         /// </summary>
-        public BoundingBox Envelope
+        public GeoAPI.Geometries.Envelope Envelope
         {
             get
             {
                 if (double.IsNaN(MapHeight))
-                    return new BoundingBox(0, 0, 0, 0);
+                    return new GeoAPI.Geometries.Envelope(0, 0, 0, 0);
 
-                Point ll = new Point(Center.X - Zoom * .5, Center.Y - MapHeight * .5);
-                Point ur = new Point(Center.X + Zoom * .5, Center.Y + MapHeight * .5);
+                var ll = new Coordinate(Center.X - Zoom * .5, Center.Y - MapHeight * .5);
+                var ur = new Coordinate(Center.X + Zoom * .5, Center.Y + MapHeight * .5);
                 PointF ptfll = WorldToImage(ll, true);
                 ptfll = new PointF(Math.Abs(ptfll.X), Math.Abs(Size.Height - ptfll.Y));
                 if (!ptfll.IsEmpty)
@@ -729,11 +730,11 @@ namespace SharpMap
                     ur.X = ur.X + ptfll.X * PixelWidth;
                     ur.Y = ur.Y + ptfll.Y * PixelHeight;
                 }
-                return new BoundingBox(ll, ur);
+                return new GeoAPI.Geometries.Envelope(ll, ur);
                 
                 //Point lb = new Point(Center.X - Zoom*.5, Center.Y - MapHeight*.5);
                 //Point rt = new Point(Center.X + Zoom*.5, Center.Y + MapHeight*.5);
-                //return new BoundingBox(lb, rt);
+                //return new GeoAPI.Geometries.Envelope(lb, rt);
             }
         }
 
@@ -947,14 +948,14 @@ namespace SharpMap
         /// Gets the extents of the map based on the extents of all the layers in the layers collection
         /// </summary>
         /// <returns>Full map extents</returns>
-        public BoundingBox GetExtents()
+        public GeoAPI.Geometries.Envelope GetExtents()
         {
             if ((Layers == null || Layers.Count == 0) &&
                 (VariableLayers == null || VariableLayers.Count == 0) &&
                 (BackgroundLayer == null || BackgroundLayer.Count == 0))
                 throw (new InvalidOperationException("No layers to zoom to"));
             
-            BoundingBox bbox = null;
+            GeoAPI.Geometries.Envelope bbox = null;
 
             ExtendBoxForCollection(Layers, ref bbox);
             ExtendBoxForCollection(VariableLayers, ref bbox);
@@ -963,20 +964,20 @@ namespace SharpMap
             return bbox;
         }
 
-        private static void ExtendBoxForCollection(LayerCollection layersCollection, ref BoundingBox bbox)
+        private static void ExtendBoxForCollection(LayerCollection layersCollection, ref GeoAPI.Geometries.Envelope bbox)
         {
             foreach (ILayer l in layersCollection)
             {
                 
                 //Tries to get bb. Fails on some specific shapes and Mercator projects (World.shp)
-                BoundingBox bb;
+                GeoAPI.Geometries.Envelope bb;
                 try
                 {
                     bb = l.Envelope;
                 }
                 catch (Exception)
                 {
-                    bb = new BoundingBox(-20037508.342789, -20037508.342789, 20037508.342789, 20037508.342789);
+                    bb = new GeoAPI.Geometries.Envelope(-20037508.342789, -20037508.342789, 20037508.342789, 20037508.342789);
                 }
 
                 if (bb != null)

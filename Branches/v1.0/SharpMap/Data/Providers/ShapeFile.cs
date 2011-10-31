@@ -24,6 +24,7 @@ using System.Text;
 using System.Web;
 using System.Web.Caching;
 #if !DotSpatialProjections
+using GeoAPI.Geometries;
 using ProjNet.Converters.WellKnownText;
 using ProjNet.CoordinateSystems;
 #else
@@ -176,7 +177,7 @@ namespace SharpMap.Data.Providers
 		private bool _coordsysReadFromFile;
 
         private int _fileSize;
-		private BoundingBox _envelope;
+		private GeoAPI.Geometries.Envelope _envelope;
 		private int _featureCount;
 		private bool _fileBasedIndex;
 	    private readonly bool _fileBasedIndexWanted;
@@ -522,18 +523,18 @@ namespace SharpMap.Data.Providers
 		/// </remarks>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public Collection<Geometry> GetGeometriesInView(BoundingBox bbox)
+		public Collection<IGeometry> GetGeometriesInView(Envelope bbox)
 		{
 			//Use the spatial index to get a list of features whose boundingbox intersects bbox
 			Collection<uint> objectlist = GetObjectIDsInView(bbox);
 			if (objectlist.Count == 0) //no features found. Return an empty set
-				return new Collection<Geometry>();
+				return new Collection<IGeometry>();
 
-			Collection<Geometry> geometries = new Collection<Geometry>();
+			var geometries = new Collection<IGeometry>();
 
 			for (int i = 0; i < objectlist.Count; i++)
 			{
-				Geometry g = GetGeometryByID(objectlist[i]);
+				var g = GetGeometryByID(objectlist[i]);
 				if (g != null)
 					geometries.Add(g);
 			}
@@ -554,15 +555,15 @@ namespace SharpMap.Data.Providers
 		/// <param name="bbox"></param>
 		/// <param name="ds"></param>
 		/// <returns></returns>
-		public void ExecuteIntersectionQuery(BoundingBox bbox, FeatureDataSet ds)
+		public void ExecuteIntersectionQuery(Envelope bbox, FeatureDataSet ds)
 		{
 			//Use the spatial index to get a list of features whose boundingbox intersects bbox
-			Collection<uint> objectlist = GetObjectIDsInView(bbox);
-			FeatureDataTable dt = _dbaseFile.NewTable;
+			var objectlist = GetObjectIDsInView(bbox);
+			var dt = _dbaseFile.NewTable;
 
 			for (int i = 0; i < objectlist.Count; i++)
 			{
-				FeatureDataRow fdr = GetFeature(objectlist[i], dt);
+				var fdr = GetFeature(objectlist[i], dt);
 				if ( fdr != null ) dt.AddRow(fdr);
 
 				/*
@@ -588,7 +589,7 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="bbox"></param>
 		/// <returns></returns>
-		public Collection<uint> GetObjectIDsInView(BoundingBox bbox)
+		public Collection<uint> GetObjectIDsInView(Envelope bbox)
 		{
 			if (!IsOpen)
 				throw (new ApplicationException("An attempt was made to read from a closed datasource"));
@@ -601,11 +602,11 @@ namespace SharpMap.Data.Providers
 		/// </summary>
 		/// <param name="oid">Object ID</param>
 		/// <returns>geometry</returns>
-		public Geometry GetGeometryByID(uint oid)
+		public IGeometry GetGeometryByID(uint oid)
 		{
 			if (FilterDelegate != null) //Apply filtering
 			{
-				FeatureDataRow fdr = GetFeature(oid);
+				var fdr = GetFeature(oid);
 				if (fdr != null)
 					return fdr.Geometry;
 				return null;
@@ -630,17 +631,17 @@ namespace SharpMap.Data.Providers
 		/// <summary>
 		/// Returns the data associated with all the geometries that are intersected by 'geom'.
 		/// Please note that the ShapeFile provider currently doesn't fully support geometryintersection
-		/// and thus only BoundingBox/BoundingBox querying are performed. The results are NOT
+		/// and thus only GeoAPI.Geometries.Envelope/GeoAPI.Geometries.Envelope querying are performed. The results are NOT
 		/// guaranteed to lie withing 'geom'.
 		/// </summary>
 		/// <param name="geom"></param>
 		/// <param name="ds">FeatureDataSet to fill data into</param>
-		public void ExecuteIntersectionQuery(Geometry geom, FeatureDataSet ds)
+		public void ExecuteIntersectionQuery(IGeometry geom, FeatureDataSet ds)
 		{
-			var bbox = geom.GetBoundingBox();
+			var bbox = geom.EnvelopeInternal;
 
 			//currently we are only checking against the bounding box,
-			//so we can safely call ExecuteIntersectionQuery(BoundingBox, FeatureDataSet)
+			//so we can safely call ExecuteIntersectionQuery(GeoAPI.Geometries.Envelope, FeatureDataSet)
 			ExecuteIntersectionQuery(bbox, ds);
 			/*
 			//Get candidates by intersecting the spatial index tree
@@ -688,7 +689,7 @@ namespace SharpMap.Data.Providers
 		/// Returns the extents of the datasource
 		/// </summary>
 		/// <returns></returns>
-		public BoundingBox GetExtents()
+		public GeoAPI.Geometries.Envelope GetExtents()
 		{
 			if (_tree == null)
 				throw new ApplicationException(
@@ -751,7 +752,7 @@ namespace SharpMap.Data.Providers
 
 			//Read the spatial bounding box of the contents
             _brShapeFile.BaseStream.Seek(36, 0); //seek to box
-            _envelope = new BoundingBox(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble(), _brShapeFile.ReadDouble(),
+            _envelope = new GeoAPI.Geometries.Envelope(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble(), _brShapeFile.ReadDouble(),
                                         _brShapeFile.ReadDouble());
 
             // Work out the numberof features, if we have an index file use that
@@ -952,7 +953,7 @@ namespace SharpMap.Data.Providers
             foreach (var box in GetAllFeatureBoundingBoxes())
             {
                 //is the box valid?
-                if (!box.IsValid) continue;
+                if (!box.IsValid()) continue;
 
                 //create box object and add to root.
                 var g = new QuadTree.BoxObjects {Box = box, ID = i};
@@ -983,7 +984,7 @@ namespace SharpMap.Data.Providers
 			uint i = 0;
 			foreach (var box in GetAllFeatureBoundingBoxes())
 			{
-				if (!box.IsValid) continue;
+				if (!box.IsValid()) continue;
 
                 var g = new QuadTree.BoxObjects {Box = box, ID = i};
 				objList.Add(g);
@@ -1117,9 +1118,9 @@ namespace SharpMap.Data.Providers
 		/// Reads all boundingboxes of features in the shapefile. This is used for spatial indexing.
 		/// </summary>
 		/// <returns></returns>
-		private IEnumerable<BoundingBox> GetAllFeatureBoundingBoxes()
+		private IEnumerable<GeoAPI.Geometries.Envelope> GetAllFeatureBoundingBoxes()
 		{
-			//List<BoundingBox> boxes = new List<BoundingBox>();
+			//List<GeoAPI.Geometries.Envelope> boxes = new List<GeoAPI.Geometries.Envelope>();
 
             /*
 		    RecordDeletedFunction recDel = dbaseFile != null
@@ -1137,8 +1138,8 @@ namespace SharpMap.Data.Providers
 					{
 						double x = _brShapeFile.ReadDouble();
 						double y = _brShapeFile.ReadDouble();
-						//boxes.Add(new BoundingBox(x, y, x, y));
-						yield return new BoundingBox(x, y, x, y);
+						//boxes.Add(new GeoAPI.Geometries.Envelope(x, y, x, y));
+						yield return new GeoAPI.Geometries.Envelope(x, y, x, y);
 					}
 				}
 			}
@@ -1149,9 +1150,9 @@ namespace SharpMap.Data.Providers
                     //if (recDel((uint)a)) continue;
                     _fsShapeFile.Seek(_offsetOfRecord[a] + 8, 0); //skip record number and content length
 					if ((ShapeType)_brShapeFile.ReadInt32() != ShapeType.Null)
-						yield return new BoundingBox(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble(),
+						yield return new GeoAPI.Geometries.Envelope(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble(),
 													 _brShapeFile.ReadDouble(), _brShapeFile.ReadDouble());
-						//boxes.Add(new BoundingBox(brShapeFile.ReadDouble(), brShapeFile.ReadDouble(),
+						//boxes.Add(new GeoAPI.Geometries.Envelope(brShapeFile.ReadDouble(), brShapeFile.ReadDouble(),
 						//                          brShapeFile.ReadDouble(), brShapeFile.ReadDouble()));
 				}
 			}
@@ -1164,112 +1165,119 @@ namespace SharpMap.Data.Providers
 		/// <remarks><see cref="FilterDelegate">Filtering</see> is not applied to this method</remarks>
 		/// <param name="oid">Object ID</param>
 		/// <returns>geometry</returns>
-		private Geometry ReadGeometry(uint oid)
+		private IGeometry ReadGeometry(uint oid)
 		{
             _brShapeFile.BaseStream.Seek(_offsetOfRecord[oid] + 8, 0); //Skip record number and content length
 			ShapeType type = (ShapeType) _brShapeFile.ReadInt32(); //Shape type
 			if (type == ShapeType.Null)
 				return null;
-			if (_shapeType == ShapeType.Point || _shapeType == ShapeType.PointM || _shapeType == ShapeType.PointZ)
+			switch (_shapeType)
 			{
-				Point tempFeature = new Point();
-				return new Point(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble());
+			    case ShapeType.PointZ:
+			    case ShapeType.PointM:
+			    case ShapeType.Point:
+			        return new Point(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble());
+			    
+                case ShapeType.MultiPointZ:
+			    case ShapeType.MultiPointM:
+			    case ShapeType.Multipoint:
+			        {
+			            _brShapeFile.BaseStream.Seek(32 + _brShapeFile.BaseStream.Position, 0); //skip min/max box
+			            var feature = new MultiPoint();
+			            var nPoints = _brShapeFile.ReadInt32(); // get the number of points
+			            if (nPoints == 0)
+			                return null;
+			            for (var i = 0; i < nPoints; i++)
+			                feature.Points.Add(new Point(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble()));
+
+			            return feature;
+			        }
+			    case ShapeType.PolygonZ:
+			    case ShapeType.PolyLineZ:
+			    case ShapeType.PolygonM:
+			    case ShapeType.PolyLineM:
+			    case ShapeType.Polygon:
+			    case ShapeType.PolyLine:
+			        {
+			            _brShapeFile.BaseStream.Seek(32 + _brShapeFile.BaseStream.Position, 0); //skip min/max box
+
+			            var nParts = _brShapeFile.ReadInt32(); // get number of parts (segments)
+			            if (nParts <= 0)
+			                return null;
+			            var nPoints = _brShapeFile.ReadInt32(); // get number of points
+
+			            var segments = new int[nParts + 1];
+			            
+                        //Read in the segment indexes
+			            for (var b = 0; b < nParts; b++)
+			                segments[b] = _brShapeFile.ReadInt32();
+			            
+                        //add end point
+			            segments[nParts] = nPoints;
+
+			            if ((int) _shapeType%10 == 3)
+			            {
+			                var mline = new MultiLineString();
+			                for (var lineID = 0; lineID < nParts; lineID++)
+			                {
+			                    var line = new LineString();
+			                    for (var i = segments[lineID]; i < segments[lineID + 1]; i++)
+			                        line.Vertices.Add(new Coordinate(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble()));
+			                    mline.LineStrings.Add(line);
+			                }
+			                if (mline.LineStrings.Count == 1)
+			                    return mline[0];
+			                return mline;
+			            }
+
+			            //First read all the rings
+			            var rings = new List<LinearRing>();
+			            for (var ringID = 0; ringID < nParts; ringID++)
+			            {
+			                var ring = new LinearRing();
+			                for (var i = segments[ringID]; i < segments[ringID + 1]; i++)
+			                    ring.Vertices.Add(new Coordinate(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble()));
+			                rings.Add(ring);
+			            }
+			            var isCounterClockWise = new bool[rings.Count];
+                        var polygonCount = 0;
+			            for (var i = 0; i < rings.Count; i++)
+			            {
+			                isCounterClockWise[i] = rings[i].IsCCW();
+			                if (!isCounterClockWise[i])
+			                    polygonCount++;
+			            }
+			            if (polygonCount == 1) //We only have one polygon
+			            {
+			                var poly = new Polygon();
+			                poly.ExteriorRing = rings[0];
+			                if (rings.Count > 1)
+			                    for (int i = 1; i < rings.Count; i++)
+			                        poly.InteriorRings.Add(rings[i]);
+			                return poly;
+			            }
+			            else
+			            {
+			                var mpoly = new MultiPolygon();
+			                var poly = new Polygon();
+			                poly.ExteriorRing = rings[0];
+			                for (int i = 1; i < rings.Count; i++)
+			                {
+			                    if (!isCounterClockWise[i])
+			                    {
+			                        mpoly.Polygons.Add(poly);
+			                        poly = new Polygon(rings[i]);
+			                    }
+			                    else
+			                        poly.InteriorRings.Add(rings[i]);
+			                }
+			                mpoly.Polygons.Add(poly);
+			                return mpoly;
+			            }
+			        }
+			    default:
+			        throw (new ApplicationException("Shapefile type " + _shapeType + " not supported"));
 			}
-			else if (_shapeType == ShapeType.Multipoint || _shapeType == ShapeType.MultiPointM ||
-					 _shapeType == ShapeType.MultiPointZ)
-			{
-				_brShapeFile.BaseStream.Seek(32 + _brShapeFile.BaseStream.Position, 0); //skip min/max box
-				MultiPoint feature = new MultiPoint();
-				int nPoints = _brShapeFile.ReadInt32(); // get the number of points
-				if (nPoints == 0)
-					return null;
-				for (int i = 0; i < nPoints; i++)
-					feature.Points.Add(new Point(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble()));
-
-				return feature;
-			}
-			else if (_shapeType == ShapeType.PolyLine || _shapeType == ShapeType.Polygon ||
-					 _shapeType == ShapeType.PolyLineM || _shapeType == ShapeType.PolygonM ||
-					 _shapeType == ShapeType.PolyLineZ || _shapeType == ShapeType.PolygonZ)
-			{
-				_brShapeFile.BaseStream.Seek(32 + _brShapeFile.BaseStream.Position, 0); //skip min/max box
-
-				int nParts = _brShapeFile.ReadInt32(); // get number of parts (segments)
-				if (nParts == 0 || nParts < 0)
-					return null;
-				int nPoints = _brShapeFile.ReadInt32(); // get number of points
-
-				int[] segments = new int[nParts + 1];
-				//Read in the segment indexes
-				for (int b = 0; b < nParts; b++)
-					segments[b] = _brShapeFile.ReadInt32();
-				//add end point
-				segments[nParts] = nPoints;
-
-				if ((int) _shapeType%10 == 3)
-				{
-					MultiLineString mline = new MultiLineString();
-					for (int LineID = 0; LineID < nParts; LineID++)
-					{
-						LineString line = new LineString();
-						for (int i = segments[LineID]; i < segments[LineID + 1]; i++)
-							line.Vertices.Add(new Point(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble()));
-						mline.LineStrings.Add(line);
-					}
-					if (mline.LineStrings.Count == 1)
-						return mline[0];
-					return mline;
-				}
-				else //(_ShapeType == ShapeType.Polygon etc...)
-				{
-					//First read all the rings
-					List<LinearRing> rings = new List<LinearRing>();
-					for (int RingID = 0; RingID < nParts; RingID++)
-					{
-						LinearRing ring = new LinearRing();
-						for (int i = segments[RingID]; i < segments[RingID + 1]; i++)
-							ring.Vertices.Add(new Point(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble()));
-						rings.Add(ring);
-					}
-					bool[] IsCounterClockWise = new bool[rings.Count];
-					int PolygonCount = 0;
-					for (int i = 0; i < rings.Count; i++)
-					{
-						IsCounterClockWise[i] = rings[i].IsCCW();
-						if (!IsCounterClockWise[i])
-							PolygonCount++;
-					}
-					if (PolygonCount == 1) //We only have one polygon
-					{
-						Polygon poly = new Polygon();
-						poly.ExteriorRing = rings[0];
-						if (rings.Count > 1)
-							for (int i = 1; i < rings.Count; i++)
-								poly.InteriorRings.Add(rings[i]);
-						return poly;
-					}
-					else
-					{
-						MultiPolygon mpoly = new MultiPolygon();
-						Polygon poly = new Polygon();
-						poly.ExteriorRing = rings[0];
-						for (int i = 1; i < rings.Count; i++)
-						{
-							if (!IsCounterClockWise[i])
-							{
-								mpoly.Polygons.Add(poly);
-								poly = new Polygon(rings[i]);
-							}
-							else
-								poly.InteriorRings.Add(rings[i]);
-						}
-						mpoly.Polygons.Add(poly);
-						return mpoly;
-					}
-				}
-			}
-			else
-				throw (new ApplicationException("Shapefile type " + _shapeType.ToString() + " not supported"));
 		}
 
 		/// <summary>

@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
 namespace SharpMap.Rendering.Symbolizer
@@ -15,30 +16,12 @@ namespace SharpMap.Rendering.Symbolizer
         }
         
         /// <summary>
-        /// Method to render a LineString to the <see cref="Graphics"/> object.
-        /// </summary>
-        /// <param name="map">The map object</param>
-        /// <param name="lineal">Linestring to symbolize</param>
-        /// <param name="g">The graphics object to use.</param>
-        public void Render(Map map, ILineal lineal, Graphics g)
-        {
-            var ms = lineal as MultiLineString;
-            if (ms != null)
-            {
-                foreach (LineString lineString in ms.LineStrings)
-                    OnRenderInternal(map, lineString, g);
-                return;
-            }
-            OnRenderInternal(map, (LineString)lineal, g);
-        }
-
-        /// <summary>
         /// Function that actually renders the linestring
         /// </summary>
         /// <param name="map">The map</param>
         /// <param name="lineString">The line string to symbolize.</param>
         /// <param name="graphics">The graphics</param>
-        protected abstract void OnRenderInternal(Map map, LineString lineString, Graphics graphics);
+        protected abstract void OnRenderInternal(Map map, ILineString lineString, Graphics graphics);
 
         /// <summary>
         /// Function to transform a linestring to a graphics path for further processing
@@ -72,7 +55,25 @@ namespace SharpMap.Rendering.Symbolizer
         public virtual void End(Graphics g, Map map)
         {
         }
-        
+
+        /// <summary>
+        /// Method to render a LineString to the <see cref="Graphics"/> object.
+        /// </summary>
+        /// <param name="map">The map object</param>
+        /// <param name="lineal">Linestring to symbolize</param>
+        /// <param name="g">The graphics object to use.</param>
+        public void Render(Map map, IGeometry lineal, Graphics g)
+        {
+            var ms = lineal as IMultiLineString;
+            if (ms != null)
+            {
+                foreach (ILineString lineString in ms.Geometries)
+                    OnRenderInternal(map, lineString, g);
+                return;
+            }
+            OnRenderInternal(map, (ILineString)lineal, g);
+        }
+
         #endregion
     }
 }

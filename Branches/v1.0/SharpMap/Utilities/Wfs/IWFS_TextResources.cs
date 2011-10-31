@@ -41,9 +41,9 @@ namespace SharpMap.Utilities.Wfs
         string XPATH_TYPEATTRIBUTEQUERY { get; }
         string DescribeFeatureTypeRequest(string featureTypeName);
         string GetCapabilitiesRequest();
-        string GetFeatureGETRequest(WfsFeatureTypeInfo featureTypeInfo, BoundingBox boundingBox, IFilter filter);
+        string GetFeatureGETRequest(WfsFeatureTypeInfo featureTypeInfo, GeoAPI.Geometries.Envelope boundingBox, IFilter filter);
 
-        byte[] GetFeaturePOSTRequest(WfsFeatureTypeInfo featureTypeInfo, string labelProperty, BoundingBox boundingBox,
+        byte[] GetFeaturePOSTRequest(WfsFeatureTypeInfo featureTypeInfo, string labelProperty, GeoAPI.Geometries.Envelope boundingBox,
                                      IFilter filter);
     }
 }

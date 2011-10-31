@@ -16,8 +16,23 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
-using System.Drawing;
+using System.Diagnostics;
+using GeoAPI.Geometries;
 using SharpMap.Utilities;
+
+namespace GeoAPI.Geometries
+{
+    public static class CoordinateEx
+    {
+        public static double [] ToDoubleArray(this Coordinate self)
+        {
+            if (self.Y != self.Y)
+                return new [] { self.X, self.Y };
+            return new[] {self.X, self.Y, self.Z};
+        }
+    }
+
+}
 
 namespace SharpMap.Geometries
 {
@@ -26,11 +41,12 @@ namespace SharpMap.Geometries
     /// value and a y-coordinate value. The boundary of a Point is the empty set.
     /// </summary>
     [Serializable]
-    public class Point : Geometry, IComparable<Point>, IPuntal
+    public class Point : Geometry, IComparable<Point>, IPuntal, IPoint
     {
-        //private bool _isEmpty;
-        private double _x;
-        private double _y;
+        private Coordinate _coordinate;
+        ////private bool _isEmpty;
+        //private double _x;
+        //private double _y;
 
         /// <summary>
         /// Null ordinate value
@@ -44,8 +60,9 @@ namespace SharpMap.Geometries
         /// <param name="y">Y coordinate</param>
         public Point(double x, double y)
         {
-            _x = x;
-            _y = y;
+            _coordinate = new Coordinate(x, y);
+            //_x = x;
+            //_y = y;
         }
 
         /// <summary>
@@ -57,16 +74,26 @@ namespace SharpMap.Geometries
         }
 
         /// <summary>
+        /// Initializes a new Point by its coordinate
+        /// </summary>
+        /// <param name="c"></param>
+        public Point(Coordinate c)
+        {
+            _coordinate = c;
+        }
+
+        /// <summary>
         /// Create a new point by a douuble[] array
         /// </summary>
         /// <param name="point"></param>
         public Point(double[] point)
         {
-            if (point.Length < 2)
+            if (point.Length != 2)
                 throw new Exception("Only 2 dimensions are supported for points");
 
-            _x = point[0];
-            _y = point[1];
+            _coordinate = new Coordinate(point[0], point[1]);
+            //_x = point[0];
+            //_y = point[1];
         }
 
         /// <summary>
@@ -75,13 +102,16 @@ namespace SharpMap.Geometries
         protected bool SetIsEmpty
         {
             set
-            { 
+            {
                 if (value)
-                    _x = NullOrdinate;// _isEmpty = value;
+                    _coordinate.X = NullOrdinate;
+                //_x = NullOrdinate;// _isEmpty = value;
                 else
                 {
-                    _x = 0d;
-                    _y = 0d;
+                    _coordinate.X = 0d;
+                    _coordinate.Y = 0d;
+                    //_x = 0d;
+                    //_y = 0d;
                 }
             }
         }
@@ -94,12 +124,14 @@ namespace SharpMap.Geometries
             get
             {
                 if (!IsEmptyPoint)
-                    return _x;
+                    return _coordinate.X;
+                    //return _x;
                 throw new ApplicationException("Point is empty");
             }
             set
             {
-                _x = value;
+                _coordinate.X = value;
+                //_x = value;
                 //_isEmpty = false;
             }
         }
@@ -112,14 +144,33 @@ namespace SharpMap.Geometries
             get
             {
                 if (!IsEmptyPoint)
-                    return _y;
+                    return _coordinate.Y;
+                    //return _y;
                 throw new ApplicationException("Point is empty");
             }
             set
             {
-                _y = value;
+                _coordinate.Y = value;
+                //_y = value;
                 //_isEmpty = false;
             }
+        }
+
+        public double Z
+        {
+            get { return NullOrdinate; }
+            set { }
+        }
+
+        public double M
+        {
+            get { return NullOrdinate; }
+            set { }
+        }
+
+        public ICoordinateSequence CoordinateSequence
+        {
+            get { throw new NotImplementedException(); }
         }
 
         /// <summary>
@@ -184,7 +235,8 @@ namespace SharpMap.Geometries
         /// <returns></returns>
         public double[] ToDoubleArray()
         {
-            return new[] {_x, _y};
+            return new[] { _coordinate.X, _coordinate.Y};
+            //return new[] { _x, _y };
         }
 
         /// <summary>
@@ -211,17 +263,8 @@ namespace SharpMap.Geometries
         /// <returns><see cref="Point"/></returns>
         public Point AsPoint()
         {
-            return new Point(_x, _y);
-        }
-
-        /// <summary>
-        /// Transforms the point to image coordinates, based on the map
-        /// </summary>
-        /// <param name="map">Map to base coordinates on</param>
-        /// <returns>point in image coordinates</returns>
-        public PointF TransformToImage(Map map)
-        {
-            return Transform.WorldtoMap(this, map);
+            return new Point(_coordinate.X, _coordinate.Y);
+            //return new Point(_x, _y);
         }
 
         /// <summary>
@@ -281,12 +324,23 @@ namespace SharpMap.Geometries
             }
         }
 
+        public override Coordinate[] Coordinates
+        {
+            get { return new [] { _coordinate };}
+        }
+
         /// <summary>
         ///  The inherent dimension of this Geometry object, which must be less than or equal to the coordinate dimension.
         /// </summary>
-        public override int Dimension
+        public override Dimension Dimension
         {
             get { return 0; }
+            set {}
+        }
+
+        public override IPoint PointOnSurface
+        {
+            get { return this; }
         }
 
         /// <summary>
@@ -296,7 +350,8 @@ namespace SharpMap.Geometries
         /// <returns></returns>
         public virtual bool Equals(Point p)
         {
-            return p != null && p.X == _x && p.Y == _y && IsEmptyPoint == p.IsEmptyPoint;
+            return _coordinate.Equals(p._coordinate);
+            //return p != null && p.X == _x && p.Y == _y && IsEmptyPoint == p.IsEmptyPoint;
         }
 
         /// <summary>
@@ -306,10 +361,19 @@ namespace SharpMap.Geometries
         /// <returns>A hash code for the current <see cref="GetHashCode"/>.</returns>
         public override int GetHashCode()
         {
-            return _x.GetHashCode() ^ _y.GetHashCode() ^ IsEmptyPoint.GetHashCode();
+            //Debug.Assert(_coordinate != null, "_coordinate != null");
+            return _coordinate.X.GetHashCode() ^ _coordinate.Y.GetHashCode() ^ IsEmptyPoint.GetHashCode();
+            //return _x.GetHashCode() ^ _y.GetHashCode() ^ IsEmptyPoint.GetHashCode();
         }
 
-        protected bool IsEmptyPoint { get { return double.IsNaN(_x) || double.IsNaN(_y); } }
+        protected bool IsEmptyPoint
+        {
+            get
+            {
+                return double.IsNaN(_coordinate.X) || double.IsNaN(_coordinate.Y);
+                //return double.IsNaN(_x) || double.IsNaN(_y);
+            }
+        }
 
         /// <summary>
         /// If true, then this Geometry represents the empty point set, Ø, for the coordinate space. 
@@ -346,7 +410,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom"></param>
         /// <returns></returns>
-        public override double Distance(Geometry geom)
+        public override double Distance(IGeometry geom)
         {
             if (geom.GetType() == typeof (Point))
             {
@@ -366,11 +430,11 @@ namespace SharpMap.Geometries
         }
 
         /// <summary>
-        /// Returns the distance between this point and a <see cref="BoundingBox"/>
+        /// Returns the distance between this point and a <see cref="GeoAPI.Geometries.Envelope"/>
         /// </summary>
         /// <param name="box"></param>
         /// <returns></returns>
-        public double Distance(BoundingBox box)
+        public double Distance(GeoAPI.Geometries.Envelope box)
         {
             return box.Distance(this);
         }
@@ -382,7 +446,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="d">Buffer distance</param>
         /// <returns>Buffer around geometry</returns>
-        public override Geometry Buffer(double d)
+        public override IGeometry Buffer(double d)
         {
             throw new NotImplementedException();
         }
@@ -391,7 +455,7 @@ namespace SharpMap.Geometries
         /// Geometry—Returns a geometry that represents the convex hull of this Geometry.
         /// </summary>
         /// <returns>The convex hull</returns>
-        public override Geometry ConvexHull()
+        public override IGeometry ConvexHull()
         {
             throw new NotImplementedException();
         }
@@ -402,7 +466,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to intersect with</param>
         /// <returns>Returns a geometry that represents the point set intersection of this Geometry with anotherGeometry.</returns>
-        public override Geometry Intersection(Geometry geom)
+        public override IGeometry Intersection(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -412,7 +476,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to union with</param>
         /// <returns>Unioned geometry</returns>
-        public override Geometry Union(Geometry geom)
+        public override IGeometry Union(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -422,7 +486,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to compare to</param>
         /// <returns>Geometry</returns>
-        public override Geometry Difference(Geometry geom)
+        public override IGeometry Difference(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -432,7 +496,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry to compare to</param>
         /// <returns>Geometry</returns>
-        public override Geometry SymDifference(Geometry geom)
+        public override IGeometry SymmetricDifference(IGeometry geom)
         {
             throw new NotImplementedException();
         }
@@ -441,19 +505,20 @@ namespace SharpMap.Geometries
         /// The minimum bounding box for this Geometry.
         /// </summary>
         /// <returns></returns>
-        public override BoundingBox GetBoundingBox()
+        public override Envelope GetBoundingBox()
         {
-            return new BoundingBox(X, Y, X, Y);
+            return new Envelope(_coordinate);
+            //return new BoundingBox(_x, _y, _x, _y);
         }
 
         /// <summary>
-        /// Checks whether this point touches a <see cref="BoundingBox"/>
+        /// Checks whether this point touches a <see cref="GeoAPI.Geometries.Envelope"/>
         /// </summary>
         /// <param name="box">box</param>
         /// <returns>true if they touch</returns>
-        public bool Touches(BoundingBox box)
+        public bool Touches(Envelope box)
         {
-            return box.Touches(this);
+            return box.Touches(_coordinate);
         }
 
         /// <summary>
@@ -461,20 +526,20 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry</param>
         /// <returns>true if they touch</returns>
-        public override bool Touches(Geometry geom)
+        public override bool Touches(IGeometry geom)
         {
             if (geom is Point && Equals(geom)) return true;
             throw new NotImplementedException("Touches not implemented for this feature type");
         }
 
         /// <summary>
-        /// Checks whether this point intersects a <see cref="BoundingBox"/>
+        /// Checks whether this point intersects a <see cref="GeoAPI.Geometries.Envelope"/>
         /// </summary>
         /// <param name="box">Box</param>
         /// <returns>True if they intersect</returns>
-        public bool Intersects(BoundingBox box)
+        public bool Intersects(Envelope box)
         {
-            return box.Contains(this);
+            return box.Contains(_coordinate);
         }
 
         /// <summary>
@@ -482,7 +547,7 @@ namespace SharpMap.Geometries
         /// </summary>
         /// <param name="geom">Geometry</param>
         /// <returns>True if geom is contained by this instance</returns>
-        public override bool Contains(Geometry geom)
+        public override bool Contains(IGeometry geom)
         {
             return false;
         }

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 #if !DotSpatialProjections
+using GeoAPI.Geometries;
 using ProjNet.CoordinateSystems.Transformations;
 #else
 using DotSpatial.Projections;
@@ -15,11 +16,10 @@ using SharpMap.Rendering.Symbolizer;
 namespace SharpMap.Layers.Symbolizer
 {
     /// <summary>
-    /// Base class for all vector layers using <see cref="ISymbolizer{TGeometry}"/> approach.
+    /// Base class for all vector layers using <see cref="ISymbolizer{TGeometry, TConstraint}"/> approach.
     /// </summary>
     /// <typeparam name="TGeometry">The geometry type</typeparam>
-    public abstract class BaseVectorLayer<TGeometry> : Layer, ICanQueryLayer, IDisposable
-        where TGeometry : class, IGeometryClassifier
+    public abstract class BaseVectorLayer<TConstraint> : Layer, ICanQueryLayer, IDisposable
     {
         #region Private fields
 
@@ -27,7 +27,7 @@ namespace SharpMap.Layers.Symbolizer
 
         #endregion
 
-        protected BaseVectorLayer(string layerName, IProvider dataSource, ISymbolizer<TGeometry> symbolizer)
+        protected BaseVectorLayer(string layerName, IProvider dataSource, ISymbolizer<TConstraint> symbolizer)
         {
             LayerName = layerName;
             _dataSource = dataSource;
@@ -51,7 +51,7 @@ namespace SharpMap.Layers.Symbolizer
         /// <summary>
         /// Gets or sets the symbolizer associated with this layer.
         /// </summary>
-        public ISymbolizer<TGeometry> Symbolizer { get; set; }
+        public ISymbolizer<TConstraint> Symbolizer { get; set; }
 
         public override void Render(Graphics g, Map map)
         {
@@ -91,14 +91,14 @@ namespace SharpMap.Layers.Symbolizer
         /// Returns the extent of the layer
         /// </summary>
         /// <returns>Bounding box corresponding to the extent of the features in the layer</returns>
-        public override BoundingBox Envelope
+        public override GeoAPI.Geometries.Envelope Envelope
         {
             get
             {
                 if (DataSource == null)
                     throw (new ApplicationException("DataSource property not set on layer '" + LayerName + "'"));
                 
-                BoundingBox box;
+                GeoAPI.Geometries.Envelope box;
                 lock (_dataSource)
                 {
                     bool wasOpen = DataSource.IsOpen;
@@ -119,7 +119,7 @@ namespace SharpMap.Layers.Symbolizer
         }
 
         private SmoothingMode _oldSmoothingMode;
-        private Collection<Geometry> _geometries;
+        private Collection<IGeometry> _geometries;
 
         /// <summary>
         /// Method called to initialize the rendering process
@@ -129,7 +129,7 @@ namespace SharpMap.Layers.Symbolizer
         protected virtual void OnRender(Graphics graphics, Map map)
         {
             // Get query envelope
-            BoundingBox envelope = map.Envelope;
+            GeoAPI.Geometries.Envelope envelope = map.Envelope;
 
             // Convert bounding box to datasource's coordinate system
             if (CoordinateTransformation != null)
@@ -175,7 +175,7 @@ namespace SharpMap.Layers.Symbolizer
             //    AttributedGeometry<TGeometry> ag = _geometrys.Dequeue();
             //    Symbolizer.Render(map, ag.Geometry, graphics);
             //}
-            foreach (Geometry geometry in _geometries)
+            foreach (IGeometry geometry in _geometries)
             {
                 Symbolizer.Render(map, geometry as TGeometry, graphics);
             }
@@ -216,7 +216,7 @@ namespace SharpMap.Layers.Symbolizer
         /// </summary>
         /// <param name="box">Geometry to intersect with</param>
         /// <param name="ds">FeatureDataSet to fill data into</param>
-        public void ExecuteIntersectionQuery(BoundingBox box, FeatureDataSet ds)
+        public void ExecuteIntersectionQuery(GeoAPI.Geometries.Envelope box, FeatureDataSet ds)
         {
             if (CoordinateTransformation != null)
             {

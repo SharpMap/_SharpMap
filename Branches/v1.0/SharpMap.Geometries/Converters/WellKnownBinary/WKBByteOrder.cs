@@ -15,23 +15,28 @@
 // along with SharpMap; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
-namespace SharpMap.Geometries
+namespace SharpMap.Converters.WellKnownBinary
 {
     /// <summary>
-    /// Interface for a GeometryCollection. A GeometryCollection is a collection of 1 or more geometries.
+    /// Specifies the specific binary encoding (NDR or XDR) used for a geometry byte stream
     /// </summary>
-    public interface IGeometryCollection : IGeometry
+    public enum WkbByteOrder : byte
     {
         /// <summary>
-        /// Returns the number of geometries in the collection.
+        /// XDR (Big Endian) Encoding of Numeric Types
         /// </summary>
-        int NumGeometries { get; }
-
+        /// <remarks>
+        /// <para>The XDR representation of an Unsigned Integer is Big Endian (most significant byte first).</para>
+        /// <para>The XDR representation of a Double is Big Endian (sign bit is first byte).</para>
+        /// </remarks>
+        Xdr = 0,
         /// <summary>
-        /// Returns an indexed geometry in the collection
+        /// NDR (Little Endian) Encoding of Numeric Types
         /// </summary>
-        /// <param name="N">Geometry index</param>
-        /// <returns>Geometry at index N</returns>
-        Geometry Geometry(int N);
+        /// <remarks>
+        /// <para>The NDR representation of an Unsigned Integer is Little Endian (least significant byte first).</para>
+        /// <para>The NDR representation of a Double is Little Endian (sign bit is last byte).</para>
+        /// </remarks>
+        Ndr = 1
     }
 }

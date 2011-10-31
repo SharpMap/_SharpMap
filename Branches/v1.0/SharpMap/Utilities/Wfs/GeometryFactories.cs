@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Xml;
+using GeoAPI.Geometries;
 using SharpMap.Data;
 using SharpMap.Geometries;
 
@@ -31,7 +32,7 @@ namespace SharpMap.Utilities.Wfs
         protected WfsFeatureTypeInfo _FeatureTypeInfo;
         protected XmlReader _GeomReader;
 
-        protected Collection<Geometry> _Geoms = new Collection<Geometry>();
+        protected Collection<IGeometry> _Geoms = new Collection<IGeometry>();
 
         protected FeatureDataTable _LabelInfo;
         protected IPathNode _LabelNode;
@@ -96,7 +97,7 @@ namespace SharpMap.Utilities.Wfs
         /// Abstract method - overwritten by derived classes for producing instances
         /// derived from <see cref="SharpMap.Geometries.Geometry"/>.
         /// </summary>
-        internal abstract Collection<Geometry> createGeometries();
+        internal abstract Collection<IGeometry> CreateGeometries();
 
         /// <summary>
         /// This method parses quickly without paying attention to
@@ -107,7 +108,7 @@ namespace SharpMap.Utilities.Wfs
         /// <param name="geometryType">The geometry type (Point, LineString, Polygon, MultiPoint, MultiCurve, 
         /// MultiLineString (deprecated), MultiSurface, MultiPolygon (deprecated)</param>
         /// <returns>The created geometries</returns>
-        internal virtual Collection<Geometry> createQuickGeometries(string geometryType)
+        internal virtual Collection<IGeometry> CreateQuickGeometries(string geometryType)
         {
             // Ignore multi-geometries
             if (geometryType.Equals("MultiPointPropertyType")) geometryType = "PointPropertyType";
@@ -127,7 +128,7 @@ namespace SharpMap.Utilities.Wfs
                         switch (geometryType)
                         {
                             case "PointPropertyType":
-                                _Geoms.Add(ParseCoordinates(_XmlReader.ReadSubtree())[0]);
+                                _Geoms.Add(ParsePoints(_XmlReader.ReadSubtree())[0]);
                                 break;
                             case "LineStringPropertyType":
                             case "CurvePropertyType":
@@ -172,13 +173,13 @@ namespace SharpMap.Utilities.Wfs
         /// </summary>
         /// <param name="reader">An XmlReader instance at the position of the coordinates to read</param>
         /// <returns>A point collection (the collected coordinates)</returns>
-        protected Collection<Point> ParseCoordinates(XmlReader reader)
+        protected Collection<Point> ParsePoints(XmlReader reader)
         {
             if (!reader.Read()) return null;
 
             string name = reader.LocalName;
             string coordinateString = reader.ReadElementString();
-            Collection<Point> vertices = new Collection<Point>();
+            var vertices = new Collection<Point>();
             string[] coordinateValues;
             int i = 0, length = 0;
 
@@ -198,6 +199,42 @@ namespace SharpMap.Utilities.Wfs
                     vertices.Add(new Point(c1, c2));
                 else
                     vertices.Add(new Point(c2, c1));
+            }
+
+            return vertices;
+        }
+
+        /// <summary>
+        /// This method parses a coordinates or posList(from 'GetFeature' response). 
+        /// </summary>
+        /// <param name="reader">An XmlReader instance at the position of the coordinates to read</param>
+        /// <returns>A point collection (the collected coordinates)</returns>
+        protected Collection<Coordinate> ParseCoordinates(XmlReader reader)
+        {
+            if (!reader.Read()) return null;
+
+            string name = reader.LocalName;
+            string coordinateString = reader.ReadElementString();
+            var vertices = new Collection<Coordinate>();
+            string[] coordinateValues;
+            int i = 0, length = 0;
+
+            if (name.Equals("coordinates"))
+                coordinateValues = coordinateString.Split(_Cs[0], _Ts[0]);
+            else
+                coordinateValues = coordinateString.Split(' ');
+
+            length = coordinateValues.Length;
+
+            while (i < length - 1)
+            {
+                double c1 = Convert.ToDouble(coordinateValues[i++], _FormatInfo);
+                double c2 = Convert.ToDouble(coordinateValues[i++], _FormatInfo);
+
+                if (name.Equals("coordinates"))
+                    vertices.Add(new Coordinate(c1, c2));
+                else
+                    vertices.Add(new Coordinate(c2, c1));
             }
 
             return vertices;
@@ -264,7 +301,7 @@ namespace SharpMap.Utilities.Wfs
         /// <summary>
         /// This method adds a label to the collection.
         /// </summary>
-        protected void AddLabel(string labelValue, Geometry geom)
+        protected void AddLabel(string labelValue, IGeometry geom)
         {
             if (_LabelInfo == null || geom == null || string.IsNullOrEmpty(labelValue)) return;
 
@@ -395,7 +432,7 @@ namespace SharpMap.Utilities.Wfs
         /// This method produces instances of type <see cref="SharpMap.Geometries.Point"/>.
         /// </summary>
         /// <returns>The created geometries</returns>
-        internal override Collection<Geometry> createGeometries()
+        internal override Collection<IGeometry> CreateGeometries()
         {
             IPathNode pointNode = new PathNode(_GMLNS, "Point", (NameTable) _XmlReader.NameTable);
             string[] labelValue = new string[1];
@@ -409,7 +446,7 @@ namespace SharpMap.Utilities.Wfs
                     while ((_GeomReader = GetSubReaderOf(_FeatureReader, labelValue, pointNode, _CoordinatesNode)) !=
                            null)
                     {
-                        _Geoms.Add(ParseCoordinates(_GeomReader)[0]);
+                        _Geoms.Add(ParsePoints(_GeomReader)[0]);
                         geomFound = true;
                     }
                     if (geomFound) AddLabel(labelValue[0], _Geoms[_Geoms.Count - 1]);
@@ -467,7 +504,7 @@ namespace SharpMap.Utilities.Wfs
         /// This method produces instances of type <see cref="SharpMap.Geometries.LineString"/>.
         /// </summary>
         /// <returns>The created geometries</returns>
-        internal override Collection<Geometry> createGeometries()
+        internal override Collection<IGeometry> CreateGeometries()
         {
             IPathNode lineStringNode = new PathNode(_GMLNS, "LineString", (NameTable) _XmlReader.NameTable);
             string[] labelValue = new string[1];
@@ -540,7 +577,7 @@ namespace SharpMap.Utilities.Wfs
         /// This method produces instances of type <see cref="SharpMap.Geometries.Polygon"/>.
         /// </summary>
         /// <returns>The created geometries</returns>
-        internal override Collection<Geometry> createGeometries()
+        internal override Collection<IGeometry> CreateGeometries()
         {
             Polygon polygon = null;
             XmlReader outerBoundaryReader = null;
@@ -634,7 +671,7 @@ namespace SharpMap.Utilities.Wfs
         /// This method produces instances of type <see cref="SharpMap.Geometries.MultiPoint"/>.
         /// </summary>
         /// <returns>The created geometries</returns>
-        internal override Collection<Geometry> createGeometries()
+        internal override Collection<IGeometry> CreateGeometries()
         {
             MultiPoint multiPoint = null;
 
@@ -653,8 +690,8 @@ namespace SharpMap.Utilities.Wfs
                         null)
                     {
                         multiPoint = new MultiPoint();
-                        GeometryFactory geomFactory = new PointFactory(_GeomReader, _FeatureTypeInfo);
-                        Collection<Geometry> points = geomFactory.createGeometries();
+                        var geomFactory = new PointFactory(_GeomReader, _FeatureTypeInfo);
+                        var points = geomFactory.CreateGeometries();
 
                         foreach (Point point in points)
                             multiPoint.Points.Add(point);
@@ -740,7 +777,7 @@ namespace SharpMap.Utilities.Wfs
                     {
                         multiLineString = new MultiLineString();
                         GeometryFactory geomFactory = new LineStringFactory(_GeomReader, _FeatureTypeInfo);
-                        Collection<Geometry> lineStrings = geomFactory.createGeometries();
+                        Collection<Geometry> lineStrings = geomFactory.CreateGeometries();
 
                         foreach (LineString lineString in lineStrings)
                             multiLineString.LineStrings.Add(lineString);
@@ -801,7 +838,7 @@ namespace SharpMap.Utilities.Wfs
         /// This method produces instances of type <see cref="SharpMap.Geometries.MultiPolygon"/>.
         /// </summary>
         /// <returns>The created geometries</returns>
-        internal override Collection<Geometry> createGeometries()
+        internal override Collection<IGeometry> CreateGeometries()
         {
             MultiPolygon multiPolygon = null;
 
@@ -826,9 +863,9 @@ namespace SharpMap.Utilities.Wfs
                     {
                         multiPolygon = new MultiPolygon();
                         GeometryFactory geomFactory = new PolygonFactory(_GeomReader, _FeatureTypeInfo);
-                        Collection<Geometry> polygons = geomFactory.createGeometries();
+                        var polygons = geomFactory.CreateGeometries();
 
-                        foreach (Polygon polygon in polygons)
+                        foreach (IPolygon polygon in polygons)
                             multiPolygon.Polygons.Add(polygon);
 
                         _Geoms.Add(multiPolygon);
@@ -894,7 +931,7 @@ namespace SharpMap.Utilities.Wfs
         /// appropriate geometries.
         /// </summary>
         /// <returns></returns>
-        internal override Collection<Geometry> createGeometries()
+        internal override Collection<IGeometry> CreateGeometries()
         {
             GeometryFactory geomFactory = null;
 
@@ -971,8 +1008,8 @@ namespace SharpMap.Utilities.Wfs
 
             if (geomFactory != null)
                 return _QuickGeometries
-                           ? geomFactory.createQuickGeometries(geometryTypeString)
-                           : geomFactory.createGeometries();
+                           ? geomFactory.CreateQuickGeometries(geometryTypeString)
+                           : geomFactory.CreateGeometries();
             return _Geoms;
         }
 
