@@ -47,32 +47,33 @@ namespace SharpMap.Geometries
     public class SharpMapCoordinateSequence : ICoordinateSequence
     {
         private readonly int _dimension;
-        private readonly IList<Coordinate> _coordinates;
+        private readonly List<Coordinate> _coordinates;
 
-        internal SharpMapCoordinateSequence(IList<Coordinate> coordinates)
+        internal SharpMapCoordinateSequence(IEnumerable<Coordinate> coordinates)
         {
-            _coordinates = coordinates;
+            _coordinates = new List<Coordinate>(coordinates);
         }
 
         internal SharpMapCoordinateSequence(ICoordinateSequence coordSeq)
         {
             _dimension = coordSeq.Dimension;
-            _coordinates = new Coordinate[coordSeq.Count];
+            _coordinates = new List<Coordinate>(coordSeq.Count);
             for (var i = 0; i < coordSeq.Count; i++)
             {
-                _coordinates[i] = new Coordinate(
-                    coordSeq.GetOrdinate(i, 0), 
-                    coordSeq.GetOrdinate(i, (Ordinate)1), 
-                    _dimension > 2 
-                        ? coordSeq.GetOrdinate(i, (Ordinate)2) 
-                        : Coordinate.NullOrdinate);
+                _coordinates.Add(new Coordinate(
+                                     coordSeq.GetOrdinate(i, 0),
+                                     coordSeq.GetOrdinate(i, (Ordinate) 1),
+                                     _dimension > 2
+                                         ? coordSeq.GetOrdinate(i, (Ordinate) 2)
+                                         : Coordinate.NullOrdinate)
+                    );
             }
         }
 
         internal SharpMapCoordinateSequence(int size, int dimension)
         {
             _dimension = dimension;
-            _coordinates = new Coordinate[size];
+            _coordinates = new List<Coordinate>(size);
         }
 
 
@@ -128,7 +129,7 @@ namespace SharpMap.Geometries
 
         public Coordinate[] ToCoordinateArray()
         {
-            return _coordinates;
+            return _coordinates.ToArray();
         }
 
         public Envelope ExpandEnvelope(Envelope env)
@@ -147,7 +148,7 @@ namespace SharpMap.Geometries
 
         public int Count
         {
-            get { return _coordinates.Length; }
+            get { return _coordinates.Count; }
         }
 
         #endregion

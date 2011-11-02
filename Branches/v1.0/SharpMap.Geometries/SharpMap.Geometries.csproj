@@ -62,9 +62,6 @@
     <Compile Include="Geometries\Curve.cs" />
     <Compile Include="Geometries\Geometry.cs" />
     <Compile Include="Geometries\GeometryCollection.cs" />
-    <Compile Include="Geometries\GeometryType.cs" />
-    <Compile Include="Geometries\IGeometry.cs" />
-    <Compile Include="Geometries\IGeometryCollection.cs" />
     <Compile Include="Geometries\IPuntal.cs" />
     <Compile Include="Geometries\LinearRing.cs" />
     <Compile Include="Geometries\LineString.cs" />
@@ -83,6 +80,12 @@
     <Compile Include="Geometries\SpatialRelations.cs" />
     <Compile Include="Geometries\Surface.cs" />
     <Compile Include="Utilities\CGAlgoritm.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpMap\SharpMap.VS2010.csproj">
+      <Project>{C83777FC-AABB-47D9-911F-D76255D4D541}</Project>
+      <Name>SharpMap.VS2010</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

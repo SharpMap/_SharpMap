@@ -108,6 +108,11 @@ namespace SharpMap.Geometries
             return GeometryServices.Instance.GeometryFactory.CreatePoint(new Coordinate(self.MinX + self.Width * 0.5d,  self.MinY + self.Height * 0.5d));
         }
 
+        public static Coordinate GetCentroidCoordinate(this Envelope self)
+        {
+            return new Coordinate(self.MinX + self.Width * 0.5d, self.MinY + self.Height * 0.5d);
+        }
+
         public static Ordinate LongestAxis(this Envelope self)
         {
             return (Ordinate)((self.Width >= self.Height) ? 0 : 1);

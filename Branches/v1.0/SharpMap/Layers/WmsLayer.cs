@@ -24,10 +24,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Web;
-using System.Web.Caching;
 using GeoAPI.Geometries;
-using SharpMap.Geometries;
 using SharpMap.Rendering.Exceptions;
 using SharpMap.Web.Wms;
 
@@ -136,6 +133,8 @@ namespace SharpMap.Layers
             LayerName = layername;
             _ContinueOnError = true;
             _Credentials = credentials;
+
+            /*
             if (HttpContext.Current != null && HttpContext.Current.Cache["SharpMap_WmsClient_" + url] != null)
             {
                 wmsClient = (Client)HttpContext.Current.Cache["SharpMap_WmsClient_" + url];
@@ -147,6 +146,7 @@ namespace SharpMap.Layers
                     HttpContext.Current.Cache.Insert("SharpMap_WmsClient_" + url, wmsClient, null,
                                                      Cache.NoAbsoluteExpiration, cachetime);
             }
+             */
             //Set default mimetype - We prefer compressed formats
             if (OutputFormats.Contains("image/jpeg")) _MimeType = "image/jpeg";
             else if (OutputFormats.Contains("image/png")) _MimeType = "image/png";

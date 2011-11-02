@@ -269,6 +269,8 @@ namespace SharpMap.Geometries
             get { throw new NotImplementedException(); }
         }
 
+        public abstract OgcGeometryType OgcGeometryType { get; }
+
         double IGeometry.Area
         {
             get { throw new NotImplementedException(); }
@@ -385,14 +387,6 @@ namespace SharpMap.Geometries
         public static Geometry GeomFromWKB(byte[] WKB)
         {
             return GeometryFromWKB.Parse(WKB);
-        }
-
-        /// <summary>
-        /// Gets the geometry type of this class
-        /// </summary>
-        public virtual GeometryType2 GeometryType
-        {
-            get { return GeometryType2.Geometry; }
         }
 
         #endregion

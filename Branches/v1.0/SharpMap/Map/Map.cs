@@ -100,7 +100,7 @@ namespace SharpMap
             _MinimumZoom = 0;
             _MapTransform = new Matrix();
             MapTransformInverted = new Matrix();
-            _Center = _factory.CreatePoint(new Coordinate(0, 0));
+            _center = new Coordinate(0, 0);
             _Zoom = 1;
             _PixelAspectRatio = 1.0;
         }
@@ -618,7 +618,7 @@ namespace SharpMap
                 _Zoom = bbox.Width; //Set the private center value so we only fire one MapOnViewChange event
                 if (Envelope.Height < bbox.Height)
                     _Zoom *= bbox.Height / Envelope.Height;
-                Center = bbox.GetCentroid();
+                Center = bbox.Centre;
             }
         }
 
@@ -691,7 +691,7 @@ namespace SharpMap
         private readonly List<IMapDecoration> _decorations = new List<IMapDecoration>();
 
         private Color _BackgroundColor;
-        private Point _Center;
+        private Coordinate _center;
         private readonly LayerCollection _Layers;
         private readonly LayerCollection _backgroundLayers;
         private readonly VariableLayerCollection _variableLayers;
@@ -824,12 +824,12 @@ namespace SharpMap
         /// <summary>
         /// Center of map in WCS
         /// </summary>
-        public Point Center
+        public Coordinate Center
         {
-            get { return _Center; }
+            get { return _center; }
             set
             {
-                _Center = value;
+                _center = value;
                 if (MapViewOnChange != null)
                     MapViewOnChange();
             }

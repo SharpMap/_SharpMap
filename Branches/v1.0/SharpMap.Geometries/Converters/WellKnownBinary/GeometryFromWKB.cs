@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using GeoAPI.Geometries;
+using GeoAPI.IO;
 using SharpMap.Geometries;
 
 namespace SharpMap.Converters.WellKnownBinary
@@ -150,28 +151,30 @@ namespace SharpMap.Converters.WellKnownBinary
 
         private static LineString CreateWKBLineString(BinaryReader reader, WkbByteOrder byteOrder)
         {
-            LineString l = new LineString();
-            //l.Vertices.AddRange(ReadCoordinates(reader, byteOrder));
+            //LineString l = new LineString();
+            ////l.Vertices.AddRange(ReadCoordinates(reader, byteOrder));
             var arrPoint = ReadCoordinates(reader, byteOrder);
-            for (int i = 0; i < arrPoint.Length; i++)
-                l.Vertices.Add(arrPoint[i]);
-
-            return l;
+            //for (int i = 0; i < arrPoint.Length; i++)
+            //    l.Vertices.Add(arrPoint[i]);
+            //return l;
+            return new LineString(arrPoint);
         }
 
         private static LinearRing CreateWKBLinearRing(BinaryReader reader, WkbByteOrder byteOrder)
         {
-            LinearRing l = new LinearRing();
-            //l.Vertices.AddRange(ReadCoordinates(reader, byteOrder));
+            //LinearRing l = new LinearRing();
+            ////l.Vertices.AddRange(ReadCoordinates(reader, byteOrder));
             var arrPoint = ReadCoordinates(reader, byteOrder);
-            for (int i = 0; i < arrPoint.Length; i++)
-                l.Vertices.Add(arrPoint[i]);
+            //for (int i = 0; i < arrPoint.Length; i++)
+            //    l.Vertices.Add(arrPoint[i]);
+            if (!arrPoint[0].Equals(arrPoint[arrPoint.Length-1]))
+                throw new ParseException("Linear ring is not closed!");
 
-            //if polygon isn't closed, add the first point to the end (this shouldn't occur for correct WKB data)
-            if (l.Vertices[0].X != l.Vertices[l.Vertices.Count - 1].X ||
-                l.Vertices[0].Y != l.Vertices[l.Vertices.Count - 1].Y)
-                l.Vertices.Add(new Coordinate(l.Vertices[0].X, l.Vertices[0].Y));
-            return l;
+            ////if polygon isn't closed, add the first point to the end (this shouldn't occur for correct WKB data)
+            //if (l.Vertices[0].X != l.Vertices[l.Vertices.Count - 1].X ||
+            //    l.Vertices[0].Y != l.Vertices[l.Vertices.Count - 1].Y)
+            //    l.Vertices.Add(new Coordinate(l.Vertices[0].X, l.Vertices[0].Y));
+            return new LinearRing(arrPoint);
         }
 
         private static Polygon CreateWKBPolygon(BinaryReader reader, WkbByteOrder byteOrder)

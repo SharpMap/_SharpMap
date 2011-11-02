@@ -83,12 +83,6 @@ namespace SharpMap.Geometries
         /// <returns></returns>
         public abstract Point Value(double t);
 
-        public override GeometryType2 GeometryType
-        {
-            get
-            {
-                return GeometryType2.Curve;
-            }
-        }
+        public override OgcGeometryType OgcGeometryType { get { return OgcGeometryType.Curve; } }
     }
 }

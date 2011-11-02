@@ -252,11 +252,11 @@ namespace SharpMap.Geometries
                 yield return p;
         }
 
-        public override GeometryType2 GeometryType
+        public override OgcGeometryType OgcGeometryType
         {
             get
             {
-                return GeometryType2.MultiPolygon;
+                return OgcGeometryType.MultiPolygon;
             }
         }
 

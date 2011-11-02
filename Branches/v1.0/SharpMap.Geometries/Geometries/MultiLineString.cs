@@ -301,11 +301,11 @@ namespace SharpMap.Geometries
                 yield return l;
         }
 
-        public override GeometryType2 GeometryType
+        public override OgcGeometryType OgcGeometryType
         {
             get
             {
-                return GeometryType2.MultiLineString;
+                return OgcGeometryType.MultiLineString;
             }
         }
 

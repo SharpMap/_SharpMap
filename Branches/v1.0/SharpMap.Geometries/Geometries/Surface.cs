@@ -42,7 +42,7 @@ namespace SharpMap.Geometries
         /// </summary>
         public virtual Point Centroid
         {
-            get { return GetBoundingBox().GetCentroid(); }
+            get { return new Point(GetBoundingBox().Centre); }
         }
 
         /// <summary>
@@ -56,11 +56,11 @@ namespace SharpMap.Geometries
             set {}
         }
 
-        public override GeometryType2 GeometryType
+        public override OgcGeometryType OgcGeometryType
         {
             get
             {
-                return GeometryType2.Surface;
+                return OgcGeometryType.Surface;
             }
         }
 

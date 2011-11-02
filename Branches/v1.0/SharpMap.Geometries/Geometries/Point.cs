@@ -20,20 +20,6 @@ using System.Diagnostics;
 using GeoAPI.Geometries;
 using SharpMap.Utilities;
 
-namespace GeoAPI.Geometries
-{
-    public static class CoordinateEx
-    {
-        public static double [] ToDoubleArray(this Coordinate self)
-        {
-            if (self.Y != self.Y)
-                return new [] { self.X, self.Y };
-            return new[] {self.X, self.Y, self.Z};
-        }
-    }
-
-}
-
 namespace SharpMap.Geometries
 {
     /// <summary>
@@ -316,12 +302,9 @@ namespace SharpMap.Geometries
 
         #region "Inherited methods from abstract class Geometry"
 
-        public override GeometryType2 GeometryType
+        public override OgcGeometryType OgcGeometryType
         {
-            get
-            {
-                return GeometryType2.Point;
-            }
+            get { return OgcGeometryType.Point; }
         }
 
         public override Coordinate[] Coordinates
@@ -436,7 +419,7 @@ namespace SharpMap.Geometries
         /// <returns></returns>
         public double Distance(GeoAPI.Geometries.Envelope box)
         {
-            return box.Distance(this);
+            return box.Distance(_coordinate);
         }
 
         /// <summary>

@@ -5,16 +5,17 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using GeoAPI.Geometries;
 using SharpMap.Geometries;
 
 namespace SharpMap.Data.Providers
 {
-    public abstract class DbBase<TOid, TConnection, TGeometry> : IUpdateableProvider
+    public abstract class DbBase<TOid, TConnection, TGeometry> : IUpdateableProvider, ISerializable
         where TOid : struct, IComparable<TOid>
         where TConnection : DbConnection, new()
-        where TGeometry : GeoAPI.Geometries.IGeometry
+        where TGeometry : IGeometry
     {
         private readonly string _connectionString;
         private readonly Dictionary<TOid, uint> _oidDictionary;
@@ -22,6 +23,7 @@ namespace SharpMap.Data.Providers
 
         protected int Srid;
 
+        [NonSerialized]
         protected readonly DataTable SchemaTable;
 
         /// <summary>
@@ -142,36 +144,36 @@ namespace SharpMap.Data.Providers
             _connectionString = connectionString;
             Schema = schema;
             Table = table;
-            Initialize(oidColumn, geometryColumn);
+            SchemaTable = Initialize(oidColumn, geometryColumn);
         }
 
-        private void Initialize(string oidColumn, string geometryColumn)
+        private DataTable Initialize(string oidColumn, string geometryColumn)
         {
-            SchemaTable = GetSchemaTable();
+            DataTable schemaTable;
+
+            using (var cn = GetOpenConnection())
+            {
+                var cmd = cn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM " + QualifiedTable + ";";
+                var dataReader = cmd.ExecuteReader();
+                schemaTable = dataReader.GetSchemaTable();
+            }
+
             
+            
+            return schemaTable;
+            var
+            DbDataAdapter dataAdapter;
+            dataAdapter.f
 
             if (Columns == null)
                 Columns = GetOtherColumns();
 
         }
 
-
-
-
-        private void GetSchemaTable()
+        private Da[] GetOtherColumns()
         {
-            using (var conn = GetOpenConnection())
-            {
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = GenerateFullSelect(1);
-                    cmd.ExecuteScalar()
-                }
-            }
-        }
-
-        private string[] GetOtherColumns()
-        {
+            var dt = new DataTable()
             
 
         }
@@ -222,7 +224,7 @@ namespace SharpMap.Data.Providers
             return entities.ToString();
         }
 
-        protected abstract string SpatialRelationClause(SpatialRelations relation);
+        protected abstract string SpatialPredicateClause(SpatialPredicate relation);
 
 
         #region Implementation of IDisposable
@@ -271,14 +273,20 @@ namespace SharpMap.Data.Providers
         }
 
         protected abstract TConnection GetOpenConnection();
+        protected abstract DbDataAdapter GetDataAdapter();
 
-        public Collection<Geometry> GetGeometriesInView(Envelope bbox)
+        public Collection<IGeometry> GetGeometriesInView(Envelope bbox)
         {
-            var res = new Collection<Geometry>();
+            var res = new Collection<IGeometry>();
             using (var cn = GetOpenConnection())
             {
 
             }
+        }
+
+        Collection<IGeometry> IProvider.GetGeometriesInView(Envelope bbox)
+        {
+            throw new NotImplementedException();
         }
 
         public Collection<uint> GetObjectIDsInView(Envelope bbox)
@@ -286,15 +294,20 @@ namespace SharpMap.Data.Providers
             throw new NotImplementedException();
         }
 
+        IGeometry IProvider.GetGeometryByID(uint oid)
+        {
+            throw new NotImplementedException();
+        }
+
         protected abstract object GetEnvelope(Envelope bbox);
 
-        public Geometry GetGeometryByID(uint oid)
+        public IGeometry GetGeometryByID(uint oid)
         {
             
             throw new NotImplementedException();
         }
 
-        public void ExecuteIntersectionQuery(Geometry geom, FeatureDataSet ds)
+        public void ExecuteIntersectionQuery(IGeometry geom, FeatureDataSet ds)
         {
             ExecuteSpatialPredicateQuery(SpatialPredicate.Intersects, geom, ds);
         }
@@ -304,7 +317,7 @@ namespace SharpMap.Data.Providers
             ExecuteSpatialPredicateQuery(SpatialPredicate.Intersects, box, ds);
         }
 
-        public void ExecuteSpatialPredicateQuery(SpatialPredicate spatialRelation, Geometries.Geometry geometry, FeatureDataSet dataSet)
+        public void ExecuteSpatialPredicateQuery(SpatialPredicate spatialRelation, IGeometry geometry, FeatureDataSet dataSet)
         {
         }
 
@@ -606,6 +619,15 @@ namespace SharpMap.Data.Providers
             res.CommandText = string.Format("DELETE FROM {0} WHERE {1}=@POid;", DecorateEntities(EntityDecorator, new[] { Table }));
             res.Parameters.Add(CreateParameter(res, "POid", DbType.UInt32));
             return res;
+        }
+
+        #endregion
+
+        #region Implementation of ISerializable
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
