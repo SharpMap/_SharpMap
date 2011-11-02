@@ -20,7 +20,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 #if !DotSpatialProjections
-using ProjNet.CoordinateSystems.Transformations;
+using GeoAPI.CoordinateSystems.Transformations;
 #else
 using DotSpatial.Projections;
 #endif
@@ -264,19 +264,21 @@ namespace SharpMap.Layers
 
 
                 if (CoordinateTransformation != null)
+                {
+                    var f = features[0].Geometry.Factory;
                     for (int i = 0; i < features.Count; i++)
 #if !DotSpatialProjections
-                    features[i].Geometry = GeometryTransform.TransformGeometry(features[i].Geometry,
-                                                                                CoordinateTransformation.
-                                                                                    MathTransform);
+                        features[i].Geometry = GeometryTransform.TransformGeometry(f, features[i].Geometry,
+                                                                                   CoordinateTransformation.
+                                                                                       MathTransform);
 #else
-                    features[i].Geometry = GeometryTransform.TransformGeometry(features[i].Geometry,
+                    features[i].Geometry = GeometryTransform.TransformGeometry(f, features[i].Geometry,
                                                                                 CoordinateTransformation.Source,
                                                                                 CoordinateTransformation.Target);
 
 #endif
-
-                //Linestring outlines is drawn by drawing the layer once with a thicker line
+            }
+            //Linestring outlines is drawn by drawing the layer once with a thicker line
                 //before drawing the "inline" on top.
                 if (Style.EnableOutline)
                 {
@@ -336,13 +338,17 @@ namespace SharpMap.Layers
                 if (!alreadyOpen) { DataSource.Close(); }
             }
             if (CoordinateTransformation != null)
+            {
+                var f = geoms[0].Factory;
                 for (int i = 0; i < geoms.Count; i++)
 #if !DotSpatialProjections
-                    geoms[i] = GeometryTransform.TransformGeometry(geoms[i], CoordinateTransformation.MathTransform);
+                    geoms[i] = GeometryTransform.TransformGeometry(f, geoms[i], CoordinateTransformation.MathTransform);
 #else
-                    geoms[i] = GeometryTransform.TransformGeometry(geoms[i], CoordinateTransformation.Source, CoordinateTransformation.Target);
+                    geoms[i] = GeometryTransform.TransformGeometry(f, geoms[i], CoordinateTransformation.Source, CoordinateTransformation.Target);
 #endif
-            if (Style.LineSymbolizer != null) {
+            }
+            if (Style.LineSymbolizer != null)
+            {
                 Style.LineSymbolizer.Begin(g, map, geoms.Count);
             } 
             else {
@@ -379,17 +385,17 @@ namespace SharpMap.Layers
 
         protected void RenderGeometry(Graphics g, Map map, IGeometry feature, VectorStyle style)
         {
-            var geometryType = feature.GeometryType;
+            var geometryType = feature.OgcGeometryType;
             switch (geometryType)
             {
-                case GeometryType2.Polygon:
+                case OgcGeometryType.Polygon:
                     if (style.EnableOutline)
                         VectorRenderer.DrawPolygon(g, (IPolygon) feature, style.Fill, style.Outline, _clippingEnabled,
                                                    map);
                     else
                         VectorRenderer.DrawPolygon(g, (IPolygon) feature, style.Fill, null, _clippingEnabled, map);
                     break;
-                case GeometryType2.MultiPolygon:
+                case OgcGeometryType.MultiPolygon:
                     if (style.EnableOutline)
                         VectorRenderer.DrawMultiPolygon(g, (IMultiPolygon) feature, style.Fill, style.Outline,
                                                         _clippingEnabled, map);
@@ -397,7 +403,7 @@ namespace SharpMap.Layers
                         VectorRenderer.DrawMultiPolygon(g, (IMultiPolygon) feature, style.Fill, null, _clippingEnabled,
                                                         map);
                     break;
-                case GeometryType2.LineString:
+                case OgcGeometryType.LineString:
                     if (style.LineSymbolizer != null)
                     {
                         style.LineSymbolizer.Render(map, (ILineString)feature, g);    
@@ -405,7 +411,7 @@ namespace SharpMap.Layers
                     }
                     VectorRenderer.DrawLineString(g, (ILineString) feature, style.Line, map, style.LineOffset);
                     return;
-                case GeometryType2.MultiLineString:
+                case OgcGeometryType.MultiLineString:
                     if (style.LineSymbolizer != null)
                     {
                         style.LineSymbolizer.Render(map, (IMultiLineString)feature, g);    
@@ -413,7 +419,7 @@ namespace SharpMap.Layers
                     }
                     VectorRenderer.DrawMultiLineString(g, (IMultiLineString) feature, style.Line, map, style.LineOffset);
                     break;
-                case GeometryType2.Point:
+                case OgcGeometryType.Point:
                     if (style.PointSymbolizer != null)
                     {
                         VectorRenderer.DrawPoint(style.PointSymbolizer, g, (IPoint)feature, map);
@@ -429,7 +435,7 @@ namespace SharpMap.Layers
                     VectorRenderer.DrawPoint(g, ((IPoint)feature).Coordinate, style.PointColor, style.PointSize, style.SymbolOffset, map);
 
                     break;
-                case GeometryType2.MultiPoint:
+                case OgcGeometryType.MultiPoint:
                 //case "SharpMap.Geometries.MultiPoint":
                     if (style.PointSymbolizer != null)
                     {
@@ -445,7 +451,7 @@ namespace SharpMap.Layers
                         VectorRenderer.DrawMultiPoint(g, (IMultiPoint)feature, style.PointColor, style.PointSize, style.SymbolOffset, map);
                     }
                     break;
-                case GeometryType2.GeometryCollection:
+                case OgcGeometryType.GeometryCollection:
                 //case "SharpMap.Geometries.GeometryCollection":
                     foreach (IGeometry geom in (IGeometryCollection) feature)
                         RenderGeometry(g, map, geom, style);
@@ -502,16 +508,16 @@ namespace SharpMap.Layers
 #if !DotSpatialProjections
                 if (ReverseCoordinateTransformation != null)
                 {
-                    geometry = GeometryTransform.TransformGeometry(geometry, ReverseCoordinateTransformation.MathTransform);
+                    geometry = GeometryTransform.TransformGeometry(geometry.Factory, geometry, ReverseCoordinateTransformation.MathTransform);
                 }
                 else
                 {
                     CoordinateTransformation.MathTransform.Invert();
-                    geometry = GeometryTransform.TransformGeometry(geometry, CoordinateTransformation.MathTransform);
+                    geometry = GeometryTransform.TransformGeometry(geometry.Factory, geometry, CoordinateTransformation.MathTransform);
                     CoordinateTransformation.MathTransform.Invert();
                 }
 #else
-                geometry = GeometryTransform.TransformGeometry(geometry, CoordinateTransformation.Target, CoordinateTransformation.Source);
+                geometry = GeometryTransform.TransformGeometry(geometry.Factory, geometry, CoordinateTransformation.Target, CoordinateTransformation.Source);
 #endif
             }
 

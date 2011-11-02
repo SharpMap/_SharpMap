@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 #if !DotSpatialProjections
+using GeoAPI.CoordinateSystems.Transformations;
 using GeoAPI.Geometries;
 using ProjNet.CoordinateSystems.Transformations;
 #else
@@ -18,7 +19,7 @@ namespace SharpMap.Layers.Symbolizer
     /// <summary>
     /// Base class for all vector layers using <see cref="ISymbolizer{TGeometry, TConstraint}"/> approach.
     /// </summary>
-    /// <typeparam name="TGeometry">The geometry type</typeparam>
+    /// <typeparam name="TConstraint">The geometry type</typeparam>
     public abstract class BaseVectorLayer<TConstraint> : Layer, ICanQueryLayer, IDisposable
     {
         #region Private fields
@@ -175,9 +176,9 @@ namespace SharpMap.Layers.Symbolizer
             //    AttributedGeometry<TGeometry> ag = _geometrys.Dequeue();
             //    Symbolizer.Render(map, ag.Geometry, graphics);
             //}
-            foreach (IGeometry geometry in _geometries)
+            foreach (var geometry in _geometries)
             {
-                Symbolizer.Render(map, geometry as TGeometry, graphics);
+                Symbolizer.Render(map, geometry, graphics);
             }
             Symbolizer.Symbolize(graphics, map);
         }
@@ -248,10 +249,10 @@ namespace SharpMap.Layers.Symbolizer
             {
 #if !DotSpatialProjections
                 CoordinateTransformation.MathTransform.Invert();
-                geometry = GeometryTransform.TransformGeometry(geometry, CoordinateTransformation.MathTransform);
+                geometry = GeometryTransform.TransformGeometry(geometry.Factory, geometry, CoordinateTransformation.MathTransform);
                 CoordinateTransformation.MathTransform.Invert();
 #else
-                geometry = GeometryTransform.TransformGeometry(geometry, CoordinateTransformation.Target, CoordinateTransformation.Source);
+                geometry = GeometryTransform.TransformGeometry(geometry.Factory, geometry, CoordinateTransformation.Target, CoordinateTransformation.Source);
 #endif
             }
 

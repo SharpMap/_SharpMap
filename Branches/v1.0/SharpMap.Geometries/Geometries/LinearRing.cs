@@ -38,13 +38,6 @@ namespace SharpMap.Geometries
         /// <summary>
         /// Initializes an instance of a LinearRing
         /// </summary>
-        public LinearRing()
-        {
-        }
-
-        /// <summary>
-        /// Initializes an instance of a LinearRing
-        /// </summary>
         /// <param name="points"></param>
         public LinearRing(IEnumerable<double[]> points)
             : base(points)
@@ -83,10 +76,16 @@ namespace SharpMap.Geometries
         /// <returns>Copy of Geometry</returns>
         public new LinearRing Clone()
         {
-            var l = new LinearRing();
-            for (var i = 0; i < Vertices.Count; i++)
-                l.Vertices.Add((Coordinate)Vertices[i].Clone());
-            return l;
+            //var l = new LinearRing();
+            //for (var i = 0; i < Vertices.Count; i++)
+            //    l.Vertices.Add((Coordinate)Vertices[i].Clone());
+            //return l;
+            var coords = new List<Coordinate>(Vertices.Count);
+            foreach (var coordinate in Vertices)
+            {
+                coords.Add((Coordinate)coordinate.Clone());
+            }
+            return new LinearRing(coords);
         }
 
         /// <summary>

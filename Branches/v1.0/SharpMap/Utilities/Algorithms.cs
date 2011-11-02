@@ -60,9 +60,9 @@ namespace SharpMap.Utilities
             // find the point with the largest Y coordinate
             var hip = ring.CoordinateSequence.GetCoordinate(0);
             int hii = 0;
-            for (int i = 1; i < ring.Vertices.Count; i++)
+            for (int i = 1; i < ring.CoordinateSequence.Count; i++)
             {
-                p = ring.Vertices[i];
+                p = ring.CoordinateSequence.GetCoordinate(i);
                 if (p.Y > hip.Y)
                 {
                     hip = p;
@@ -71,12 +71,12 @@ namespace SharpMap.Utilities
             }
             // Point left to Hip
             int iPrev = hii - 1;
-            if (iPrev < 0) iPrev = ring.Vertices.Count - 2;
+            if (iPrev < 0) iPrev = ring.CoordinateSequence.Count - 2;
             // Point right to Hip
             int iNext = hii + 1;
-            if (iNext >= ring.Vertices.Count) iNext = 1;
-            PrevPoint = ring.Vertices[iPrev];
-            NextPoint = ring.Vertices[iNext];
+            if (iNext >= ring.CoordinateSequence.Count) iNext = 1;
+            PrevPoint = ring.CoordinateSequence.GetCoordinate(iPrev);
+            NextPoint = ring.CoordinateSequence.GetCoordinate(iNext);
 
             // translate so that hip is at the origin.
             // This will not affect the area calculation, and will avoid

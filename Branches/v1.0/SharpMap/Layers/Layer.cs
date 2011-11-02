@@ -17,7 +17,7 @@
 
 using System.Drawing;
 #if !DotSpatialProjections
-using ProjNet.CoordinateSystems.Transformations;
+using GeoAPI.CoordinateSystems.Transformations;
 #else
 using DotSpatial.Projections;
 #endif

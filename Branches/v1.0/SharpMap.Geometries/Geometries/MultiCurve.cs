@@ -55,11 +55,11 @@ namespace SharpMap.Geometries
         /// <returns>Geometry at index N</returns>
         public new abstract Geometry Geometry(int n);
 
-        public override GeometryType2 GeometryType
+        public override OgcGeometryType OgcGeometryType
         {
             get
             {
-                return GeometryType2.MultiCurve;
+                return OgcGeometryType.MultiCurve;
             }
         }
 

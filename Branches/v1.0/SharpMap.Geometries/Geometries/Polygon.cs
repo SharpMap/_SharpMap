@@ -58,13 +58,6 @@ namespace SharpMap.Geometries
         {
         }
 
-        /// <summary>
-        /// Instatiates a polygon
-        /// </summary>
-        public Polygon() : this(new LinearRing(), new Collection<LinearRing>())
-        {
-        }
-
         public ILineString GetInteriorRingN(int n)
         {
             return _interiorRings[n];
@@ -133,6 +126,11 @@ namespace SharpMap.Geometries
             get { return _interiorRings.Count; }
         }
 
+        public override OgcGeometryType OgcGeometryType
+        {
+            get { return OgcGeometryType.Polygon; }
+        }
+
         /// <summary>
         /// The area of this Surface, as measured in the spatial reference system of this Surface.
         /// </summary>
@@ -159,12 +157,22 @@ namespace SharpMap.Geometries
         /// </summary>
         public override Point Centroid
         {
-            get { return _exteriorRing.GetBoundingBox().GetCentroid(); }
+            get { return new Point(_exteriorRing.EnvelopeInternal.Centre); }
         }
 
         public override Coordinate[] Coordinates
         {
-            get { throw new NotSupportedException(); }
+            get 
+            {
+                var coll = new List<Coordinate>();
+                coll.AddRange(_exteriorRing.Coordinates);
+                if (_interiorRings != null)
+                foreach (var interiorRing in _interiorRings)
+                {
+                    coll.AddRange(interiorRing.Coordinates);
+                }
+                return coll.ToArray();
+            }
         }
 
         /// <summary>
@@ -193,7 +201,7 @@ namespace SharpMap.Geometries
         public override GeoAPI.Geometries.Envelope GetBoundingBox()
         {
             if (_exteriorRing == null || _exteriorRing.Vertices.Count == 0) return null;
-            GeoAPI.Geometries.Envelope bbox = new GeoAPI.Geometries.Envelope(_exteriorRing.Vertices[0].X, _exteriorRing.Vertices[0].Y,
+            GeoAPI.Geometries.Envelope bbox = new Envelope(_exteriorRing.Vertices[0].X, _exteriorRing.Vertices[0].Y,
                 _exteriorRing.Vertices[0].X, _exteriorRing.Vertices[0].Y);
             //GeoAPI.Geometries.Envelope bbox = new GeoAPI.Geometries.Envelope(_ExteriorRing.Vertices[0], _ExteriorRing.Vertices[0]);
             for (int i = 1; i < _exteriorRing.Vertices.Count; i++)
@@ -223,13 +231,6 @@ namespace SharpMap.Geometries
         }
 
         #region "Inherited methods from abstract class Geometry"
-        public override GeometryType2 GeometryType
-        {
-            get
-            {
-                return GeometryType2.Polygon;
-            }
-        }
 
         /// <summary>
         /// Determines if this Polygon and the specified Polygon object has the same values

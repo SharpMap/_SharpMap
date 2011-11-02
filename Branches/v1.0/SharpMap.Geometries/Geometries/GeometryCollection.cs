@@ -322,12 +322,9 @@ namespace SharpMap.Geometries
             return geoms;
         }
 
-        public override GeometryType2 GeometryType
+        public override OgcGeometryType OgcGeometryType
         {
-            get
-            {
-                return GeometryType2.GeometryCollection;
-            }
+            get { return OgcGeometryType.GeometryCollection; }
         }
     }
 }

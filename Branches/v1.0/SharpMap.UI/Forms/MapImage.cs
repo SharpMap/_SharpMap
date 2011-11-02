@@ -21,10 +21,10 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using GeoAPI.Geometries;
 using SharpMap.Data;
-using SharpMap.Geometries;
 using SharpMap.Layers;
-using Point = SharpMap.Geometries.Point;
+using Point = GeoAPI.Geometries.Coordinate;
 
 namespace SharpMap.Forms
 {
@@ -559,9 +559,9 @@ namespace SharpMap.Forms
             {
                 ICanQueryLayer queryLayer = layer as ICanQueryLayer;
 
-                BoundingBox bbox =
-                        _map.ImageToWorld(pt, true).GetBoundingBox().Grow(_map.PixelSize*5);
-                FeatureDataSet ds = new FeatureDataSet();
+                var bbox = new Envelope(_map.ImageToWorld(pt, true));
+                bbox.ExpandBy(_map.PixelSize*5);
+                var ds = new FeatureDataSet();
                 queryLayer.ExecuteIntersectionQuery(bbox, ds);
                 if (MapQueried != null)
                 {

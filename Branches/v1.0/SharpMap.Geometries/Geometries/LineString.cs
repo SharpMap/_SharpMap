@@ -45,14 +45,6 @@ namespace SharpMap.Geometries
         /// <summary>
         /// Initializes an instance of a LineString
         /// </summary>
-        public LineString()
-            : this((SharpMapCoordinateSequence)SharpMapCoordinateSequenceFactory.Instance.Create(0, 2))
-        {
-        }
-
-        /// <summary>
-        /// Initializes an instance of a LineString
-        /// </summary>
         /// <param name="points"></param>
         public LineString(IEnumerable<double[]> points)
         {
@@ -69,8 +61,11 @@ namespace SharpMap.Geometries
         /// </summary>
         public virtual IList<Coordinate> Vertices
         {
-            get { return _vertices; }
-            set { _vertices = value; }
+            get { return _vertices.ToCoordinateArray(); }
+            set
+            {
+                _vertices = SharpMapCoordinateSequenceFactory.Instance.Create(value);
+            }
         }
 
         /// <summary>
@@ -198,19 +193,16 @@ namespace SharpMap.Geometries
         /// <returns>Copy of Geometry</returns>
         public new LineString Clone()
         {
-            var l = new LineString();
-            for (var i = 0; i < _vertices.Count; i++)
-                l.Vertices.Add((Coordinate)_vertices[i].Clone());
-            return l;
+            return (LineString)SharpMapGeometryFactory.Instance.CreateLineString((ICoordinateSequence) _vertices.Clone());
         }
 
         #region "Inherited methods from abstract class Geometry"
 
-        public override GeometryType2 GeometryType
+        public override OgcGeometryType OgcGeometryType
         {
             get
             {
-                return GeometryType2.LineString;
+                return OgcGeometryType.LineString;
             }
         }
 
@@ -414,7 +406,7 @@ namespace SharpMap.Geometries
 
         public Coordinate GetCoordinateN(int n)
         {
-            return _vertices[n];
+            return _vertices.GetCoordinate(n);
         }
 
         #endregion

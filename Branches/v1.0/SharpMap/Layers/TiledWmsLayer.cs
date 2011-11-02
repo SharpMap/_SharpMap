@@ -26,9 +26,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Web;
-using System.Web.Caching;
-using GeoAPI.Geometries;
 using SharpMap.Geometries;
 using SharpMap.Rendering.Exceptions;
 using SharpMap.Utilities;
@@ -124,6 +121,7 @@ namespace SharpMap.Layers
             LayerName = layername;
             _ContinueOnError = true;
 
+            /*
             if (HttpContext.Current != null && HttpContext.Current.Cache["SharpMap_WmsClient_" + url] != null)
             {
                 _WmsClient = (Client) HttpContext.Current.Cache["SharpMap_WmsClient_" + url];
@@ -135,6 +133,7 @@ namespace SharpMap.Layers
                     HttpContext.Current.Cache.Insert("SharpMap_WmsClient_" + url, _WmsClient, null,
                                                      Cache.NoAbsoluteExpiration, cachetime);
             }
+             */
             _TileSets = TileSet.ParseVendorSpecificCapabilitiesNode(_WmsClient.VendorSpecificCapabilities);
         }
 

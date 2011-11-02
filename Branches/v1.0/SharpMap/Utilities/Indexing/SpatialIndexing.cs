@@ -122,11 +122,11 @@ namespace SharpMap.Utilities.SpatialIndexing
                 // go through all bbox and calculate the average of the midpoints
                 double frac = 1.0f/objList.Count;
                 for (int i = 0; i < objList.Count; i++)
-                    geoavg += objList[i].Box.GetCentroid()[(uint)longaxis]*frac;
+                    geoavg += objList[i].Box.GetCentroidCoordinate()[(Ordinate)longaxis] * frac;
 
                 // bucket bbox based on their midpoint's side of the geo average in the longest axis
                 for (int i = 0; i < objList.Count; i++)
-                    objBuckets[geoavg > objList[i].Box.GetCentroid()[(uint)longaxis] ? 1 : 0].Add(objList[i]);
+                    objBuckets[geoavg > objList[i].Box.GetCentroidCoordinate()[(Ordinate)longaxis] ? 1 : 0].Add(objList[i]);
 
                 //If objects couldn't be splitted, just store them at the leaf
                 //TODO: Try splitting on another axis

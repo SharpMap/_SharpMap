@@ -21,17 +21,19 @@
  */
 #if UseMapBox || UseMapBoxAsMapImage
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using GeoAPI.Geometries;
 using SharpMap.Layers;
 using System.Drawing.Imaging;
 using System.Diagnostics;
 
-using GeoPoint = SharpMap.Geometries.Point;
-using Geometry = SharpMap.Geometries.Geometry;
-using BoundingBox = SharpMap.Geometries.BoundingBox;
+using GeoPoint = GeoAPI.Geometries.Coordinate;
+using Geometry = GeoAPI.Geometries.IGeometry;
+using BoundingBox = GeoAPI.Geometries.Envelope;
 
 namespace SharpMap.Forms
 {
@@ -575,8 +577,8 @@ namespace SharpMap.Forms
             {
                 try
                 {
-                    PointF min = _map.WorldToImage(new GeoPoint(box.Min.X, box.Min.Y));
-                    PointF max = _map.WorldToImage(new GeoPoint(box.Max.X, box.Max.Y));
+                    PointF min = _map.WorldToImage(new GeoPoint(box.MinX, box.MinY));
+                    PointF max = _map.WorldToImage(new GeoPoint(box.MaxX, box.MaxY));
 
                     min = new PointF((float)Math.Round(min.X), (float)Math.Round(min.Y));
                     max = new PointF((float)Math.Round(max.X), (float)Math.Round(max.Y));
@@ -1360,9 +1362,11 @@ namespace SharpMap.Forms
                                     bounding = new BoundingBox(lowerLeft, upperRight);
                                 }
                                 else
-                                    bounding = _map.ImageToWorld(new Point(e.X, e.Y)).GetBoundingBox().Grow(_map.PixelSize * 5);
-
-                                Data.FeatureDataSet ds = new Data.FeatureDataSet();
+                                {
+                                    bounding = new BoundingBox(_map.ImageToWorld(new PointF(e.X, e.Y)));
+                                    bounding.ExpandBy(_map.PixelSize*5);
+                                }
+                                var ds = new Data.FeatureDataSet();
                                 layer.ExecuteIntersectionQuery(bounding, ds);
                                 if (ds.Tables.Count > 0)
                                     if (MapQueried != null) MapQueried(ds.Tables[0]);
@@ -1394,7 +1398,7 @@ namespace SharpMap.Forms
                     {
                         if (GeometryDefined != null)
                         {
-                            GeometryDefined(Map.ImageToWorld(new PointF(e.X, e.Y)));
+                            GeometryDefined(GeometryServices.Instance.GeometryFactory.CreatePoint(Map.ImageToWorld(new PointF(e.X, e.Y))));
                         }
                     }
                     else if (_activeTool == Tools.DrawPolygon || _activeTool == Tools.DrawLine)
@@ -1457,18 +1461,22 @@ namespace SharpMap.Forms
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
             base.OnMouseDoubleClick(e);
+            
+            var factory = GeometryServices.Instance.GeometryFactory;
 
             if (_activeTool == Tools.DrawPolygon)
             {
                 if (GeometryDefined != null)
                 {
-                    Geometries.LinearRing extRing = new Geometries.LinearRing();
-                    for (int i = 0; i < _pointArray.GetUpperBound(0); i++)
-                        extRing.Vertices.Add(Map.ImageToWorld(new PointF(_pointArray[i].X, _pointArray[i].Y)));
+                    var coordinates = new List<GeoPoint>();
+                    for (var i = 0; i < _pointArray.GetUpperBound(0); i++)
+                        coordinates.Add(Map.ImageToWorld(new PointF(_pointArray[i].X, _pointArray[i].Y)));
 
-                    extRing.Vertices.Add(Map.ImageToWorld(new PointF(_pointArray[0].X, _pointArray[0].Y)));
+                    if (!coordinates[0].Equals(coordinates[coordinates.Count-1]))
+                        coordinates.Add((Coordinate)coordinates[0].Clone());
+                    var extRing = factory.CreateLinearRing(coordinates.ToArray());
 
-                    GeometryDefined(new Geometries.Polygon(extRing));
+                    GeometryDefined(factory.CreatePolygon(extRing, null));
                 }
                 ActiveTool = Tools.None;
             }
@@ -1476,11 +1484,11 @@ namespace SharpMap.Forms
             {
                 if (GeometryDefined != null)
                 {
-                    Geometries.LineString line = new Geometries.LineString();
-                    for (int i = 0; i <= _pointArray.GetUpperBound(0); i++)
-                        line.Vertices.Add(Map.ImageToWorld(new PointF(_pointArray[i].X, _pointArray[i].Y)));
+                    var coordinates = new List<GeoPoint>();
+                    for (var i = 0; i < _pointArray.GetUpperBound(0); i++)
+                        coordinates.Add(Map.ImageToWorld(new PointF(_pointArray[i].X, _pointArray[i].Y)));
 
-                    GeometryDefined(line);
+                    GeometryDefined(factory.CreateLineString(coordinates.ToArray()));
                 }
                 ActiveTool = Tools.None;
             }

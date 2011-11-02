@@ -22,6 +22,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Globalization;
 #if !DotSpatialProjections
+using GeoAPI.CoordinateSystems.Transformations;
 using ProjNet.CoordinateSystems.Transformations;
 #else
 using DotSpatial.Projections;
@@ -398,13 +399,15 @@ namespace SharpMap.Layers
                 for (int i = 0; i < features.Count; i++)
                 {
                     FeatureDataRow feature = features[i];
+                    IGeometryFactory gf = null;
                     if (CoordinateTransformation != null)
 #if !DotSpatialProjections
-                        features[i].Geometry = GeometryTransform.TransformGeometry(features[i].Geometry,
+                        gf = GeometryServices.Instance[CoordinateTransformation.TargetCS];
+                        features[i].Geometry = GeometryTransform.TransformGeometry(gf, features[i].Geometry,
                                                                                    CoordinateTransformation.
                                                                                        MathTransform);
 #else
-                        features[i].Geometry = GeometryTransform.TransformGeometry(features[i].Geometry,
+                        features[i].Geometry = GeometryTransform.TransformGeometry(gf, features[i].Geometry,
                                                                                CoordinateTransformation.Source,
                                                                                CoordinateTransformation.Target);
 #endif
@@ -648,8 +651,8 @@ namespace SharpMap.Layers
             if (!isRightToLeft && dx >= 0)
                 return line;
 
-            var revCoord = new Stack<Point>(line.Vertices);
-            return new LineString(revCoord.ToArray());
+            var revCoord = new Stack<Coordinate>(line.CoordinateSequence.ToCoordinateArray());
+            return line.Factory.CreateLineString(revCoord.ToArray());
         }
 
         //private static void WarpedLabel(MultiLineString line, ref BaseLabel baseLabel, Map map)
@@ -740,18 +743,19 @@ namespace SharpMap.Layers
             double dx, dy;
             var label = baseLabel as Label;
 
+            var vertices = line.CoordinateSequence.ToCoordinateArray();
             // first find the middle segment of the line
-            int midPoint = (line.Vertices.Count - 1)/2;
-            if (line.Vertices.Count > 2)
+            var midPoint = (vertices.Length - 1)/2;
+            if (vertices.Length > 2)
             {
-                dx = line.Vertices[midPoint + 1].X - line.Vertices[midPoint].X;
-                dy = line.Vertices[midPoint + 1].Y - line.Vertices[midPoint].Y;
+                dx = vertices[midPoint + 1].X - vertices[midPoint].X;
+                dy = vertices[midPoint + 1].Y - vertices[midPoint].Y;
             }
             else
             {
                 midPoint = 0;
-                dx = line.Vertices[1].X - line.Vertices[0].X;
-                dy = line.Vertices[1].Y - line.Vertices[0].Y;
+                dx = vertices[1].X - vertices[0].X;
+                dy = vertices[1].Y - vertices[0].Y;
             }
             if (dy == 0)
                 label.Rotation = 0;
@@ -764,8 +768,8 @@ namespace SharpMap.Layers
                 angle *= (180d/Math.PI); // convert radians to degrees
                 label.Rotation = (float) angle - 90; // -90 text orientation
             }
-            double tmpx = line.Vertices[midPoint].X + (dx*0.5);
-            double tmpy = line.Vertices[midPoint].Y + (dy*0.5);
+            double tmpx = vertices[midPoint].X + (dx*0.5);
+            double tmpy = vertices[midPoint].Y + (dy*0.5);
             label.Location = map.WorldToImage(new Coordinate(tmpx, tmpy));
         }
     }
