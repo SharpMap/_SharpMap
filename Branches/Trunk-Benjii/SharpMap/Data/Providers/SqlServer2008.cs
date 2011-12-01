@@ -423,26 +423,27 @@ namespace SharpMap.Data.Providers
                strSQL += strGeom;   
  
                using (SqlDataAdapter adapter = new SqlDataAdapter(strSQL, conn))   
-               {   
-                   conn.Open();   
-                   adapter.Fill(ds);   
-                   conn.Close();   
-                   if (ds.Tables.Count > 0)   
-                   {   
-                       FeatureDataTable fdt = new FeatureDataTable(ds.Tables[0]);   
-                       foreach (System.Data.DataColumn col in ds.Tables[0].Columns)   
-                           if (col.ColumnName != GeometryColumn && col.ColumnName != "sharpmap_tempgeometry")   
-                               fdt.Columns.Add(col.ColumnName, col.DataType, col.Expression);   
-                       foreach (System.Data.DataRow dr in ds.Tables[0].Rows)   
-                       {   
-                           FeatureDataRow fdr = fdt.NewRow();   
-                           foreach (System.Data.DataColumn col in ds.Tables[0].Columns)   
-                               if (col.ColumnName != GeometryColumn && col.ColumnName != "sharpmap_tempgeometry")   
-                                   fdr[col.ColumnName] = dr[col];   
-                           fdr.Geometry = Converters.WellKnownBinary.GeometryFromWKB.Parse((byte[])dr["sharpmap_tempgeometry"]);   
-                           fdt.AddRow(fdr);   
-                       }   
-                       ds.Tables.Add(fdt);   
+               {
+                   conn.Open();
+                   System.Data.DataSet ds2 = new System.Data.DataSet();
+                   adapter.Fill(ds2);
+                   conn.Close();
+                   if (ds2.Tables.Count > 0)
+                   {
+                       FeatureDataTable fdt = new FeatureDataTable(ds2.Tables[0]);
+                       foreach (System.Data.DataColumn col in ds2.Tables[0].Columns)
+                           if (col.ColumnName != GeometryColumn && col.ColumnName != "sharpmap_tempgeometry")
+                               fdt.Columns.Add(col.ColumnName, col.DataType, col.Expression);
+                       foreach (System.Data.DataRow dr in ds2.Tables[0].Rows)
+                       {
+                           FeatureDataRow fdr = fdt.NewRow();
+                           foreach (System.Data.DataColumn col in ds2.Tables[0].Columns)
+                               if (col.ColumnName != GeometryColumn && col.ColumnName != "sharpmap_tempgeometry")
+                                   fdr[col.ColumnName] = dr[col];
+                           fdr.Geometry = Converters.WellKnownBinary.GeometryFromWKB.Parse((byte[])dr["sharpmap_tempgeometry"]);
+                           fdt.AddRow(fdr);
+                       }
+                       ds.Tables.Add(fdt);
                    }   
                }   
            }   
