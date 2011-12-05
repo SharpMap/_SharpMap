@@ -575,9 +575,18 @@ namespace SharpMap.Layers
                         {
                             var plbl = labels[i] as PathLabel;
                             var lblStyle = plbl.Style;
-                            g.DrawString(lblStyle.Halo, new SolidBrush(lblStyle.ForeColor), plbl.Text,
-                                         lblStyle.Font.FontFamily, (int) lblStyle.Font.Style, lblStyle.Font.Size,
-                                         lblStyle.GetStringFormat(), lblStyle.IgnoreLength, plbl.Location);
+                            
+                            try
+                            {
+                                g.DrawString(lblStyle.Halo, new SolidBrush(lblStyle.ForeColor), plbl.Text,
+                                             lblStyle.Font.FontFamily, (int)lblStyle.Font.Style, lblStyle.Font.Size,
+                                             lblStyle.GetStringFormat(), lblStyle.IgnoreLength, plbl.Location);
+                            }
+                            catch (ArgumentException argEx)
+                            {
+                                // A warp path call for this label has failed, continue processing other labels
+                                // TODO: Add logging or fix this problem
+                            }
                         }
                     }
                 }
