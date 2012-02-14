@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="GeoAPI.Extensions">
+  <subclass name="GeoAPI.Extensions.Networks.IBranch" lazy="false" discriminator-value="network_branch" extends="GeoAPI.Extensions.Networks.INetworkFeature">      
+    <property name="Length" column="length" />
+    <property name="IsLengthCustom" />
+
+<!-- Mapping is now in branch. Want to map to field to circumvent incomingbranch logic of node 
+    <many-to-one access="field" name="source" cascade="save-update" class="GeoAPI.Extensions.Networks.INode" column="from_network_node_id"  />
+    <many-to-one access="field" name="target" cascade="save-update" class="GeoAPI.Extensions.Networks.INode" column="to_network_node_id"  />
+-->
+    <!-- Cannot use all-delete-orhpan because an object is considered an orphaned when removed from collection. Moving it to other branch causes cascade problem-->
+    <!-- http://fabiomaulo.blogspot.com/2009/09/nhibernate-tree-re-parenting.html -->
+    <list name="BranchFeatures" batch-size="500" cascade="all-delete-orphan" collection-type="DeltaShell.Plugins.Data.NHibernate.Collections.Generic.PersistentEventedListType`1[[GeoAPI.Extensions.Networks.IBranchFeature, GeoAPI.Extensions]], DeltaShell.Plugins.Data.NHibernate"  >
+      <key column="branch_id"/>
+      <index column="branch_list_index" />
+      <one-to-many class="GeoAPI.Extensions.Networks.IBranchFeature, GeoAPI.Extensions"  />
+    </list>
+    <subclass name="GeoAPI.Extensions.Networks.BranchStub, GeoAPI.Extensions" discriminator-value="branch_stub" lazy="false"/>
+  </subclass>
+</hibernate-mapping>
+  

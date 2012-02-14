@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" 
+                   auto-import="false" 
+                   namespace="NetTopologySuite.Extensions.Coverages" 
+                   assembly="NetTopologySuite.Extensions">
+  
+  <!-- Don't map network location as a branchfeature. This leads to adding to the list of branchFeatures of some branch. Will crash-->
+  <!-- So althought a networklocation has a branch it is not always included in the branches' BranchFeatureCollection-->
+  
+  <subclass name="NetworkLocation" 
+            extends="GeoAPI.Extensions.Networks.INetworkFeature" 
+            lazy="false" 
+            discriminator-value="network_location">
+    
+    <many-to-one name="Branch" 
+                 class="GeoAPI.Extensions.Networks.IBranch" 
+                 column="networklocation_branch_id"   />
+    
+    <property name="Offset" column="offset" />
+    <property name="Length" column="length" />
+    
+  </subclass>
+
+  <subclass name="DelftTools.Functions.Generic.Variable`1[[GeoAPI.Extensions.Coverages.INetworkLocation, GeoAPI.Extensions]], DelftTools.Functions" 
+            extends="DelftTools.Functions.IVariable,DelftTools.Functions" 
+            discriminator-value="variable_network_location" />
+  
+  
+  <subclass name="DelftTools.Functions.Generic.MultiDimensionalArray`1[[GeoAPI.Extensions.Coverages.INetworkLocation, GeoAPI.Extensions]], DelftTools.Functions" 
+            extends="DelftTools.Functions.MultiDimensionalArray,DelftTools.Functions" 
+            discriminator-value="md_array_network_location" 
+            lazy="false" >    
+    <list name="Values" 
+          cascade="all-delete-orphan" 
+          table="md_values_network_location" >
+      <key column="multidimensionalarray_id"/>
+      <index column="index_col"/>      
+      <many-to-many class="NetworkLocation" column="location_id" lazy="false" />
+    </list>
+    
+  </subclass>
+  
+</hibernate-mapping>
+

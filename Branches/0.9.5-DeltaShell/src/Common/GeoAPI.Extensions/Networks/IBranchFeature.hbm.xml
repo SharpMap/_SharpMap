@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="GeoAPI.Extensions" auto-import="false">
+  <subclass name="GeoAPI.Extensions.Networks.IBranchFeature" discriminator-value="network_branch_feature" extends="GeoAPI.Extensions.Networks.INetworkFeature">
+    <!-- Branch is responsible for this association. This side cannot because we need an index. -->
+    <!-- http://docs.jboss.org/hibernate/core/3.3/reference/en/html/collections.html -->
+    <many-to-one name="Branch" class="GeoAPI.Extensions.Networks.IBranch" column="branch_id" insert="false" update="false"/>
+    <property name="Offset" column="offset" />
+    <property name="Length" column="length" />
+
+    <!-- HACK: remove it -->
+    <subclass name="GeoAPI.Extensions.Networks.BranchFeatureStub, GeoAPI.Extensions" discriminator-value="branch_feature_stub" lazy="false"/>
+  </subclass>
+
+  <subclass name="DelftTools.Functions.Generic.Variable`1[[GeoAPI.Extensions.Networks.IBranchFeature, GeoAPI.Extensions]], DelftTools.Functions"
+      extends="DelftTools.Functions.IVariable,DelftTools.Functions"
+      discriminator-value="hydro_variable_branchfeature" />
+
+  <subclass name="DelftTools.Functions.Generic.MultiDimensionalArray`1[[GeoAPI.Extensions.Networks.IBranchFeature, GeoAPI.Extensions]], DelftTools.Functions"
+    discriminator-value="md_array_branchfeature"
+    lazy="false"
+    extends="DelftTools.Functions.MultiDimensionalArray, DelftTools.Functions">
+    <!-- can't do cascase all here. because the branchfeature might be part of a network. network is owener and not featurecoverage-->
+    <list name="Values" cascade="save-update" table="md_array_branchfeature" >
+      <key column="multidimensionalarray_id"/>
+      <index column="index_col"/>
+      <many-to-many class="GeoAPI.Extensions.Networks.IBranchFeature, GeoAPI.Extensions" column="branchfeature_id"/>
+    </list>
+  </subclass>
+</hibernate-mapping>

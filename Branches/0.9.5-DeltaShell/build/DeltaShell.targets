@@ -36,8 +36,10 @@
   <Target Name="BeforeBuild" DependsOnTargets="_TimeStampBeforeCompile;CopyExternalDependencies">
     <Message Text="BuildInParallel: $(BuildInParallel)" />
 
+<!--
     <MakeDir Condition="'$(IsPluginComponent)'=='true' and '$(PluginName)'!='' and !Exists('$(InstallDir)\plugins\$(PluginName)')" 
 		Directories="$(InstallDir)\plugins\$(PluginName)"/>
+-->
 
 <!--
     <Copy

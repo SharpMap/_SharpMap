@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" 
+                   namespace="NetTopologySuite.Extensions.Coverages" 
+                   assembly="NetTopologySuite.Extensions">
+  
+  <!-- Removed lazy..this messes up equals for coverageviewviewcontext..-->
+  
+  <subclass name="NetworkCoverage" 
+            discriminator-value="network_coverage" 
+            extends="DelftTools.Functions.Function, DelftTools.Functions" 
+            lazy="false" >
+    
+    <many-to-one name="Network" 
+                 class="GeoAPI.Extensions.Networks.INetwork,GeoAPI.Extensions" 
+                 cascade="save-update" 
+                 not-null="false" 
+                 lazy="false"/>
+    
+    <property name="SegmentGenerationMethod"/>
+
+    <subclass name ="Route" discriminator-value="route" lazy="false"/>
+    
+  </subclass>
+</hibernate-mapping>

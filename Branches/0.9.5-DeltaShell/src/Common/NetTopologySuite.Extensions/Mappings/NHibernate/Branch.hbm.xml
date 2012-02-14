@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <subclass name="NetTopologySuite.Extensions.Networks.Branch, NetTopologySuite.Extensions" lazy="false" discriminator-value="branch" extends="GeoAPI.Extensions.Networks.IBranch, GeoAPI.Extensions" >
+    <many-to-one access="field" name="source" cascade="save-update" class="GeoAPI.Extensions.Networks.INode" column="from_node_id" />
+    <many-to-one access="field" name="target" cascade="save-update" class="GeoAPI.Extensions.Networks.INode" column="to_node_id" />
+  </subclass>
+</hibernate-mapping>

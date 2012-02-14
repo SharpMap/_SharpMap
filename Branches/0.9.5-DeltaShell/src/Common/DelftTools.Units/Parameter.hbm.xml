@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="false" namespace="DelftTools.Units" assembly="DelftTools.Units">
+  <class name="DelftTools.Units.Parameter, DelftTools.Units" table="parameter" lazy="false" >
+    <id name="Id" column="id" type="Int64" unsaved-value="0">
+      <generator class="increment" />
+    </id>
+    <discriminator column="type" type="string"/>
+    <property name="Name" />
+    <property name="Description" />
+    <many-to-one name="Unit" class="Unit" cascade="all-delete-orphan" column="unit_id" />
+  </class>
+  <subclass name="DelftTools.Units.Generics.Parameter`1[System.Boolean]" extends="Parameter" discriminator-value="parameter_boolean" lazy="false" >
+    <property name="Value" type ="System.Boolean" column="value_boolean"/>
+    <property name="DefaultValue" type ="System.Boolean" column="default_value_boolean"/>
+    <property name="MinValidValue" type ="System.Boolean" column="min_value_boolean"/>
+    <property name="MaxValidValue" type ="System.Boolean" column="max_value_boolean"/>
+  </subclass>
+  <subclass name="DelftTools.Units.Generics.Parameter`1[System.Int32]" extends="Parameter" discriminator-value="parameter_int" lazy="false" >
+    <property name="Value" type ="System.Int32" column="value_int"/>
+    <property name="DefaultValue" type ="System.Int32" column="default_value_int"/>
+    <property name="MinValidValue" type ="System.Int32" column="min_value_int"/>
+    <property name="MaxValidValue" type ="System.Int32" column="max_value_int"/>
+  </subclass>
+  <subclass name="DelftTools.Units.Generics.Parameter`1[System.TimeSpan]" extends="Parameter" discriminator-value="parameter_timespan">
+    <property name="Value" type ="System.TimeSpan" column="value_timespan"/>
+    <property name="DefaultValue" type ="System.TimeSpan" column="default_value_timespan"/>
+    <property name="MinValidValue" type ="System.TimeSpan" column="min_value_timespan"/>
+    <property name="MaxValidValue" type ="System.TimeSpan" column="max_value_timespan"/>
+  </subclass>
+  <subclass name="DelftTools.Units.Generics.Parameter`1[System.DateTime]" extends="Parameter" discriminator-value="parameter_datetime">
+    <property name="Value" column="value_datetime"/>
+    <property name="DefaultValue" type ="System.DateTime" column="default_value_datetime"/>
+    <property name="MinValidValue" type ="System.DateTime" column="min_value_datetime"/>
+    <property name="MaxValidValue" type ="System.DateTime" column="max_value_datetime"/>
+  </subclass>
+  <subclass name="DelftTools.Units.Generics.Parameter`1[System.Double]" extends="Parameter" discriminator-value="parameter_double" lazy="false" >
+    <property name="Value" type ="System.Double" column="value_double"/>
+    <property name="DefaultValue" type ="System.Double" column="default_value_double"/>
+    <property name="MinValidValue" type ="System.Double" column="min_value_double"/>
+    <property name="MaxValidValue" type ="System.Double" column="max_value_double"/>
+  </subclass>
+  <subclass name="DelftTools.Units.Generics.Parameter`1[System.String]" extends="Parameter" discriminator-value="parameter_string" lazy="false" >
+    <property name="Value" type ="System.String" column="value_string"/>
+    <property name="DefaultValue" type ="System.String" column="default_value_string"/>
+    <property name="MinValidValue" type ="System.String" column="min_value_string"/>
+    <property name="MaxValidValue" type ="System.String" column="max_value_string"/>
+  </subclass>
+</hibernate-mapping>

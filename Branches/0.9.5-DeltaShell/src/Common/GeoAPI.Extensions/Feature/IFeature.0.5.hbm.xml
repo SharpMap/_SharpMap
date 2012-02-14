@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+<class name="GeoAPI.Extensions.Feature.IFeature, GeoAPI.Extensions" table="features" lazy="false" batch-size="500">
+  <id name="Id" column="id" type="Int64" unsaved-value="0" access="property">
+    <generator class="increment" />
+  </id>
+  
+  <discriminator formula="REPLACE(REPLACE(REPLACE(type,'cross_section_yz','cross_section'),'cross_section_xyz','cross_section'),'cross_section_zw','cross_section')" type="string"/>
+  
+  <property name="Geometry" column="the_geom" type="NetTopologySuite.Extensions.NHibernate.GeometryUserType, NetTopologySuite.Extensions.NHibernate" />
+  <property name="Attributes" type="NetTopologySuite.Extensions.Features.DictionaryFeatureAttributeCollection, NetTopologySuite.Extensions"/>
+  
+</class>
+
+<subclass name="DelftTools.Functions.Generic.Variable`1[[GeoAPI.Extensions.Feature.IFeature, GeoAPI.Extensions]], DelftTools.Functions"
+    extends="DelftTools.Functions.IVariable,DelftTools.Functions"
+    discriminator-value="variable_feature" />
+
+<subclass name="DelftTools.Functions.Generic.MultiDimensionalArray`1[[GeoAPI.Extensions.Feature.IFeature, GeoAPI.Extensions]], DelftTools.Functions"
+  discriminator-value="md_array_feature"
+  lazy="false"
+  extends="DelftTools.Functions.MultiDimensionalArray, DelftTools.Functions">
+  <!-- can't do cascase all here. because the feature might be part of a network. network is owner and not featurecoverage-->
+  <list name="Values" cascade="save-update" table="md_array_feature" >
+    <key column="multidimensionalarray_id"/>
+    <index column="index_col"/>
+    <many-to-many class="GeoAPI.Extensions.Feature.IFeature, GeoAPI.Extensions" column="feature_id"/>
+  </list>
+</subclass>
+</hibernate-mapping>
