@@ -1,0 +1,226 @@
+using DelftTools.Shell.Core;
+using DelftTools.Utils;
+using DelftTools.Utils.Collections;
+using DelftTools.Utils.Collections.Generic;
+using NUnit.Framework;
+
+namespace DelftTools.Tests.Core
+{
+    [TestFixture]
+    public class DataItemsEventedListAdapterTest
+    {
+        [Test]
+        public void CollectionChangedAddToDataItemsResultInCollectionChangedForAdapter()
+        {
+            IEventedList < IDataItem > dataItems  = new EventedList<IDataItem>();
+
+            var adapter = new DataItemsEventedListAdapter<Url>(dataItems);
+
+            var url = new Url();
+            int callCount = 0;
+            adapter.CollectionChanged += (sender, e) =>
+                                             {
+                                                 callCount++;
+                                                 Assert.AreEqual(adapter, sender);
+                                                 Assert.AreEqual(url, e.Item);
+                                                 Assert.AreEqual(0, e.Index);
+                                             };
+            //action! add
+            dataItems.Add(new DataItem(url));
+            Assert.AreEqual(1,callCount);
+        }
+
+
+        [Test]
+        public void CollectionChangedRemoveDataItemsResultInCollectionChangedForAdapter()
+        {
+            //create a list of dataItem containing urls
+            IEventedList<IDataItem> dataItems = new EventedList<IDataItem>();
+            var url = new Url();
+            var dataItem = new DataItem(url);
+            dataItems.Add(dataItem);
+
+            //adapter for the list
+            var adapter = new DataItemsEventedListAdapter<Url>(dataItems);
+
+            int callCount = 0;
+            adapter.CollectionChanged += (sender, e) =>
+            {
+                callCount++;
+                Assert.AreEqual(adapter, sender);
+                Assert.AreEqual(url, e.Item);
+                Assert.AreEqual(0, e.Index);
+            };
+
+            //action! remove the url from the dataitems list
+            dataItems.Remove(dataItem);
+            Assert.AreEqual(1, callCount);
+        }
+
+        [Test]
+        public void CollectionChangedReplaceDataItemsResultInCollectionChangedForAdapter()
+        {
+            //create a list of dataItem containing urls
+            IEventedList<IDataItem> dataItems = new EventedList<IDataItem>();
+            var oldUrl = new Url();
+            var newUrl = new Url();
+            var dataItem = new DataItem(oldUrl);
+            dataItems.Add(dataItem);
+
+            //adapter for the list
+            var adapter = new DataItemsEventedListAdapter<Url>(dataItems);
+
+            int callCount = 0;
+            adapter.CollectionChanged += (sender, e) =>
+            {
+                callCount++;
+                Assert.AreEqual(NotifyCollectionChangeAction.Replace,e.Action);
+                Assert.AreEqual(adapter, sender);
+                Assert.AreEqual(newUrl, e.Item);
+                //discutable but current eventedlist implementation does this
+                Assert.AreEqual(-1, e.OldIndex);
+                Assert.AreEqual(0, e.Index);
+            };
+
+            //action! replace one dataitem with another
+            dataItems[0] = new DataItem(newUrl);
+            Assert.AreEqual(1, callCount);
+        }
+
+        [Test]
+        public void DataItemLinkToIsCollectionChanged()
+        {
+            //create a list of dataItem containing urls
+            IEventedList<IDataItem> dataItems = new EventedList<IDataItem>();
+            var oldUrl = new Url();
+            var dataItem = new DataItem(oldUrl);
+            dataItems.Add(dataItem);
+
+            //adapter for the list
+            var adapter = new DataItemsEventedListAdapter<Url>(dataItems);
+
+            
+            var newUrl = new Url();
+            var sourceDataItem = new DataItem(newUrl);
+            int callCount = 0;
+            adapter.CollectionChanged += (sender, e) =>
+            {
+                callCount++;
+                Assert.AreEqual(NotifyCollectionChangeAction.Replace, e.Action);
+                Assert.AreEqual(adapter, sender);
+                Assert.AreEqual(newUrl, e.Item);
+                //discutable but current eventedlist implementation does this
+                Assert.AreEqual(-1, e.OldIndex);
+                Assert.AreEqual(0, e.Index);
+            };
+
+            //action! link the first dataItem.
+            dataItems[0].LinkTo(sourceDataItem);
+            Assert.AreEqual(1, callCount);
+        }
+
+
+
+        [Test]
+        public void DataValueSettingIsCollectionChanged()
+        {
+            //create a list of dataItem containing urls
+            IEventedList<IDataItem> dataItems = new EventedList<IDataItem>();
+            var oldUrl = new Url();
+            var dataItem = new DataItem(oldUrl);
+            dataItems.Add(dataItem);
+
+            //adapter for the list
+            var adapter = new DataItemsEventedListAdapter<Url>(dataItems);
+
+
+            var newUrl = new Url();
+            var sourceDataItem = new DataItem(newUrl);
+            int callCount = 0;
+            adapter.CollectionChanged += (sender, e) =>
+            {
+                callCount++;
+                Assert.AreEqual(NotifyCollectionChangeAction.Replace, e.Action);
+                Assert.AreEqual(adapter, sender);
+                Assert.AreEqual(newUrl, e.Item);
+                //discutable but current eventedlist implementation does this
+                Assert.AreEqual(-1, e.OldIndex);
+                Assert.AreEqual(0, e.Index);
+            };
+
+            //action! set Value of the first dataItem.
+            dataItems[0].Value = newUrl;
+            
+            Assert.AreEqual(1, callCount);
+        }
+        [Test]
+        public void AddToAdapter()
+        {
+            IEventedList<IDataItem> dataItems = new EventedList<IDataItem>();
+            var adapter = new DataItemsEventedListAdapter<Url>(dataItems);
+
+            int callCount = 0;
+            var newUrl = new Url();
+            adapter.CollectionChanged += (sender, e) =>
+                                             {
+                                                 callCount++;
+                                                 Assert.AreEqual(NotifyCollectionChangeAction.Add, e.Action);
+                                                 Assert.AreEqual(adapter, sender);
+                                                 Assert.AreEqual(newUrl, e.Item);
+                                                 //discutable but current eventedlist implementation does this
+                                                 Assert.AreEqual(-1, e.OldIndex);
+                                                 Assert.AreEqual(0, e.Index);
+                                             };
+            //action! add a new url
+            adapter.Add(newUrl);
+
+            Assert.AreEqual(1,dataItems.Count);
+            Assert.AreEqual(1,callCount);
+        }
+
+        [Test]
+        public void UpdatesInDataItemResultInPropertyChangedOfAdaptingList()
+        {
+            IEventedList<IDataItem> dataItems = new EventedList<IDataItem>();
+            
+            var adapter = new DataItemsEventedListAdapter<Url>(dataItems);
+            var url = new Url();
+            adapter.Add(url);
+            
+            var callCount = 0;
+            adapter.PropertyChanged += (s, e) =>
+                                           {
+                                               callCount++;
+                                               Assert.AreEqual("Name", e.PropertyName);
+                                               Assert.AreEqual(url, s);
+                                           };
+
+            ((Url)(dataItems[0].Value)).Name = "Hooi";
+
+            Assert.AreEqual(1,callCount);
+            
+            //why is this bad 
+        }
+        
+        [Test]
+        public void SettingDataItemsChangesList()
+        {
+            IEventedList<IDataItem> dataItems1 = new EventedList<IDataItem>();
+            IEventedList<IDataItem> dataItems2 = new EventedList<IDataItem>();
+
+            var adapter = new DataItemsEventedListAdapter<Url>(dataItems1);
+            adapter.Add(new Url());
+            adapter.DataItems = dataItems2;
+            adapter.Add(new Url());
+
+            //make sure both sets have one url now
+            Assert.AreEqual(1, dataItems1.Count);
+            Assert.AreEqual(1, dataItems2.Count);
+
+            //make sure changes in the first set are not bubbled
+            adapter.CollectionChanged += (s, e) => Assert.Fail("No change expected");
+            dataItems1.Add(new DataItem(new Url()));
+        }
+        
+    }
+}

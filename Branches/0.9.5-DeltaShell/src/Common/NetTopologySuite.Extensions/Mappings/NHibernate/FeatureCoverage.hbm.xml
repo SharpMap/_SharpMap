@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" 
+                   auto-import="true" 
+                   namespace="NetTopologySuite.Extensions.Coverages" 
+                   assembly="NetTopologySuite.Extensions">
+  <subclass name="FeatureCoverage" 
+            extends="DelftTools.Functions.Function,DelftTools.Functions" 
+            discriminator-value="FeatureCoverage" lazy="false">
+    <list name="Features" lazy="false" table="featurecoverage_features" cascade="save-update" collection-type="DeltaShell.Plugins.Data.NHibernate.Collections.Generic.PersistentEventedListType`1[[GeoAPI.Extensions.Feature.IFeature, GeoAPI.Extensions]], DeltaShell.Plugins.Data.NHibernate">
+      <key column="featurecoverage_id"/>
+      <index column="feature_list_index" />
+      <many-to-many class="GeoAPI.Extensions.Feature.IFeature, GeoAPI.Extensions"  />
+    </list>
+  </subclass>
+</hibernate-mapping>

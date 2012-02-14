@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="SharpMap.Layers.ILayer">
+    <Position X="7" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAADAAEoCQCAAEAAQJDAgAABAAABAIQAAAAAA=</HashCode>
+      <FileName>Layers\ILayer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DataSource" />
+      <Property Name="Theme" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="CustomRenderers" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="SharpMap.Data.Providers.IFeatureProvider">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIACAAAAAAAAAAAEAABAIKAQAggCAAAAAAAAAAwAAA=</HashCode>
+      <FileName>Data\Providers\IFeatureProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.IFeatureRenderer">
+    <Position X="9.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAACAAEgAAAAAAAAAAAAAAABAACAAAAAA=</HashCode>
+      <FileName>Rendering\IFeatureRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.Thematics.ITheme">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GEAAAAAAAQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\ITheme.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

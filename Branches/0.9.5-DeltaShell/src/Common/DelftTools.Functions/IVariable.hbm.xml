@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- TODO: split into file-per-class -->
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="DelftTools.Functions" assembly="DelftTools.Functions"  auto-import="false">
+  <subclass name="IVariable" extends="IFunction" discriminator-value="variable" lazy="false">
+
+    <!-- Property mappings for IVariable<T> -->
+    <property name="FixedSize"/>
+    <property name="IsAutoSorted"/>
+    <property name="GenerateUniqueValueForDefaultValue"/>
+    <property name="InterpolationType"/>
+    <property name="ExtrapolationType"/>
+    <property name="AllowSetInterpolationType"/>
+    <property name="AllowSetExtrapolationType"/>
+    
+    <many-to-one name="Store" cascade="all-delete-orphan" column="function_store_id" />
+    <many-to-one name="Unit" class="DelftTools.Units.Unit,DelftTools.Units" cascade="all-delete-orphan" column="unit_id" />
+
+  </subclass>
+
+  <!-- IVariable<T> mapping for: System.Char -->
+  <subclass name="DelftTools.Functions.Generic.Variable`1[System.Char]" extends="IVariable" discriminator-value="variable_char" lazy="false" >
+    <property name ="defaultValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.CharUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="minValidValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.CharUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="maxValidValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.CharUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <list name="noDataValues" access="field" table="no_data_values_char" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value"  type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.CharUserType,DeltaShell.Plugins.Data.NHibernate"/>
+    </list>
+  </subclass>
+
+  <!-- IVariable<T> mapping for: System.Boolean -->
+  <subclass name="DelftTools.Functions.Generic.Variable`1[System.Boolean]" extends="IVariable" discriminator-value="variable_bool" lazy="false" >
+    <property name ="defaultValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.BooleanUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="minValidValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.BooleanUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="maxValidValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.BooleanUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <list name="noDataValues" access="field" table="no_data_values_bool" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value"  type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.BooleanUserType,DeltaShell.Plugins.Data.NHibernate"/>
+    </list>
+  </subclass>
+
+  <!-- IVariable<T> mapping for: System.Byte -->
+  <subclass name="DelftTools.Functions.Generic.Variable`1[System.Byte]" extends="IVariable" discriminator-value="variable_byte" lazy="false" >
+    <property name ="defaultValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.ByteUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="minValidValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.ByteUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="maxValidValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.ByteUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <list name="noDataValues" access="field" table="no_data_values_byte" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value"  type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.ByteUserType,DeltaShell.Plugins.Data.NHibernate"/>
+    </list>
+  </subclass>
+
+  <!-- IVariable<T> mapping for: System.String -->
+  <subclass name="DelftTools.Functions.Generic.Variable`1[System.String]" extends="IVariable" discriminator-value="variable_string" lazy="false" >
+    <property name ="defaultValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.StringUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="minValidValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.StringUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="maxValidValue" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.StringUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <list name="noDataValues" access="field" table="no_data_values_string" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value"  type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.StringUserType,DeltaShell.Plugins.Data.NHibernate"/>
+    </list>
+  </subclass>
+
+  <!-- IVariable<T> mapping for: System.Double -->
+  <subclass name="DelftTools.Functions.Generic.Variable`1[System.Double]" extends="IVariable" discriminator-value="variable_double" lazy="false" >
+    <property name="defaultValue"  column="defaultValueDouble" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DoubleUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="minValidValue" column="minValidValueDouble" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DoubleUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="maxValidValue" column="maxValidValueDouble" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DoubleUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <list name="noDataValues" access="field" table="no_data_values_double" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DoubleUserType,DeltaShell.Plugins.Data.NHibernate"/>
+    </list>
+  </subclass>
+
+  <!-- IVariable<T> mapping for: System.Float -->
+  <subclass name="DelftTools.Functions.Generic.Variable`1[System.Single]" extends="IVariable" discriminator-value="variable_float" lazy="false">
+    <property name="defaultValue"  column="defaultValueSingle"  type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.SingleUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="minValidValue" column="minValidValueSingle" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.SingleUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="maxValidValue" column="maxValidValueSingle" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.SingleUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <list name="noDataValues" access="field" table="no_data_values_single" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value"  type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.SingleUserType,DeltaShell.Plugins.Data.NHibernate"/>
+    </list>
+  </subclass>
+
+  <!-- IVariable<T> mapping for: System.Int32 -->
+  <subclass name="DelftTools.Functions.Generic.Variable`1[System.Int32]" extends="IVariable" discriminator-value="variable_int" lazy="false">
+    <property name="defaultValue" type="System.Int32" access="field"/>
+    <property name="minValidValue" type="System.Int32" access="field"/>
+    <property name="maxValidValue" type="System.Int32" access="field"/>
+    <list name="noDataValues" access="field" table="no_data_values_int" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value"  type="System.Int32"/>
+    </list>
+  </subclass>
+
+  <!-- IVariable<T> mapping for: System.Int16 -->
+  <subclass name="DelftTools.Functions.Generic.Variable`1[System.Int16]" extends="IVariable" discriminator-value="variable_int16" lazy="false">
+    <property name="defaultValue" type="System.Int16" access="field"/>
+    <property name="minValidValue" type="System.Int16" access="field"/>
+    <property name="maxValidValue" type="System.Int16" access="field"/>
+    <list name="noDataValues" access="field" table="no_data_values_int16" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value"  type="System.Int16"/>
+    </list>
+  </subclass>
+
+  <!-- IVariable<T> mapping for: System.DateTime -->
+  <subclass name="DelftTools.Functions.Generic.Variable`1[System.DateTime]" extends="IVariable" discriminator-value="variable_datetime" lazy="false">
+    <!-- cannot use the same column as the other default values here-->
+    <property name="defaultValue" column="the_date" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DateTimeStringUserType,DeltaShell.Plugins.Data.NHibernate" access="field" />
+    <property name="minValidValue" column="min_date" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DateTimeStringUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <property name="maxValidValue" column="max_date" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DateTimeStringUserType,DeltaShell.Plugins.Data.NHibernate" access="field"/>
+    <list name="noDataValues" access="field" table="no_data_values_datetime" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value"  type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DateTimeStringUserType,DeltaShell.Plugins.Data.NHibernate"/>
+    </list>
+  </subclass>
+
+  <!--subclass name="DelftTools.Functions.Generic.Variable`1[System.UInt32]" extends="IVariable" discriminator-value="variable_uint32" lazy="false">
+    <property name ="DefaultValue" type="System.UInt32"/>
+    <list name="noDataValues" access="field" table="no_data_values_uint32" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value"  type="System.UInt32"/>
+    </list>
+  </subclass-->
+  <!--subclass name="DelftTools.Functions.Generic.Variable`1[System.UInt16]" extends="IVariable" discriminator-value="variable_uint16" lazy="false">
+    <property name ="DefaultValue" type="System.UInt16"/>
+    <list name="noDataValues" access="field" table="no_data_values_uint16" >
+      <key column="variable_id"/>
+      <index column="no_data_values_list_index"/>
+      <element column="value"  type="System.UInt16"/>
+    </list>
+  </subclass-->
+
+</hibernate-mapping>

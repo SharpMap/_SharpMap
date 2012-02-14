@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="SharpMap.UI.Forms.MapControl" BaseTypeListCollapsed="true">
+    <Position X="14" Y="8.5" Width="2.5" />
+    <NestedTypes>
+      <Delegate Name="SharpMap.UI.Forms.MapControl.MouseEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Forms\MapControl.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>sJOIEY0gQrDEhEDC4gUADwAwEBpQGBQA8AQCMJBDSIg=</HashCode>
+      <FileName>Forms\MapControl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Map">
+    <Position X="11" Y="8.5" Width="2.25" />
+    <NestedTypes>
+      <Delegate Name="SharpMap.Map.MapViewChangedHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Delegate Name="SharpMap.Map.MapLayerRenderedEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Delegate Name="SharpMap.Map.MapRenderedEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Tools.SelectTool">
+    <Position X="0.5" Y="6.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>IIKAQKIIVACAkQhgEYTACAACAxAkAIAQIDJiUBBCAgA=</HashCode>
+      <FileName>Tools\SelectTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.MapTool" Collapsed="true">
+    <Position X="3" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIiAwQAhwBCQgITIEAFgDJRAARJgCAEEMBgAAIACQAI=</HashCode>
+      <FileName>Tools\MapTool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.Layer">
+    <Position X="7.75" Y="8.5" Width="3" />
+    <NestedTypes>
+      <Delegate Name="SharpMap.Layers.Layer.LayerRenderedEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.VectorLayer">
+    <Position X="5" Y="6.75" Width="2" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SharpMap.UI.Forms.IMapControl">
+    <Position X="14" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAEIAYQkBxBAgEAAIAgAAkAwAIgAEBAA0AACCBABQQA=</HashCode>
+      <FileName>Forms\IMapControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.UI.Tools.IMapTool">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIiAgAAAQACAAISAEABABARAARJgCAAEMBAAAIACAAA=</HashCode>
+      <FileName>Tools\IMapTool.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Collections.Generic.IList&lt;T&gt;">
+    <Position X="7.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="SharpMap.Data.Providers.IFeatureProvider">
+    <Position X="5" Y="10.75" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="SharpMap.UI.Tools.MultiSelectionMode" Collapsed="true">
+    <Position X="4.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\SelectTool.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

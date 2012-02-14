@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FAFDB463-9612-41F4-B3DD-FF9C6E7023BA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DelftTools.Tests</RootNamespace>
+    <AssemblyName>DelftTools.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug MorphAn|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug MorphAn\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1591</NoWarn>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMorphAn|AnyCPU' ">
+    <OutputPath>bin\DebugMorphAn\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+    <NoWarn>1591</NoWarn>
+    <DebugType>none</DebugType>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v9.3">
+      <HintPath>..\..\..\lib\DevExpress.Data.v9.3.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v9.3">
+      <HintPath>..\..\..\lib\DevExpress.Utils.v9.3.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v9.3">
+      <HintPath>..\..\..\lib\DevExpress.XtraEditors.v9.3.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v9.3">
+      <HintPath>..\..\..\lib\DevExpress.XtraGrid.v9.3.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="NUnitEx, Version=1.0.5.0, Culture=neutral, PublicKeyToken=57e34ad207e9e5a3">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\NUnitEx.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp.Laos, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\PostSharp.Laos.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp.Public, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\PostSharp.Public.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph, Version=3.2.40610.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\QuickGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TeeChart, Version=3.5.3225.32184, Culture=neutral, PublicKeyToken=1463a114303c2e80, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\TeeChart.dll</HintPath>
+    </Reference>
+    <Reference Include="ValidationAspects, Version=2.1.0.0, Culture=neutral, PublicKeyToken=cef13554f3ca1f2d">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\ValidationAspects.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CatchmentTest.cs" />
+    <Compile Include="Controls\Swf\Charting\ChartTest.cs" />
+    <Compile Include="Controls\Swf\Charting\ChartViewTest.cs" />
+    <Compile Include="Controls\Swf\Charting\QuarterViewDateTimeFormatProviderTest.cs" />
+    <Compile Include="Controls\Swf\Charting\SeriesTest.cs" />
+    <Compile Include="Controls\Swf\Charting\Series\TeeChartSeriesDecoratorTest.cs" />
+    <Compile Include="Controls\Swf\Charting\Tools\BandToolTest.cs" />
+    <Compile Include="Controls\Swf\Charting\Tools\CursorLineToolTest.cs" />
+    <Compile Include="Controls\Swf\Charting\Tools\SelectPointToolTest.cs" />
+    <Compile Include="Controls\Swf\Charting\YearViewDateTimeFormatProviderTest.cs" />
+    <Compile Include="Controls\Swf\GridBasedDialogTest.cs" />
+    <Compile Include="Controls\Swf\HtmlPageViewTest.cs" />
+    <Compile Include="Controls\Swf\InputTextDialogTest.cs" />
+    <Compile Include="Controls\Swf\ListBasedDialogTest.cs" />
+    <Compile Include="Controls\Swf\MenuItemContextMenuStripAdapterTest.cs" />
+    <Compile Include="Controls\Swf\MessageBoxTest.cs" />
+    <Compile Include="Controls\Swf\MockFormView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Swf\MockUserControlView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Swf\PresenterTest.cs" />
+    <Compile Include="Controls\Swf\Table\TableViewArgumentBasedPasteControllerTest.cs" />
+    <Compile Include="Controls\Swf\Table\TableViewFunctionPasteControllerTest.cs" />
+    <Compile Include="Controls\Swf\Table\TestClasses\ClassWithBool.cs" />
+    <Compile Include="Controls\Swf\Table\XtraGridComboBoxHelper.cs" />
+    <Compile Include="Controls\Swf\Table\FileNameUITypeEditorTests.cs" />
+    <Compile Include="Controls\Swf\Table\TableViewPasteControllerTest.cs" />
+    <Compile Include="Controls\Swf\Table\TableViewCopyPasteTest.cs" />
+    <Compile Include="Controls\Swf\Table\TestClasses\ClassWithEnum.cs" />
+    <Compile Include="Controls\Swf\Table\TestClasses\Person.cs" />
+    <Compile Include="Controls\Swf\Table\TableViewTest.cs" />
+    <Compile Include="Controls\Swf\Table\TestClasses\ClassToEdit.cs" />
+    <Compile Include="Controls\Swf\Table\TestClasses\ClassWithTwoProperties.cs" />
+    <Compile Include="Controls\Swf\Table\TestClasses\SomeData.cs" />
+    <Compile Include="Controls\Swf\ExceptionDialogTest.cs" />
+    <Compile Include="Controls\Swf\TimeNavigation\TimeNavigationChartTest.cs" />
+    <Compile Include="Controls\Swf\TreeNodePresenterResolverTest.cs" />
+    <Compile Include="Controls\Swf\TreeNodeTest.cs" />
+    <Compile Include="Controls\Swf\TreeViewTests.cs" />
+    <Compile Include="Controls\Swf\UndoRedoHistoryControlTest.cs" />
+    <Compile Include="Controls\Swf\UndoRedoTestClasses\Child.cs" />
+    <Compile Include="Controls\Swf\UndoRedoTestClasses\Parent.cs" />
+    <Compile Include="Controls\Swf\WindowsFormsHelperTests.cs" />
+    <Compile Include="Controls\Swf\WizardPages\SelectFileWizardPageTest.cs" />
+    <Compile Include="Controls\Swf\XtraGridContextMenuTest.cs" />
+    <Compile Include="Core\DataItemsEventedListAdapterTest.cs" />
+    <Compile Include="Core\DataItemSetTest.cs" />
+    <Compile Include="Core\DataItemTest.cs" />
+    <Compile Include="Core\FolderTest.cs" />
+    <Compile Include="Core\Mocks\ClassWithNameButNotINameable.cs" />
+    <Compile Include="Core\Mocks\CloneableClassWithThreeProperties.cs" />
+    <Compile Include="Core\Mocks\SimplerModel.cs" />
+    <Compile Include="Core\Mocks\TestModel.cs" />
+    <Compile Include="Core\ModelDataItemTest.cs" />
+    <Compile Include="Core\ProjectTest.cs" />
+    <Compile Include="Core\UrlTest.cs" />
+    <Compile Include="Core\WorkFlow\CompositeModelTest.cs" />
+    <Compile Include="Core\WorkFlow\TimeDependentModelBaseTest.cs" />
+    <Compile Include="Hydo\ChannelTest.cs" />
+    <Compile Include="Hydo\CrossSectionBranchFeatureTest.cs" />
+    <Compile Include="Hydo\CrossSectionDefinitionProxyTest.cs" />
+    <Compile Include="Hydo\CrossSectionDefinitionStandardTest.cs" />
+    <Compile Include="Hydo\CrossSectionSectionTest.cs" />
+    <Compile Include="Hydo\CrossSectionStandardShapeArchTest.cs" />
+    <Compile Include="Hydo\CrossSectionStandardShapeTrapeziumTest.cs" />
+    <Compile Include="Hydo\DataSets\FastDataTableTestHelper.cs" />
+    <Compile Include="Hydo\DataSets\FastXYZDataTableTest.cs" />
+    <Compile Include="Hydo\DataSets\FastYZDataTableTest.cs" />
+    <Compile Include="Hydo\CrossSectionDefinitionZWTest.cs" />
+    <Compile Include="Hydo\CrossSectionDefinitionXYZTest.cs" />
+    <Compile Include="Hydo\CrossSectionDefinitionYZTest.cs" />
+    <Compile Include="Hydo\DataSets\FastZWDataTableTest.cs" />
+    <Compile Include="Hydo\Helpers\CrossSectionConverterTest.cs" />
+    <Compile Include="Hydo\Helpers\CrossSectionValidatorTest.cs" />
+    <Compile Include="Hydo\Helpers\CrossSectionHelperTest.cs" />
+    <Compile Include="Hydo\Helpers\HydroNetworkHelperTest.cs" />
+    <Compile Include="Hydo\CrossSectionTest.cs" />
+    <Compile Include="Hydo\Helpers\StandardCrossSectionsFactoryTest.cs" />
+    <Compile Include="Hydo\HydroNetworkTest.cs" />
+    <Compile Include="Hydo\HydroNodeTest.cs" />
+    <Compile Include="Hydo\LateralSourceTest.cs" />
+    <Compile Include="Hydo\Structures\BridgeTest.cs" />
+    <Compile Include="Hydo\Structures\CompositeStructureTest.cs" />
+    <Compile Include="Hydo\Structures\CulvertTest.cs" />
+    <Compile Include="Hydo\Structures\PumpTest.cs" />
+    <Compile Include="Hydo\Structures\WeirFormula\FreeFormWeirFormulaTest.cs" />
+    <Compile Include="Hydo\Structures\WeirFormula\GeneralStructureWeirFormulaTest.cs" />
+    <Compile Include="Hydo\Structures\WeirTest.cs" />
+    <Compile Include="Controls\Swf\FileSystemTreeViewTest.cs" />
+    <Compile Include="TestObjects\TestCrossSectionDefinitionDefinition.cs" />
+    <Compile Include="ProjectStructureValidation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shell\Core\ProjectFileBasedItemRepositoryTest.cs" />
+    <Compile Include="Shell\Gui\Swf\ControlExtensionTest.cs" />
+    <Compile Include="TestObjects\Child.cs" />
+    <Compile Include="TestObjects\ChildNodePresenter.cs" />
+    <Compile Include="TestObjects\MockTestNode.cs" />
+    <Compile Include="TestObjects\Parent.cs" />
+    <Compile Include="TestObjects\ParentNodePresenter.cs" />
+    <Compile Include="TestObjects\TestClasses.cs" />
+    <Compile Include="TestUtils\WindowsFormsTestHelperTest.cs" />
+    <Compile Include="Units\ParameterTest.cs" />
+    <Compile Include="Units\UnitTest.cs" />
+    <Compile Include="WasteWaterTreatmentPlantTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Common\DelftTools.Functions\DelftTools.Functions.csproj">
+      <Project>{7B4EB5A8-53A5-4AB2-8530-801BE8AA9534}</Project>
+      <Name>DelftTools.Functions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\DelftTools.Utils.RemoteInstanceServer\DelftTools.Utils.RemoteInstanceServer.csproj">
+      <Project>{89ED43B3-178F-4BC4-A457-656B4F736E56}</Project>
+      <Name>DelftTools.Utils.RemoteInstanceServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\GeoAPI.Extensions\GeoAPI.Extensions.csproj">
+      <Project>{016DBD27-99BF-489A-81B5-50D66964BB90}</Project>
+      <Name>GeoAPI.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\GeoAPI\GeoAPI.csproj">
+      <Project>{FFB69466-79DE-466A-ADA7-5C47C5C5CA3A}</Project>
+      <Name>GeoAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\DelftTools.Controls.Swf\DelftTools.Controls.Swf.csproj">
+      <Project>{3DBD23CE-5C4A-4A49-B51C-B268CB2B510E}</Project>
+      <Name>DelftTools.Controls.Swf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\DelftTools.Controls\DelftTools.Controls.csproj">
+      <Project>{9A2D67E6-26AC-4D17-B11A-2B4372F2F572}</Project>
+      <Name>DelftTools.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\DelftTools.Shell.Core\DelftTools.Shell.Core.csproj">
+      <Project>{82B61D20-FD4B-49BE-9252-5BF6E3EE4666}</Project>
+      <Name>DelftTools.Shell.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\DelftTools.Hydro\DelftTools.Hydro.csproj">
+      <Project>{9F94F7FE-C79C-4E32-B3DC-A11C01B79349}</Project>
+      <Name>DelftTools.Hydro</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\DelftTools.Shell.Gui.Swf\DelftTools.Shell.Gui.Swf.csproj">
+      <Project>{08205620-D756-4533-922C-D6A4C0038535}</Project>
+      <Name>DelftTools.Shell.Gui.Swf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\DelftTools.Shell.Gui\DelftTools.Shell.Gui.csproj">
+      <Project>{30E4C2AE-719E-4D70-9FA9-668A9767FBFA}</Project>
+      <Name>DelftTools.Shell.Gui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\NetTopologySuite.Extensions\NetTopologySuite.Extensions.csproj">
+      <Project>{8A3636FB-31B4-4F4B-9165-F718F87A92DF}</Project>
+      <Name>NetTopologySuite.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\NetTopologySuite\NetTopologySuite.csproj">
+      <Project>{5770DAA9-84E5-4770-AF43-F6B815894368}</Project>
+      <Name>NetTopologySuite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Plugins\NetworkEditor\DeltaShell.Plugins.NetworkEditor\DeltaShell.Plugins.NetworkEditor.csproj">
+      <Project>{11330F89-2B3D-449D-9211-EA3E0D7F6CDC}</Project>
+      <Name>DeltaShell.Plugins.NetworkEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DeltaShell\DeltaShell.IntegrationTestUtils\DeltaShell.IntegrationTestUtils.csproj">
+      <Project>{E24E26CF-7233-4B5D-902A-6E31CDABAAB4}</Project>
+      <Name>DeltaShell.IntegrationTestUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DelftTools.TestUtils\DelftTools.TestUtils.csproj">
+      <Project>{EFA25023-CF6A-4FF7-8C42-B24D7F9509E1}</Project>
+      <Name>DelftTools.TestUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\DelftTools.Units\DelftTools.Units.csproj">
+      <Project>{88274B6A-53B6-46BA-AE56-CEFBB44EBCEB}</Project>
+      <Name>DelftTools.Units</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Common\DelftTools.Utils\DelftTools.Utils.csproj">
+      <Project>{F49BD8B2-332A-4C91-A196-8CCE0A2C7D98}</Project>
+      <Name>DelftTools.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DelftTools.TestUtils\DelftTools.TestUtils.csproj">
+      <Project>{EFA25023-CF6A-4FF7-8C42-B24D7F9509E1}</Project>
+      <Name>DelftTools.TestUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <UsePostSharp>true</UsePostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-Mono|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug-Mono</OutputPath>
+    <DefineConstants>DEBUG;TRACE;MONO</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="run-postsharp.sh ${SolutionDir}/build/tools/PostSharpMono ${TargetName}&#xA;" workingdir="${TargetDir}" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <Import Project="..\..\..\build\DeltaShell.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties InternalTargetFrameworkVersion="3.5" />
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

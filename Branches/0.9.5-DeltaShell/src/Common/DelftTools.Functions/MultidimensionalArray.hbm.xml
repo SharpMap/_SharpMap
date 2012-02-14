@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="DelftTools.Functions" assembly="DelftTools.Functions"  auto-import="false">
+  <class name="IMultiDimensionalArray" table="md_arrays" batch-size="200">
+    <id name="Id" column="id" type="long">
+      <generator class="increment" />
+    </id>
+    <discriminator column="type" type="string"/>
+    <property name="IsAutoSorted"/>
+    <subclass name="MultiDimensionalArray" discriminator-value="md_array">
+      <property name="Shape" column="shape" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.IntArrayBinaryUserType,DeltaShell.Plugins.Data.NHibernate" />
+      
+      <!--<array name="Shape" table="md_shape" cascade="all" access="property" >
+        <key column="md_array_id"/>
+        <index column="value_list_index"/>
+        <element column="value" type="System.Int32"/>
+      </array>
+      -->
+      
+      
+      <!-- Mapping for IVariable<T> : System.String -->
+      <subclass name="DelftTools.Functions.Generic.MultiDimensionalArray`1[System.String]" discriminator-value="md_array_string">
+        <property name="DefaultValue" type="System.String" column="default_value_string"/>
+        <list name="Values" table="md_values_string" >
+          <key column="md_array_id"/>
+          <index column="value_list_index"/>
+          <element column="value"  type="System.String"/>
+        </list>
+      </subclass>
+
+      <!-- Mapping for IVariable<T> : System.Boolean -->
+      <subclass name="DelftTools.Functions.Generic.MultiDimensionalArray`1[System.Boolean]" discriminator-value="md_array_bool">
+        <property name="DefaultValue" type="System.Boolean" column="default_value_bool"/>
+        <list name="Values" table="md_values_bool" >
+          <key column="md_array_id"/>
+          <index column="value_list_index"/>
+          <element column="value"  type="System.Boolean"/>
+        </list>
+      </subclass>
+
+      <!-- Mapping for IVariable<T> : System.Double -->
+      <subclass name="DelftTools.Functions.Generic.MultiDimensionalArray`1[System.Double]" discriminator-value="md_array_double">
+        <property name="DefaultValue" type="System.Double" column="default_value_double"/>
+        <list name="Values" table="md_values_double" >
+          <key column="md_array_id"/>
+          <index column="value_list_index"/>
+          <element column="value" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DoubleUserType,DeltaShell.Plugins.Data.NHibernate"/>          
+        </list>
+      </subclass>
+      
+      <subclass name="DelftTools.Functions.Generic.MultiDimensionalArray`1[System.Int32]" discriminator-value="md_array_int">
+        <property name="DefaultValue" type="System.Int32" column="default_value_int"/>
+        <list name="Values" table="md_values_int" >
+          <key column="md_array_id"/>
+          <index column="value_list_index"/>
+          <element column="value"  type="System.Int32"/>
+        </list>
+      </subclass>
+      <subclass name="DelftTools.Functions.Generic.MultiDimensionalArray`1[System.Single]" discriminator-value="md_array_single">
+        <property name="DefaultValue" type="System.Single" column="default_value_single"/>
+        <list name="Values" table="md_values_single" >
+          <key column="md_array_id"/>
+          <index column="value_list_index"/>
+          <element column="value"  type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.SingleUserType,DeltaShell.Plugins.Data.NHibernate"/>
+        </list>
+      </subclass>
+      <subclass name="DelftTools.Functions.Generic.MultiDimensionalArray`1[System.DateTime]" discriminator-value="md_array_datetime">
+        <property name="DefaultValue" type="System.DateTime" column="default_value_datetime"/>
+        <list name="Values" table="md_values_datetime"  >
+          <key column="md_array_id"/>
+          <index column="value_list_index"/>
+          <element column="value"  type="DateTime"/>
+        </list>
+      </subclass>
+    </subclass>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SharpMap.UI.Tools.CurvePointTool">
+    <Position X="13.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAgAAAAAAACAAEAAAABAABIAAAAAoBABAAACAAA=</HashCode>
+      <FileName>Tools\CurvePointTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.DeleteTool">
+    <Position X="13.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAIAAAAAACAAA=</HashCode>
+      <FileName>Tools\DeleteTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.GridProfileTool">
+    <Position X="15.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BIAAABAAAAAAAAAAkAAAAIAAABAAAAAAIBCgAABKoAA=</HashCode>
+      <FileName>Tools\GridProfileTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.LayoutComponentTool">
+    <Position X="3.25" Y="12.5" Width="1.75" />
+    <InheritanceLine Type="SharpMap.UI.Tools.MapTool" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="13.25" />
+        <Point X="5" Y="13.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AwCAIAEIEAAAgkAAAIAAAAAAABBCAAAIIAAACAACAAA=</HashCode>
+      <FileName>Tools\LayoutComponentTool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Tools.MapTool">
+    <Position X="6.25" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gImAwQghgBGQgITIEAFgDJRAARJgCAEEMBgAIIAKQAI=</HashCode>
+      <FileName>Tools\MapTool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Tools.NewLineTool">
+    <Position X="11.25" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAgAsAAIAggQLAAFgBAEBAABMkAEEBIBAAAQBKgkA=</HashCode>
+      <FileName>Tools\NewLineTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.NewNodeTool">
+    <Position X="13.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABwABAAEgAAABAABAAAIIBIBAAAAACgAA=</HashCode>
+      <FileName>Tools\NewNodeTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.NewPolygonTool">
+    <Position X="9" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAgAEAAAABAAAAAUAAAABAABIAAAAAIAAAAAACAEA=</HashCode>
+      <FileName>Tools\NewPolygonTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.NorthArrowTool">
+    <Position X="3" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAgAAAACAAAAAIBAAAAAAAAA=</HashCode>
+      <FileName>Tools\NorthArrowTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.ScaleBarTool">
+    <Position X="5" Y="18.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Tools\ScaleBarTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.SelectTool">
+    <Position X="0.5" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AICAQKAIEACAkQBgAcRACABSAxAlAIAQIDBgUBBCAAA=</HashCode>
+      <FileName>Tools\SelectTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Snapping.SnapTool">
+    <Position X="15.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAEABgAABAIACAAACQAAEAAQADAEAAIIBAA=</HashCode>
+      <FileName>Snapping\SnapTool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.FixedZoomInTool">
+    <Position X="10" Y="17.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Zooming\FixedZoomInTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.FixedZoomOutTool">
+    <Position X="8" Y="17.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Zooming\FixedZoomOutTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.PanZoomTool">
+    <Position X="12" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAgAAADAAAABAAAAAAIAAAAAACIAA=</HashCode>
+      <FileName>Tools\Zooming\PanZoomTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.ZoomHistoryTool">
+    <Position X="9.25" Y="19.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IAACAAAAAAAIIAAAAEAAAAACAAEgAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Tools\Zooming\ZoomHistoryTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.ZoomState">
+    <Position X="12" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Tools\Zooming\ZoomState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.ZoomTool">
+    <Position X="10" Y="15.25" Width="1.5" />
+    <InheritanceLine Type="SharpMap.UI.Tools.MapTool" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="8" Y="14.212" />
+        <Point X="8" Y="14.94" />
+        <Point X="10.75" Y="14.94" />
+        <Point X="10.75" Y="15.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Zooming\ZoomTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.PanZoomUsingMouseWheelTool">
+    <Position X="16" Y="17.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAEAAAAAAABAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Tools\Zooming\PanZoomUsingMouseWheelTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.ZoomUsingRectangleTool">
+    <Position X="13.75" Y="17.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAABAAAAAgIAAAAAACCAg=</HashCode>
+      <FileName>Tools\Zooming\ZoomUsingRectangleTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.MoveTool">
+    <Position X="3.5" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAWBQAAAQGABEECABEBAGABEABKQCACBIBQAAEACkAA=</HashCode>
+      <FileName>Tools\MoveTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.ToolTipTool">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="SharpMap.UI.Tools.MapTool" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.688" Y="4.25" />
+        <Point X="7.688" Y="3.825" />
+        <Point X="11.812" Y="3.825" />
+        <Point X="11.812" Y="3.187" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAGAAACAAAABAAAAAIAAAABAAAAAA=</HashCode>
+      <FileName>Tools\TooltipTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.MeasureTool">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="SharpMap.UI.Tools.MapTool" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="8.188" Y="4.25" />
+        <Point X="8.188" Y="3.95" />
+        <Point X="13.75" Y="3.95" />
+        <Point X="13.75" Y="3.68" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AgCAgAAIAAAAAACAEAAAAAAAAAAAAAAAIBAAAAJAAAA=</HashCode>
+      <FileName>Tools\MeasureTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.QueryTool">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="SharpMap.UI.Tools.MapTool" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.312" Y="4.25" />
+        <Point X="7.312" Y="3.233" />
+        <Point X="10.062" Y="3.233" />
+        <Point X="10.062" Y="2.858" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAEAAAAAAAAAAAAAAAQAAAAABCAAA=</HashCode>
+      <FileName>Tools\QueryTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.QueryResultEventArgs">
+    <Position X="7" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\QueryResultEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.LegendTool">
+    <Position X="1" Y="18.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="SharpMap.UI.Tools.LegendTool.LegendItem" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Tools\LegendTool.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAABAAEAAAAACIAAAAEABIABAACACA=</HashCode>
+      <FileName>Tools\LegendTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7B4EB5A8-53A5-4AB2-8530-801BE8AA9534}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DelftTools.Functions</RootNamespace>
+    <AssemblyName>DelftTools.Functions</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>DelftTools.snk</AssemblyOriginatorKeyFile>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Release\DelftTools.Functions.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug MorphAn|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug MorphAn\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMorphAn|AnyCPU' ">
+    <OutputPath>bin\DebugMorphAn\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp.Laos, Version=1.0.8.364, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\PostSharp.Laos.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp.Public, Version=1.0.8.364, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\PostSharp.Public.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ValidationAspects, Version=2.1.0.0, Culture=neutral, PublicKeyToken=cef13554f3ca1f2d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\ValidationAspects.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Binding\EditableBindingListRow.cs" />
+    <Compile Include="Binding\MultipleFunctionBindingListPropertyDescriptor.cs" />
+    <Compile Include="Binding\FunctionBindingList.cs" />
+    <Compile Include="Binding\FunctionBindingListRow.cs" />
+    <Compile Include="FilteredArrayInfo.cs" />
+    <Compile Include="Binding\MultipleFunctionBindingList.cs" />
+    <Compile Include="Binding\FunctionBindingListPropertyDescriptor.cs" />
+    <Compile Include="Binding\MultipleFunctionBindingListRow.cs" />
+    <Compile Include="Binding\IFunctionBindingList.cs" />
+    <Compile Include="Binding\IMultiDimensionalArrayBindingList.cs" />
+    <Compile Include="Binding\MultiDimensionalArrayBindingList.cs" />
+    <Compile Include="Binding\MultiDimensionalArrayBindingListRow.cs" />
+    <Compile Include="Binding\MultiDimensionaArrayPropertyDescriptor.cs" />
+    <Compile Include="Conversion\ConvertedFunction.cs" />
+    <Compile Include="Conversion\ConvertedEnumerator.cs" />
+    <Compile Include="Conversion\ConvertedVariable.cs" />
+    <Compile Include="Filters\IVariableValueFilter.cs" />
+    <Compile Include="Generic\ExtrapolationType.cs" />
+    <Compile Include="TimeArgumentNavigatable.cs" />
+    <Compile Include="Filters\VariableAggregationFilter.cs" />
+    <Compile Include="Filters\VariableIndexRangesFilter.cs" />
+    <Compile Include="Filters\VariableValueRangesFilter.cs" />
+    <Compile Include="Filters\VariableValueReduceFilter.cs" />
+    <Compile Include="Filters\VariableFilterExtension.cs" />
+    <Compile Include="Function.cs" />
+    <Compile Include="FunctionAttributes.cs" />
+    <Compile Include="FunctionExtensions.cs" />
+    <Compile Include="FunctionHelper.cs" />
+    <Compile Include="FunctionValuesChangingEventArgs.cs" />
+    <Compile Include="Generic\InterpolationType.cs" />
+    <Compile Include="Generic\ArrayExtensions.cs" />
+    <Compile Include="Generic\ConvertedArray.cs" />
+    <Compile Include="Generic\IMultiDimensionalArrayView.cs" />
+    <Compile Include="Generic\IMultiDimensionalArray.cs" />
+    <Compile Include="Generic\LazyMultiDimensionalArray.cs" />
+    <Compile Include="Generic\MultiDimensionalArrayEnumerator.cs" />
+    <Compile Include="Generic\NextValueGenerator.cs" />
+    <Compile Include="ITimeSeries.cs" />
+    <Compile Include="ITypeConverter.cs" />
+    <Compile Include="TimeSeries.cs" />
+    <Compile Include="TimeSeriesExtensions.cs" />
+    <Compile Include="TimeSeriesFactory.cs" />
+    <Compile Include="Tuples\ITuple.cs" />
+    <Compile Include="Generic\MultiDimensionalArray.cs" />
+    <Compile Include="Generic\MultiDimensionalArrayView.cs" />
+    <Compile Include="ICachedMultiDimensionalArray.cs" />
+    <Compile Include="IMultiDimensionalArrayView.cs" />
+    <Compile Include="MemoryFunctionStoreHelper.cs" />
+    <Compile Include="MultiDimensionalArrayChangingEventArgs.cs" />
+    <Compile Include="MultiDimensionalArrayDimensionChangeAction.cs" />
+    <Compile Include="MultiDimensionalArrayEnumerator.cs" />
+    <Compile Include="MultiDimensionalArrayResizeArgs.cs" />
+    <Compile Include="MultiDimensionalArrayView.cs" />
+    <Compile Include="MemoryFunctionStore.cs" />
+    <Compile Include="MultiDimensionalArray.cs" />
+    <Compile Include="Filters\ComponentFilter.cs" />
+    <Compile Include="Generic\IVariable.cs" />
+    <Compile Include="Generic\Variable.cs">
+    </Compile>
+    <Compile Include="Filters\IComponentFilter.cs" />
+    <Compile Include="IFunction.cs" />
+    <Compile Include="IFunctionStore.cs" />
+    <Compile Include="IMultiDimensionalArray.cs" />
+    <Compile Include="IVariable.cs" />
+    <Compile Include="Filters\IVariableFilter.cs" />
+    <Compile Include="MultiDimensionalArrayHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Filters\VariableValueFilter.cs" />
+    <Compile Include="Filters\VariableIndexRangeFilter.cs" />
+    <Compile Include="Tuples\Pair.cs" />
+    <Compile Include="Tuples\PairTypeConverter.cs" />
+    <Compile Include="TypeConverterBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DelftTools.Units\DelftTools.Units.csproj">
+      <Project>{88274B6A-53B6-46BA-AE56-CEFBB44EBCEB}</Project>
+      <Name>DelftTools.Units</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DelftTools.Utils\DelftTools.Utils.csproj">
+      <Project>{F49BD8B2-332A-4C91-A196-8CCE0A2C7D98}</Project>
+      <Name>DelftTools.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Uml\MultiDimensionalArray.cd" />
+    <None Include="DelftTools.snk" />
+    <None Include="Uml\Function.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Function.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MultidimensionalArray.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="IVariable.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TimeSeries.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Filters\IVariableFilter.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HibernateUserTypes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TimeSeries.0.5.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Function.0.5.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <UsePostSharp>true</UsePostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-Mono|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug-Mono</OutputPath>
+    <DefineConstants>DEBUG;TRACE;MONO</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="run-postsharp.sh ${SolutionDir}/build/tools/PostSharpMono ${TargetName}&#xA;" workingdir="${TargetDir}" Condition=" '$(Configuration)|$(Platform)' == 'Debug-Mono|AnyCPU' " />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <Import Project="..\..\..\build\DeltaShell.targets" />
+</Project>
