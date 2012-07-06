@@ -1241,6 +1241,7 @@ namespace DelftTools.Functions.Tests
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void SettingValuesUsingSetValuesShouldBeFastForSingleComponentFunctions()
         {
             var f = FunctionHelper.Get1DFunction<int, int>();
@@ -1857,6 +1858,7 @@ namespace DelftTools.Functions.Tests
         
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void SetALotOfValuesWithoutEvents()
         {
             //do a manual of function to speed up..disable all the event stuff..
@@ -1885,6 +1887,7 @@ namespace DelftTools.Functions.Tests
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void SetALotOfValuesWithEvents()
         {
             //do a manual of function to speed up..disable all the event stuff..
