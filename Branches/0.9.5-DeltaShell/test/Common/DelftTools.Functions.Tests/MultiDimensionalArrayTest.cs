@@ -594,6 +594,7 @@ namespace DelftTools.Functions.Tests
         }
 
         [Test, NUnit.Framework.Category(TestCategory.Performance)]
+        [NUnit.Framework.Category(TestCategory.WorkInProgress)] // slow
         public void PerformanceChangeSizeOfFirstDimensions_WithEvents()
         {
             const int valuesToAdd = 100000;
@@ -618,6 +619,7 @@ namespace DelftTools.Functions.Tests
         }
 
         [Test, NUnit.Framework.Category(TestCategory.Performance)]
+        [NUnit.Framework.Category(TestCategory.WorkInProgress)] // slow
         public void PerformanceChangeSizeOfFirstDimensions_WithoutEvents()
         {
             // increasing the 1st dimension should be fast. 
@@ -1043,6 +1045,7 @@ namespace DelftTools.Functions.Tests
         [Test]
         [NUnit.Framework.Category(TestCategory.Performance)]
         [NUnit.Framework.Category(TestCategory.BadQuality)] // TODO: split this test in two tests measuring actual time and use TestHelper.AssertIsFasterThan()
+        [NUnit.Framework.Category(TestCategory.WorkInProgress)] // slow
         public void InsertAtOnFirstDimensionShouldPerformLinearly()
         {
             //TODO: move this test back to MDAT...only here to use functionview..
@@ -1367,6 +1370,7 @@ namespace DelftTools.Functions.Tests
 
 
         [Test, NUnit.Framework.Category(TestCategory.Performance)]
+        [NUnit.Framework.Category(TestCategory.WorkInProgress)] // slow
         public void PerformanceAddValues()
         {
             IMultiDimensionalArray<double> array = new MultiDimensionalArray<double>();

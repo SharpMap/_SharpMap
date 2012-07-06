@@ -402,6 +402,7 @@ namespace DelftTools.Functions.Tests.Generic
         }*/
 
         [Test, NUnit.Framework.Category(TestCategory.Performance)]
+        [NUnit.Framework.Category(TestCategory.WorkInProgress)] // slow
         public void PerformanceAddValuesToArgument_UsingSetValues_WithEvents()
         {
             IVariable<DateTime> x = new Variable<DateTime>("x");
@@ -447,6 +448,7 @@ namespace DelftTools.Functions.Tests.Generic
         }
 
         [Test, NUnit.Framework.Category(TestCategory.Performance)]
+        [NUnit.Framework.Category(TestCategory.WorkInProgress)] // slow
         public void PerformanceAddValuesToArgument_WithEvents()
         {
             IVariable<double> x = new Variable<double>("x") { GenerateUniqueValueForDefaultValue = true };
@@ -463,6 +465,7 @@ namespace DelftTools.Functions.Tests.Generic
         }
 
         [Test, NUnit.Framework.Category(TestCategory.Performance)]
+        [NUnit.Framework.Category(TestCategory.WorkInProgress)] // slow
         public void PerformanceAddValuesToArgumentWithEventsIndependentVariable()
         {
             IVariable<double> x = new Variable<double>("x");
@@ -483,6 +486,7 @@ namespace DelftTools.Functions.Tests.Generic
         }
 
         [Test, NUnit.Framework.Category("Performance")]
+        [NUnit.Framework.Category(TestCategory.WorkInProgress)] // slow
         public void PerformanceAddValuesRangeToArgumentWithEventsIndependentVariable()
         {
             IVariable<double> x = new Variable<double>("x");

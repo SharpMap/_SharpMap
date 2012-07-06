@@ -36,6 +36,7 @@ namespace DelftTools.Functions.Tests
         }
 
         [Test]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void GetFirstValueBiggerThan()
         {
             var array = new [] { 1.0, 2.0 };
@@ -73,6 +74,7 @@ namespace DelftTools.Functions.Tests
         }
 
         [Test]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void GetLastValueSmallerThan()
         {
             var array = new MultiDimensionalArray { 1.0, 2.0 };

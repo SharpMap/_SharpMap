@@ -54,6 +54,7 @@ namespace NetTopologySuite.Tests.Geometry
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void GetHashCodeShouldBeComputedLazyAndShouldBeVeryFast()
         {
             var geometryCount = 1000000;

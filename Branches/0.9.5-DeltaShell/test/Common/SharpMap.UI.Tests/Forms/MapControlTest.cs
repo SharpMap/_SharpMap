@@ -23,6 +23,7 @@ namespace SharpMap.UI.Tests.Forms
 
         [Test]
         [Category(TestCategory.WindowsForms)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void DisablingLayerShouldRefreshMapControlOnce()
         {
             var mapControl = new MapControl();
@@ -54,6 +55,7 @@ namespace SharpMap.UI.Tests.Forms
 
         [Test]
         [Category(TestCategory.WindowsForms)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void PanZoomUsingMouseWheelTest()
         {
             var map = new Map();
@@ -79,6 +81,7 @@ namespace SharpMap.UI.Tests.Forms
 
         [Test]
         [Category(TestCategory.WindowsForms)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void ChangingEnvelopeAfterMapControlIsShownWorksCorrectly()
         {
             var layer = new VectorLayer { DataSource = new DataTableFeatureProvider("POINT(1 1)") };

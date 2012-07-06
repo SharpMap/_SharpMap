@@ -256,6 +256,7 @@ namespace DelftTools.Functions.Tests
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void GetVariableValueFilterIndexesShouldBeFast()
         {
             IVariable<double> x = new Variable<double>("x");

@@ -45,6 +45,7 @@ namespace NetTopologySuite.Extensions.Tests.Coverages
 
         [Test]
         [NUnit.Framework.Category(TestCategory.Performance)]
+        [NUnit.Framework.Category(TestCategory.WorkInProgress)] // slow
         public void AddingTimeSlicesShouldBeFastUsingMemoryStore()
         {
             var random = new Random();
