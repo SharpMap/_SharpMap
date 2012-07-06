@@ -11,6 +11,7 @@ namespace SharpMap.UI.Tests.Tools
     public class QueryToolTest
     {
         [Test,Category(TestCategory.WindowsForms)]
+        [Category(TestCategory.WorkInProgress)] // drag&drop problems
         public void ShowMapWithQueryToolActive()
         {
             var mapControl = new MapControl();

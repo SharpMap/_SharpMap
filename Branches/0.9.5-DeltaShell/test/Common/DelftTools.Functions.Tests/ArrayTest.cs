@@ -26,6 +26,7 @@ namespace DelftTools.Functions.Tests
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void CheckArrayPerormance()
         {
             int[] lengths = new[] {100, 200, 300};
@@ -51,6 +52,7 @@ namespace DelftTools.Functions.Tests
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void CheckListPerformance()
         {
             int[] lengths = new[] { 100, 100, 200 };

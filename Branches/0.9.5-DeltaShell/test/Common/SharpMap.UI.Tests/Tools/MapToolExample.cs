@@ -13,6 +13,7 @@ namespace SharpMap.UI.Tests.Tools
     {
         [Test]
         [Category(TestCategory.WindowsForms)]
+        [Category(TestCategory.WorkInProgress)] // drag&drop problems
         public void MapToolMessageBoxEnabledTest()
         {
             var demoMapTool = new MapToolMessageBox();
@@ -25,6 +26,7 @@ namespace SharpMap.UI.Tests.Tools
 
         [Test]
         [Category(TestCategory.WindowsForms)]
+        [Category(TestCategory.WorkInProgress)] // drag&drop problems
         public void MapToolMessageBoxDisabledTest()
         {
             var demoMapTool = new MapToolMessageBox();

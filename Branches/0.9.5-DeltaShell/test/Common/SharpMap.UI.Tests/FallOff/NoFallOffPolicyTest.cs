@@ -113,6 +113,7 @@ namespace SharpMap.UI.Tests.FallOff
         }
 
         [Test]
+        [NUnit.Framework.Category(TestCategory.WorkInProgress)] // slow
         public void MovePolygonWithTrackersShouldBeFast()
         {
             var factory = new GeometricShapeFactory();

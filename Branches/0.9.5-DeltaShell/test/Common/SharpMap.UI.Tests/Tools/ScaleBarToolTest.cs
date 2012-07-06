@@ -8,6 +8,7 @@ namespace SharpMap.UI.Tests.Tools
     public class ScaleBarToolTest
     {
         [Test,Category(TestCategory.WindowsForms)]
+        [Category(TestCategory.WorkInProgress)] // drag&drop problems
         public void ShowMapWithScaleBar()
         {
             MapControl mapControl = new MapControl();

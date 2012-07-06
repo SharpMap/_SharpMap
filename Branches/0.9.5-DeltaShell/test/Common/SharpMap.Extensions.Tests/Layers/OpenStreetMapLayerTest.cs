@@ -10,6 +10,7 @@ namespace SharpMap.Extensions.Tests.Layers
     {
         [Test]
         [Category(TestCategory.WindowsForms)]
+        [Category(TestCategory.WorkInProgress)] // some problems with Drag&Drop registration
         public void ShowWithOsmLayer()
         {
             var map = new Map();

@@ -35,6 +35,7 @@ namespace NetTopologySuite.Extensions.Tests.Features
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void GetAttributeFast()
         {
             var testFeature = new TestFeature();

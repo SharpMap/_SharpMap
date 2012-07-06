@@ -460,6 +460,7 @@ namespace SharpMap.Extensions.Tests.Data.Providers
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void ReadingATifFileShouldBeReasonablyFast()
         {
             Action action = delegate
@@ -830,6 +831,7 @@ namespace SharpMap.Extensions.Tests.Data.Providers
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void GettingCountOfGridComponentsShouldBeReallyFast()
         {
             string path = rasterDataPath + "Bodem.bil";

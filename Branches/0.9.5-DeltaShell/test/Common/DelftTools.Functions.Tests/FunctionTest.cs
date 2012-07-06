@@ -1118,6 +1118,7 @@ namespace DelftTools.Functions.Tests
         
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void Set10kFunctionValues2D()
         {
             var f = new Function();
@@ -1148,7 +1149,8 @@ namespace DelftTools.Functions.Tests
         /// Note: this works ~70% faster compare to the above
         /// </summary>
         [Test]
-        [NUnit.Framework.Category(TestCategory.Performance)]
+        [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void Set10kFunctionValues2D_SetFirstDimensionAsLast()
         {
             var f = new Function();
@@ -1178,6 +1180,7 @@ namespace DelftTools.Functions.Tests
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void CloneShouldBeFast()
         {
             var f = new Function { Name = "f" };

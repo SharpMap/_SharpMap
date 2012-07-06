@@ -618,6 +618,7 @@ namespace DelftTools.Functions.Tests.Binding
         [Test]
         [Category(TestCategory.Performance)]
         [Category(TestCategory.BadQuality)] // TODO: split this test in two tests measuring actual time and use TestHelper.AssertIsFasterThan()
+        [Category(TestCategory.WorkInProgress)] // slow
         public void AddManyFunctionValuesWithBindingListShouldBeFast()
         {
             var f = new Function
@@ -697,6 +698,7 @@ namespace DelftTools.Functions.Tests.Binding
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void GetIndexOfRowIsFast()
         {
             var f = new Function

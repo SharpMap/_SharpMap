@@ -158,6 +158,7 @@ namespace SharpMap.Tests.Layers
 
         [Test]
         [Category(TestCategory.WindowsForms)]
+        [Category(TestCategory.WorkInProgress)] // Drag & Drop registration problems
         public void SelectFaces()
         {
             var points = new[,]
@@ -191,6 +192,7 @@ namespace SharpMap.Tests.Layers
 
         [Test]
         [Category(TestCategory.WindowsForms)]
+        [Category(TestCategory.WorkInProgress)] // Drag & Drop registration problems
         public void QueryValuesUsingProfileTool()
         {
             var points = new[,]

@@ -114,6 +114,7 @@ namespace NetTopologySuite.Extensions.Tests.Coverages
 
         [Test]
         [Category(TestCategory.Performance)]
+        [Category(TestCategory.WorkInProgress)] // slow
         public void ResizeIsFast()
         {
             //TODO: make this really fast by optimizing resize...
