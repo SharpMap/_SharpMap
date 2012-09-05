@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" 
+                   auto-import="true" 
+                   namespace="NetTopologySuite.Extensions.Coverages" 
+                   assembly="NetTopologySuite.Extensions">
+  <subclass name="FeatureCoverage" 
+            extends="DelftTools.Functions.Function,DelftTools.Functions" 
+            discriminator-value="FeatureCoverage" lazy="false">    
+  </subclass>
+</hibernate-mapping>
