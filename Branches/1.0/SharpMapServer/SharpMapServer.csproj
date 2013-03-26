@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FCA0E48D-9803-4F63-BA14-AB8F8810709B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SharpMapServer</RootNamespace>
+    <AssemblyName>SharpMapServer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GeoAPI, Version=1.7.1.0, Culture=neutral, PublicKeyToken=a1a0da7def465678, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\GeoAPI.1.7.1\lib\net40-client\GeoAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\custom-theme\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="css\custom-theme\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="css\custom-theme\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="css\custom-theme\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="css\custom-theme\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="css\custom-theme\images\ui-bg_glass_75_ffffff_1x400.png" />
+    <Content Include="css\custom-theme\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="css\custom-theme\images\ui-bg_inset-soft_95_fef1ec_1x100.png" />
+    <Content Include="css\custom-theme\images\ui-icons_222222_256x240.png" />
+    <Content Include="css\custom-theme\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="css\custom-theme\images\ui-icons_454545_256x240.png" />
+    <Content Include="css\custom-theme\images\ui-icons_888888_256x240.png" />
+    <Content Include="css\custom-theme\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="css\custom-theme\jquery-ui-1.8.16.custom.css" />
+    <Content Include="css\img\add_point_off.png" />
+    <Content Include="css\img\add_point_on.png" />
+    <Content Include="css\img\blank.gif" />
+    <Content Include="css\img\close.gif" />
+    <Content Include="css\img\drag-rectangle-off.png" />
+    <Content Include="css\img\drag-rectangle-on.png" />
+    <Content Include="css\img\draw_line_off.png" />
+    <Content Include="css\img\draw_line_on.png" />
+    <Content Include="css\img\draw_point_off.png" />
+    <Content Include="css\img\draw_point_on.png" />
+    <Content Include="css\img\draw_polygon_off.png" />
+    <Content Include="css\img\draw_polygon_on.png" />
+    <Content Include="css\img\editing_tool_bar.png" />
+    <Content Include="css\img\move_feature_off.png" />
+    <Content Include="css\img\move_feature_on.png" />
+    <Content Include="css\img\navigation_history.png" />
+    <Content Include="css\img\overview_replacement.gif" />
+    <Content Include="css\img\pan-panel-NOALPHA.png" />
+    <Content Include="css\img\pan-panel.png" />
+    <Content Include="css\img\panning-hand-off.png" />
+    <Content Include="css\img\panning-hand-on.png" />
+    <Content Include="css\img\pan_off.png" />
+    <Content Include="css\img\pan_on.png" />
+    <Content Include="css\img\remove_point_off.png" />
+    <Content Include="css\img\remove_point_on.png" />
+    <Content Include="css\img\ruler.png" />
+    <Content Include="css\img\save_features_off.png" />
+    <Content Include="css\img\save_features_on.png" />
+    <Content Include="css\img\view_next_off.png" />
+    <Content Include="css\img\view_next_on.png" />
+    <Content Include="css\img\view_previous_off.png" />
+    <Content Include="css\img\view_previous_on.png" />
+    <Content Include="css\img\zoom-panel-NOALPHA.png" />
+    <Content Include="css\img\zoom-panel.png" />
+    <Content Include="css\openlayers.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="Demo.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="images\blank.gif" />
+    <Content Include="images\cloud-popup-relative.png" />
+    <Content Include="images\drag-rectangle-off.png" />
+    <Content Include="images\drag-rectangle-on.png" />
+    <Content Include="images\east-mini.png" />
+    <Content Include="images\layer-switcher-maximize.png" />
+    <Content Include="images\layer-switcher-minimize.png" />
+    <Content Include="images\marker-blue.png" />
+    <Content Include="images\marker-gold.png" />
+    <Content Include="images\marker-green.png" />
+    <Content Include="images\marker.png" />
+    <Content Include="images\measuring-stick-off.png" />
+    <Content Include="images\measuring-stick-on.png" />
+    <Content Include="images\north-mini.png" />
+    <Content Include="images\panning-hand-off.png" />
+    <Content Include="images\panning-hand-on.png" />
+    <Content Include="images\SharpMapBanner.png" />
+    <Content Include="images\slider.png" />
+    <Content Include="images\south-mini.png" />
+    <Content Include="images\west-mini.png" />
+    <Content Include="images\zoom-minus-mini.png" />
+    <Content Include="images\zoom-plus-mini.png" />
+    <Content Include="images\zoom-world-mini.png" />
+    <Content Include="images\zoombar.png" />
+    <Content Include="js\jquery-1.6.2.min.js" />
+    <Content Include="js\jquery-1.6.4.js" />
+    <Content Include="js\jquery-ui-1.8.16.custom.min.js" />
+    <Content Include="js\OpenLayers.js" />
+    <Content Include="js\SharpMapServer.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminServices.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Demo.aspx.cs">
+      <DependentUpon>Demo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Demo.aspx.designer.cs">
+      <DependentUpon>Demo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SharpMapContext.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\WmsCapabilities.cs" />
+    <Compile Include="Model\WmsLayer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WMSServer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpMap.Web\SharpMap.Web.csproj">
+      <Project>{292EF671-4063-4952-8DE0-423DF72A0950}</Project>
+      <Name>SharpMap.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpMap\SharpMap.csproj">
+      <Project>{C83777FC-AABB-47D9-911F-D76255D4D541}</Project>
+      <Name>SharpMap.VS2010</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="states.dbf" />
+    <None Include="states.prj" />
+    <None Include="states.shp" />
+    <None Include="states.shx" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>53337</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
