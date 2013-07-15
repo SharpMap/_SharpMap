@@ -1,0 +1,39 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SolutionDir Condition= "'$(SolutionDir)' == '' Or '$(SolutionDir)' == '*Undefined*'">.\</SolutionDir>
+    <SolutionFile>SharpMap.sln</SolutionFile>
+    <RequireRestoreConsent>false</RequireRestoreConsent>
+    <RestorePackages>true</RestorePackages>
+    <EnableNuGetPackageRestore>true</EnableNuGetPackageRestore>
+  </PropertyGroup>
+
+  <Target Name="EnableNPR">
+    <!--<Message Text="Setting Environment variable EnableNuGetPackageRestore"/>
+    <SetEnvironmentVariable EnvKey ="EnableNuGetPackageRestore" EnvValue="TRUE"/>-->
+  </Target>
+  
+  <Target Name="CleanDebug">
+    <MSBuild Projects="$(SolutionFile)" Targets="Clean" Properties="Configuration=Debug" />
+  </Target>
+
+  <Target Name="CleanRelease">
+    <MSBuild Projects="$(SolutionFile)" Targets="Clean" Properties="Configuration=Release" />
+  </Target>
+
+  <Target Name="BuildDebug" DependsOnTargets="EnableNPR">
+    <MSBuild Projects="$(SolutionFile)" Targets="SharpMap;SharpMap_UI;SharpMap_Extensions;SharpMap_Extensions_x86;SharpMap_Web" Properties="Configuration=Debug" />
+  </Target>
+
+  <Target Name="BuildRelease" DependsOnTargets="EnableNPR">
+    <MSBuild Projects="$(SolutionFile)" Targets="SharpMap;SharpMap_UI;SharpMap_Extensions;SharpMap_Extensions_x86;SharpMap_Web" Properties="Configuration=Release" />
+  </Target>
+
+  <!-- build only for now, test on build server -->
+  <Target Name="UnitTests">
+    <MSBuild Projects="$(SolutionFile)" Targets="UnitTests" Properties="Configuration=Release" />
+  </Target>
+
+  <!-- TODO: add targets here to build zip, NuGet, ... -->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+</Project>
