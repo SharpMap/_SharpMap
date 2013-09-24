@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SharpMap.Data.Providers.DataTablePoint" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>IEIsCAAAACDMYAIAEAABQoKAQAggCggAACAAAACwAAA=</HashCode>
+      <FileName>Data\Providers\DataTablePoint.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.NtsProvider" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="1.75" Width="3" />
+    <NestedTypes>
+      <Delegate Name="SharpMap.Data.Providers.NtsProvider.GeometryOperationDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\Providers\NtsProvider.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEIICAAAECCAAAEAEBABAIKAQAggCAAAAAAAAAAwAAA=</HashCode>
+      <FileName>Data\Providers\NtsProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Extensions.Data.Providers.DemisMapControlLegendHelper">
+    <Position X="17.75" Y="5.5" Width="2.5" />
+    <NestedTypes>
+      <Class Name="SharpMap.Extensions.Data.Providers.DemisMapControlLegendHelper.Tuple&lt;T, U&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\Providers\DemisMapControlLegendHelper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="SharpMap.Extensions.Data.Providers.DemisMapControlLegendHelper.Legend" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\Providers\DemisMapControlLegendHelper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="SharpMap.Extensions.Data.Providers.DemisMapControlLegendHelper.Setting&lt;T&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\Providers\DemisMapControlLegendHelper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="SharpMap.Extensions.Data.Providers.DemisMapControlLegendHelper.Ranges&lt;T&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\Providers\DemisMapControlLegendHelper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="SharpMap.Extensions.Data.Providers.DemisMapControlLegendHelper.Range&lt;T&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\Providers\DemisMapControlLegendHelper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QAAEAAAAAAAAAAACAAAAAAAAACAAQIAAAASAAAAAACI=</HashCode>
+      <FileName>Data\Providers\DemisMapControlLegendHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Extensions.Data.Providers.GdalFeatureProvider" BaseTypeListCollapsed="true">
+    <Position X="7.25" Y="1.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>IEICCgAAACCAIAIAEAABCoKQQAkgCAABAAAAAQCwIAA=</HashCode>
+      <FileName>Data\Providers\GdalFeatureProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Extensions.Data.Providers.GdalFunctionStore" BaseTypeListCollapsed="true">
+    <Position X="26.5" Y="1.75" Width="3.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="SharpMap.Extensions.Data.Providers.GdalFunctionStore.GdalState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\Providers\GdalFunctionStore.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Struct Name="SharpMap.Extensions.Data.Providers.GdalFunctionStore.RasterBoundaries" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\Providers\GdalFunctionStore.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>YAACBoQUBoIHMDIMCqACjosQAAsBQAFECgCMMAGAohg=</HashCode>
+      <FileName>Data\Providers\GdalFunctionStore.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Extensions.Data.Providers.GdalHelper">
+    <Position X="23.25" Y="7.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>QAgBAAAAAACAAAgAAAIICKoAAQIBAAIAAACABgAACQA=</HashCode>
+      <FileName>Data\Providers\GdalHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Extensions.Data.Providers.GdalRenderer">
+    <Position X="20.5" Y="5.5" Width="2.25" />
+    <NestedTypes>
+      <Struct Name="SharpMap.Extensions.Data.Providers.GdalRenderer.ImageSettings" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\Providers\GdalRenderer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAIEAAEAEAAAgAAAAAACAAAgAAAAUAAIBAABAAABAQ=</HashCode>
+      <FileName>Data\Providers\GdalRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Extensions.Data.Providers.OgrFeatureProvider" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="1.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>JEIICAUAAKWAIAIEEAADCoaY0AkgCpAAAAAUAACwIAA=</HashCode>
+      <FileName>Data\Providers\OgrFeatureProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Extensions.Data.Providers.OgrHelper">
+    <Position X="13.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Providers\OgrHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Extensions.Layers.BingLayer">
+    <Position X="21.25" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ACgAAAAAAAAAAACAAAAACAAAAAAABQAAAAgEIAAAAAA=</HashCode>
+      <FileName>Layers\BingLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Extensions.Layers.GdalRasterLayer">
+    <Position X="23.25" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\GdalRasterLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Extensions.Layers.GdalRegularGridRasterLayer">
+    <Position X="23" Y="5.25" Width="3.25" />
+    <InheritanceLine Type="SharpMap.Extensions.Layers.GdalRasterLayer" FixedToPoint="true">
+      <Path>
+        <Point X="24.5" Y="3.458" />
+        <Point X="24.5" Y="5.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\GdalRegularGridRasterLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Extensions.Layers.MapTransform">
+    <Position X="18" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EAgBABAABAAAAAQAQAAAAGAAAAAgAAAAAAAAAAAYAAA=</HashCode>
+      <FileName>Layers\MapTransform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Extensions.Layers.EmptyWebProxy" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAACAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\OpenStreetMapLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Extensions.Layers.OpenStreetMapLayer">
+    <Position X="19.25" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ACgAAAAAAAAAAACAAAAACAAAAAAABQAAAAgkIAAgAAA=</HashCode>
+      <FileName>Layers\OpenStreetMapLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9.16" />
+</ClassDiagram>

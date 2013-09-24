@@ -1,0 +1,200 @@
+[
+  {
+    "Time": "09/24/2013 14:19:33",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 40.0,
+    "ActualWeighted": 40.0,
+    "Max": 130.0,
+    "BuildNumber": 0,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:19:33",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 40.0,
+    "ActualWeighted": 40.0,
+    "Max": 130.0,
+    "BuildNumber": 1,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:20:40",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 39.0,
+    "ActualWeighted": 39.0,
+    "Max": 130.0,
+    "BuildNumber": 2,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:20:40",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 39.0,
+    "ActualWeighted": 39.0,
+    "Max": 130.0,
+    "BuildNumber": 3,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:24:25",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 40.0,
+    "ActualWeighted": 40.0,
+    "Max": 130.0,
+    "BuildNumber": 4,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:24:25",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 40.0,
+    "ActualWeighted": 40.0,
+    "Max": 130.0,
+    "BuildNumber": 5,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:26:14",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 41.0,
+    "ActualWeighted": 41.0,
+    "Max": 130.0,
+    "BuildNumber": 6,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:26:14",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 41.0,
+    "ActualWeighted": 41.0,
+    "Max": 130.0,
+    "BuildNumber": 7,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:29:14",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 40.0,
+    "ActualWeighted": 40.0,
+    "Max": 130.0,
+    "BuildNumber": 8,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:29:14",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 40.0,
+    "ActualWeighted": 40.0,
+    "Max": 130.0,
+    "BuildNumber": 9,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:32:04",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 43.0,
+    "ActualWeighted": 43.0,
+    "Max": 130.0,
+    "BuildNumber": 10,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:32:04",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 43.0,
+    "ActualWeighted": 43.0,
+    "Max": 130.0,
+    "BuildNumber": 11,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:36:30",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 39.0,
+    "ActualWeighted": 39.0,
+    "Max": 130.0,
+    "BuildNumber": 12,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:36:30",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 39.0,
+    "ActualWeighted": 39.0,
+    "Max": 130.0,
+    "BuildNumber": 13,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:39:04",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 39.0,
+    "ActualWeighted": 39.0,
+    "Max": 130.0,
+    "BuildNumber": 14,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:39:04",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 39.0,
+    "ActualWeighted": 39.0,
+    "Max": 130.0,
+    "BuildNumber": 15,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:40:15",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 40.0,
+    "ActualWeighted": 40.0,
+    "Max": 130.0,
+    "BuildNumber": 16,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:40:15",
+    "TestName": "MemoryFunctionStoreTest.GetVariableValueFilterIndexesShouldBeFast",
+    "Actual": 40.0,
+    "ActualWeighted": 40.0,
+    "Max": 130.0,
+    "BuildNumber": 17,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  }
+]

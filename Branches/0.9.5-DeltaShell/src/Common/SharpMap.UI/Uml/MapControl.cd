@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="SharpMap.UI.Forms.MapControl" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="1" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="SharpMap.UI.Forms.MapControl.MouseEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Forms\MapControl.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>kJOIEY2oQrDEpEPS4gUABgAwEBpUGBQA8AACMJBDXIk=</HashCode>
+      <FileName>Forms\MapControl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Tools.SelectTool">
+    <Position X="12.5" Y="25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>IICAQKIIVACEkQhgEYTACAACAxAkAIAQIDIiUBBCQgA=</HashCode>
+      <FileName>Tools\SelectTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.MapTool">
+    <Position X="11.25" Y="3.25" Width="3.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>gIiAwQAhwBCQgITIEAFgDJRAARJgCAEEMBgAAIACYAI=</HashCode>
+      <FileName>Tools\MapTool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Tools.ToolTipTool">
+    <Position X="4.25" Y="25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAGAAACAAAABAAAAAIAAAABAAAAAA=</HashCode>
+      <FileName>Tools\TooltipTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.CoverageProfile" BaseTypeListCollapsed="true">
+    <Position X="39.25" Y="29.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAAAEgAAAAaAAAAAAIAAASABAAEgBA=</HashCode>
+      <FileName>Tools\CoverageProfile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Tools.CoverageProfileTool">
+    <Position X="39.25" Y="25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BIAAABAAQAAAAAAAkAgAAAAIABAAAAAAIBAAAgBKgAA=</HashCode>
+      <FileName>Tools\CoverageProfileTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.CurvePointTool">
+    <Position X="26" Y="25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAgAAAAAAACAAEAAAABAABIAAAAAoBABAAACAAA=</HashCode>
+      <FileName>Tools\CurvePointTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.DeleteTool">
+    <Position X="19.5" Y="25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAABAAAAAAAAAIAAAAAACAAA=</HashCode>
+      <FileName>Tools\DeleteTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.LayoutComponentTool">
+    <Position X="6" Y="25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AwCAIAEIEQAAgkAAAIAAAAAAABBCAAAIIAAACAACIAA=</HashCode>
+      <FileName>Tools\Decorations\LayoutComponentTool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Tools.LegendTool">
+    <Position X="7" Y="30.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAEgGAAAAAEAAAAACIACAAEIBoAFBACICI=</HashCode>
+      <FileName>Tools\Decorations\LegendTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.LegendToolItem">
+    <Position X="3.75" Y="33.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAIIAABAEAAAiCBAAAgAQBAAiAAQAAggAAIACAACGBA=</HashCode>
+      <FileName>Tools\Decorations\LegendToolItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.MeasureTool">
+    <Position X="25" Y="29.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AgSAgAAIBAAAAACAEAAAAAAAAAAAAAAAIBAAAABAAAA=</HashCode>
+      <FileName>Tools\MeasureTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.MoveTool">
+    <Position X="16.5" Y="25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>CASBQAAIQGABAEAAAMBAGABEABIQCACAIBQAAEACkAA=</HashCode>
+      <FileName>Tools\MoveTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.MoveToolFeature" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="33.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAgBA=</HashCode>
+      <FileName>Tools\MoveToolFeature.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Tools.NewArrowLineTool">
+    <Position X="36.5" Y="25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAQAACiABAAkAAAERAABgAAAAFIBAEgAAIgKA=</HashCode>
+      <FileName>Tools\NewArrowLineTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.NewLineTool">
+    <Position X="31.5" Y="25" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AIAAgAsAQIQAgQLAAFhBCEBAAFMkAAEBIBAAAQBKgkA=</HashCode>
+      <FileName>Tools\NewLineTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.NewNodeTool">
+    <Position X="28.25" Y="25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABwABAAEgAAABAABAAAIIBIBAAAAgCgAA=</HashCode>
+      <FileName>Tools\NewNodeTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.NewPolygonTool">
+    <Position X="34.25" Y="25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIAAgAEAAAABAAAAAUAAAABAABIAAAAAIAAAAAACAEA=</HashCode>
+      <FileName>Tools\NewPolygonTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.NorthArrowTool">
+    <Position X="10" Y="30.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAIEAAAAAAgAAAAIAAAgQAAACAAAAAIBAAAAAAIAA=</HashCode>
+      <FileName>Tools\Decorations\NorthArrowTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.QueryResultEventArgs">
+    <Position X="27" Y="33.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\QueryResultEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.QueryTool">
+    <Position X="28" Y="29.5" Width="2.25" />
+    <InheritanceLine Type="SharpMap.UI.Tools.MapTool" ManuallyRouted="true">
+      <Path>
+        <Point X="12.875" Y="11.93" />
+        <Point X="12.875" Y="24.573" />
+        <Point X="27.877" Y="24.573" />
+        <Point X="27.877" Y="31.03" />
+        <Point X="28" Y="31.03" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAEAEABAAAAAABBAAAAAAAQAAABAAAA=</HashCode>
+      <FileName>Tools\QueryTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.ScaleBar">
+    <Position X="1" Y="29" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>CCIIoSAJIICmIQ+gCjpEEQCqgCDBIRAgxAkEI0EhaII=</HashCode>
+      <FileName>Tools\Decorations\ScaleBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.ScaleBarExtensions">
+    <Position X="3.75" Y="28.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Decorations\ScaleBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.ScaleBarTool">
+    <Position X="3.75" Y="30.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAACEAAAAAAAAAAAAAAAAAAIBAAAAAAIAA=</HashCode>
+      <FileName>Tools\Decorations\ScaleBarTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.FixedZoomInTool">
+    <Position X="35.75" Y="33.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAJAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Zooming\FixedZoomInTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.FixedZoomOutTool">
+    <Position X="40.25" Y="33.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAJAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Zooming\FixedZoomOutTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.PanZoomTool">
+    <Position X="29" Y="33.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAgAAADABAABAAAAAAIAAAAAACIAA=</HashCode>
+      <FileName>Tools\Zooming\PanZoomTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.PanZoomUsingMouseWheelTool">
+    <Position X="31.25" Y="33.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAACAgAEADABAABBAAAAAIAAAAAACIAE=</HashCode>
+      <FileName>Tools\Zooming\PanZoomUsingMouseWheelTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.ZoomHistoryTool">
+    <Position X="33.5" Y="33.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAACAAAAAAAIIAAAAEAAAAACAAEgAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Tools\Zooming\ZoomHistoryTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.ZoomState">
+    <Position X="36.5" Y="30.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Tools\Zooming\ZoomState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.ZoomTool">
+    <Position X="34.75" Y="31" Width="1.5" />
+    <InheritanceLine Type="SharpMap.UI.Tools.MapTool" ManuallyRouted="true">
+      <Path>
+        <Point X="12.875" Y="11.93" />
+        <Point X="12.875" Y="24.595" />
+        <Point X="24.918" Y="24.595" />
+        <Point X="24.918" Y="32.875" />
+        <Point X="35.417" Y="32.875" Type="JumpStart" />
+        <Point X="35.583" Y="32.875" Type="JumpEnd" />
+        <Point X="36.373" Y="32.875" />
+        <Point X="36.373" Y="31.608" />
+        <Point X="36.25" Y="31.608" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Zooming\ZoomTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Tools.Zooming.ZoomUsingRectangleTool">
+    <Position X="38" Y="33.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAABAAAAAgIAAAAAACCAg=</HashCode>
+      <FileName>Tools\Zooming\ZoomUsingRectangleTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.Snapping.SnappingHelper">
+    <Position X="22" Y="10.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAEABACQAAAAQAgAEAAAAAAAAQIAA=</HashCode>
+      <FileName>Editors\Snapping\SnappingHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.Snapping.SnapResult" BaseTypeListCollapsed="true">
+    <Position X="22" Y="8" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAIAABAACAACAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Editors\Snapping\SnapResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.Snapping.SnapRule" BaseTypeListCollapsed="true">
+    <Position X="22" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAIAAEQAAAAAAAAAAAAAAAAAAAACAgAAEAA=</HashCode>
+      <FileName>Editors\Snapping\SnapRule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Editors.Snapping.SnapTool">
+    <Position X="9.25" Y="25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>CAQAAAAAQAEABgAAAAQgAAAAAAAAAAAQABAEAAAIAAA=</HashCode>
+      <FileName>Editors\Snapping\SnapTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Mapping.TrackerSymbolHelper">
+    <Position X="25" Y="7.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\TrackerSymbolHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Helpers.MapControlHelper">
+    <Position X="11.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\MapControlHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Helpers.GraphicsHelper">
+    <Position X="22.5" Y="13.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Helpers\GraphicsHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.FallOff.LinearFallOffPolicy">
+    <Position X="27" Y="12.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAABAAAIABAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\FallOff\LinearFallOffPolicy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.FallOff.NoFallOffPolicy">
+    <Position X="28.75" Y="10.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAABAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\FallOff\NoFallOffPolicy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Editors.FallOff.RingFallOffPolicy">
+    <Position X="29.75" Y="13" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\FallOff\RingFallOffPolicy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.FeatureEditor">
+    <Position X="33.75" Y="0.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>CRIAAAAIECoGAEAAAABQAABAIxEAAIAcoBAUQQAiUAA=</HashCode>
+      <FileName>Editors\FeatureEditor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.UI.Editors.FeatureEditorFactory">
+    <Position X="31" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\FeatureEditorFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.CoverageProfileEditor">
+    <Position X="35.5" Y="13.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Editors\CoverageProfileEditor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.LineStringEditor">
+    <Position X="34.75" Y="9.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAIEAAAQAAAAAwAAAIAAAAASQAAAAAA=</HashCode>
+      <FileName>Editors\LineStringEditor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.PointEditor">
+    <Position X="32.75" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAASQAAAAAA=</HashCode>
+      <FileName>Editors\PointEditor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.RegularGridCoverageCellEditor">
+    <Position X="33" Y="13.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAACAAA=</HashCode>
+      <FileName>Editors\RegularGridCoverageCellEditor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.UI.Editors.TrackerFeature" BaseTypeListCollapsed="true">
+    <Position X="25" Y="4.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAgAAAAQAAAAAAAgAAEAAAAAgBI=</HashCode>
+      <FileName>Editors\TrackerFeature.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SharpMap.UI.Forms.IMapControl">
+    <Position X="0.5" Y="1.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAEIAYQkBxBAgEAAIAgAAkAwAIgEEBAA0AACCBABQQA=</HashCode>
+      <FileName>Forms\IMapControl.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Tools" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="SharpMap.UI.Tools.IMapTool">
+    <Position X="5.25" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIiAgAAAQACAAISAEABABARAARJgCAAEMBAAAIACIAA=</HashCode>
+      <FileName>Tools\IMapTool.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.UI.Editors.Snapping.ISnapRule">
+    <Position X="22" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAACAgAAEAA=</HashCode>
+      <FileName>Editors\Snapping\ISnapRule.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.UI.Editors.IFeatureEditor">
+    <Position X="27.75" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AQIAAAAAECoCAEAAAABQAABAIREAAIAUIBAQQQAgEAA=</HashCode>
+      <FileName>Editors\IFeatureEditor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.UI.Editors.FallOff.IFallOffPolicy">
+    <Position X="28.75" Y="8.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAABAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\FallOff\IFallOffPolicy.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.UI.Editors.IFeatureRelationEditor">
+    <Position X="25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAEAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\IFeatureRelationEditor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="SharpMap.UI.Tools.MultiSelectionMode">
+    <Position X="10.5" Y="29" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\SelectTool.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.UI.Tools.ScaleBarStyle">
+    <Position X="7" Y="36" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAIAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Tools\Decorations\ScaleBar.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.UI.Tools.sbScaleText">
+    <Position X="7" Y="37.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAA=</HashCode>
+      <FileName>Tools\Decorations\ScaleBar.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.UI.Tools.MapUnits">
+    <Position X="8.75" Y="36" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAFAAAAAAAAAAAAAAAAAAYBABAAACAAAA=</HashCode>
+      <FileName>Tools\Decorations\ScaleBar.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.UI.Editors.Snapping.SnapRole">
+    <Position X="22" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAiAAAAGAAAAAAAAAAAAAAAAAgAAAAAEAAAI=</HashCode>
+      <FileName>Editors\Snapping\SnapRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.UI.Editors.FallOff.FallOffPolicyRule">
+    <Position X="27" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Editors\FallOff\FallOffPolicyRule.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="SharpMap.UI.Editors.FeatureEditorCreationEventHandler">
+    <Position X="31" Y="2.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAIAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\FeatureEditorCreationEventHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SharpMap.UI.Editors.WorkerFeatureCreated">
+    <Position X="31" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\IFeatureEditor.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SharpMap.UI.Editors.AddRelatedFeature">
+    <Position X="24.5" Y="2.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAEAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\IFeatureRelationEditor.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

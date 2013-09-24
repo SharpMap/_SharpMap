@@ -1,0 +1,200 @@
+[
+  {
+    "Time": "09/24/2013 14:19:55",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 604.0,
+    "ActualWeighted": 604.0,
+    "Max": 2000.0,
+    "BuildNumber": 0,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:19:55",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 604.0,
+    "ActualWeighted": 604.0,
+    "Max": 2000.0,
+    "BuildNumber": 1,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:20:43",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 601.0,
+    "ActualWeighted": 601.0,
+    "Max": 2000.0,
+    "BuildNumber": 2,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:20:43",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 601.0,
+    "ActualWeighted": 601.0,
+    "Max": 2000.0,
+    "BuildNumber": 3,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:24:28",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 603.0,
+    "ActualWeighted": 603.0,
+    "Max": 2000.0,
+    "BuildNumber": 4,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:24:28",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 603.0,
+    "ActualWeighted": 603.0,
+    "Max": 2000.0,
+    "BuildNumber": 5,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:26:17",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 599.0,
+    "ActualWeighted": 599.0,
+    "Max": 2000.0,
+    "BuildNumber": 6,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:26:17",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 599.0,
+    "ActualWeighted": 599.0,
+    "Max": 2000.0,
+    "BuildNumber": 7,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:29:18",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 596.0,
+    "ActualWeighted": 596.0,
+    "Max": 2000.0,
+    "BuildNumber": 8,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:29:18",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 596.0,
+    "ActualWeighted": 596.0,
+    "Max": 2000.0,
+    "BuildNumber": 9,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:32:07",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 602.0,
+    "ActualWeighted": 602.0,
+    "Max": 2000.0,
+    "BuildNumber": 10,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:32:07",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 602.0,
+    "ActualWeighted": 602.0,
+    "Max": 2000.0,
+    "BuildNumber": 11,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:36:33",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 602.0,
+    "ActualWeighted": 602.0,
+    "Max": 2000.0,
+    "BuildNumber": 12,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:36:33",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 602.0,
+    "ActualWeighted": 602.0,
+    "Max": 2000.0,
+    "BuildNumber": 13,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:39:07",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 625.0,
+    "ActualWeighted": 625.0,
+    "Max": 2000.0,
+    "BuildNumber": 14,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:39:07",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 625.0,
+    "ActualWeighted": 625.0,
+    "Max": 2000.0,
+    "BuildNumber": 15,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:40:18",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 632.0,
+    "ActualWeighted": 632.0,
+    "Max": 2000.0,
+    "BuildNumber": 16,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:40:18",
+    "TestName": "NetworkCoverageTest.AddingTimeSlicesShouldBeFastUsingMemoryStore",
+    "Actual": 632.0,
+    "ActualWeighted": 632.0,
+    "Max": 2000.0,
+    "BuildNumber": 17,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  }
+]

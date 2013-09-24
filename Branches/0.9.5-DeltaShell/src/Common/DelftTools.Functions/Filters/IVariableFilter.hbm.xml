@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="DelftTools.Functions" assembly="DelftTools.Functions"  auto-import="false">
+  <class abstract="true" name="DelftTools.Functions.Filters.IVariableFilter, DelftTools.Functions" table="variable_filters" batch-size="500">
+    <id name="Id" column="id" type="System.Int64" unsaved-value="0">
+      <generator class="increment" />
+    </id>
+
+    <discriminator column="type" type="string"/>
+
+    <many-to-one name="Variable" class="DelftTools.Functions.IVariable, DelftTools.Functions" not-null="false" lazy="false"/>
+
+    <subclass name="DelftTools.Functions.Filters.VariableValueFilter`1[System.DateTime]" discriminator-value="variable_filter_datetime" >
+      <list name="Values" table="variable_filter_datetime_values" >
+        <key column="variable_filter_id"/>
+        <index column="variable_filter_value_index"/>
+        <element column="value_datetime" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DateTimeStringUserType,DeltaShell.Plugins.Data.NHibernate"/>
+      </list>
+    </subclass>
+    <subclass name="DelftTools.Functions.Filters.VariableValueFilter`1[System.Double]" discriminator-value="variable_filter_double" >
+      <list name="Values" table="variable_filter_double_values" >
+        <key column="variable_filter_id"/>
+        <index column="variable_filter_value_index"/>
+        <element column="value_double" type="DeltaShell.Plugins.Data.NHibernate.DelftTools.Shell.Core.Dao.DoubleUserType,DeltaShell.Plugins.Data.NHibernate"/>
+      </list>
+    </subclass>
+  </class>  
+</hibernate-mapping>

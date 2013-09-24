@@ -1,0 +1,552 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="SharpMap.Map">
+    <Position X="38" Y="4.5" Width="3.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="SharpMap.Map.MapViewChangedHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Map\Map.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="SharpMap.Map.MapLayerRenderedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Map\Map.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="SharpMap.Map.MapRenderedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Map\Map.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <AssociationLine Name="Layers" Type="SharpMap.Layers.ILayer" FixedFromPoint="true">
+      <Path>
+        <Point X="38" Y="9" />
+        <Point X="35.75" Y="9" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>JIoGCgCCJCAQgMKOtIAEwpYCNRCEAhGGOpEBJCiLExo=</HashCode>
+      <FileName>Map\Map.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Layers" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.Layer">
+    <Position X="8.75" Y="21" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="SharpMap.Layers.Layer.LayerRenderedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Layers\Layer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQEEAIJBTIAAgGUCEIEBA0ZHAgkFBBIMJAIaAAACBQ=</HashCode>
+      <FileName>Layers\Layer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.VectorLayer">
+    <Position X="8.5" Y="31.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AACAAIAAACAARgDAEECECBAABggEAAAiRAAAIAAAABA=</HashCode>
+      <FileName>Layers\VectorLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.GroupLayer">
+    <Position X="5.75" Y="31.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAADABAASAAIAAggAAAAGAAAEEAIAIJACAAFU=</HashCode>
+      <FileName>Layers\GroupLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.LabelLayer">
+    <Position X="3" Y="31.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="SharpMap.Layers.LabelLayer.MultipartGeometryBehaviourEnum" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Layers\LabelLayer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Delegate Name="SharpMap.Layers.LabelLayer.GetLabelMethod" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Layers\LabelLayer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AACAAAAAIDQCAiCdAACASAAAAIgFAAAABQAEIAJQBBE=</HashCode>
+      <FileName>Layers\LabelLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.RegularGridCoverageLayer">
+    <Position X="19.5" Y="31.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>CAQQAggBAAIICACAFgCAAAIAAAAABAIQABAYYgAggBA=</HashCode>
+      <FileName>Layers\RegularGridCoverageLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.DiscreteGridPointCoverageLayer">
+    <Position X="14" Y="31.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAQQAAgAIKAIKCCgBghgCAIBAAkEECKBBAJgIgAAABA=</HashCode>
+      <FileName>Layers\DiscreteGridPointCoverageLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.FeatureCoverageLayer">
+    <Position X="6.75" Y="39.5" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAQwAAgAEAAKCgCQBgAAAAIQEAgQAIaAAAIIogAiABA=</HashCode>
+      <FileName>Layers\FeatureCoverageLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.NetworkCoverageBaseLayer">
+    <Position X="10.75" Y="37.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAIASAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\NetworkCoverageBaseLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.NetworkCoverageGroupLayer">
+    <Position X="3.75" Y="39" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>CAQQAAiAAAAICQKEJgAABAIAAIAAQAIEAAAIAgAgAAA=</HashCode>
+      <FileName>Layers\NetworkCoverageGroupLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Layers.NetworkCoverageLocationLayer">
+    <Position X="9.75" Y="40" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAQAAAIAAAgAA=</HashCode>
+      <FileName>Layers\NetworkCoverageLocationLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Layers.NetworkCoverageSegmentLayer">
+    <Position X="12.5" Y="40" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAACIAAAAAAAAAAAAAAAAQAAAIAAAAAA=</HashCode>
+      <FileName>Layers\NetworkCoverageSegmentLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Layers.WmsLayer">
+    <Position X="17" Y="31.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IAgAEAgAiAFJIY6BACBGAggCAAAMAABY3ABAYAEAAFA=</HashCode>
+      <FileName>Layers\WmsLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Data.Providers.DataTableFeatureProvider">
+    <Position X="3.25" Y="3.25" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>BGZIiAAAQCCAAAAAEAABDIKSYCkgCAABAAEAQAB0AAA=</HashCode>
+      <FileName>Data\Providers\DataTableFeatureProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.FeatureCollection">
+    <Position X="6.5" Y="3.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>KEYQCAgAACCIAAEAFgABAIKIQgggCEIAIBAAAgEwAAA=</HashCode>
+      <FileName>Data\Providers\FeatureCollection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Data.Providers.NetworkCoverageFeatureCollection">
+    <Position X="6.5" Y="12.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAADAAQAAAAAFEAABBAAAQAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Providers\NetworkCoverageFeatureCollection.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="NetworkCoverageFeatureType" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SharpMap.Data.Providers.ShapeFile">
+    <Position X="9.75" Y="3.25" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="SharpMap.Data.Providers.ShapeFile.FilterMethod" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\Providers\ShapeFile.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>pGIICEBAAiCgIJIAkQQDCsKQwAshGSDAEIAUgQCwZAA=</HashCode>
+      <FileName>Data\Providers\ShapeFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.CategorialTheme">
+    <Position X="25" Y="30" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>WEAAgAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAJA=</HashCode>
+      <FileName>Rendering\Thematics\CategorialTheme.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.CategorialThemeItem">
+    <Position X="31.75" Y="36" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAACAAAAAAAACAAAAAgAAAACBA=</HashCode>
+      <FileName>Rendering\Thematics\CategorialThemeItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.ColorBlend" BaseTypeListCollapsed="true">
+    <Position X="32" Y="30" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAgIAgEAAAAggAAAAAAAAAgAAISAQIAAgBAgCBA=</HashCode>
+      <FileName>Rendering\Thematics\ColorBlend.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.CustomTheme" BaseTypeListCollapsed="true">
+    <Position X="25" Y="25.75" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="SharpMap.Rendering.Thematics.CustomTheme.GetStyleMethod" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Rendering\Thematics\CustomTheme.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>GEAAAAAAAQAQAIBAAAAAAAAAAAAAAAAAQAAAAAAAAJA=</HashCode>
+      <FileName>Rendering\Thematics\CustomTheme.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.GradientTheme">
+    <Position X="28.75" Y="30" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>GUIQAAAACREAgAAAEJIKAgAACQIQACEYIhAAAxAAEBA=</HashCode>
+      <FileName>Rendering\Thematics\GradientTheme.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.GradientThemeItem">
+    <Position X="37.75" Y="36" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Rendering\Thematics\GradientThemeItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.QuantityTheme">
+    <Position X="27" Y="30" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>WEgAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJA=</HashCode>
+      <FileName>Rendering\Thematics\QuantityTheme.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.QuantityThemeItem">
+    <Position X="34.75" Y="36" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAACAQAEIAAAACAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Rendering\Thematics\QuantityThemeItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.Theme">
+    <Position X="26.75" Y="25.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>GEAAAAAAAQAAAKAAAAAAAAAAAAAAACAAAAAAABAAABA=</HashCode>
+      <FileName>Rendering\Thematics\Theme.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.ThemeFactory">
+    <Position X="34.25" Y="25.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAQAAAQACACAIAAAAAAAAAAgAA=</HashCode>
+      <FileName>Rendering\Thematics\ThemeFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.ThemeFactoryHelper">
+    <Position X="25" Y="34.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Rendering\Thematics\ThemeFactoryHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.ThemeHelper">
+    <Position X="31" Y="25.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\ThemeHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.ThemeItem">
+    <Position X="35.5" Y="32" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAACBQAAAAAAAAAAAAEAAAABAAAAAAACBA=</HashCode>
+      <FileName>Rendering\Thematics\ThemeItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.FeatureCoverageRenderer" BaseTypeListCollapsed="true">
+    <Position X="10" Y="44.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAACACEgAAAAAAAAAAAAAAABAACAAAAAA=</HashCode>
+      <FileName>Rendering\FeatureCoverageRenderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.LabelBox" BaseTypeListCollapsed="true">
+    <Position X="29.25" Y="25.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAQAQAAQAEgAAAAIAAAACACAAAAAAIA=</HashCode>
+      <FileName>Rendering\Label.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Label" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="33.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAQAAIQEAACAAgAAAAIUAAAIFABACAACAAA=</HashCode>
+      <FileName>Rendering\Label.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharpMap.Rendering.LabelCollisionDetection">
+    <Position X="0.5" Y="31.75" Width="2.25" />
+    <NestedTypes>
+      <Delegate Name="SharpMap.Rendering.LabelCollisionDetection.LabelFilterMethod" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Rendering\LabelCollisionDetection.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\LabelCollisionDetection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.LineRectangleClipHelper">
+    <Position X="35" Y="28.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAIAgAAABAAAAAAAAAAAAAgAAACAAAAAQA=</HashCode>
+      <FileName>Rendering\LineRectangleClipHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.MapHelper">
+    <Position X="25" Y="35.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAgAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\MapHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.NetworkCoverageLocationRenderer">
+    <Position X="17.75" Y="42.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Rendering\NetworkCoverageLocationRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.NetworkCoverageRenderer">
+    <Position X="16.5" Y="40.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAACABEgAAAAAAAAAAAAAAABAACAAAAAA=</HashCode>
+      <FileName>Rendering\NetworkCoverageRenderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.NetworkCoverageSegmentRenderer">
+    <Position X="14.75" Y="42.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AgCAAAAAAAAEgAAAGAAAAAABBAAAAgBAIBABAAAAICA=</HashCode>
+      <FileName>Rendering\NetworkCoverageSegmentRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.RegularGridCoverageRenderer" BaseTypeListCollapsed="true">
+    <Position X="19.5" Y="38" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACIAAAICAAEgAACAAAAAAAAAAAAFBICEAAAAQ=</HashCode>
+      <FileName>Rendering\RegularGridCoverageRenderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.VectorRenderingHelper">
+    <Position X="10.75" Y="32.5" Width="2" />
+    <NestedTypes>
+      <Enum Name="SharpMap.Rendering.VectorRenderingHelper.ClipState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Rendering\VectorRenderingHelper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABJAAIAAgAAAAAAAIAAACQAQEAAAABAIAAQAAAAACAI=</HashCode>
+      <FileName>Rendering\VectorRenderingHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Exceptions.RenderException">
+    <Position X="37.5" Y="32.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\RenderExceptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Layers.RouteLayerHelper">
+    <Position X="25" Y="37.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\RouteLayerHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="SharpMap.Data.Providers.IFeatureProvider">
+    <Position X="26.75" Y="9" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AEIACAAAAACAAAAAEAABAIKAQAggCAAAAAAAAAAwAAA=</HashCode>
+      <FileName>Data\Providers\IFeatureProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.ILayer">
+    <Position X="32.75" Y="5.75" Width="3" />
+    <AssociationLine Name="CustomRenderers" Type="SharpMap.Rendering.IFeatureRenderer">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.377" Y="0.072" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAQGAAAAADAAAgCQCAAEAAQJDAgAEBAIEJAIQAAAAAA=</HashCode>
+      <FileName>Layers\ILayer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DataSource" />
+      <Property Name="Theme" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="CustomRenderers" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="SharpMap.Layers.ICoverageLayer">
+    <Position X="32.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\ICoverageLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.IFeatureCoverageLayer">
+    <Position X="31.5" Y="14.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Layers\IFeatureCoverageLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.IGroupLayer">
+    <Position X="35" Y="12.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAIAAAAAAE=</HashCode>
+      <FileName>Layers\IGroupLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.INetworkCoverageGroupLayer">
+    <Position X="29" Y="14.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAIAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\INetworkCoverageGroupLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Layers.IRegularGridCoverageLayer">
+    <Position X="34" Y="14.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layers\IRegularGridCoverageLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Data.Providers.IFileBasedFeatureProvider">
+    <Position X="26.5" Y="14.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Data\Providers\IFileBasedFeatureProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.Utils.IO.IFileBased">
+    <Position X="24.75" Y="10.75" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="SharpMap.Rendering.Thematics.ITheme">
+    <Position X="28" Y="4.25" Width="2" />
+    <AssociationLine Name="ThemeItems" Type="SharpMap.Rendering.Thematics.IThemeItem" FixedFromPoint="true">
+      <Path>
+        <Point X="28" Y="5.25" />
+        <Point X="25.5" Y="5.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>GEAAAAAAAQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\ITheme.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ThemeItems" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.Thematics.IThemeItem">
+    <Position X="24" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAACAAAAAAAAAAAAAAAAAAABAAAAAAACAA=</HashCode>
+      <FileName>Rendering\Thematics\IThemeItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.IFeatureRenderer">
+    <Position X="27.5" Y="6.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAACAAEgAAAAAAAAAAAAAAABAACAAAAAA=</HashCode>
+      <FileName>Rendering\IFeatureRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="SharpMap.Data.Providers.NetworkCoverageFeatureType">
+    <Position X="3.25" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Providers\NetworkCoverageFeatureType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharpMap.Rendering.Thematics.QuantityThemeIntervalType">
+    <Position X="37.5" Y="34" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Thematics\QuantityThemeIntervalType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9.16" />
+</ClassDiagram>

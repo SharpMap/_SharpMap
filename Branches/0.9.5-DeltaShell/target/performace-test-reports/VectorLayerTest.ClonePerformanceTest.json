@@ -1,0 +1,178 @@
+[
+  {
+    "Time": "09/24/2013 14:20:56",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 0,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:20:56",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 1,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:24:40",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 2,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:24:40",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 3,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:26:30",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 4,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:26:30",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 5,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:29:30",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 6,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:29:30",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 7,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:32:20",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 8,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:32:20",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 9,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:36:45",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 12.0,
+    "ActualWeighted": 12.0,
+    "Max": 230.0,
+    "BuildNumber": 10,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:36:45",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 12.0,
+    "ActualWeighted": 12.0,
+    "Max": 230.0,
+    "BuildNumber": 11,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:39:20",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 12,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:39:20",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 13,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:40:31",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 14,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:40:31",
+    "TestName": "VectorLayerTest.ClonePerformanceTest",
+    "Actual": 11.0,
+    "ActualWeighted": 11.0,
+    "Max": 230.0,
+    "BuildNumber": 15,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  }
+]
