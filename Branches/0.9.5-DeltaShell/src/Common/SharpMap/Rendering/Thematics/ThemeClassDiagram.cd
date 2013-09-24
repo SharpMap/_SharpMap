@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="SharpMap.Rendering.Thematics.GradientThemeItem" Collapsed="true">
+    <Position X="4.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\GradientThemeItem.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.Theme" Collapsed="true">
+    <Position X="0.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\Theme.cs</FileName>
+      <HashCode>GEAAAAAAAAAAAAAAAAAACAAABAAAACAAAAABABAAABA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.QuantityTheme" Collapsed="true">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\QuantityTheme.cs</FileName>
+      <HashCode>AEgAgAAAAAAAAIAAAAAAAAAAAAAAAIAAAAAAAAAAAJA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.GradientTheme" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\GradientTheme.cs</FileName>
+      <HashCode>AUIQAIAACBEBgAAAEJBCAQBAAAAAAIEIMgBAAwAAGBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.CategorialTheme" Collapsed="true">
+    <Position X="4.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\CategorialTheme.cs</FileName>
+      <HashCode>AEAAgAAAAAAABIAAAAAAAAAAAAAAAIAAAAAAAAAAAJA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.CategorialThemeItem" Collapsed="true">
+    <Position X="2.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\CategorialThemeItem.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAACAAAAAgAAAACBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.QuantityThemeItem" Collapsed="true">
+    <Position X="0.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\QuantityThemeItem.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAACAAAAAAAAAAAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.CustomTheme" Collapsed="true">
+    <Position X="2.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\CustomTheme.cs</FileName>
+      <HashCode>GEAAAAAAAAAQAABAAAAAAAAAAAAAAAAAQAAAAAAAAJA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SharpMap.Rendering.Thematics.ThemeItem" Collapsed="true">
+    <Position X="0.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\ThemeItem.cs</FileName>
+      <HashCode>AAAAAAAAEAAAABAAAAAAAAAAAAAEAAAABAAAAAAACBA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SharpMap.Rendering.Thematics.ITheme" Collapsed="true">
+    <Position X="0.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\ITheme.cs</FileName>
+      <HashCode>GEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharpMap.Rendering.Thematics.IThemeItem" Collapsed="true">
+    <Position X="0.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rendering\Thematics\IThemeItem.cs</FileName>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAABAAAAAAACAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+</ClassDiagram>

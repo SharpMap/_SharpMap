@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="false" namespace="DelftTools.Units" assembly="DelftTools.Units">
+  <class name="DelftTools.Units.Unit, DelftTools.Units" table="units" lazy="false" >
+    <id name="Id" column="id" type="Int64" unsaved-value="0">
+      <generator class="increment" />
+    </id>
+    <property name="Name" />
+    <property name="Symbol" />
+  </class>
+</hibernate-mapping>

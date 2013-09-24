@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Comment CommentText="L^-1, L^3, M^2">
+    <Position X="11.289" Y="5.022" Height="0.271" Width="1.017" />
+  </Comment>
+  <Comment CommentText="L * M / T">
+    <Position X="14.612" Y="4.873" Height="0.343" Width="0.7" />
+  </Comment>
+  <Comment CommentText="m^3/s">
+    <Position X="4.292" Y="5.002" Height="0.263" Width="0.754" />
+  </Comment>
+  <Comment CommentText="m^2, km">
+    <Position X="1.458" Y="5.028" Height="0.271" Width="0.7" />
+  </Comment>
+  <Comment CommentText="TransformedUnit = Multiplier * BaseUnit ^ Power + Offset&#xD;&#xA;&#xD;&#xA;m^2 = 1e6 * km ^ 2 + 0 = 1e6 * BaseUnit ^ 2 + 0&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;ProductUnit = Product { ProductUnit(i) }&#xD;&#xA;&#xD;&#xA;m^3 / s = m ^ 3 * s ^ -1 = TransformedUnit1 * TransformedUnit2&#xD;&#xA;">
+    <Position X="10.574" Y="0.5" Height="1.37" Width="3.983" />
+  </Comment>
+  <Class Name="DelftTools.Units.Parameter">
+    <Position X="9.25" Y="8.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACEAAAAAAgAIQAoBAAAAQAAABEACAAQAAwAAAAEhA=</HashCode>
+      <FileName>Parameter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="DelftTools.Units.IUnitSystem">
+    <Position X="7" Y="1.75" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="DerivedUnits" Type="DelftTools.Units.IUnit" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="2.846" />
+        <Point X="4" Y="2.846" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAgAAAAAAAAAAQAAAAAIQAAAAgAAAACEAA=</HashCode>
+      <FileName>IUnitSystem.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="BaseDimensions" />
+      <Property Name="BaseUnits" />
+      <Property Name="DerivedUnits" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="DelftTools.Units.IDimension">
+    <Position X="12" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>IDimension.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.Units.IUnit">
+    <Position X="1.25" Y="2" Width="2.75" />
+    <AssociationLine Name="Dimension" Type="DelftTools.Units.IDimension" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="3.313" />
+        <Point X="6.375" Y="3.313" />
+        <Point X="6.375" Y="3.312" />
+        <Point X="12" Y="3.312" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.308" Y="0.123" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAQAAAAAQAAAAAAAAAAACAA=</HashCode>
+      <FileName>IUnit.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Dimension" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="DelftTools.Units.IUnitConvertor">
+    <Position X="0.75" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IUnitConvertor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.Units.IProductUnit">
+    <Position X="2.75" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>IProductUnit.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.Units.IProductDimension">
+    <Position X="12.75" Y="4.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IProductDimension.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.Units.ITransformedUnit">
+    <Position X="0.5" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAABAAAAAAAABAAAAAAAAgAA=</HashCode>
+      <FileName>ITransformedUnit.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.Units.ITransformedDimension">
+    <Position X="10" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAABAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>ITransformedDimension.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DelftTools.Units.IMeasurable">
+    <Position X="5.25" Y="7.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAIAAAAAAAAABAAAAAAAAAAAAAEBA=</HashCode>
+      <FileName>IMeasurable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

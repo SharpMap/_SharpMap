@@ -1,0 +1,24 @@
+[
+  {
+    "Time": "09/24/2013 14:19:51",
+    "TestName": "MultiDimensionalArrayTest.PerformanceRemoveValues",
+    "Actual": 16276.0,
+    "ActualWeighted": 16276.0,
+    "Max": 95000.0,
+    "BuildNumber": 0,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:19:51",
+    "TestName": "MultiDimensionalArrayTest.PerformanceRemoveValues",
+    "Actual": 16276.0,
+    "ActualWeighted": 16276.0,
+    "Max": 95000.0,
+    "BuildNumber": 1,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  }
+]

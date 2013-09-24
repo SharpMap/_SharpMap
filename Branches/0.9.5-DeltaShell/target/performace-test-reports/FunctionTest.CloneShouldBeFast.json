@@ -1,0 +1,200 @@
+[
+  {
+    "Time": "09/24/2013 14:19:29",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 156.0,
+    "ActualWeighted": 156.0,
+    "Max": 840.0,
+    "BuildNumber": 0,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:19:29",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 156.0,
+    "ActualWeighted": 156.0,
+    "Max": 840.0,
+    "BuildNumber": 1,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:20:36",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 213.0,
+    "ActualWeighted": 213.0,
+    "Max": 840.0,
+    "BuildNumber": 2,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:20:36",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 213.0,
+    "ActualWeighted": 213.0,
+    "Max": 840.0,
+    "BuildNumber": 3,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:24:21",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 155.0,
+    "ActualWeighted": 155.0,
+    "Max": 840.0,
+    "BuildNumber": 4,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:24:21",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 155.0,
+    "ActualWeighted": 155.0,
+    "Max": 840.0,
+    "BuildNumber": 5,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:26:10",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 152.0,
+    "ActualWeighted": 152.0,
+    "Max": 840.0,
+    "BuildNumber": 6,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:26:10",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 152.0,
+    "ActualWeighted": 152.0,
+    "Max": 840.0,
+    "BuildNumber": 7,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:29:11",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 154.0,
+    "ActualWeighted": 154.0,
+    "Max": 840.0,
+    "BuildNumber": 8,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:29:11",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 154.0,
+    "ActualWeighted": 154.0,
+    "Max": 840.0,
+    "BuildNumber": 9,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:32:00",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 152.0,
+    "ActualWeighted": 152.0,
+    "Max": 840.0,
+    "BuildNumber": 10,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:32:00",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 152.0,
+    "ActualWeighted": 152.0,
+    "Max": 840.0,
+    "BuildNumber": 11,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:36:26",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 153.0,
+    "ActualWeighted": 153.0,
+    "Max": 840.0,
+    "BuildNumber": 12,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:36:26",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 153.0,
+    "ActualWeighted": 153.0,
+    "Max": 840.0,
+    "BuildNumber": 13,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:39:00",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 154.0,
+    "ActualWeighted": 154.0,
+    "Max": 840.0,
+    "BuildNumber": 14,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:39:00",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 154.0,
+    "ActualWeighted": 154.0,
+    "Max": 840.0,
+    "BuildNumber": 15,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:40:11",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 155.0,
+    "ActualWeighted": 155.0,
+    "Max": 840.0,
+    "BuildNumber": 16,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  },
+  {
+    "Time": "09/24/2013 14:40:11",
+    "TestName": "FunctionTest.CloneShouldBeFast",
+    "Actual": 155.0,
+    "ActualWeighted": 155.0,
+    "Max": 840.0,
+    "BuildNumber": 17,
+    "MachineHddRank": 1.0,
+    "MachineRank": 1.0,
+    "UseMachineHddRank": false
+  }
+]

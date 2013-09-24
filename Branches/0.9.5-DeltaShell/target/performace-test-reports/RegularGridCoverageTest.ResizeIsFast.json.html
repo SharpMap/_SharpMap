@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--[if IE]><script language="javascript" type="text/javascript" src="../../build/tools/flot/js/excanvas.min.js"></script><![endif]-->
+    <script language="javascript" type="text/javascript" src="../../build/tools/flot/js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="../../build/tools/flot/js/jquery.flot.js"></script>
+ </head>
+    <body>
+
+    <div id="placeholder" style="width:850px;height:300px;"></div>
+
+<script id="source" language="javascript" type="text/javascript">
+$(function () {
+    var valuesGreen = [[0, 214], [1, 214], [2, 185], [3, 185], [4, 211], [5, 211], [6, 216], [7, 216], [8, 184], [9, 184], [10, 201], [11, 201], [12, 354], [13, 354], [14, 206], [15, 206], ];
+    var valuesRed = [];
+    var thresholds = [[0, 431], [1, 431], [2, 431], [3, 431], [4, 431], [5, 431], [6, 431], [7, 431], [8, 431], [9, 431], [10, 431], [11, 431], [12, 431], [13, 431], [14, 431], [15, 431], ];
+
+    $.plot($("#placeholder"), [
+        {
+            label: "threshold",
+            data: thresholds,
+            color: "rgb(250, 10, 10)",
+            lines: { show: true },
+        },
+        {
+            label: "passed",
+            data: valuesGreen,
+            color: "rgb(30, 180, 20)",
+            points: { show: true }
+        },
+        {
+            label: "failed",
+            data: valuesRed,
+            color: "rgb(250, 10, 10)",
+            points: { show: true }
+        }],
+      
+        { 
+            grid: { hoverable: true, autoHighlight: true },
+            legend: { show: false },
+            yaxis: { min: 0 }
+        }
+    );
+
+    function showTooltip(x, y, contents, color) {
+        $('<div id="tooltip">' + contents + '</div>').css( {
+            position: 'absolute',
+            display: 'none',
+            top: y + 5,
+            left: x + 20,
+            border: '1px solid #aaa',
+            padding: '2px',
+            'background-color': '#eee',
+            'color': color,
+            opacity: 0.80
+        }).appendTo("body").fadeIn(200);
+    }
+
+    var previousPoint = null;
+    $("#placeholder").bind("plothover", function (event, pos, item) {
+        if (item) {
+            if (previousPoint != item.datapoint) {
+                previousPoint = item.datapoint;
+                   
+                $("#tooltip").remove();
+                var x = item.datapoint[0].toFixed(2),
+                    y = item.datapoint[1].toFixed(2);
+                    
+                if(item.series.label == "threshold")
+                    showTooltip(item.pageX, item.pageY, (x | 0) + " : " + y + " ms", "#f00");
+
+                if(item.series.label == "passed")
+                    showTooltip(item.pageX, item.pageY, (x | 0) + " : " + y + " ms", "#0000");
+
+                if(item.series.label == "failed")
+                    showTooltip(item.pageX, item.pageY, (x | 0) + " : " + y + " ms (failed)", "#f00");
+            }
+        }
+        else {
+            $("#tooltip").remove();
+            previousPoint = null;            
+        }
+    });
+});
+</script>
+
+ </body>
+</html>
