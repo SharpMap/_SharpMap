@@ -29,6 +29,8 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using GeoAPI.Features;
 using SharpMap.Features;
+using SharpMap.Rendering;
+using SharpMap.Styles;
 #if !DotSpatialProjection
 using GeoAPI.CoordinateSystems.Transformations;
 #else
@@ -72,6 +74,7 @@ namespace SharpMap.Layers
         /// Creates an instance of this class
         /// </summary>
         private HeatLayer()
+            : base(new Style(), new NullRenderer())
         {
             ZoomMin = Double.NaN;
             _bitmaps = GenerateDots();

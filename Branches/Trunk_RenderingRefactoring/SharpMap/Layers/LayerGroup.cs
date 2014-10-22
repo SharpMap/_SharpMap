@@ -21,6 +21,7 @@ using System.Drawing;
 using GeoAPI.Features;
 using SharpMap.Data;
 using GeoAPI.Geometries;
+using SharpMap.Rendering;
 using SharpMap.Styles;
 
 namespace SharpMap.Layers
@@ -42,6 +43,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="layername">Name of layer</param>
         public LayerGroup(string layername)
+            : base (new Style(), new NullRenderer())
         {
             LayerName = layername;
             _layers = new Collection<Layer>();

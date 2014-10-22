@@ -27,6 +27,8 @@ using System.Runtime.Serialization;
 using GeoAPI.Geometries;
 using NetTopologySuite.Geometries;
 using RTools_NTS.Util;
+using SharpMap.Rendering;
+using SharpMap.Styles;
 using Point = System.Drawing.Point;
 
 namespace SharpMap.Layers
@@ -78,6 +80,7 @@ namespace SharpMap.Layers
         /// <param name="layerName">The layer name</param>
         /// <param name="image"></param>
         public GdiImageLayer(string layerName, Image image)
+            : base (new Style(), new NullRenderer())
         {
             InterpolationMode = InterpolationMode.HighQualityBicubic;
 

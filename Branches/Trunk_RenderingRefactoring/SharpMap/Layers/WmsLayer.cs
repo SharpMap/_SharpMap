@@ -24,7 +24,9 @@ using System.IO;
 using System.Net;
 using System.Text;
 using GeoAPI.Geometries;
+using SharpMap.Rendering;
 using SharpMap.Rendering.Exceptions;
+using SharpMap.Styles;
 using SharpMap.Web.Wms;
 using Common.Logging;
 
@@ -171,6 +173,7 @@ namespace SharpMap.Layers
         /// <param name="layername"></param>
         /// <param name="wmsClient"></param>
         public WmsLayer(string layername, Client wmsClient)
+            : base(new Style(), new NullRenderer())
         {
             _wmsClient = wmsClient;
             _continueOnError = true;

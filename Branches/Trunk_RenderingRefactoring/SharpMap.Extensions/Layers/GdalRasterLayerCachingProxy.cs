@@ -20,6 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using SharpMap.Rendering;
+using SharpMap.Styles;
 #if !DotSpatialProjections
 using GeoAPI.CoordinateSystems.Transformations;
 #else
@@ -37,12 +39,14 @@ namespace SharpMap.Layers
         private readonly GdalRasterLayer _innerLayer;
 
         public GdalRasterLayerCachingProxy(GdalRasterLayer innerLayer)
+            : base(new Style(), new NullRenderer())
         {
             _innerLayer = innerLayer;
             LayerName = innerLayer.LayerName;
         }
 
         public GdalRasterLayerCachingProxy(string strLayerName, string imageFilename)
+            : base(new Style(), new NullRenderer())
         {
             LayerName = strLayerName;
             _innerLayer = new GdalRasterLayer(strLayerName, imageFilename);

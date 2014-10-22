@@ -27,7 +27,9 @@ using System.IO;
 using System.Net;
 using System.Text;
 using GeoAPI.Geometries;
+using SharpMap.Rendering;
 using SharpMap.Rendering.Exceptions;
+using SharpMap.Styles;
 using SharpMap.Utilities;
 using SharpMap.Web.Wms;
 using SharpMap.Web.Wms.Tiling;
@@ -119,6 +121,7 @@ namespace SharpMap.Layers
         /// <param name="cachetime">Time for caching Service Description (ASP.NET only)</param>
         /// <param name="proxy">Proxy</param>
         public TiledWmsLayer(string layername, string url, TimeSpan cachetime, WebProxy proxy)
+            : base (new Style(), new NullRenderer())
         {
             _Proxy = proxy;
             _TimeOut = 10000;

@@ -17,6 +17,7 @@
 
 using System;
 using System.Drawing;
+using SharpMap.Rendering;
 #if !DotSpatialProjections
 using GeoAPI.CoordinateSystems.Transformations;
 #else
@@ -105,26 +106,19 @@ namespace SharpMap.Layers
 
         private string _layerName;
         private IStyle _style;
+        private IRenderer _renderer;
         private int _srid = -1;
         private int? _targetSrid;
 
 // ReSharper disable PublicConstructorInAbstractClass
         ///<summary>
         /// Creates an instance of this class using the given Style
-        ///</summary>
-        ///<param name="style"></param>
-        public Layer(Style style)
+        ///</summary>        
+        public Layer(IStyle style, IRenderer renderer)
 // ReSharper restore PublicConstructorInAbstractClass
         {
             _style = style;
-        }
-
-        /// <summary>
-        /// Creates an instance of this class
-        /// </summary>
-        protected Layer() //Style style)
-        {
-            _style = new Style();
+            _renderer = renderer;            
         }
 
         /// <summary>
@@ -301,6 +295,15 @@ namespace SharpMap.Layers
                     OnStyleChanged(EventArgs.Empty);
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the Style for this Layer
+        /// </summary>
+        public virtual IRenderer Renderer
+        {
+            get { return _renderer; }
+            set { _renderer = value; }
         }
 
         #endregion
