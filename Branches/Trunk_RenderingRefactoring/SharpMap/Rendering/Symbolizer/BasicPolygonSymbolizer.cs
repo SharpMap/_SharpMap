@@ -70,7 +70,7 @@ namespace SharpMap.Rendering.Symbolizer
 
             // clip
             if (UseClipping)
-                pts = VectorRenderer.ClipPolygon(pts, map.Size.Width, map.Size.Height);
+                pts = RendererHelper.ClipPolygon(pts, map.Size.Width, map.Size.Height);
             
             // fill the polygon
             if (Fill != null)
@@ -147,7 +147,7 @@ namespace SharpMap.Rendering.Symbolizer
             
             // clip
             if (UseClipping)
-                pts = VectorRenderer.ClipPolygon(pts, map.Size.Width, map.Size.Height);
+                pts = RendererHelper.ClipPolygon(pts, map.Size.Width, map.Size.Height);
 
             // fill the polygon
             if (Fill != null)

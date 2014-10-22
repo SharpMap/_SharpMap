@@ -32,17 +32,12 @@ namespace SharpMap.Rendering
     /// <summary>
     /// This class renders individual geometry features to a graphics object using the settings of a map object.
     /// </summary>
-    public static class VectorRenderer
+    public class VectorRenderer
     {
         internal const float ExtremeValueLimit = 1E+8f;
         internal const float NearZero = 1E-30f; // 1/Infinity
 
-        static VectorRenderer()
-        {
-            SizeOfString = SizeOfString74;
-        }
-
-        private static readonly Bitmap Defaultsymbol =
+        private readonly Bitmap Defaultsymbol =
             (Bitmap)
             Image.FromStream(
                 Assembly.GetExecutingAssembly().GetManifestResourceStream("SharpMap.Styles.DefaultSymbol.png"));
@@ -56,64 +51,13 @@ namespace SharpMap.Rendering
         /// <param name="map">Map reference</param>
         /// <param name="offset">Offset by which line will be moved to right</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawMultiLineString(Graphics g, IMultiLineString lines, Pen pen, Map map, float offset)
+        public void DrawMultiLineString(Graphics g, IMultiLineString lines, Pen pen, Map map, float offset)
         {
             for(var i = 0; i < lines.NumGeometries; i++)
             {
                 var line = (ILineString) lines[i];
                 DrawLineString(g, line, pen, map, offset);
             }
-        }
-
-        /// <summary>
-        /// Offset drawn linestring by given pixel width
-        /// </summary>
-        /// <param name="points"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
-        internal static PointF[] OffsetRight(PointF[] points, float offset)
-        {
-            int length = points.Length;
-            var newPoints = new PointF[(length - 1) * 2];
-
-            float space = (offset * offset / 4) + 1;
-
-            //if there are two or more points
-            if (length >= 2)
-            {
-                var counter = 0;
-                float x = 0, y = 0;
-                for (var i = 0; i < length - 1; i++)
-                {
-                    var b = -(points[i + 1].X - points[i].X);
-                    if (b != 0)
-                    {
-                        var a = points[i + 1].Y - points[i].Y;
-                        var c = a / b;
-                        y = 2 * (float)Math.Sqrt(space / (c * c + 1));
-                        y = b < 0 ? y : -y;
-                        x = c * y;
-
-                        if (offset < 0)
-                        {
-                            y = -y;
-                            x = -x;
-                        }
-
-                        newPoints[counter] = new PointF(points[i].X + x, points[i].Y + y);
-                        newPoints[counter + 1] = new PointF(points[i + 1].X + x, points[i + 1].Y + y);
-                    }
-                    else
-                    {
-                        newPoints[counter] = new PointF(points[i].X + x, points[i].Y + y);
-                        newPoints[counter + 1] = new PointF(points[i + 1].X + x, points[i + 1].Y + y);
-                    }
-                    counter += 2;
-                }
-
-                return newPoints;
-            }
-            return points;
         }
 
         /// <summary>
@@ -124,7 +68,7 @@ namespace SharpMap.Rendering
         /// <param name="pen">Pen style used for rendering</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawLineString(Graphics g, ILineString line, Pen pen, Map map)
+        public void DrawLineString(Graphics g, ILineString line, Pen pen, Map map)
         {
             DrawLineString(g, line, pen, map, 0);
         }
@@ -136,14 +80,14 @@ namespace SharpMap.Rendering
         /// <param name="pen">Pen style used for rendering</param>
         /// <param name="map">Map reference</param>
         /// <param name="offset">Offset by which line will be moved to right</param>
-        public static void DrawLineString(Graphics g, ILineString line, Pen pen, Map map, float offset)
+        public void DrawLineString(Graphics g, ILineString line, Pen pen, Map map, float offset)
         {
             var points = line.TransformToImage(map);
             if (points.Length > 1)
             {
                 var gp = new GraphicsPath();
                 if (offset != 0d)
-                    points = OffsetRight(points, offset);
+                    points = RendererHelper.OffsetRight(points, offset);
                 gp.AddLines(/*LimitValues(*/points/*, ExtremeValueLimit)*/);
 
                 g.DrawPath(pen, gp);
@@ -160,7 +104,7 @@ namespace SharpMap.Rendering
         /// <param name="clip">Specifies whether polygon clipping should be applied</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawMultiPolygon(Graphics g, IMultiPolygon pols, Brush brush, Pen pen, bool clip, Map map)
+        public void DrawMultiPolygon(Graphics g, IMultiPolygon pols, Brush brush, Pen pen, bool clip, Map map)
         {
             for (var i = 0; i < pols.NumGeometries;i++ )
             {
@@ -179,7 +123,7 @@ namespace SharpMap.Rendering
         /// <param name="clip">Specifies whether polygon clipping should be applied</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawPolygon(Graphics g, IPolygon pol, Brush brush, Pen pen, bool clip, Map map)
+        public void DrawPolygon(Graphics g, IPolygon pol, Brush brush, Pen pen, bool clip, Map map)
         {
             if (pol.ExteriorRing == null)
                 return;
@@ -221,7 +165,7 @@ namespace SharpMap.Rendering
             }
         }
 
-        private static void DrawPolygonClipped(GraphicsPath gp, PointF[] polygon, int width, int height)
+        private void DrawPolygonClipped(GraphicsPath gp, PointF[] polygon, int width, int height)
         {
             var clipState = DetermineClipState(polygon, width, height);
             if (clipState == ClipState.Within)
@@ -230,7 +174,7 @@ namespace SharpMap.Rendering
             }
             else if (clipState == ClipState.Intersecting)
             {
-                var clippedPolygon = ClipPolygon(polygon, width, height);
+                var clippedPolygon = RendererHelper.ClipPolygon(polygon, width, height);
                 if (clippedPolygon.Length > 2)
                     gp.AddPolygon(clippedPolygon);
             }
@@ -246,7 +190,7 @@ namespace SharpMap.Rendering
         /// <param name="vertices">The vertices that need to be limited</param>
         /// <param name="limit">The limit at which coordinate values will be cutoff</param>
         /// <returns>The limited vertices</returns>
-        private static PointF[] LimitValues(PointF[] vertices, float limit)
+        private PointF[] LimitValues(PointF[] vertices, float limit)
         {
             for (var i = 0; i < vertices.Length; i++)
             {
@@ -265,21 +209,6 @@ namespace SharpMap.Rendering
         /// <returns>the size</returns>
         public delegate SizeF SizeOfStringDelegate(Graphics g, string text, Font font);
 
-        private static SizeOfStringDelegate _sizeOfString;
-
-        /// <summary>
-        /// Delegate used to determine the <see cref="SizeF"/> of a given string.
-        /// </summary>
-        public static SizeOfStringDelegate SizeOfString
-        {
-            get { return _sizeOfString ?? (_sizeOfString = SizeOfString74); }
-            set 
-            { 
-                if (value != null )
-                    _sizeOfString = value;
-            }
-        }
-
         /// <summary>
         /// Function to get the <see cref="SizeF"/> of a string when rendered with the given font.
         /// </summary>
@@ -287,11 +216,11 @@ namespace SharpMap.Rendering
         /// <param name="text">the text to render</param>
         /// <param name="font">the font to use</param>
         /// <returns>the size</returns>
-        public static SizeF SizeOfStringBase(Graphics g, string text, Font font)
+        public SizeF SizeOfStringBase(Graphics g, string text, Font font)
         {
             return g.MeasureString(text, font);
         }
-
+        
         /// <summary>
         /// Function to get the <see cref="SizeF"/> of a string when rendered with the given font.
         /// </summary>
@@ -299,19 +228,7 @@ namespace SharpMap.Rendering
         /// <param name="text">the text to render</param>
         /// <param name="font">the font to use</param>
         /// <returns>the size</returns>
-        public static SizeF SizeOfString74(Graphics g, string text, Font font)
-        {
-            var s = g.MeasureString(text, font);
-            return new SizeF(s.Width * 0.74f+1f, s.Height * 0.74f); 
-        }
-        /// <summary>
-        /// Function to get the <see cref="SizeF"/> of a string when rendered with the given font.
-        /// </summary>
-        /// <param name="g"><see cref="Graphics"/> object</param>
-        /// <param name="text">the text to render</param>
-        /// <param name="font">the font to use</param>
-        /// <returns>the size</returns>
-        public static SizeF SizeOfStringCeiling(Graphics g, string text, Font font)
+        public SizeF SizeOfStringCeiling(Graphics g, string text, Font font)
         {
             SizeF f = g.MeasureString(text, font);
             return new SizeF((float)Math.Ceiling(f.Width), (float)Math.Ceiling(f.Height));
@@ -334,14 +251,14 @@ namespace SharpMap.Rendering
         /// <param name="alignment">Horizontal alignment for multi line labels. If not set <see cref="StringAlignment.Near"/> is used</param>
         /// <param name="rotationPoint">Point where the rotation should take place</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawLabel(Graphics g, PointF labelPoint, PointF offset, Font font, Color forecolor,
+        public void DrawLabel(Graphics g, PointF labelPoint, PointF offset, Font font, Color forecolor,
                                      Brush backcolor, Pen halo, float rotation, string text, Map map,
                                      LabelStyle.HorizontalAlignmentEnum alignment = LabelStyle.HorizontalAlignmentEnum.Left,
                                      PointF? rotationPoint = null)
 
         {
             //Calculate the size of the text
-            var labelSize = _sizeOfString(g, text, font);
+            var labelSize = RendererHelper.SizeOfString(g, text, font);
             
             //Add label offset
             labelPoint.X += offset.X;
@@ -408,7 +325,7 @@ namespace SharpMap.Rendering
             }
         }
 
-        private static ClipState DetermineClipState(PointF[] vertices, int width, int height)
+        private ClipState DetermineClipState(PointF[] vertices, int width, int height)
         {
             float minX = float.MaxValue;
             float minY = float.MaxValue;
@@ -432,132 +349,6 @@ namespace SharpMap.Rendering
         }
 
         /// <summary>
-        /// Clips a polygon to the view.
-        /// Based on UMN Mapserver renderer 
-        /// </summary>
-        /// <param name="vertices">vertices in image coordinates</param>
-        /// <param name="width">Width of map in image coordinates</param>
-        /// <param name="height">Height of map in image coordinates</param>
-        /// <returns>Clipped polygon</returns>
-        internal static PointF[] ClipPolygon(PointF[] vertices, int width, int height)
-        {
-            var line = new List<PointF>();
-            if (vertices.Length <= 1) /* nothing to clip */
-                return vertices;
-
-            for (int i = 0; i < vertices.Length - 1; i++)
-            {
-                var x1 = vertices[i].X;
-                var y1 = vertices[i].Y;
-                var x2 = vertices[i + 1].X;
-                var y2 = vertices[i + 1].Y;
-
-                var deltax = x2 - x1;
-                if (deltax == 0f)
-                {
-                    // bump off of the vertical
-                    deltax = (x1 > 0) ? -NearZero : NearZero;
-                }
-                var deltay = y2 - y1;
-                if (deltay == 0f)
-                {
-                    // bump off of the horizontal
-                    deltay = (y1 > 0) ? -NearZero : NearZero;
-                }
-
-                float xin;
-                float xout;
-                if (deltax > 0)
-                {
-                    //  points to right
-                    xin = 0;
-                    xout = width;
-                }
-                else
-                {
-                    xin = width;
-                    xout = 0;
-                }
-
-                float yin;
-                float yout;
-                if (deltay > 0)
-                {
-                    //  points up
-                    yin = 0;
-                    yout = height;
-                }
-                else
-                {
-                    yin = height;
-                    yout = 0;
-                }
-
-                var tinx = (xin - x1)/deltax;
-                var tiny = (yin - y1)/deltay;
-
-                float tin1;
-                float tin2;
-                if (tinx < tiny)
-                {
-                    // hits x first
-                    tin1 = tinx;
-                    tin2 = tiny;
-                }
-                else
-                {
-                    // hits y first
-                    tin1 = tiny;
-                    tin2 = tinx;
-                }
-
-                if (1 >= tin1)
-                {
-                    if (0 < tin1)
-                        line.Add(new PointF(xin, yin));
-
-                    if (1 >= tin2)
-                    {
-                        var toutx = (xout - x1)/deltax;
-                        var touty = (yout - y1)/deltay;
-
-                        var tout = (toutx < touty) ? toutx : touty;
-
-                        if (0 < tin2 || 0 < tout)
-                        {
-                            if (tin2 <= tout)
-                            {
-                                if (0 < tin2)
-                                {
-                                    line.Add(tinx > tiny
-                                                 ? new PointF(xin, y1 + tinx*deltay)
-                                                 : new PointF(x1 + tiny*deltax, yin));
-                                }
-
-                                if (1 > tout)
-                                {
-                                    line.Add(toutx < touty
-                                                 ? new PointF(xout, y1 + toutx*deltay)
-                                                 : new PointF(x1 + touty*deltax, yout));
-                                }
-                                else
-                                    line.Add(new PointF(x2, y2));
-                            }
-                            else
-                            {
-                                line.Add(tinx > tiny ? new PointF(xin, yout) : new PointF(xout, yin));
-                            }
-                        }
-                    }
-                }
-            }
-            if (line.Count > 0)
-                line.Add(new PointF(line[0].X, line[0].Y));
-
-            return line.ToArray();
-        }
-
-        /// <summary>
         /// Renders a point to the map.
         /// </summary>
         /// <param name="g">Graphics reference</param>
@@ -567,7 +358,7 @@ namespace SharpMap.Rendering
         /// <param name="offset">Symbol offset af scale=1</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawPoint(Graphics g, IPoint point, Brush b, float size, PointF offset, Map map)
+        public void DrawPoint(Graphics g, IPoint point, Brush b, float size, PointF offset, Map map)
         {
             if (point == null)
                 return;
@@ -590,7 +381,7 @@ namespace SharpMap.Rendering
         /// <param name="symbolizer">Symbolizer to decorate point</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawPoint(IPointSymbolizer symbolizer, Graphics g, IPoint point, Map map)
+        public void DrawPoint(IPointSymbolizer symbolizer, Graphics g, IPoint point, Map map)
         {
             if (point == null)
                 return; 
@@ -609,7 +400,7 @@ namespace SharpMap.Rendering
         /// <param name="rotation">Symbol rotation in degrees</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawPoint(Graphics g, IPoint point, Image symbol, float symbolscale, PointF offset,
+        public void DrawPoint(Graphics g, IPoint point, Image symbol, float symbolscale, PointF offset,
                                      float rotation, Map map)
         {
             if (point == null)
@@ -683,7 +474,7 @@ namespace SharpMap.Rendering
         /// <param name="rotation">Symbol rotation in degrees</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawMultiPoint(Graphics g, IMultiPoint points, Image symbol, float symbolscale, PointF offset,
+        public void DrawMultiPoint(Graphics g, IMultiPoint points, Image symbol, float symbolscale, PointF offset,
                                           float rotation, Map map)
         {
             for (var i = 0; i < points.NumGeometries; i++)
@@ -701,7 +492,7 @@ namespace SharpMap.Rendering
         /// <param name="symbolizer">Symbolizer to decorate point</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawMultiPoint(IPointSymbolizer symbolizer, Graphics g, IMultiPoint points, Map map)
+        public void DrawMultiPoint(IPointSymbolizer symbolizer, Graphics g, IMultiPoint points, Map map)
         {
             symbolizer.Render(map, points, g);
         }
@@ -716,7 +507,7 @@ namespace SharpMap.Rendering
         /// <param name="offset">Symbol offset af scale=1</param>
         /// <param name="map">Map reference</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void DrawMultiPoint(Graphics g, IMultiPoint points, Brush brush, float size, PointF offset, Map map)
+        public void DrawMultiPoint(Graphics g, IMultiPoint points, Brush brush, float size, PointF offset, Map map)
         {
             for (var i = 0; i < points.NumGeometries; i++)
             {
@@ -734,6 +525,6 @@ namespace SharpMap.Rendering
             Intersecting
         } ;
 
-        #endregion
+        #endregion        
     }
 }

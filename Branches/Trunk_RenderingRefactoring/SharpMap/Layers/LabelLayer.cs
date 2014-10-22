@@ -31,7 +31,6 @@ using GeoAPI.CoordinateSystems.Transformations;
 #else
 using DotSpatial.Projections;
 #endif
-using SharpMap.Data;
 using SharpMap.Data.Providers;
 using GeoAPI.Geometries;
 using SharpMap.Rendering;
@@ -149,7 +148,6 @@ namespace SharpMap.Layers
         /// </summary>
         private string _rotationColumn;
 
-
         private TextRenderingHint _textRenderingHint;
 
         private ITheme _theme;
@@ -158,7 +156,7 @@ namespace SharpMap.Layers
         /// Creates a new instance of a LabelLayer
         /// </summary>
         public LabelLayer(string layername)
-            :base(new LabelStyle())
+            : base(new LabelStyle(), new LabelRenderer())
         {
             //_Style = new LabelStyle();
             LayerName = layername;
@@ -185,7 +183,6 @@ namespace SharpMap.Layers
             get { return _labelFilter; }
             set { _labelFilter = value; }
         }
-
 
         /// <summary>
         /// Render whether smoothing (antialiasing) is applied to lines and curves and the edges of filled areas
@@ -400,7 +397,7 @@ namespace SharpMap.Layers
         {
             if (Style.Enabled && Style.MaxVisible >= map.Zoom && Style.MinVisible < map.Zoom)
             {
-                
+
                 if (DataSource == null)
                     throw (new ApplicationException("DataSource property not set on layer '" + LayerName + "'"));
                 g.TextRenderingHint = TextRenderingHint;
@@ -445,7 +442,7 @@ namespace SharpMap.Layers
 
                 //List<System.Drawing.Rectangle> LabelBoxes; //Used for collision detection
                 //Render labels
-                foreach(var feature in features)
+                foreach (var feature in features)
                 {
                     var featureGeometry = (IGeometry)feature.Geometry.Clone();
                     if (CoordinateTransformation != null)
@@ -533,24 +530,24 @@ namespace SharpMap.Layers
                                     for (var j = 0; j < coll.NumGeometries; j++)
                                     {
                                         var geom = coll.GetGeometryN(j);
-                                        if (geom is ILineString && ((ILineString) geom).Length > largestVal)
+                                        if (geom is ILineString && ((ILineString)geom).Length > largestVal)
                                         {
-                                            largestVal = ((ILineString) geom).Length;
+                                            largestVal = ((ILineString)geom).Length;
                                             idxOfLargest = j;
                                         }
-                                        if (geom is IMultiLineString && ((IMultiLineString) geom).Length > largestVal)
+                                        if (geom is IMultiLineString && ((IMultiLineString)geom).Length > largestVal)
                                         {
                                             largestVal = ((IMultiLineString)geom).Length;
                                             idxOfLargest = j;
                                         }
-                                        if (geom is IPolygon && ((IPolygon) geom).Area > largestVal)
+                                        if (geom is IPolygon && ((IPolygon)geom).Area > largestVal)
                                         {
-                                            largestVal = ((IPolygon) geom).Area;
+                                            largestVal = ((IPolygon)geom).Area;
                                             idxOfLargest = j;
                                         }
-                                        if (geom is IMultiPolygon && ((IMultiPolygon) geom).Area > largestVal)
+                                        if (geom is IMultiPolygon && ((IMultiPolygon)geom).Area > largestVal)
                                         {
-                                            largestVal = ((IMultiPolygon) geom).Area;
+                                            largestVal = ((IMultiPolygon)geom).Area;
                                             idxOfLargest = j;
                                         }
                                     }
@@ -574,9 +571,9 @@ namespace SharpMap.Layers
                 {
                     if (Style.CollisionDetection && _labelFilter != null)
                         _labelFilter(labels);
-                    
+
                     for (int i = 0; i < labels.Count; i++)
-                    {   
+                    {
                         // Don't show the label if not necessary
                         if (!labels[i].Show)
                         {
@@ -586,13 +583,9 @@ namespace SharpMap.Layers
                         if (labels[i] is Label)
                         {
                             var label = labels[i] as Label;
-                            if (label.Style.IsTextOnPath == false || label.TextOnPathLabel==null)
+                            if (label.Style.IsTextOnPath == false || label.TextOnPathLabel == null)
                             {
-                                VectorRenderer.DrawLabel(g, label.Location, label.Style.Offset,
-                                                            label.Style.Font, label.Style.ForeColor,
-                                                            label.Style.BackColor, label.Style.Halo, label.Rotation,
-                                                            label.Text, map, label.Style.HorizontalAlignment,
-                                                            label.LabelPoint);
+                                Renderer.Draw(map, g, label);
                             }
                             else
                             {
@@ -613,7 +606,7 @@ namespace SharpMap.Layers
                             var plbl = labels[i] as PathLabel;
                             var lblStyle = plbl.Style;
                             g.DrawString(lblStyle.Halo, new SolidBrush(lblStyle.ForeColor), plbl.Text,
-                                         lblStyle.Font.FontFamily, (int) lblStyle.Font.Style, lblStyle.Font.Size,
+                                         lblStyle.Font.FontFamily, (int)lblStyle.Font.Style, lblStyle.Font.Size,
                                          lblStyle.GetStringFormat(), lblStyle.IgnoreLength, plbl.Location);
                         }
                     }
@@ -628,13 +621,13 @@ namespace SharpMap.Layers
             return CreateLabel(fdr, feature, text, rotation, Priority, style, map, g, _getLocationMethod);
         }
 
-        private static BaseLabel CreateLabel(IFeature fdr, IGeometry feature, string text, float rotation, int priority, LabelStyle style, Map map, Graphics g, GetLocationMethod _getLocationMethod)
+        private BaseLabel CreateLabel(IFeature fdr, IGeometry feature, string text, float rotation, int priority, LabelStyle style, Map map, Graphics g, GetLocationMethod _getLocationMethod)
         {
             if (feature == null) return null;
 
             BaseLabel lbl = null;
 
-            SizeF size = VectorRenderer.SizeOfString(g, text, style.Font);
+            SizeF size = RendererHelper.SizeOfString(g, text, style.Font);
 
             if (feature is ILineal)
             {
@@ -684,25 +677,23 @@ namespace SharpMap.Layers
             var position = Transform.WorldtoMap(worldPosition, map);
 
             var location = new PointF(
-                position.X - size.Width*(short) style.HorizontalAlignment*0.5f,
-                position.Y - size.Height*(short) (2 - (int) style.VerticalAlignment)*0.5f);
+                position.X - size.Width * (short)style.HorizontalAlignment * 0.5f,
+                position.Y - size.Height * (short)(2 - (int)style.VerticalAlignment) * 0.5f);
 
             if (location.X - size.Width > map.Size.Width || location.X + size.Width < 0 ||
                 location.Y - size.Height > map.Size.Height || location.Y + size.Height < 0)
                 return null;
 
             if (!style.CollisionDetection)
-                lbl = new Label(text, location, rotation, priority, null, style)
-                    {LabelPoint = position};
+                lbl = new Label(text, location, rotation, priority, null, style) { LabelPoint = position };
             else
             {
                 //Collision detection is enabled so we need to measure the size of the string
                 lbl = new Label(text, location, rotation, priority,
-                                new LabelBox(location.X - size.Width*0.5f - style.CollisionBuffer.Width,
-                                             location.Y + size.Height*0.5f + style.CollisionBuffer.Height,
-                                             size.Width + 2f*style.CollisionBuffer.Width,
-                                             size.Height + style.CollisionBuffer.Height*2f), style) 
-                                { LabelPoint = position }; 
+                                new LabelBox(location.X - size.Width * 0.5f - style.CollisionBuffer.Width,
+                                             location.Y + size.Height * 0.5f + style.CollisionBuffer.Height,
+                                             size.Width + 2f * style.CollisionBuffer.Width,
+                                             size.Height + style.CollisionBuffer.Height * 2f), style) { LabelPoint = position };
             }
 
             /*
@@ -736,7 +727,7 @@ namespace SharpMap.Layers
             var dx = e.X - s.X;
             if (isRightToLeft && dx < 0)
                 return line;
-            
+
             if (!isRightToLeft && dx >= 0)
                 return line;
 
@@ -755,7 +746,7 @@ namespace SharpMap.Layers
 
         //private static void WarpedLabel(LineString line, ref BaseLabel baseLabel, Map map)
         //{
-            
+
         //    var path = LineStringToPath(line, map, false);
 
         //    var pathLabel = new PathLabel(baseLabel.Text, path, 0f, baseLabel.Priority, new LabelBox(path.GetBounds()), baseLabel.Style);
@@ -774,7 +765,7 @@ namespace SharpMap.Layers
         {
             var gp = new GraphicsPath(FillMode.Alternate);
             //if (!useClipping)
-                gp.AddLines(lineString.TransformToImage(map));
+            gp.AddLines(lineString.TransformToImage(map));
             //else
             //{
             //    var bb = map.Envelope;
@@ -784,14 +775,14 @@ namespace SharpMap.Layers
             //    {
             //        var s = clippedLineString.StartPoint;
             //        var e = clippedLineString.EndPoint;
-                    
+
             //        var dx = e.X - s.X;
             //        //var dy = e.Y - s.Y;
 
             //        LineString revcls = null;
             //        if (dx < 0)
             //            revcls = ReverseLineString(clippedLineString);
-                    
+
             //        gp.StartFigure();
             //        gp.AddLines(revcls == null ? clippedLineString.TransformToImage(map) : revcls.TransformToImage(map));
             //    }
@@ -835,7 +826,7 @@ namespace SharpMap.Layers
 
             // first find the middle segment of the line
             var vertices = line.Coordinates;
-            int midPoint = (vertices.Length - 1)/2;
+            int midPoint = (vertices.Length - 1) / 2;
             if (vertices.Length > 2)
             {
                 dx = vertices[midPoint + 1].X - vertices[midPoint].X;
@@ -854,12 +845,12 @@ namespace SharpMap.Layers
             else
             {
                 // calculate angle of line					
-                double angle = -Math.Atan(dy/dx) + Math.PI*0.5;
-                angle *= (180d/Math.PI); // convert radians to degrees
-                label.Rotation = (float) angle - 90; // -90 text orientation
+                double angle = -Math.Atan(dy / dx) + Math.PI * 0.5;
+                angle *= (180d / Math.PI); // convert radians to degrees
+                label.Rotation = (float)angle - 90; // -90 text orientation
             }
-            var tmpx = vertices[midPoint].X + (dx*0.5);
-            var tmpy = vertices[midPoint].Y + (dy*0.5);
+            var tmpx = vertices[midPoint].X + (dx * 0.5);
+            var tmpy = vertices[midPoint].Y + (dy * 0.5);
             label.Location = map.WorldToImage(new Coordinate(tmpx, tmpy));
         }
 
@@ -923,7 +914,7 @@ namespace SharpMap.Layers
                 var idxStartPath = 0;
                 var numberPoint = colPoint.Count;
                 // start Optimzes Path points                
-                
+
                 var step = 100;
                 if (colPoint.Count >= step * 2)
                 {

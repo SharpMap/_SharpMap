@@ -757,7 +757,7 @@ namespace SharpMap
             //Disclaimer
             if (!String.IsNullOrEmpty(_disclaimer))
             {
-                var size = VectorRenderer.SizeOfString(g, _disclaimer, _disclaimerFont);
+                var size = RendererHelper.SizeOfString(g, _disclaimer, _disclaimerFont);
                 size.Width = (Single)Math.Ceiling(size.Width);
                 size.Height = (Single)Math.Ceiling(size.Height);
                 StringFormat sf;

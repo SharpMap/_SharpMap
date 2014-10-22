@@ -192,9 +192,13 @@
     </Compile>
     <Compile Include="Rendering\IMapRenderer.cs" />
     <Compile Include="Rendering\IDeviceRenderer.cs" />
+    <Compile Include="Rendering\IRenderer.cs" />
     <Compile Include="Rendering\Label.cs" />
     <Compile Include="Rendering\LabelCollisionDetection.cs" />
+    <Compile Include="Rendering\LabelRenderer.cs" />
     <Compile Include="Rendering\LayerCollectionRenderer.cs" />
+    <Compile Include="Rendering\NullRenderer.cs" />
+    <Compile Include="Rendering\RendererHelper.cs" />
     <Compile Include="Rendering\RenderExceptions.cs" />
     <Compile Include="Rendering\Symbolizer\BaseSymbolizer.cs" />
     <Compile Include="Rendering\Symbolizer\CohenSutherlandLineClipping.cs" />
@@ -206,6 +210,7 @@
     <Compile Include="Rendering\Thematics\GradientTheme.cs" />
     <Compile Include="Rendering\Thematics\ITheme.cs" />
     <Compile Include="Rendering\VectorRenderer.cs" />
+    <Compile Include="Rendering\VectorRendererAdapter.cs" />
     <Compile Include="SharpMapException.cs" />
     <Compile Include="SpatialReference\NoopReprojector.cs" />
     <Compile Include="SpatialReference\Reprojector.cs" />

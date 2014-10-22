@@ -6,6 +6,8 @@ using System.Drawing.Drawing2D;
 using GeoAPI;
 using GeoAPI.Features;
 using GeoAPI.Geometries;
+using SharpMap.Rendering;
+using SharpMap.Styles;
 #if !DotSpatialProjections
 using GeoAPI.CoordinateSystems.Transformations;
 #else
@@ -44,6 +46,7 @@ namespace SharpMap.Layers.Symbolizer
         /// <param name="dataSource">The data source</param>
         /// <param name="symbolizer">The symbolizer</param>
         protected BaseVectorLayer(string layerName, IProvider dataSource, ISymbolizer<TGeometry> symbolizer)
+            : base(new Style(), new VectorRendererAdapter())
         {
             LayerName = layerName;
             _dataSource = dataSource;

@@ -62,7 +62,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="graphics">The graphics object</param>
         protected override void OnRenderInternal(Map map, ILineString lineString, Graphics graphics)
         {
-            var pts = /*LimitValues(*/ VectorRenderer.OffsetRight(lineString.TransformToImage(map), Offset) /*)*/;
+            var pts = /*LimitValues(*/ RendererHelper.OffsetRight(lineString.TransformToImage(map), Offset) /*)*/;
             graphics.DrawLines(Line, pts);
         }
 

@@ -16,13 +16,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Linq.Expressions;
 using GeoAPI.Features;
-using NetTopologySuite.Features;
 using SharpMap.Features;
 #if !DotSpatialProjections
 using GeoAPI;
@@ -30,7 +27,6 @@ using GeoAPI.CoordinateSystems.Transformations;
 #else
 using DotSpatial.Projections;
 #endif
-using SharpMap.Data;
 using SharpMap.Data.Providers;
 using GeoAPI.Geometries;
 using SharpMap.Rendering;
@@ -47,7 +43,7 @@ namespace SharpMap.Layers
     [Serializable]
     public class VectorLayer : Layer, ICanQueryLayer
     {
-        static ILog logger = LogManager.GetLogger(typeof(VectorLayer));
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(VectorLayer));
 
         private bool _clippingEnabled;
         private bool _isQueryEnabled = true;
@@ -59,8 +55,8 @@ namespace SharpMap.Layers
         /// Initializes a new layer
         /// </summary>
         /// <param name="layername">Name of layer</param>
-        public VectorLayer(string layername)
-            :base(new VectorStyle())
+        public VectorLayer(string layername) :
+            base(new VectorStyle(), new VectorRendererAdapter())
         {
             LayerName = layername;
             SmoothingMode = SmoothingMode.AntiAlias;
@@ -71,11 +67,12 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="layername">Name of layer</param>
         /// <param name="dataSource">Data source</param>
-        public VectorLayer(string layername, IProvider dataSource) : this(layername)
+        public VectorLayer(string layername, IProvider dataSource)
+            : this(layername)
         {
             _dataSource = dataSource;
         }
-		/// <summary>
+        /// <summary>
         /// Gets or sets a Dictionary with themes suitable for this layer. A theme in the dictionary can be used for rendering be setting the Theme Property using a delegate function
         /// </summary>
         public Dictionary<string, ITheme> Themes
@@ -83,8 +80,6 @@ namespace SharpMap.Layers
             get;
             set;
         }
-
-
 
         /// <summary>
         /// Gets or sets thematic settings for the layer. Set to null to ignore thematics
@@ -163,7 +158,7 @@ namespace SharpMap.Layers
                 {
                     var boxTrans = GeometryTransform.TransformBox(box, CoordinateTransformation.MathTransform);
                     return boxTrans;
-                }            
+                }
 #else
                     return GeometryTransform.TransformBox(box, CoordinateTransformation.Source, CoordinateTransformation.Target);
 #endif
@@ -184,7 +179,7 @@ namespace SharpMap.Layers
                 return DataSource.SRID;
             }
             set { DataSource.SRID = value; }
-        }       
+        }
 
         #region IDisposable Members
 
@@ -192,10 +187,10 @@ namespace SharpMap.Layers
         /// Disposes the object
         /// </summary>
         protected override void ReleaseManagedResources()
-        {   
+        {
             if (DataSource != null)
                 DataSource.Dispose();
- 	        base.ReleaseManagedResources();
+            base.ReleaseManagedResources();
         }
 
         #endregion
@@ -257,7 +252,7 @@ namespace SharpMap.Layers
         /// <param name="theme">The theme to apply</param>
         protected void RenderInternal(Graphics g, Map map, Envelope envelope, ITheme theme)
         {
-            
+
             IFeatureCollectionSet ds;
             lock (_dataSource)
             {
@@ -305,16 +300,7 @@ namespace SharpMap.Layers
                             if (outlineStyle != null)
                             {
                                 //Draw background of all line-outlines first
-                                if (feature.Geometry is ILineString)
-                                {
-                                    VectorRenderer.DrawLineString(g, feature.Geometry as ILineString, outlineStyle.Outline,
-                                                                        map, outlineStyle.LineOffset);
-                                }
-                                else if (feature.Geometry is IMultiLineString)
-                                {
-                                    VectorRenderer.DrawMultiLineString(g, feature.Geometry as IMultiLineString,
-                                                                        outlineStyle.Outline, map, outlineStyle.LineOffset);
-                                }
+                                Renderer.DrawOutline(map, g, feature.Geometry, outlineStyle);                                
                             }
                         }
                     }
@@ -364,8 +350,8 @@ namespace SharpMap.Layers
             if (!Style.Enabled) return;
 
             IStyle[] stylesToRender = GetStylesToRender(Style);
-            
-            if (stylesToRender== null)
+
+            if (stylesToRender == null)
                 return;
 
             foreach (var style in stylesToRender)
@@ -388,9 +374,9 @@ namespace SharpMap.Layers
                             // Read data
                             geoms = new List<IGeometry>(DataSource.GetGeometriesInView(envelope));
 
-                            if (logger.IsDebugEnabled)
+                            if (_logger.IsDebugEnabled)
                             {
-                                logger.DebugFormat("Layer {0}, NumGeometries {1}", LayerName, geoms.Count());
+                                _logger.DebugFormat("Layer {0}, NumGeometries {1}", LayerName, geoms.Count());
                             }
 
                             // If was not open, close it
@@ -422,10 +408,7 @@ namespace SharpMap.Layers
                                     if (geom != null)
                                     {
                                         //Draw background of all line-outlines first
-                                        if (geom is ILineString)
-                                            VectorRenderer.DrawLineString(g, geom as ILineString, vStyle.Outline, map, vStyle.LineOffset);
-                                        else if (geom is IMultiLineString)
-                                            VectorRenderer.DrawMultiLineString(g, geom as IMultiLineString, vStyle.Outline, map, vStyle.LineOffset);
+                                        Renderer.DrawOutline(map, g, geom, vStyle);                                        
                                     }
                                 }
                             }
@@ -485,82 +468,7 @@ namespace SharpMap.Layers
             if (feature == null)
                 return;
 
-            var geometryType = feature.OgcGeometryType;
-            switch (geometryType)
-            {
-                case OgcGeometryType.Polygon:
-                    if (style.EnableOutline)
-                        VectorRenderer.DrawPolygon(g, (IPolygon) feature, style.Fill, style.Outline, _clippingEnabled,
-                                                   map);
-                    else
-                        VectorRenderer.DrawPolygon(g, (IPolygon) feature, style.Fill, null, _clippingEnabled, map);
-                    break;
-                case OgcGeometryType.MultiPolygon:
-                    if (style.EnableOutline)
-                        VectorRenderer.DrawMultiPolygon(g, (IMultiPolygon) feature, style.Fill, style.Outline,
-                                                        _clippingEnabled, map);
-                    else
-                        VectorRenderer.DrawMultiPolygon(g, (IMultiPolygon) feature, style.Fill, null, _clippingEnabled,
-                                                        map);
-                    break;
-                case OgcGeometryType.LineString:
-                    if (style.LineSymbolizer != null)
-                    {
-                        style.LineSymbolizer.Render(map, (ILineString)feature, g);    
-                        return;
-                    }
-                    VectorRenderer.DrawLineString(g, (ILineString) feature, style.Line, map, style.LineOffset);
-                    return;
-                case OgcGeometryType.MultiLineString:
-                    if (style.LineSymbolizer != null)
-                    {
-                        style.LineSymbolizer.Render(map, (IMultiLineString)feature, g);    
-                        return;
-                    }
-                    VectorRenderer.DrawMultiLineString(g, (IMultiLineString) feature, style.Line, map, style.LineOffset);
-                    break;
-                case OgcGeometryType.Point:
-                    if (style.PointSymbolizer != null)
-                    {
-                        VectorRenderer.DrawPoint(style.PointSymbolizer, g, (IPoint)feature, map);
-                        return;
-                    }
-
-                    if (style.Symbol != null || style.PointColor == null)
-                    {
-                        VectorRenderer.DrawPoint(g, (IPoint)feature, style.Symbol, style.SymbolScale, style.SymbolOffset,
-                                                 style.SymbolRotation, map);
-                        return;
-                    }
-                    VectorRenderer.DrawPoint(g, (IPoint)feature, style.PointColor, style.PointSize, style.SymbolOffset, map);
-
-                    break;
-                case OgcGeometryType.MultiPoint:
-                    if (style.PointSymbolizer != null)
-                    {
-                        VectorRenderer.DrawMultiPoint(style.PointSymbolizer, g, (IMultiPoint)feature, map);
-                    }
-                    if (style.Symbol != null || style.PointColor == null)
-                    {
-                        VectorRenderer.DrawMultiPoint(g, (IMultiPoint) feature, style.Symbol, style.SymbolScale,
-                                                  style.SymbolOffset, style.SymbolRotation, map);
-                    }
-                    else
-                    {
-                        VectorRenderer.DrawMultiPoint(g, (IMultiPoint)feature, style.PointColor, style.PointSize, style.SymbolOffset, map);
-                    }
-                    break;
-                case OgcGeometryType.GeometryCollection:                    
-                    IGeometryCollection coll = (IGeometryCollection)feature;
-                    for (var i = 0; i < coll.NumGeometries; i++)
-                    {
-                        IGeometry geom = coll[i];
-                        RenderGeometry(g, map, geom, style);
-                    }
-                    break;
-                default:
-                    break;
-            }
+            Renderer.Draw(map, g, feature, style, ClippingEnabled);            
         }
 
         #region Implementation of ICanQueryLayer

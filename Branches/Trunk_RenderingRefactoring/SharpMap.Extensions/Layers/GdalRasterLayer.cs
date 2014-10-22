@@ -26,6 +26,8 @@ using GeoAPI;
 using GeoAPI.Features;
 using GeoAPI.Geometries;
 using OSGeo.GDAL;
+using SharpMap.Rendering;
+using SharpMap.Styles;
 #if !DotSpatialProjections
 using GeoAPI.CoordinateSystems;
 using ProjNet.CoordinateSystems;
@@ -316,6 +318,7 @@ namespace SharpMap.Layers
         #endregion
 
         protected GdalRasterLayer(string layerName)
+            : base(new Style(), new NullRenderer())
         {
             SpotPoint = new PointF(0, 0);
             Projection = "";

@@ -10,6 +10,8 @@ using BruTile;
 using BruTile.Cache;
 using Common.Logging;
 using GeoAPI.Geometries;
+using SharpMap.Rendering;
+using SharpMap.Styles;
 
 namespace SharpMap.Layers
 {
@@ -123,6 +125,7 @@ namespace SharpMap.Layers
         /// <param name="fileCacheDir">If the layer should use a file-cache so store tiles, set this to that directory. Set to null to avoid filecache</param>
         /// <remarks>If <paramref name="showErrorInTile"/> is set to false, tile source keeps trying to get the tile in every request</remarks>
         public TileLayer(ITileSource tileSource, string layerName, Color transparentColor, bool showErrorInTile, string fileCacheDir)
+            : base(new Style(), new NullRenderer())
         {
             _source = tileSource;
             LayerName = layerName;
@@ -146,6 +149,7 @@ namespace SharpMap.Layers
         /// <param name="fileCache">If the layer should use a file-cache so store tiles, set this to a fileCacheProvider. Set to null to avoid filecache</param>
         /// <param name="imgFormat">Set the format of the tiles to be used</param>
         public TileLayer(ITileSource tileSource, string layerName, Color transparentColor, bool showErrorInTile, FileCache fileCache, ImageFormat imgFormat)
+            : base(new Style(), new NullRenderer())
         {
             _source = tileSource;
             LayerName = layerName;

@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <SccProjectName>%24/SharpMap/Trunk/SharpMap.SqlServerSpatialObjects</SccProjectName>
+    <SccProjectName>%24/SharpMap/Branches/Trunk_RenderingRefactoring/SharpMap.SqlServerSpatialObjects</SccProjectName>
     <SccLocalPath>.</SccLocalPath>
     <SccAuxPath>https://tfs.codeplex.com/tfs/tfs01</SccAuxPath>
     <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>

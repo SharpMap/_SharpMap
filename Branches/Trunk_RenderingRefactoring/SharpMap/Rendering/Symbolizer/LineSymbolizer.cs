@@ -8,7 +8,7 @@ namespace SharpMap.Rendering.Symbolizer
     /// Abstract base class for all line symbolizer classes
     /// </summary>
     public abstract class LineSymbolizer : BaseSymbolizer, ILineSymbolizer
-    {
+    {        
         /// <summary>
         /// Creates an instance of this class. <see cref="Line"/> is set to a random <see cref="KnownColor"/>.
         /// </summary>
