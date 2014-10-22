@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{292EF671-4063-4952-8DE0-423DF72A0950}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SharpMap</RootNamespace>
+    <AssemblyName>SharpMap.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+    <SccProjectName>%24/SharpMap/Trunk/SharpMap.Web</SccProjectName>
+    <SccLocalPath>.</SccLocalPath>
+    <SccAuxPath>https://tfs.codeplex.com/tfs/tfs01</SccAuxPath>
+    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\SharpMap.Web.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\SharpMap.Web.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugDSProjection|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugDSProjection\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;DotSpatialProjections</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDSProjection|AnyCPU'">
+    <OutputPath>bin\ReleaseDSProjection\</OutputPath>
+    <DefineConstants>TRACE;DotSpatialProjections</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GeoAPI, Version=1.7.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\GeoAPI.1.7.2\lib\net403-client\GeoAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\Cache.cs" />
+    <Compile Include="Web\HttpHandler.cs" />
+    <Compile Include="Web\UI\Ajax\AjaxMapControl.cs" />
+    <Compile Include="Web\UI\Ajax\AjaxMapControlDesigner.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsArgumentException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsArgumentNullException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsExceptionBase.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsExceptionCode.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsInvalidBboxException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsInvalidCRSException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsInvalidDimensionsException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsInvalidParameterException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsLayerNotDefinedException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsLayerNotQueryableException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsNotApplicableException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsOperationNotSupportedException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsParameterNotSpecifiedException.cs" />
+    <Compile Include="Web\Wms\Exceptions\WmsStyleNotDefinedException.cs" />
+    <Compile Include="Web\Wms\ServerCapabilities.cs" />
+    <Compile Include="Web\Wms\Server\Context.cs" />
+    <Compile Include="Web\Wms\Server\ContextRequest.cs" />
+    <Compile Include="Web\Wms\Server\ContextResponse.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\AbstractGetFeatureInfoResponse.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\AbstractGetFeatureInfoText.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\AbstractHandler.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetCapabilities.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetCapabilitiesResponse.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetFeatureInfo.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetFeatureInfoHtml.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetFeatureInfoJson.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetFeatureInfoParams.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetFeatureInfoPlain.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetFeatureInfoResponseHtml.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetFeatureInfoResponseJson.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetFeatureInfoResponsePlain.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetMap.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\GetMapResponse.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\IHandler.cs" />
+    <Compile Include="Web\Wms\Server\Handlers\WmsParams.cs" />
+    <Compile Include="Web\Wms\Server\IContext.cs" />
+    <Compile Include="Web\Wms\Server\IContextRequest.cs" />
+    <Compile Include="Web\Wms\Server\IContextResponse.cs" />
+    <Compile Include="Web\Wms\Server\StringComparerIgnoreCase.cs" />
+    <Compile Include="Web\Wms\WmsException.cs" />
+    <Compile Include="Web\Wms\LegacyWmsServer.cs" />
+    <Compile Include="..\SharedAssemblyVersion.cs">
+      <Link>Properties\SharedAssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="Web\Wms\WmsServer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Web\UI\Ajax\AjaxMap.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GeoAPI.Extensions\GeoAPI.Extensions.csproj">
+      <Project>{efb576e1-56fc-47db-ac7e-683a535434be}</Project>
+      <Name>GeoAPI.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpMap.Data\SharpMap.Data.csproj">
+      <Project>{79703116-03e1-4579-8412-e5fa87a701b2}</Project>
+      <Name>SharpMap.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpMap\SharpMap.csproj">
+      <Project>{c83777fc-aabb-47d9-911f-d76255d4d541}</Project>
+      <Name>SharpMap</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Web\Wfs\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
