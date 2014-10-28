@@ -591,7 +591,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
-        public override void Render(Graphics g, Map map)
+        public override void Render(IGraphics g, Map map)
         {
             if (Logger.IsDebugEnabled)
                 Logger.Debug("Rendering wmslayer: " + LayerName);
@@ -720,10 +720,15 @@ namespace SharpMap.Layers
                                 Logger.Debug("Image read.. Drawing");
 
                             if (_imageAttributes != null)
-                                g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), 0, 0,
-                                    img.Width, img.Height, GraphicsUnit.Pixel, _imageAttributes);
+                            {
+                                Rectangle rectangle = new Rectangle(0, 0, img.Width, img.Height);
+                                g.DrawImage(img, rectangle, 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, _imageAttributes);
+                            }
                             else
-                                g.DrawImage(img, Rectangle.FromLTRB(0, 0, map.Size.Width, map.Size.Height));
+                            {
+                                Rectangle rectangle = Rectangle.FromLTRB(0, 0, map.Size.Width, map.Size.Height);
+                                g.DrawImage(img, rectangle);
+                            }
 
                             if (Logger.IsDebugEnabled)
                                 Logger.Debug("Draw complete");

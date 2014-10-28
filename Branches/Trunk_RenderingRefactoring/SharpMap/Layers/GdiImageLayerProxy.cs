@@ -22,6 +22,7 @@ using Common.Logging;
 using GeoAPI.Features;
 using GeoAPI.Geometries;
 using SharpMap.Data;
+using SharpMap.Rendering;
 
 namespace SharpMap.Layers
 {
@@ -154,7 +155,7 @@ namespace SharpMap.Layers
             set { _baseLayer.Proj4Projection = value; }
         }
 
-        void ILayer.Render(Graphics g, Map map)
+        void ILayer.Render(IGraphics g, Map map)
         {
             if (_baseLayer is ITileAsyncLayer)
             {
@@ -166,7 +167,7 @@ namespace SharpMap.Layers
             var s = map.Size;
             using (var img = new Bitmap(s.Width, s.Height, PixelFormat.Format32bppArgb))
             {
-                using (var gg = Graphics.FromImage(img))
+                using (IGraphics gg = Graphics.FromImage(img).G())
                 {
                     _baseLayer.Render(gg, map);
                 }

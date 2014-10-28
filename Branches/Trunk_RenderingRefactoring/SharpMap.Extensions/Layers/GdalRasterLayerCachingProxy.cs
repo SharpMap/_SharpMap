@@ -450,14 +450,14 @@ namespace SharpMap.Layers
                 RequiresRedraw = true;
         }
 
-        public override void Render(Graphics g, Map map)
+        public override void Render(IGraphics g, Map map)
         {
             LastRenderedSize = map.Size;
             LastRenderedExtents = map.Envelope;
             if (RequiresRedraw || CachedBitmap == null)
             {
                 var bmp = new Bitmap(LastRenderedSize.Value.Width, LastRenderedSize.Value.Height);
-                using (Graphics g2 = Graphics.FromImage(bmp))
+                using (IGraphics g2 = Graphics.FromImage(bmp).G())
                 {
                     _innerLayer.Render(g2, map);
                     CachedBitmap = bmp;

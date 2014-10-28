@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using SharpMap.Layers;
 using SharpMap.Utilities;
 
 namespace SharpMap.Rendering.Decoration
@@ -75,7 +76,7 @@ namespace SharpMap.Rendering.Decoration
         /// <param name="g">The graphics object</param>
         /// <param name="map">The map</param>
         /// <returns>The size of the map decoration</returns>
-        protected override Size InternalSize(Graphics g, Map map)
+        protected override Size InternalSize(IGraphics g, Map map)
         {
             return Size;
         }
@@ -85,7 +86,7 @@ namespace SharpMap.Rendering.Decoration
         /// </summary>
         /// <param name="g"></param>
         /// <param name="map"></param>
-        protected override void OnRender(Graphics g, Map map)
+        protected override void OnRender(IGraphics g, Map map)
         {
             var image = NorthArrowImage ?? DefaultNorthArrowBitmap;
 

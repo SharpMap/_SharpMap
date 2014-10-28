@@ -16,7 +16,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
-using System.Drawing;
 using SharpMap.Rendering;
 #if !DotSpatialProjections
 using GeoAPI.CoordinateSystems.Transformations;
@@ -45,7 +44,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="layer">Layer rendered</param>
         /// <param name="g">Reference to graphics object used for rendering</param>
-        public delegate void LayerRenderedEventHandler(Layer layer, Graphics g);
+        public delegate void LayerRenderedEventHandler(Layer layer, IGraphics g);
 
         #endregion
 
@@ -110,12 +109,10 @@ namespace SharpMap.Layers
         private int _srid = -1;
         private int? _targetSrid;
 
-// ReSharper disable PublicConstructorInAbstractClass
         ///<summary>
         /// Creates an instance of this class using the given Style
         ///</summary>        
-        public Layer(IStyle style, IRenderer renderer)
-// ReSharper restore PublicConstructorInAbstractClass
+        protected Layer(IStyle style, IRenderer renderer)
         {
             _style = style;
             _renderer = renderer;            
@@ -207,7 +204,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
-        public virtual void Render(Graphics g, Map map)
+        public virtual void Render(IGraphics g, Map map)
         {
             if (LayerRendered != null) 
                 LayerRendered(this, g); //Fire event
@@ -300,7 +297,7 @@ namespace SharpMap.Layers
         /// <summary>
         /// Gets or sets the Style for this Layer
         /// </summary>
-        public virtual IRenderer Renderer
+        public IRenderer Renderer
         {
             get { return _renderer; }
             set { _renderer = value; }

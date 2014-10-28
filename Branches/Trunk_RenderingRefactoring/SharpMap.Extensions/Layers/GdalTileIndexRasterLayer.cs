@@ -80,7 +80,7 @@ namespace SharpMap.Layers
             }
         }
 
-        public override void Render(Graphics g, Map map)
+        public override void Render(IGraphics g, Map map)
         {
             try
             {

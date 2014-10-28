@@ -294,12 +294,12 @@ namespace SharpMap
         /// <summary>
         /// EventHandler for event fired when all layers have been rendered
         /// </summary>
-        public delegate void MapRenderedEventHandler(Graphics g);
+        public delegate void MapRenderedEventHandler(IGraphics g);
 
         /// <summary>
         /// EventHandler for event fired when all layers are about to be rendered
         /// </summary>
-        public delegate void MapRenderingEventHandler(Graphics g);
+        public delegate void MapRenderingEventHandler(IGraphics g);
 
         /// <summary>
         /// EventHandler for event fired when the zoomlevel or the center point has been changed
@@ -370,9 +370,8 @@ namespace SharpMap
         public Image GetMap()
         {
             Image img = new Bitmap(Size.Width, Size.Height);
-            Graphics g = Graphics.FromImage(img);
-            RenderMap(g);
-            g.Dispose();
+            using (IGraphics g = Graphics.FromImage(img).G())
+                RenderMap(g);            
             return img;
         }
 
@@ -385,9 +384,8 @@ namespace SharpMap
         {
             Image img = new Bitmap(Size.Width, Size.Height);
             ((Bitmap)img).SetResolution(resolution, resolution);
-            Graphics g = Graphics.FromImage(img);
-            RenderMap(g);
-            g.Dispose();
+            using (IGraphics g = Graphics.FromImage(img).G())
+                RenderMap(g);            
             return img;
 
         }
@@ -418,15 +416,15 @@ namespace SharpMap
         {
             Metafile metafile;
             var bm = new Bitmap(1, 1);
-            using (var g = Graphics.FromImage(bm))
+            using (IGraphics g = Graphics.FromImage(bm).G())
             {
-                 var hdc = g.GetHdc();
+                 IntPtr hdc = g.GetHdc();
                  using (var stream = new MemoryStream())
                  {
                      metafile = new Metafile(stream, hdc, new RectangleF(0, 0, Size.Width, Size.Height),
                                              MetafileFrameUnit.Pixel, EmfType.EmfPlusDual);
 
-                     using (var metafileGraphics = Graphics.FromImage(metafile))
+                     using (IGraphics metafileGraphics = Graphics.FromImage(metafile).G())
                      {
                          metafileGraphics.PageUnit = GraphicsUnit.Pixel;
                          metafileGraphics.TransformPoints(CoordinateSpace.Page, CoordinateSpace.Device,
@@ -462,12 +460,12 @@ namespace SharpMap
         }
 
         /// <summary>
-        /// Renders the map using the provided <see cref="Graphics"/> object.
+        /// Renders the map using the provided <see cref="IGraphics"/> object.
         /// </summary>
-        /// <param name="g">the <see cref="Graphics"/> object to use</param>
-        /// <exception cref="ArgumentNullException">if <see cref="Graphics"/> object is null.</exception>
+        /// <param name="g">the <see cref="IGraphics"/> object to use</param>
+        /// <exception cref="ArgumentNullException">if <see cref="IGraphics"/> object is null.</exception>
         /// <exception cref="InvalidOperationException">if there are no layers to render.</exception>
-        public void RenderMap(Graphics g)
+        public void RenderMap(IGraphics g)
         {
             OnMapRendering(g);
 
@@ -548,7 +546,7 @@ namespace SharpMap
         /// Fired when map is rendering
         /// </summary>
         /// <param name="g"></param>
-        protected virtual void OnMapRendering(Graphics g)
+        protected virtual void OnMapRendering(IGraphics g)
         {
             var e = MapRendering;
             if (e != null) e(g);
@@ -558,7 +556,7 @@ namespace SharpMap
         /// Fired when Map is rendered
         /// </summary>
         /// <param name="g"></param>
-        protected virtual void OnMapRendered(Graphics g)
+        protected virtual void OnMapRendered(IGraphics g)
         {
             var e = MapRendered;
             if (e != null) e(g); //Fire render event
@@ -601,27 +599,27 @@ namespace SharpMap
 
 
         /// <summary>
-        /// Renders the map using the provided <see cref="Graphics"/> object.
+        /// Renders the map using the provided <see cref="IGraphics"/> object.
         /// </summary>
-        /// <param name="g">the <see cref="Graphics"/> object to use</param>
+        /// <param name="g">the <see cref="IGraphics"/> object to use</param>
         /// <param name="layerCollectionType">the <see cref="LayerCollectionType"/> to use</param>
-        /// <exception cref="ArgumentNullException">if <see cref="Graphics"/> object is null.</exception>
+        /// <exception cref="ArgumentNullException">if <see cref="IGraphics"/> object is null.</exception>
         /// <exception cref="InvalidOperationException">if there are no layers to render.</exception>
-        public void RenderMap(Graphics g, LayerCollectionType layerCollectionType)
+        public void RenderMap(IGraphics g, LayerCollectionType layerCollectionType)
         {
             RenderMap(g, layerCollectionType, true, false);
         }
 
         /// <summary>
-        /// Renders the map using the provided <see cref="Graphics"/> object.
+        /// Renders the map using the provided <see cref="IGraphics"/> object.
         /// </summary>
-        /// <param name="g">the <see cref="Graphics"/> object to use</param>
+        /// <param name="g">the <see cref="IGraphics"/> object to use</param>
         /// <param name="layerCollectionType">the <see cref="LayerCollectionType"/> to use</param>
         /// <param name="drawMapDecorations">Set whether to draw map decorations on the map (if such are set)</param>
         /// <param name="drawTransparent">Set wether to draw with transparent background or with BackColor as background</param>
-        /// <exception cref="ArgumentNullException">if <see cref="Graphics"/> object is null.</exception>
+        /// <exception cref="ArgumentNullException">if <see cref="IGraphics"/> object is null.</exception>
         /// <exception cref="InvalidOperationException">if there are no layers to render.</exception>
-        public void RenderMap(Graphics g, LayerCollectionType layerCollectionType, bool drawMapDecorations, bool drawTransparent)
+        public void RenderMap(IGraphics g, LayerCollectionType layerCollectionType, bool drawMapDecorations, bool drawTransparent)
         {
             if (g == null)
                 throw new ArgumentNullException("g", "Cannot render map with null graphics object!");
@@ -752,36 +750,37 @@ namespace SharpMap
         }
 
         [Obsolete]
-        private void RenderDisclaimer(Graphics g)
+        private void RenderDisclaimer(IGraphics g)
         {
             //Disclaimer
             if (!String.IsNullOrEmpty(_disclaimer))
             {
-                var size = RendererHelper.SizeOfString(g, _disclaimer, _disclaimerFont);
+                SizeF size = RendererHelper.SizeOfString(g, _disclaimer, _disclaimerFont);
                 size.Width = (Single)Math.Ceiling(size.Width);
                 size.Height = (Single)Math.Ceiling(size.Height);
-                StringFormat sf;
+                RectangleF visibleClipBounds = g.VisibleClipBounds;
+                StringFormat sf;                
                 switch (DisclaimerLocation)
                 {
                     case 0: //Right-Bottom
                         sf = new StringFormat();
                         sf.Alignment = StringAlignment.Far;
                         g.DrawString(Disclaimer, DisclaimerFont, Brushes.Black,
-                            g.VisibleClipBounds.Width,
-                            g.VisibleClipBounds.Height - size.Height - 2, sf);
+                            visibleClipBounds.Width,
+                            visibleClipBounds.Height - size.Height - 2, sf);
                         break;
                     case 1: //Right-Top
                         sf = new StringFormat();
                         sf.Alignment = StringAlignment.Far;
                         g.DrawString(Disclaimer, DisclaimerFont, Brushes.Black,
-                            g.VisibleClipBounds.Width, 0f, sf);
+                            visibleClipBounds.Width, 0f, sf);
                         break;
                     case 2: //Left-Top
                         g.DrawString(Disclaimer, DisclaimerFont, Brushes.Black, 0f, 0f);
                         break;
                     case 3://Left-Bottom
                         g.DrawString(Disclaimer, DisclaimerFont, Brushes.Black, 0f,
-                            g.VisibleClipBounds.Height - size.Height - 2);
+                            visibleClipBounds.Height - size.Height - 2);
                         break;
                 }
             }
@@ -1101,25 +1100,15 @@ namespace SharpMap
         {
             get
             {
-                using (var img = new Bitmap(1, 1))
-                {
-                    using (var g = Graphics.FromImage(img))
-                    {
-                        return GetMapScale((int) g.DpiX);
-                    }
-                }
+                using (Bitmap img = new Bitmap(1, 1))
+                using (IGraphics g = Graphics.FromImage(img).G())
+                    return GetMapScale((int) g.DpiX);
             }
             set
             {
-
                 using (var img = new Bitmap(1, 1))
-                {
-                    using (var g = Graphics.FromImage(img))
-                    {
-                        Zoom = GetMapZoomFromScale(value, (int) g.DpiX);
-                    }
-                }
-            
+                using (IGraphics g = Graphics.FromImage(img).G())
+                    Zoom = GetMapZoomFromScale(value, (int) g.DpiX);
             }
         }
 

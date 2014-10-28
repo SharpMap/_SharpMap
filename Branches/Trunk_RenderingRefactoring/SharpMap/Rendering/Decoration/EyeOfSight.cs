@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering.Decoration
 {
@@ -17,9 +18,9 @@ namespace SharpMap.Rendering.Decoration
             var roestte = new Bitmap(120, 120);
             
             //Anyone for a more sophisticated roestte?
-            using (var g = Graphics.FromImage(roestte))
+            using (IGraphics g = Graphics.FromImage(roestte).G())
             {
-                var t = new Matrix(1f, 0f, 0f, 1f, 60, 60);
+                Matrix t = new Matrix(1f, 0f, 0f, 1f, 60, 60);
                 g.Transform = t;
 
                 var f = new Font("Arial", 20, FontStyle.Bold);
@@ -67,7 +68,7 @@ namespace SharpMap.Rendering.Decoration
         /// </summary>
         /// <param name="g"></param>
         /// <param name="map"></param>
-        protected override void OnRender(Graphics g, Map map)
+        protected override void OnRender(IGraphics g, Map map)
         {
             // Render the rosetta
             base.OnRender(g, map);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering
 {
@@ -13,9 +14,9 @@ namespace SharpMap.Rendering
         /// <param name="text">the text to render</param>
         /// <param name="font">the font to use</param>
         /// <returns>the size</returns>
-        internal static SizeF SizeOfString74(Graphics g, string text, Font font)
+        internal static SizeF SizeOfString74(IGraphics g, string text, Font font)
         {
-            var s = g.MeasureString(text, font);
+            SizeF s = g.MeasureString(text, font);
             return new SizeF(s.Width * 0.74f + 1f, s.Height * 0.74f);
         }
 

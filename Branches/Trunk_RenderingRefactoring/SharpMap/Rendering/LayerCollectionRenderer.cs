@@ -37,7 +37,7 @@ namespace SharpMap.Rendering
         /// <param name="g">The graphics object</param>
         /// <param name="map">The map</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void Render(Graphics g, Map map)
+        public void Render(IGraphics g, Map map)
         {
             _map = map;
             _transform = _map.MapTransform;
@@ -78,7 +78,7 @@ namespace SharpMap.Rendering
             return (size.Width < 1920 && size.Height <= 1920 && numLayers < 100);
         }
 
-        private void RenderSequenial(Graphics g)
+        private void RenderSequenial(IGraphics g)
         {
             for (var layerIndex = 0; layerIndex < _layers.Length; layerIndex++)
             {
@@ -93,7 +93,7 @@ namespace SharpMap.Rendering
             }
         }
 
-        private void RenderParellel(Graphics g)
+        private void RenderParellel(IGraphics g)
         {
             _images = new Image[_layers.Length];
 
@@ -126,7 +126,7 @@ namespace SharpMap.Rendering
                 if (layer.MaxVisible >= _map.Zoom && layer.MinVisible < _map.Zoom)
                 {
                     var image = _images[layerIndex] = new Bitmap(_map.Size.Width, _map.Size.Height, PixelFormat.Format32bppArgb);
-                    using (var g = Graphics.FromImage(image))
+                    using (IGraphics g = Graphics.FromImage(image).G())
                     {
                         g.PageUnit = GraphicsUnit.Pixel;
                         ApplyTransform(_transform, g);
@@ -139,7 +139,7 @@ namespace SharpMap.Rendering
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void ApplyTransform(Matrix transform, Graphics g)
+        private static void ApplyTransform(Matrix transform, IGraphics g)
         {
             g.Transform = transform.Clone();
         }
