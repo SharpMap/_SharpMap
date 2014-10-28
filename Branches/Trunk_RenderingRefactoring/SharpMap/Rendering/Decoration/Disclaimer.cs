@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using SharpMap.Layers;
 using SharpMap.Rendering.Symbolizer;
 
 namespace SharpMap.Rendering.Decoration
@@ -94,7 +95,7 @@ namespace SharpMap.Rendering.Decoration
         /// <param name="g"></param>
         /// <param name="map"></param>
         /// <returns>The</returns>
-        protected override Size InternalSize(Graphics g, Map map)
+        protected override Size InternalSize(IGraphics g, Map map)
         {
             var s = g.MeasureString(Text, Font);
             return new Size((int)Math.Ceiling(s.Width), (int)Math.Ceiling(s.Height));
@@ -105,9 +106,9 @@ namespace SharpMap.Rendering.Decoration
         /// </summary>
         /// <param name="g"></param>
         /// <param name="map"></param>
-        protected override void OnRender(Graphics g, Map map)
+        protected override void OnRender(IGraphics g, Map map)
         {
-            var layoutRectangle = g.ClipBounds;
+            RectangleF layoutRectangle = g.ClipBounds;
             var b = new SolidBrush(OpacityColor(ForeColor));
             if (Halo > 0)
             {

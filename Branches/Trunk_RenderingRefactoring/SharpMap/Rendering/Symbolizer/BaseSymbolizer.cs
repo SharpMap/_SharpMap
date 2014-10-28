@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using SharpMap.Base;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering.Symbolizer
 {
@@ -55,7 +56,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="g">The graphics object to symbolize upon</param>
         /// <param name="map">The map</param>
         /// <param name="aproximateNumberOfGeometries">An approximate number of geometries to symbolize</param>
-        public virtual void Begin(Graphics g, Map map, int aproximateNumberOfGeometries)
+        public virtual void Begin(IGraphics g, Map map, int aproximateNumberOfGeometries)
         {
             _oldSmootingMode = g.SmoothingMode;
             _oldPixelOffsetMode = g.PixelOffsetMode;
@@ -69,7 +70,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="g">The graphics object to symbolize upon</param>
         /// <param name="map">The map</param>
-        public virtual void Symbolize(Graphics g, Map map)
+        public virtual void Symbolize(IGraphics g, Map map)
         {
         }
 
@@ -78,7 +79,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="g">The graphics object to symbolize upon</param>
         /// <param name="map">The map</param>
-        public virtual void End(Graphics g, Map map)
+        public virtual void End(IGraphics g, Map map)
         {
             g.SmoothingMode = _oldSmootingMode;
             g.PixelOffsetMode = _oldPixelOffsetMode;

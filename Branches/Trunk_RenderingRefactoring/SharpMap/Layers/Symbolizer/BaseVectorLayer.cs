@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Drawing.Drawing2D;
 using GeoAPI;
 using GeoAPI.Features;
@@ -13,7 +11,6 @@ using GeoAPI.CoordinateSystems.Transformations;
 #else
 using DotSpatial.Projections;
 #endif
-using SharpMap.Data;
 using SharpMap.Data.Providers;
 using SharpMap.Rendering.Symbolizer;
 using IGeometry = GeoAPI.Geometries.IGeometry;
@@ -88,7 +85,7 @@ namespace SharpMap.Layers.Symbolizer
         /// </summary>
         /// <param name="g">The graphics object</param>
         /// <param name="map">The map</param>
-        public override void Render(Graphics g, Map map)
+        public override void Render(IGraphics g, Map map)
         {
             // Map setup correctly
             if (map.Center == null)
@@ -148,7 +145,7 @@ namespace SharpMap.Layers.Symbolizer
         /// </summary>
         /// <param name="graphics">The graphics object to render upon</param>
         /// <param name="map">The map</param>
-        protected virtual void OnRender(Graphics graphics, Map map)
+        protected virtual void OnRender(IGraphics graphics, Map map)
         {
             // Get query envelope
             var envelope = map.Envelope;
@@ -195,7 +192,7 @@ namespace SharpMap.Layers.Symbolizer
         /// </summary>
         /// <param name="graphics">The graphics object to render upon</param>
         /// <param name="map">The map</param>
-        protected virtual void OnRendering(Graphics graphics, Map map)
+        protected virtual void OnRendering(IGraphics graphics, Map map)
         {
             foreach (var geometry in _geometries)
             {
@@ -210,7 +207,7 @@ namespace SharpMap.Layers.Symbolizer
         /// </summary>
         /// <param name="graphics">The graphics object to render upon</param>
         /// <param name="map">The map</param>
-        protected virtual void OnRendered(Graphics graphics, Map map)
+        protected virtual void OnRendered(IGraphics graphics, Map map)
         {
             Symbolizer.End(graphics, map);
         }

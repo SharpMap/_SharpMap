@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering.Symbolizer
 {
@@ -415,7 +416,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="format">The format</param>
         /// <param name="ignoreLength"></param>
         /// <param name="path"></param>
-        public static void DrawString(this Graphics self, Pen halo, Brush fill, string text, FontFamily fontFamily, int style, float emSize, StringFormat format, bool ignoreLength, GraphicsPath path)
+        public static void DrawString(this IGraphics self, Pen halo, Brush fill, string text, FontFamily fontFamily, int style, float emSize, StringFormat format, bool ignoreLength, GraphicsPath path)
         {
             if (path == null || path.PointCount == 0)
                 return;

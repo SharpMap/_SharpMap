@@ -1,18 +1,19 @@
 using System;
 using System.Drawing;
 using GeoAPI.Geometries;
+using SharpMap.Layers;
 using SharpMap.Styles;
 
 namespace SharpMap.Rendering
 {
     public class VectorRendererAdapter : VectorRenderer, IRenderer
     {
-        public void Draw(Map map, Graphics g, Label label)
+        public void Draw(Map map, IGraphics g, Label label)
         {
             throw new NotImplementedException();
         }
 
-        public void Draw(Map map, Graphics g, IGeometry geom, IStyle style, bool clip)
+        public void Draw(Map map, IGraphics g, IGeometry geom, IStyle style, bool clip)
         {
             Validate(map, g, geom, style);
 
@@ -81,7 +82,7 @@ namespace SharpMap.Rendering
             }
         }
 
-        public void DrawOutline(Map map, Graphics g, IGeometry geom, IStyle style)
+        public void DrawOutline(Map map, IGraphics g, IGeometry geom, IStyle style)
         {
             Validate(map, g, geom, style);
             VectorStyle s = (VectorStyle)style;
@@ -97,7 +98,7 @@ namespace SharpMap.Rendering
             }                
         }
 
-        private static void Validate(Map map, Graphics g, IGeometry geom, IStyle style)
+        private static void Validate(Map map, IGraphics g, IGeometry geom, IStyle style)
         {
             if (map == null)
                 throw new ArgumentNullException("map");

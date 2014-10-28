@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using SharpMap.Layers;
 using SharpMap.Utilities;
 
 namespace SharpMap.Rendering.Decoration.ScaleBar
@@ -111,7 +112,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// <param name="g">The graphics object</param>
         /// <param name="map">The map</param>
         /// <returns>The size of the map decoration</returns>
-        protected override Size InternalSize(Graphics g, Map map)
+        protected override Size InternalSize(IGraphics g, Map map)
         {
             CalcScale((int)g.DpiX);
             double width = MarginLeft + MarginRight + DefaultWidth;
@@ -124,7 +125,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// </summary>
         /// <param name="g"></param>
         /// <param name="map"></param>
-        protected override void OnRender(Graphics g, Map map)
+        protected override void OnRender(IGraphics g, Map map)
         {
             var rectF = g.ClipBounds;
             
@@ -145,7 +146,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
 
         #region Private render methods
         
-        private void RenderScaleBar(Graphics g, Rectangle rc)
+        private void RenderScaleBar(IGraphics g, Rectangle rc)
         {
             int width = rc.Right - rc.Left;
             int height = rc.Bottom - rc.Top;
@@ -183,7 +184,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// <param name="nTicLength">The length of each tic</param>
         /// <param name="nOffsetX">The x-offset</param>
         /// <param name="nOffsetY">The y-offset</param>
-        private void RenderBar(Graphics g, int nTicLength, int nOffsetX, int nOffsetY)
+        private void RenderBar(IGraphics g, int nTicLength, int nOffsetX, int nOffsetY)
         {
             Color cr1 = OpacityColor(_barColor1);
             Color cr2 = OpacityColor(_barColor2);
@@ -207,7 +208,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// <param name="bOutline">Value indicating whether the bar should be outlined</param>
         /// <param name="crOutline">The outline color</param>
         /// <param name="style">The <see cref="ScaleBarStyle"/></param>
-        private static void RenderBarWithStyle(Graphics g, int nOffsetX, int nOffsetY, int nNumTics, int nTicLength,
+        private static void RenderBarWithStyle(IGraphics g, int nOffsetX, int nOffsetY, int nNumTics, int nTicLength,
                                                int nBarWidth,
                                                Color crBar1, Color crBar2, bool bOutline, Color crOutline,
                                                ScaleBarStyle style)
@@ -248,7 +249,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// <param name="nTicLength">The length of each tic</param>
         /// <param name="xOrigin">The x-origin</param>
         /// <param name="yOrigin">The y-origin</param>
-        private static void RenderTicLine(Graphics g, int nNumTics, Color crBar1, Color crBar2, int nTicLength,
+        private static void RenderTicLine(IGraphics g, int nNumTics, Color crBar1, Color crBar2, int nTicLength,
                                           int xOrigin, int yOrigin)
         {
             var pen1 = new Pen(crBar1, 1);
@@ -276,7 +277,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// <param name="crBar2">The second bar color</param>
         /// <param name="bOutline">Value indicating whether the bar should be outlined</param>
         /// <param name="crOutline">The outline color</param>
-        private static void RenderTicBarStandard(Graphics g, int nNumTics, int nBarWidth, Color crBar1, Color crBar2,
+        private static void RenderTicBarStandard(IGraphics g, int nNumTics, int nBarWidth, Color crBar1, Color crBar2,
                                                  int nTicLength, int xOrigin, int yOrigin, bool bOutline,
                                                  Color crOutline)
         {
@@ -316,7 +317,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
             }
         }
 
-        private static void RenderRectangle(Graphics g, int x, int y, int width, int height, Pen pen, Brush brush)
+        private static void RenderRectangle(IGraphics g, int x, int y, int width, int height, Pen pen, Brush brush)
         {
             if (brush != null)
                 g.FillRectangle(brush, x, y, width, height);
@@ -336,7 +337,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// <param name="crBar2">The second bar color</param>
         /// <param name="bOutline">Value indicating whether the bar should be outlined</param>
         /// <param name="crOutline">The outline color</param>
-        private static void RenderTicBarMeridian(Graphics g, int nNumTics, int nBarWidth, Color crBar1, Color crBar2,
+        private static void RenderTicBarMeridian(IGraphics g, int nNumTics, int nBarWidth, Color crBar1, Color crBar2,
                                                  int nTicLength, int xOrigin, int yOrigin, bool bOutline,
                                                  Color crOutline)
         {
@@ -393,7 +394,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// <param name="crBar2">The second bar color</param>
         /// <param name="bOutline">Value indicating whether the bar should be outlined</param>
         /// <param name="crOutline">The outline color</param>
-        private static void RenderTicBarMeridian1(Graphics g, int nNumTics, int nBarWidth, Color crBar1, Color crBar2,
+        private static void RenderTicBarMeridian1(IGraphics g, int nNumTics, int nBarWidth, Color crBar1, Color crBar2,
                                                   int nTicLength, int xOrigin, int yOrigin, bool bOutline,
                                                   Color crOutline)
         {
@@ -445,7 +446,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// <param name="g">The graphics object</param>
         /// <param name="x">x-ordinate of the reference point for the text, the center of the bar</param>
         /// <param name="y">y-ordinate of the reference point for the text, the top or the bar</param>
-        private void RenderVerbalScale(Graphics g, int x, int y)
+        private void RenderVerbalScale(IGraphics g, int x, int y)
         {
             int lastX = int.MinValue;
             //Get the scale text.
@@ -472,7 +473,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// <param name="ticWidth">The width of each tic in pixels</param>
         /// <param name="scaleBarUnitsPerTic">The scale bar units per tic</param>
         /// <param name="strUnit">The abbreviated unit text</param>
-        private void RenderSegmentText(Graphics g, int x, int y, int tics, int ticWidth, double scaleBarUnitsPerTic,
+        private void RenderSegmentText(IGraphics g, int x, int y, int tics, int ticWidth, double scaleBarUnitsPerTic,
                                        string strUnit)
         {
             int lastX = int.MinValue;
@@ -513,7 +514,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
         /// <param name="y">The y-ordinate of the reference point</param>
         /// <param name="format">The string format, mainly vertical an horizontal alignment are of interest.</param>
         /// <param name="lastX">The last horizontal position, to ensure that texts are not overlapping</param>
-        private void RenderTextWithFormat(Graphics g, string text, int x, int y, StringFormat format, ref int lastX)
+        private void RenderTextWithFormat(IGraphics g, string text, int x, int y, StringFormat format, ref int lastX)
         {
             //Get the size of the string
             var size = g.MeasureString(text, _font);
@@ -1000,7 +1001,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
             return precision;
         }
 
-        static private int MeasureDisplayStringWidthExact(Graphics graphics, string text,
+        static private int MeasureDisplayStringWidthExact(IGraphics graphics, string text,
                                             Font font)
         {
             var ranges = new[] { new CharacterRange(0, text.Length) };
@@ -1009,8 +1010,8 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
 
             var rect = new RectangleF(0, 0, 1000, 1000);
 
-            var regions = graphics.MeasureCharacterRanges(text, font, rect, format);
-            rect = regions[0].GetBounds(graphics);
+            Region[] regions = graphics.MeasureCharacterRanges(text, font, rect, format);            
+            rect = regions[0].GetBounds(graphics.GetNativeObject());
 
             return (int)(rect.Right + 1.0f);
         }

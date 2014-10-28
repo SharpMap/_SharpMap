@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using GeoAPI.Geometries;
 using SharpMap.Base;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering.Symbolizer
 {
@@ -18,7 +19,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="g">The graphics object</param>
         /// <param name="paths">The Paths</param>
-        void SymbolizePaths(Graphics g, IEnumerable<GraphicsPath> paths);
+        void SymbolizePaths(IGraphics g, IEnumerable<GraphicsPath> paths);
     }
 
     /// <summary>
@@ -37,7 +38,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="g">The graphics object</param>
         /// <param name="path">The Path</param>
-        public void SymbolizePaths(Graphics g, IEnumerable<GraphicsPath> path)
+        public void SymbolizePaths(IGraphics g, IEnumerable<GraphicsPath> path)
         {
             foreach (var graphicsPath in path)
                 g.DrawPath(Line, graphicsPath);
@@ -100,7 +101,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="g">The graphics object</param>
         /// <param name="paths">The paths</param>
-        public void SymbolizePaths(Graphics g, IEnumerable<GraphicsPath> paths)
+        public void SymbolizePaths(IGraphics g, IEnumerable<GraphicsPath> paths)
         {
             foreach (var graphicsPath in paths)
             {
@@ -200,7 +201,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map"></param>
         /// <param name="lineString"></param>
         /// <param name="graphics"></param>
-        protected override void OnRenderInternal(Map map, ILineString lineString, Graphics graphics)
+        protected override void OnRenderInternal(Map map, ILineString lineString, IGraphics graphics)
         {
             var gp = new GraphicsPath();
             gp.AddLines(/*LimitValues(*/lineString.TransformToImage(map)/*)*/);
@@ -221,7 +222,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <summary>
         /// Method to indicate that the symbolizer has to be prepared.
         /// </summary>
-        public override void Begin(Graphics g, Map map, int aproximateNumberOfGeometries)
+        public override void Begin(IGraphics g, Map map, int aproximateNumberOfGeometries)
         {
             _graphicsPaths = new List<GraphicsPath>(aproximateNumberOfGeometries);
             base.Begin(g, map, aproximateNumberOfGeometries);
@@ -231,12 +232,12 @@ namespace SharpMap.Rendering.Symbolizer
         /// <summary>
         /// Method to indicate that the symbolizer should do its symbolizer work.
         /// </summary>
-        public override void Symbolize(Graphics g, Map map)
+        public override void Symbolize(IGraphics g, Map map)
         {
             Symbolize(g, map, Paths);
         }
 
-        private void Symbolize(Graphics graphics, Map map, List<GraphicsPath> paths)
+        private void Symbolize(IGraphics graphics, Map map, List<GraphicsPath> paths)
         {
             if (_lineSymbolizeHandlers.Count == 0)
                 _fallback.SymbolizePaths(graphics, paths);
@@ -250,7 +251,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <summary>
         /// Method to indicate that the symbolizers work is done and it can clean up.
         /// </summary>
-        public override void End(Graphics g, Map map)
+        public override void End(IGraphics g, Map map)
         {
             if (_graphicsPaths.Count > 0)
                 _graphicsPaths.Clear();

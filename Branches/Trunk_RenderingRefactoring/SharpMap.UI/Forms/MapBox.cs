@@ -25,7 +25,7 @@ using GeoAPI.Geometries;
 using SharpMap.Layers;
 using System.Drawing.Imaging;
 using System.Diagnostics;
-
+using SharpMap.Rendering;
 using IGeometry = GeoAPI.Geometries.IGeometry;
 using System.Threading;
 using Common.Logging;
@@ -853,7 +853,7 @@ namespace SharpMap.Forms
 
                 var retval = new Bitmap(width, height);
 
-                using (var g = Graphics.FromImage(retval))
+                using (IGraphics g = Graphics.FromImage(retval).G())
                 {
                     g.Clear(Color.Transparent);
                     map.RenderMap(g, layerCollectionType, false, true);
@@ -1706,7 +1706,7 @@ namespace SharpMap.Forms
                 {
                     foreach (Rendering.Decoration.IMapDecoration md in _map.Decorations)
                     {
-                        md.Render(pe.Graphics, _map);
+                        md.Render(pe.Graphics.G(), _map);
                     }
                 }
             }

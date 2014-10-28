@@ -1,6 +1,6 @@
 using System;
-using System.Drawing;
 using System.Drawing.Drawing2D;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering.Symbolizer
 {
@@ -25,21 +25,21 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="g">The graphics object</param>
         /// <param name="map">The map</param>
         /// <param name="aproximateNumberOfGeometries">The approximate number of geometries</param>
-        void Begin(Graphics g, Map map, int aproximateNumberOfGeometries);
+        void Begin(IGraphics g, Map map, int aproximateNumberOfGeometries);
 
         /// <summary>
         /// Method to indicate that the symbolizer should do its symbolizer work.
         /// </summary>
         /// <param name="g">The graphics object</param>
         /// <param name="map">The map</param>
-        void Symbolize(Graphics g, Map map);
+        void Symbolize(IGraphics g, Map map);
 
         /// <summary>
         /// Method to indicate that the symbolizers work is done and it can clean up.
         /// </summary>
         /// <param name="g">The graphics object</param>
         /// <param name="map">The map</param>
-        void End(Graphics g, Map map);
+        void End(IGraphics g, Map map);
 
         /*
         /// <summary>
@@ -62,7 +62,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map">The map object, mainly needed for transformation purposes.</param>
         /// <param name="geometry">The geometry to symbolize.</param>
         /// <param name="graphics">The graphics object to use.</param>
-        void Render(Map map, TGeometry geometry, Graphics graphics);
+        void Render(Map map, TGeometry geometry, IGraphics graphics);
 
     }
 }

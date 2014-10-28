@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering.Decoration
 {
@@ -165,9 +166,9 @@ namespace SharpMap.Rendering.Decoration
         /// <param name="g">The graphics object</param>
         /// <param name="map">The map</param>
         /// <returns>The size of the map decoration</returns>
-        protected abstract Size InternalSize(Graphics g, Map map);
+        protected abstract Size InternalSize(IGraphics g, Map map);
 
-        private void CalcMapDecorationMetrics(Graphics g, Map map)
+        private void CalcMapDecorationMetrics(IGraphics g, Map map)
         {
             _cachedSize = InternalSize(g, map);
             var rect = new Rectangle(Point.Add(GetLocation(map), BorderMargin), _cachedSize);
@@ -221,7 +222,7 @@ namespace SharpMap.Rendering.Decoration
         /// </summary>
         /// <param name="g"></param>
         /// <param name="map"></param>
-        public void Render(Graphics g, Map map)
+        public void Render(IGraphics g, Map map)
         {
             //Is this map decoration enabled?
             if (!Enabled)
@@ -243,7 +244,7 @@ namespace SharpMap.Rendering.Decoration
             g.FillPath(new SolidBrush(OpacityColor(BackgroundColor)), gp);
 
             //Clip region
-            var oldClip = g.Clip;
+            Region oldClip = g.Clip;
             g.Clip = GetClipRegion(map);
 
             //Actually render the Decoration
@@ -262,7 +263,7 @@ namespace SharpMap.Rendering.Decoration
         /// </summary>
         /// <param name="g"></param>
         /// <param name="map"></param>
-        protected virtual void OnRender(Graphics g, Map map)
+        protected virtual void OnRender(IGraphics g, Map map)
         {
         }
         /// <summary>
@@ -270,7 +271,7 @@ namespace SharpMap.Rendering.Decoration
         /// </summary>
         /// <param name="g"></param>
         /// <param name="map"></param>
-        protected virtual void OnRendering(Graphics g, Map map)
+        protected virtual void OnRendering(IGraphics g, Map map)
         {
             CalcMapDecorationMetrics(g, map);
         }
@@ -279,7 +280,7 @@ namespace SharpMap.Rendering.Decoration
         /// </summary>
         /// <param name="g"></param>
         /// <param name="map"></param>
-        protected virtual void OnRendered(Graphics g, Map map)
+        protected virtual void OnRendered(IGraphics g, Map map)
         {
         }
     }

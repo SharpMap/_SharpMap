@@ -164,7 +164,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
-        public override void Render(Graphics g, Map map)
+        public override void Render(IGraphics g, Map map)
         {
             if (BaseLayer != null)
             {
@@ -187,10 +187,8 @@ namespace SharpMap.Layers
 
             using (var image = new Bitmap(map.Size.Width + dot.Width, map.Size.Height + dot.Height, PixelFormat.Format32bppArgb))
             {
-                using (var gr = Graphics.FromImage(image))
-                {
+                using (IGraphics gr = Graphics.FromImage(image).G())
                     gr.Clear(Color.White);
-                }
 
                 DrawPoints(map, fds[0], dot, image);
                 Colorize(image, HeatColorBlend, opacity);

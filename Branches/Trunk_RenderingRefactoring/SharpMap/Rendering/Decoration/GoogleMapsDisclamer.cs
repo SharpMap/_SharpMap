@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using SharpMap.Layers;
 #if !DotSpatialProjections
 using System.Runtime.Serialization;
 using IMathTransform = ProjNet.CoordinateSystems.Transformations.MathTransform;
@@ -111,7 +112,7 @@ namespace SharpMap.Rendering.Decoration
         /// <param name="g"></param>
         /// <param name="map"></param>
         /// <returns>The</returns>
-        protected override Size InternalSize(Graphics g, Map map)
+        protected override Size InternalSize(IGraphics g, Map map)
         {
             RequestDisclaimer(map);
 
@@ -125,7 +126,7 @@ namespace SharpMap.Rendering.Decoration
         /// </summary>
         /// <param name="g"></param>
         /// <param name="map"></param>
-        protected override void OnRender(Graphics g, Map map)
+        protected override void OnRender(IGraphics g, Map map)
         {
             RequestDisclaimer(map);
 

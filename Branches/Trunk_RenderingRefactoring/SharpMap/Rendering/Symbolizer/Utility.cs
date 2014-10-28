@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering.Symbolizer
 {
@@ -38,7 +39,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="unit"></param>
         /// <param name="g"></param>
         /// <returns></returns>
-        public static float ScaleSizeToDeviceUnits(float size, GraphicsUnit unit, Graphics g)
+        public static float ScaleSizeToDeviceUnits(float size, GraphicsUnit unit, IGraphics g)
         {
             if (unit == g.PageUnit)
                 return size;

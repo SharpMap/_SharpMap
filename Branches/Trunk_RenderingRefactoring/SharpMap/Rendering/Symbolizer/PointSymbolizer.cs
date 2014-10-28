@@ -20,6 +20,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using GeoAPI.Geometries;
+using SharpMap.Layers;
 using SharpMap.Utilities;
 
 namespace SharpMap.Rendering.Symbolizer
@@ -86,7 +87,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map">The map</param>
         /// <param name="point">The point to symbolize</param>
         /// <param name="g">The graphics object</param>
-        protected void RenderPoint(Map map, Coordinate point, Graphics g)
+        protected void RenderPoint(Map map, Coordinate point, IGraphics g)
         {
             if (point == null)
                 return;
@@ -120,7 +121,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="pt">The point</param>
         /// <param name="g">The graphics object</param>
-        internal abstract void OnRenderInternal(PointF pt, Graphics g);
+        internal abstract void OnRenderInternal(PointF pt, IGraphics g);
 
         /// <summary>
         /// Utility function to transform any <see cref="IPointSymbolizer"/> into an unscaled <see cref="RasterPointSymbolizer"/>. This may bring performance benefits.
@@ -129,7 +130,7 @@ namespace SharpMap.Rendering.Symbolizer
         public virtual IPointSymbolizer ToRasterPointSymbolizer()
         {
             var bitmap = new Bitmap(Size.Width, Size.Height);
-            using (var g = Graphics.FromImage(bitmap))
+            using (IGraphics g = Graphics.FromImage(bitmap).G())
             {
                 g.Clear(Color.Transparent);
                 OnRenderInternal(new PointF(Size.Width * 0.5f, Size.Height * 0.5f), g);
@@ -151,7 +152,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map">The map object, mainly needed for transformation purposes.</param>
         /// <param name="geometry">The geometry to symbolize.</param>
         /// <param name="graphics">The graphics object to use.</param>
-        public void Render(Map map, IPuntal geometry, Graphics graphics)
+        public void Render(Map map, IPuntal geometry, IGraphics graphics)
         {
             var mp = geometry as IMultiPoint;
             if (mp != null)

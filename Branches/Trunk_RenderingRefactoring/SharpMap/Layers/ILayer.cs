@@ -15,7 +15,6 @@
 // along with SharpMap; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
-using System.Drawing;
 using GeoAPI.Geometries;
 
 namespace SharpMap.Layers
@@ -75,7 +74,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
-        void Render(Graphics g, Map map);
+        void Render(IGraphics g, Map map);
 
 
         //SharpMap.CoordinateSystems.CoordinateSystem CoordinateSystem { get; set; }

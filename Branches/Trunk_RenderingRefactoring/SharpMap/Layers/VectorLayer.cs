@@ -201,7 +201,7 @@ namespace SharpMap.Layers
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
         /// 
-        public override void Render(Graphics g, Map map)
+        public override void Render(IGraphics g, Map map)
         {
             if (map.Center == null)
                 throw (new ApplicationException("Cannot render map. View center not specified"));
@@ -250,7 +250,7 @@ namespace SharpMap.Layers
         /// <param name="map">The map object</param>
         /// <param name="envelope">The envelope to render</param>
         /// <param name="theme">The theme to apply</param>
-        protected void RenderInternal(Graphics g, Map map, Envelope envelope, ITheme theme)
+        protected void RenderInternal(IGraphics g, Map map, Envelope envelope, ITheme theme)
         {
 
             IFeatureCollectionSet ds;
@@ -344,7 +344,7 @@ namespace SharpMap.Layers
         /// <param name="g">The graphics object</param>
         /// <param name="map">The map object</param>
         /// <param name="envelope">The envelope to render</param>
-        protected void RenderInternal(Graphics g, Map map, Envelope envelope)
+        protected void RenderInternal(IGraphics g, Map map, Envelope envelope)
         {
             //if style is not enabled, we don't need to render anything
             if (!Style.Enabled) return;
@@ -463,7 +463,7 @@ namespace SharpMap.Layers
         /// <param name="map">The map</param>
         /// <param name="feature">The feature's geometry</param>
         /// <param name="style">The style to apply</param>
-        protected void RenderGeometry(Graphics g, Map map, IGeometry feature, VectorStyle style)
+        protected void RenderGeometry(IGraphics g, Map map, IGeometry feature, VectorStyle style)
         {
             if (feature == null)
                 return;

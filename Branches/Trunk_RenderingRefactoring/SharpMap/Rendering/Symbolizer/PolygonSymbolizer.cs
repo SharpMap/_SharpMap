@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using GeoAPI.Geometries;
+using SharpMap.Layers;
 using Point = System.Drawing.Point;
 
 namespace SharpMap.Rendering.Symbolizer
@@ -55,7 +56,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map">The map object, mainly needed for transformation purposes.</param>
         /// <param name="geometry">The geometry to symbolize.</param>
         /// <param name="graphics">The graphics object to use.</param>
-        public void Render(Map map, IPolygonal geometry, Graphics graphics)
+        public void Render(Map map, IPolygonal geometry, IGraphics graphics)
         {
             var mp = geometry as IMultiPolygon;
             if (mp != null)
@@ -76,7 +77,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map">The map</param>
         /// <param name="polygon">The polygon to render</param>
         /// <param name="g">The graphics object to use</param>
-        protected abstract void OnRenderInternal(Map map, IPolygon polygon, Graphics g);
+        protected abstract void OnRenderInternal(Map map, IPolygon polygon, IGraphics g);
 
         private Point _renderOrigin;
 
@@ -86,7 +87,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="g">The graphics object to symbolize upon</param>
         /// <param name="map">The map</param>
         /// <param name="aproximateNumberOfGeometries">An approximate number of geometries to symbolize</param>
-        public override void Begin(Graphics g, Map map, int aproximateNumberOfGeometries)
+        public override void Begin(IGraphics g, Map map, int aproximateNumberOfGeometries)
         {
             _renderOrigin = g.RenderingOrigin;
             g.RenderingOrigin = RenderOrigin;
@@ -98,7 +99,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="g">The graphics object to symbolize upon</param>
         /// <param name="map">The map</param>
-        public override void End(Graphics g, Map map)
+        public override void End(IGraphics g, Map map)
         {
             g.RenderingOrigin = _renderOrigin;
             base.End(g, map);

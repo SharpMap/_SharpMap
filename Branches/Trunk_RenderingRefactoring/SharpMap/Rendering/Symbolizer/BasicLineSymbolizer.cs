@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using GeoAPI.Geometries;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering.Symbolizer
 {
@@ -26,7 +27,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map">The map</param>
         /// <param name="lineString">The linestring</param>
         /// <param name="graphics">The graphics object</param>
-        protected override void OnRenderInternal(Map map, ILineString lineString, Graphics graphics)
+        protected override void OnRenderInternal(Map map, ILineString lineString, IGraphics graphics)
         {
             graphics.DrawLines(Line, /*LimitValues(*/lineString.TransformToImage(map)/*)*/);
         }
@@ -60,7 +61,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="map">The map</param>
         /// <param name="lineString">The linestring</param>
         /// <param name="graphics">The graphics object</param>
-        protected override void OnRenderInternal(Map map, ILineString lineString, Graphics graphics)
+        protected override void OnRenderInternal(Map map, ILineString lineString, IGraphics graphics)
         {
             var pts = /*LimitValues(*/ RendererHelper.OffsetRight(lineString.TransformToImage(map), Offset) /*)*/;
             graphics.DrawLines(Line, pts);

@@ -1,25 +1,23 @@
-﻿using System.Collections.Generic;
+﻿//using SharpMap.Geometries;
 using System.Drawing;
-using GeoAPI.Geometries;
 using NUnit.Framework;
 using SharpMap;
 using SharpMap.Data.Providers;
-using SharpMap.Rendering.Decoration;
-//using SharpMap.Geometries;
-using SharpMap.Rendering.Decoration.ScaleBar;
 using SharpMap.Layers;
+using SharpMap.Rendering.Decoration;
+using SharpMap.Rendering.Decoration.ScaleBar;
 using GeoPoint = GeoAPI.Geometries.Coordinate;
 
 namespace UnitTests
 {
     public class TestDecoration : MapDecoration
     {
-        protected override Size InternalSize(Graphics g, Map map)
+        protected override Size InternalSize(IGraphics g, Map map)
         {
             return new Size(50, 30);
         }
 
-        protected override void OnRender(Graphics g, Map map)
+        protected override void OnRender(IGraphics g, Map map)
         {
             g.FillRegion(new SolidBrush(OpacityColor(Color.Red)), g.Clip);
         }
@@ -30,9 +28,9 @@ namespace UnitTests
         [Test]
         public void TestMapDecorationTest()
         {
-            var m = new Map(new Size(780, 540)) {BackColor = Color.White, SRID = 0};
-            var pts = new [] {new GeoPoint(0, 0), new GeoPoint(779, 539)};
-            var p = new FeatureProvider(m.Factory.CreateLineString(pts));
+            Map m = new Map(new Size(780, 540)) {BackColor = Color.White, SRID = 0};
+            GeoPoint[] pts = new [] {new GeoPoint(0, 0), new GeoPoint(779, 539)};
+            FeatureProvider p = new FeatureProvider(m.Factory.CreateLineString(pts));
             m.Layers.Add(new VectorLayer("t",p));
             m.ZoomToExtents();
 
@@ -74,7 +72,7 @@ namespace UnitTests
                 NumTicks = 2,
                 Opacity = 1f
             });
-            var bmp = m.GetMap();
+            Image bmp = m.GetMap();
             bmp.Save("TestMapDecorationTest.bmp");
         }
 

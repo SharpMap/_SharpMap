@@ -1,13 +1,13 @@
 using System;
-using System.Drawing;
 using GeoAPI.Geometries;
+using SharpMap.Layers;
 using SharpMap.Styles;
 
 namespace SharpMap.Rendering
 {
     public class LabelRenderer : VectorRenderer, IRenderer
     {
-        public void Draw(Map map, Graphics g, Label label)
+        public void Draw(Map map, IGraphics g, Label label)
         {
             if (map == null)
                 throw new ArgumentNullException("map");
@@ -23,14 +23,14 @@ namespace SharpMap.Rendering
                 label.LabelPoint);
         }
 
-        public void Draw(Map map, Graphics g, IGeometry geom, IStyle style, bool clip)
+        public void Draw(Map map, IGraphics g, IGeometry geom, IStyle style, bool clip)
         {
             throw new NotImplementedException();
         }
 
-        public void DrawOutline(Map map, Graphics g, IGeometry geom, IStyle style)
+        public void DrawOutline(Map map, IGraphics g, IGeometry geom, IStyle style)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

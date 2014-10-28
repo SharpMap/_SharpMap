@@ -403,7 +403,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
-        public override void Render(Graphics g, Map map)
+        public override void Render(IGraphics g, Map map)
         {
             CheckDisposed();
             if (TilingSize.IsEmpty || (TilingSize.Width > map.Size.Width && TilingSize.Height > map.Size.Height))
@@ -808,10 +808,10 @@ namespace SharpMap.Layers
         // add image pixels to the map
         
 #if !DotSpatialProjections
-        protected virtual void GetPreview(Dataset dataset, Size size, Graphics g,
+        protected virtual void GetPreview(Dataset dataset, Size size, IGraphics g,
                                           Envelope displayBbox, ICoordinateSystem mapProjection, Map map)
 #else
-        protected virtual void GetPreview(Dataset dataset, Size size, Graphics g,
+        protected virtual void GetPreview(Dataset dataset, Size size, IGraphics g,
                                           Envelope displayBbox, ProjectionInfo mapProjection, Map map)
 #endif
         {
@@ -1343,10 +1343,10 @@ namespace SharpMap.Layers
 
         // faster than rotated display
 #if !DotSpatialProjections
-        private void GetNonRotatedPreview(Dataset dataset, Size size, Graphics g,
+        private void GetNonRotatedPreview(Dataset dataset, Size size, IGraphics g,
                                           Envelope bbox, ICoordinateSystem mapProjection)
 #else
-        private void GetNonRotatedPreview(Dataset dataset, Size size, Graphics g,
+        private void GetNonRotatedPreview(Dataset dataset, Size size, IGraphics g,
                                           Envelope bbox, ProjectionInfo mapProjection)
 #endif
         {

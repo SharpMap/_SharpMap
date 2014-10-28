@@ -18,6 +18,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering.Symbolizer
 {
@@ -193,7 +194,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="pt">The point</param>
         /// <param name="g">The graphics object</param>
-        internal override void OnRenderInternal(PointF pt, Graphics g)
+        internal override void OnRenderInternal(PointF pt, IGraphics g)
         {
             if (Halo > 0)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
+using SharpMap.Layers;
 
 namespace SharpMap.Rendering
 {
@@ -49,6 +50,11 @@ namespace SharpMap.Rendering
     /// </summary>
     public static class GraphicsExtension
     {
+        public static IGraphics G(this Graphics g)
+        {
+            return new GraphicsDecorator(g);
+        }
+
         /// <summary>
         /// Method to measure the length of a string
         /// </summary>
@@ -58,7 +64,7 @@ namespace SharpMap.Rendering
         /// <param name="brush">The <see cref="Brush"/> to use</param>
         /// <param name="graphicsPath">The <see cref="GraphicsPath"/> describing the </param>
         /// <returns>An array of <see cref="RectangleF"/>s</returns>
-        public static RectangleF[] MeasureString(Graphics graphics, string s, Font font, Brush brush, GraphicsPath graphicsPath)
+        public static RectangleF[] MeasureString(IGraphics graphics, string s, Font font, Brush brush, GraphicsPath graphicsPath)
         {
             return MeasureString(graphics, s, font, brush, TextPathAlign.Left, TextPathPosition.CenterPath, 100, graphicsPath);
         }
@@ -74,7 +80,7 @@ namespace SharpMap.Rendering
         /// <param name="textPathPosition">The vertical position on the <paramref name="graphicsPath"/></param>
         /// <param name="graphicsPath">The <see cref="GraphicsPath"/> describing the </param>
         /// <returns>An array of <see cref="RectangleF"/>s</returns>
-        public static RectangleF[] MeasureString(Graphics graphics, string s, Font font, Brush brush, TextPathAlign textPathAlign, TextPathPosition textPathPosition, GraphicsPath graphicsPath)
+        public static RectangleF[] MeasureString(IGraphics graphics, string s, Font font, Brush brush, TextPathAlign textPathAlign, TextPathPosition textPathPosition, GraphicsPath graphicsPath)
         {
             return MeasureString(graphics, s, font, brush, textPathAlign, textPathPosition, 100, graphicsPath);
         }
@@ -87,7 +93,7 @@ namespace SharpMap.Rendering
         /// <param name="font">The <see cref="Font"/> to use</param>
         /// <param name="brush">The <see cref="Brush"/> to use</param>
         /// <param name="graphicsPath">The <see cref="GraphicsPath"/> describing the </param>
-        public static void DrawString(Graphics graphics, string s, Font font, Brush brush, GraphicsPath graphicsPath)
+        public static void DrawString(IGraphics graphics, string s, Font font, Brush brush, GraphicsPath graphicsPath)
         {
             DrawString(graphics, s, font, brush, TextPathAlign.Left, TextPathPosition.CenterPath, 100, graphicsPath);
         }
@@ -102,7 +108,7 @@ namespace SharpMap.Rendering
         /// <param name="textPathAlign">The horizontal position on the <paramref name="graphicsPath"/></param>
         /// <param name="textPathPosition">The vertical position on the <paramref name="graphicsPath"/></param>
         /// <param name="graphicsPath">The <see cref="GraphicsPath"/> describing the </param>
-        public static void DrawString(Graphics graphics, string s, Font font, Brush brush, TextPathAlign textPathAlign, TextPathPosition textPathPosition, GraphicsPath graphicsPath)
+        public static void DrawString(IGraphics graphics, string s, Font font, Brush brush, TextPathAlign textPathAlign, TextPathPosition textPathPosition, GraphicsPath graphicsPath)
         {
             DrawString(graphics, s, font, brush, textPathAlign, textPathPosition, 100, graphicsPath);
         }
@@ -119,7 +125,7 @@ namespace SharpMap.Rendering
         /// <param name="letterSpace">A value controlling the spacing between letters</param>
         /// <param name="graphicsPath">The <see cref="GraphicsPath"/> describing the </param>
         /// <returns>An array of <see cref="RectangleF"/>s</returns>
-        public static RectangleF[] MeasureString(Graphics graphics, string s, Font font, Brush brush, TextPathAlign textPathAlign, TextPathPosition textPathPosition, int letterSpace, GraphicsPath graphicsPath)
+        public static RectangleF[] MeasureString(IGraphics graphics, string s, Font font, Brush brush, TextPathAlign textPathAlign, TextPathPosition textPathPosition, int letterSpace, GraphicsPath graphicsPath)
         {
             var angles = new List<float>();
             var pointsText = new List<PointF>();
@@ -139,7 +145,7 @@ namespace SharpMap.Rendering
         /// <param name="letterSpace">A value controlling the spacing between letters</param>
         /// <param name="graphicsPath">The <see cref="GraphicsPath"/> describing the </param>
         /// <returns>An array of <see cref="RectangleF"/>s</returns>
-        public static void DrawString(Graphics graphics, string s, Font font, Brush brush, TextPathAlign textPathAlign, TextPathPosition textPathPosition, int letterSpace, GraphicsPath graphicsPath)
+        public static void DrawString(IGraphics graphics, string s, Font font, Brush brush, TextPathAlign textPathAlign, TextPathPosition textPathPosition, int letterSpace, GraphicsPath graphicsPath)
         {
             DrawString(graphics, s, font, brush, textPathAlign, textPathPosition, 100, 0, graphicsPath,false);
         }
@@ -159,13 +165,13 @@ namespace SharpMap.Rendering
         /// <param name="angles">A list of angle values (in degrees), one for each letter</param>
         /// <param name="pointsText">A list of positions, one for each letter</param>
         /// <param name="pointsUp">A list of points (don't know what for)</param>
-        public static RectangleF[] MeasureString(Graphics graphics, string s, Font font, Brush brush,
+        public static RectangleF[] MeasureString(IGraphics graphics, string s, Font font, Brush brush,
                                                  TextPathAlign textPathAlign, TextPathPosition textPathPosition,
                                                  int letterSpace, float rotateDegree, GraphicsPath graphicsPath,
                                                  ref List<float> angles, ref List<PointF> pointsText,
                                                  ref List<Point> pointsUp)
         {
-            var top = TextOnPath.TextOnPathInstance;
+            TextOnPath top = TextOnPath.TextOnPathInstance;
             top.Text = s;
             top.Font = font;
             top.FillColorTop = brush;
@@ -197,7 +203,7 @@ namespace SharpMap.Rendering
         /// <param name="rotateDegree">A value controlling the rotation of <paramref name="s"/></param>
         /// <param name="graphicsPath">The <see cref="GraphicsPath"/> describing the </param>
         /// <param name="showPath">A value indicating if the <paramref name="graphicsPath"/> should be drawn, too.</param>
-        public static void DrawString(Graphics graphics, string s, Font font, Brush brush, TextPathAlign textPathAlign, TextPathPosition textPathPosition, int letterSpace, float rotateDegree, GraphicsPath graphicsPath, bool showPath)
+        public static void DrawString(IGraphics graphics, string s, Font font, Brush brush, TextPathAlign textPathAlign, TextPathPosition textPathPosition, int letterSpace, float rotateDegree, GraphicsPath graphicsPath, bool showPath)
         {
             var top = TextOnPath.TextOnPathInstance;
             
@@ -250,7 +256,7 @@ namespace SharpMap.Rendering
         /// <summary>
         /// Gets or sets the <see cref="Graphics"/> object
         /// </summary>
-        public Graphics Graphics { get; set; }
+        public IGraphics Graphics { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating the <see cref="GraphicsPath"/> used to render text along
@@ -545,7 +551,7 @@ namespace SharpMap.Rendering
 
         }
 
-        private void DrawText(Graphics g, PointF[] points, int maxPoints)
+        private void DrawText(IGraphics g, PointF[] points, int maxPoints)
         {
 
             //GraphicsPath gp = new GraphicsPath(_pathdata.Points, _pathdata.Types) { FillMode = FillMode.Winding };
@@ -618,7 +624,7 @@ namespace SharpMap.Rendering
 
         }
 
-        private RectangleF StringRegionValue(Graphics g, int textpos)
+        private RectangleF StringRegionValue(IGraphics g, int textpos)
         {
 
             var measureString = Text.Substring(textpos, 1);
@@ -638,10 +644,10 @@ namespace SharpMap.Rendering
             stringFormat.SetMeasurableCharacterRanges(characterRanges);
             stringFormat.Alignment = StringAlignment.Center;
             var stringRegions = g.MeasureCharacterRanges(Text.Substring(textpos), _font, layoutRect, stringFormat);
-            return stringRegions[0].GetBounds(g);
+            return stringRegions[0].GetBounds(g.GetNativeObject());
         }
 
-        private float StringRegion(Graphics g, int textpos)
+        private float StringRegion(IGraphics g, int textpos)
         {
             return StringRegionValue(g, textpos).Width;
         }
@@ -675,7 +681,7 @@ namespace SharpMap.Rendering
         /// <param name="text">The text string</param>
         /// <param name="angle">The rotation angle</param>
         /// <param name="pointCenter">The center point around which to rotate</param>
-        private void DrawRotatedText(Graphics gr, string text, float angle, PointF pointCenter)
+        private void DrawRotatedText(IGraphics gr, string text, float angle, PointF pointCenter)
         {
             angle -= RotateDegree;
             var stringFormat =  new StringFormat { Alignment = StringAlignment.Center };

@@ -393,7 +393,7 @@ namespace SharpMap.Layers
         /// </summary>
         /// <param name="g">Graphics object reference</param>
         /// <param name="map">Map which is rendered</param>
-        public override void Render(Graphics g, Map map)
+        public override void Render(IGraphics g, Map map)
         {
             if (Style.Enabled && Style.MaxVisible >= map.Zoom && Style.MinVisible < map.Zoom)
             {
@@ -616,12 +616,12 @@ namespace SharpMap.Layers
         }
 
 
-        private BaseLabel CreateLabel(IFeature fdr, IGeometry feature, string text, float rotation, LabelStyle style, Map map, Graphics g)
+        private BaseLabel CreateLabel(IFeature fdr, IGeometry feature, string text, float rotation, LabelStyle style, Map map, IGraphics g)
         {
             return CreateLabel(fdr, feature, text, rotation, Priority, style, map, g, _getLocationMethod);
         }
 
-        private BaseLabel CreateLabel(IFeature fdr, IGeometry feature, string text, float rotation, int priority, LabelStyle style, Map map, Graphics g, GetLocationMethod _getLocationMethod)
+        private BaseLabel CreateLabel(IFeature fdr, IGeometry feature, string text, float rotation, int priority, LabelStyle style, Map map, IGraphics g, GetLocationMethod _getLocationMethod)
         {
             if (feature == null) return null;
 
@@ -657,7 +657,7 @@ namespace SharpMap.Layers
                     else
                     {
                         //get centriod
-                        System.Drawing.PointF position2 = map.WorldToImage(feature.EnvelopeInternal.Centre);
+                        PointF position2 = map.WorldToImage(feature.EnvelopeInternal.Centre);
                         lbl = new Label(text, position2, rotation, priority, style);
                         if (size.Width < 0.95 * line.Length / map.PixelWidth || !style.IgnoreLength)
                         {
@@ -854,7 +854,7 @@ namespace SharpMap.Layers
             label.Location = map.WorldToImage(new Coordinate(tmpx, tmpy));
         }
 
-        private static void CalculateLabelAroundOnLineString(ILineString line, ref BaseLabel label, Map map, System.Drawing.Graphics g, System.Drawing.SizeF textSize)
+        private static void CalculateLabelAroundOnLineString(ILineString line, ref BaseLabel label, Map map, IGraphics g, SizeF textSize)
         {
             var sPoints = line.Coordinates;
 

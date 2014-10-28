@@ -151,7 +151,9 @@
     <Compile Include="Layers\DuplicateLayerException.cs" />
     <Compile Include="Layers\GdiImageLayer.cs" />
     <Compile Include="Layers\GdiImageLayerProxy.cs" />
+    <Compile Include="Layers\GraphicsDecorator.cs" />
     <Compile Include="Layers\IAsyncLayer.cs" />
+    <Compile Include="Layers\IGraphics.cs" />
     <Compile Include="Layers\ILayer.cs" />
     <Compile Include="Layers\ICanQueryLayer.cs" />
     <Compile Include="Layers\LabelLayer.cs" />
