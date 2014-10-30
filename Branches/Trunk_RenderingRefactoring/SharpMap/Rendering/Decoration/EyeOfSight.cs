@@ -32,7 +32,7 @@ namespace SharpMap.Rendering.Decoration
                 foreach (var s in Directions)
                 {
                     g.DrawString(s, f, b, 0, -55, sf);
-                    g.DrawArc(p, rect, 290f, 50f);
+                    g.DrawArc(p, rect, 290, 50);
                     g.RotateTransform(90f);
                 }
             }

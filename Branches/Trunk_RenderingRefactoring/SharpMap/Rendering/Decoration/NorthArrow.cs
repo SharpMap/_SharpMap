@@ -121,10 +121,7 @@ namespace SharpMap.Rendering.Decoration
             ia.SetRemapTable( cmap );
 
             g.Transform = newTransform;
-            
-            var rect = new Rectangle(-halfSize.Width, -halfSize.Height, Size.Width, Size.Height);
-            g.DrawImage(image, rect, 0, 0, image.Size.Width, image.Size.Height, GraphicsUnit.Pixel, ia);
-
+            g.DrawImage(image, -halfSize.Width, -halfSize.Height, Size.Width, Size.Height, 0, 0, image.Size.Width, image.Size.Height, GraphicsUnit.Pixel, ia);
             g.Transform = oldTransform;
         }
 

@@ -267,9 +267,9 @@ namespace SharpMap.Layers
                             double maxY = (int) Math.Round(destMin.Y);
 
                             g.DrawImage(bitmap,
-                                        new Rectangle((int) minX, (int) minY, (int) (maxX - minX), (int) (maxY - minY)),
-                                        0, 0, tileSet.Width, tileSet.Height,
-                                        GraphicsUnit.Pixel, _ImageAttributes);
+                                (int) minX, (int) minY, (int) (maxX - minX), (int) (maxY - minY),
+                                0, 0, tileSet.Width, tileSet.Height,
+                                GraphicsUnit.Pixel, _ImageAttributes);
                         }
                     }
                 }

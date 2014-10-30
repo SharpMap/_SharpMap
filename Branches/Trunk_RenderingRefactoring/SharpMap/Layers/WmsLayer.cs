@@ -721,13 +721,15 @@ namespace SharpMap.Layers
 
                             if (_imageAttributes != null)
                             {
-                                Rectangle rectangle = new Rectangle(0, 0, img.Width, img.Height);
-                                g.DrawImage(img, rectangle, 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, _imageAttributes);
+                                g.DrawImage(img, 
+                                    0, 0, img.Width, img.Height, 
+                                    0, 0, img.Width, img.Height, 
+                                    GraphicsUnit.Pixel, _imageAttributes);
                             }
                             else
                             {
                                 Rectangle rectangle = Rectangle.FromLTRB(0, 0, map.Size.Width, map.Size.Height);
-                                g.DrawImage(img, rectangle);
+                                g.DrawImage(img, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
                             }
 
                             if (Logger.IsDebugEnabled)

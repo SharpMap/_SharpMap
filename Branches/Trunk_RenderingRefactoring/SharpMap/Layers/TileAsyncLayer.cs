@@ -221,9 +221,8 @@ namespace SharpMap.Layers
                 max = new PointF((float)Math.Round(max.X), (float)Math.Round(max.Y));
 
                 g.DrawImage(bm,
-                    new Rectangle((int)min.X, (int)max.Y, (int)(max.X - min.X), (int)(min.Y - max.Y)),
-                    0, 0,
-                    sourceWidth, sourceHeight,
+                    (int)min.X, (int)max.Y, (int)(max.X - min.X), (int)(min.Y - max.Y),
+                    0, 0, sourceWidth, sourceHeight,
                     GraphicsUnit.Pixel,
                     imageAttributes);
 

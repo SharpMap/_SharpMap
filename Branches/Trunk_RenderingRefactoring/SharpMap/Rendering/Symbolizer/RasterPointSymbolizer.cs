@@ -151,10 +151,10 @@ namespace SharpMap.Rendering.Symbolizer
                     {
                         g.DrawImage(
                             symbol,
-                            (int)pt.X,
-                            (int)pt.Y,
-                            width,
-                            height);
+                            (int) pt.X,
+                            (int) pt.Y,
+                            (int) width,
+                            (int) height);
                     }
                 }
             }
@@ -166,11 +166,8 @@ namespace SharpMap.Rendering.Symbolizer
                 int y = (int)(pt.Y);
                 g.DrawImage(
                     symbol,
-                    new Rectangle(x, y, (int)width, (int)height),
-                    0,
-                    0,
-                    symbol.Width,
-                    symbol.Height,
+                    x, y, (int)width, (int)height,
+                    0, 0, symbol.Width, symbol.Height,
                     GraphicsUnit.Pixel,
                     ImageAttributes);
             }

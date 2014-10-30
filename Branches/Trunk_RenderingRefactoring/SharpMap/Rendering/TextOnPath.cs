@@ -564,9 +564,7 @@ namespace SharpMap.Rendering
             {
                 var pen = new Pen(PathColorTop);
                 foreach (var p in points)
-                {
-                    g.DrawEllipse(pen, p.X, p.Y, 1, 1);
-                }
+                    g.DrawEllipse(pen, (int) p.X, (int) p.Y, 1, 1);
                 pen.Dispose();
             }
             var count = 0;
@@ -643,8 +641,7 @@ namespace SharpMap.Rendering
             stringFormat.FormatFlags = StringFormatFlags.NoClip;
             stringFormat.SetMeasurableCharacterRanges(characterRanges);
             stringFormat.Alignment = StringAlignment.Center;
-            var stringRegions = g.MeasureCharacterRanges(Text.Substring(textpos), _font, layoutRect, stringFormat);
-            return stringRegions[0].GetBounds(g.GetNativeObject());
+            return g.MeasureCharacterRanges(Text.Substring(textpos), _font, layoutRect, stringFormat);
         }
 
         private float StringRegion(IGraphics g, int textpos)

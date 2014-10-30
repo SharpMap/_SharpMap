@@ -1001,18 +1001,14 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
             return precision;
         }
 
-        static private int MeasureDisplayStringWidthExact(IGraphics graphics, string text,
-                                            Font font)
+        static private int MeasureDisplayStringWidthExact(IGraphics graphics, string text, Font font)
         {
-            var ranges = new[] { new CharacterRange(0, text.Length) };
-            var format = new StringFormat();
+            CharacterRange[] ranges = new[] { new CharacterRange(0, text.Length) };
+            StringFormat format = new StringFormat();
             format.SetMeasurableCharacterRanges(ranges);
 
-            var rect = new RectangleF(0, 0, 1000, 1000);
-
-            Region[] regions = graphics.MeasureCharacterRanges(text, font, rect, format);            
-            rect = regions[0].GetBounds(graphics.GetNativeObject());
-
+            RectangleF rect = new RectangleF(0, 0, 1000, 1000);
+            rect = graphics.MeasureCharacterRanges(text, font, rect, format);            
             return (int)(rect.Right + 1.0f);
         }
 
