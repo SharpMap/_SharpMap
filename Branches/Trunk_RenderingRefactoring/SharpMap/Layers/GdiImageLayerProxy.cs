@@ -174,8 +174,10 @@ namespace SharpMap.Layers
 
                 using (var ia = CreateImageAttributes())
                 {
-                    g.DrawImage(img, new Rectangle(0, 0, s.Width, s.Height), 
-                        0, 0, s.Width, s.Height, GraphicsUnit.Pixel, ia);
+                    g.DrawImage(img, 
+                        0, 0, s.Width, s.Height, 
+                        0, 0, s.Width, s.Height, 
+                        GraphicsUnit.Pixel, ia);
                 }
             }
         }

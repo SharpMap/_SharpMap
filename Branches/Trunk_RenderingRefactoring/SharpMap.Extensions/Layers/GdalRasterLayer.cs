@@ -1220,20 +1220,11 @@ namespace SharpMap.Layers
                 }
             }
 
-            //using (var ia = new ImageAttributes())
-            //{
-            //    var colorMap = new[]
-            //        {
-            //            new ColorMap {OldColor = _noDataInitColor, NewColor = Color.Transparent},
-            //            new ColorMap {OldColor = TransparentColor, NewColor = Color.Transparent}
-            //        }; 
-            //    
-            //    ia.SetRemapTable(colorMap, ColorAdjustType.Bitmap);
-                bitmap.MakeTransparent(_noDataInitColor);
-                if (TransparentColor != Color.Empty)
-                    bitmap.MakeTransparent(TransparentColor);
-                g.DrawImage(bitmap, bitmapTl);
-            //}
+            bitmap.MakeTransparent(_noDataInitColor);
+            if (TransparentColor != Color.Empty)
+                bitmap.MakeTransparent(TransparentColor);
+            g.DrawImage(bitmap, bitmapTl.X, bitmapTl.Y);
+            
         }
 
  
@@ -1596,7 +1587,7 @@ namespace SharpMap.Layers
             }
             if (TransparentColor != Color.Empty)
                 bitmap.MakeTransparent(TransparentColor);
-            g.DrawImage(bitmap, new Point((int)Math.Round(dblLocX), (int)Math.Round(dblLocY)));
+            g.DrawImage(bitmap, (int)Math.Round(dblLocX), (int)Math.Round(dblLocY));
         }
 
         /// <summary>

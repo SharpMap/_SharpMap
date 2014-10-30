@@ -284,19 +284,22 @@ namespace SharpMap.Rendering
             {
                 rotationPoint = rotationPoint ?? labelPoint;
 
-                g.FillEllipse(Brushes.LawnGreen, rotationPoint.Value.X - 1, rotationPoint.Value.Y - 1, 2, 2);
+                PointF pt = rotationPoint.Value;
+                g.FillEllipse(Brushes.LawnGreen, (int) (pt.X - 1), (int) (pt.Y - 1), 2, 2);
                 
                 var t = g.Transform.Clone();
-                g.TranslateTransform(rotationPoint.Value.X, rotationPoint.Value.Y);
+                g.TranslateTransform(pt.X, pt.Y);
                 g.RotateTransform(rotation);
                 //g.TranslateTransform(-labelSize.Width/2, -labelSize.Height/2);
 
-                labelPoint = new PointF(labelPoint.X - rotationPoint.Value.X,
-                                        labelPoint.Y - rotationPoint.Value.Y);
+                labelPoint = new PointF(labelPoint.X - pt.X,
+                                        labelPoint.Y - pt.Y);
 
                 //labelSize = new SizeF(labelSize.Width*0.74f + 1f, labelSize.Height*0.74f);
                 if (backcolor != null && backcolor != Brushes.Transparent)
-                    g.FillRectangle(backcolor, labelPoint.X, labelPoint.Y, labelSize.Width, labelSize.Height);
+                    g.FillRectangle(backcolor, 
+                        (int) labelPoint.X, (int) labelPoint.Y,
+                        (int) labelSize.Width, (int) labelSize.Height);
 
                 var path = new GraphicsPath();
                 path.AddString(text, font.FontFamily, (int) font.Style, font.Size,
@@ -312,8 +315,9 @@ namespace SharpMap.Rendering
             else
             {
                 if (backcolor != null && backcolor != Brushes.Transparent)
-                    g.FillRectangle(backcolor, labelPoint.X, labelPoint.Y, labelSize.Width,
-                                    labelSize.Height);
+                    g.FillRectangle(backcolor, 
+                        (int) labelPoint.X, (int) labelPoint.Y, 
+                        (int) labelSize.Width, (int) labelSize.Height);
 
                 var path = new GraphicsPath();
                 path.AddString(text, font.FontFamily, (int) font.Style, font.Size, 
@@ -370,8 +374,9 @@ namespace SharpMap.Rendering
             float width = size;
             float height = size;
 
-            g.FillEllipse(b, (int)pp.X - width / 2 + offset.X ,
-                        (int)pp.Y - height / 2 + offset.Y , width, height);
+            g.FillEllipse(b, 
+                (int) (pp.X - width / 2 + offset.X), (int) (pp.Y - height / 2 + offset.Y), 
+                (int) width, (int) height);
         }
 
         /// <summary>
@@ -424,42 +429,24 @@ namespace SharpMap.Rendering
                     transform.RotateAt(rotation, rotationCenter);
                     g.Transform = transform;
 
-                    //if (symbolscale == 1f)
-                    //{
-                    //    g.DrawImage(symbol,  (pp.X - symbol.Width/2f + offset.X),
-                    //                                (pp.Y - symbol.Height/2f + offset.Y));
-                    //}
-                    //else
-                    //{
-                    //    var width = symbol.Width*symbolscale;
-                    //    var height = symbol.Height*symbolscale;
-                    //    g.DrawImage(symbol, (int) pp.X - width/2 + offset.X*symbolscale,
-                    //                        (int) pp.Y - height/2 + offset.Y*symbolscale, width, height);
-                    //}
                     var width = symbol.Width * symbolscale;
                     var height = symbol.Height * symbolscale;
-                    g.DrawImage(symbol, pp.X - width / 2 + offset.X * symbolscale,
-                                        pp.Y - height / 2 + offset.Y * symbolscale, width, height);
+                    g.DrawImage(symbol, 
+                        (int) (pp.X - width / 2 + offset.X * symbolscale),
+                        (int) (pp.Y - height / 2 + offset.Y * symbolscale), 
+                        (int) width, 
+                        (int) height);
                     g.Transform = startingTransform;
                 }
                 else
                 {
-                    //if (symbolscale == 1f)
-                    //{
-                    //    g.DrawImageUnscaled(symbol, (int) (pp.X - symbol.Width/2f + offset.X),
-                    //                                (int) (pp.Y - symbol.Height/2f + offset.Y));
-                    //}
-                    //else
-                    //{
-                    //    var width = symbol.Width*symbolscale;
-                    //    var height = symbol.Height*symbolscale;
-                    //    g.DrawImage(symbol, (int) pp.X - width/2 + offset.X*symbolscale,
-                    //                        (int) pp.Y - height/2 + offset.Y*symbolscale, width, height);
-                    //}
                     var width = symbol.Width * symbolscale;
                     var height = symbol.Height * symbolscale;
-                    g.DrawImage(symbol, pp.X - width / 2 + offset.X * symbolscale,
-                                        pp.Y - height / 2 + offset.Y * symbolscale, width, height);
+                    g.DrawImage(symbol, 
+                        (int) (pp.X - width / 2 + offset.X * symbolscale),
+                        (int) (pp.Y - height / 2 + offset.Y * symbolscale), 
+                        (int) width, 
+                        (int) height);
                 }
             }
         }

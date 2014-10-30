@@ -126,37 +126,31 @@ namespace SharpMap.Layers
 
         public void FillRegion(Brush brush, Region region)
         {
-            throw new NotImplementedException();
+            _g.FillRegion(brush, region);
         }
 
         public void DrawImage(Image img, Rectangle rect)
         {
-            _g.DrawImage(img, rect);
+            DrawImage(img, rect.X, rect.Y, rect.Width, rect.Height);
         }
 
-        public void DrawImage(Bitmap img, Rectangle rect)
-        {
-            _g.DrawImage(img, rect);
-        }
-
-        public void DrawImage(Bitmap img, Point rect)
-        {
-            _g.DrawImage(img, rect);
-        }
-
-        public void DrawImage(Bitmap img, float x, float y)
+        public void DrawImage(Bitmap img, int x, int y)
         {
             _g.DrawImage(img, x, y);
         }
 
-        public void DrawImage(Image img, float x, float y, float w, float h)
+        public void DrawImage(Image img, int x, int y, int w, int h)
         {
             _g.DrawImage(img, x, y, w, h);
         }
 
-        public void DrawImage(Image img, Rectangle rect, float x, float y, float w, float h, GraphicsUnit unit, ImageAttributes attribs)
+        public void DrawImage(Image img, 
+            int dstX, int dstY, int dstW, int dstH, 
+            int srcX, int srcY, int srcW, int srcH, 
+            GraphicsUnit unit, ImageAttributes attribs)
         {
-            _g.DrawImage(img, rect, x, y, w, h, unit, attribs);
+            Rectangle destRect = new Rectangle(dstX, dstY, dstW, dstH);
+            _g.DrawImage(img, destRect, srcX, srcY, srcW, srcH, unit, attribs);
         }
 
         public void DrawImageUnscaled(Image img, int x, int y)
@@ -164,7 +158,7 @@ namespace SharpMap.Layers
             _g.DrawImageUnscaled(img, x, y);
         }
 
-        public void DrawLine(Pen pen, float x1, float y1, float x2, float y2)
+        public void DrawLine(Pen pen, int x1, int y1, int x2, int y2)
         {
             _g.DrawLine(pen, x1, y1, x2, y2);
         }
@@ -184,7 +178,7 @@ namespace SharpMap.Layers
             _g.FillPath(brush, path);
         }
 
-        public void DrawArc(Pen pen, RectangleF rect, float x, float y)
+        public void DrawArc(Pen pen, RectangleF rect, int x, int y)
         {
             _g.DrawArc(pen, rect, x, y);
         }
@@ -199,12 +193,12 @@ namespace SharpMap.Layers
             _g.FillPolygon(brush, pts);
         }
 
-        public void DrawRectangle(Pen pen, float x, float y, float w, float h)
+        public void DrawRectangle(Pen pen, int x, int y, int w, int h)
         {
             _g.DrawRectangle(pen, x, y, w, h);
         }
 
-        public void FillRectangle(Brush brush, float x, float y, float w, float h)
+        public void FillRectangle(Brush brush, int x, int y, int w, int h)
         {
             _g.FillRectangle(brush, x, y, w, h);
         }
@@ -214,21 +208,21 @@ namespace SharpMap.Layers
             _g.FillRectangles(brush, rects);
         }
 
-        public void DrawEllipse(Pen pen, float x, float y, float w, float h)
+        public void DrawEllipse(Pen pen, int x, int y, int w, int h)
         {
             _g.DrawEllipse(pen, x, y, w, h);
         }
 
-        public void FillEllipse(Brush brush, float x, float y, float w, float h)
+        public void FillEllipse(Brush brush, int x, int y, int w, int h)
         {
             _g.FillEllipse(brush, x, y, w, h);
         }
-        public void DrawString(string text, Font font, Brush brush, float x, float y)
+        public void DrawString(string text, Font font, Brush brush, int x, int y)
         {
             _g.DrawString(text, font, brush, x, y);
         }
 
-        public void DrawString(string text, Font font, Brush brush, float x, float y, StringFormat format)
+        public void DrawString(string text, Font font, Brush brush, int x, int y, StringFormat format)
         {
             _g.DrawString(text, font, brush, x, y, format);
         }
@@ -253,9 +247,10 @@ namespace SharpMap.Layers
             return _g.MeasureString(text, font, letterSpacePercentage);
         }
 
-        public Region[] MeasureCharacterRanges(string text, Font font, RectangleF rect, StringFormat format)
+        public RectangleF MeasureCharacterRanges(string text, Font font, RectangleF rect, StringFormat format)
         {
-            return _g.MeasureCharacterRanges(text, font, rect, format);
+            Region[] regions = _g.MeasureCharacterRanges(text, font, rect, format);
+            return regions[0].GetBounds(_g);
         }
 
         public IntPtr GetHdc()
@@ -266,12 +261,6 @@ namespace SharpMap.Layers
         public void ReleaseHdc(IntPtr hdc)
         {
             _g.ReleaseHdc(hdc);
-        }
-
-        [Obsolete("should be removed!")]
-        public Graphics GetNativeObject()
-        {
-            return _g;
-        }
+        }        
     }
 }

@@ -207,7 +207,9 @@ namespace SharpMap.Layers
                     ia.SetColorMatrix(new ColorMatrix { Matrix44 = 1 - Transparency },
                         ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-                    g.DrawImage(_image, mapRect, imgRect.X, imgRect.Y, imgRect.Width, imgRect.Height,
+                    g.DrawImage(_image, 
+                        mapRect.X, mapRect.Y, mapRect.Width, mapRect.Height,
+                        imgRect.X, imgRect.Y, imgRect.Width, imgRect.Height,
                         GraphicsUnit.Pixel, ia);
                 }
 
