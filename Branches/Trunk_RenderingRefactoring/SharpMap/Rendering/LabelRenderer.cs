@@ -5,6 +5,7 @@ using SharpMap.Styles;
 
 namespace SharpMap.Rendering
 {
+    [Serializable]
     public class LabelRenderer : VectorRenderer, IRenderer
     {
         public void Draw(Map map, IGraphics g, Label label)

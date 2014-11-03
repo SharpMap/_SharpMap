@@ -1,5 +1,4 @@
-﻿//using SharpMap.Geometries;
-using System.Drawing;
+﻿using System.Drawing;
 using NUnit.Framework;
 using SharpMap;
 using SharpMap.Data.Providers;
@@ -19,7 +18,11 @@ namespace UnitTests
 
         protected override void OnRender(IGraphics g, Map map)
         {
-            g.FillRegion(new SolidBrush(OpacityColor(Color.Red)), g.Clip);
+            Brush brush = new SolidBrush(OpacityColor(Color.Red));
+            RectangleF rect = g.Clip;
+            g.FillRectangle(brush, 
+                (int) rect.X, (int) rect.Y, 
+                (int) rect.Width, (int) rect.Height);
         }
     }
 

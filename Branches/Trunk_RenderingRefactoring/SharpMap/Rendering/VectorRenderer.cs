@@ -16,7 +16,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
@@ -33,6 +32,7 @@ namespace SharpMap.Rendering
     /// <summary>
     /// This class renders individual geometry features to a graphics object using the settings of a map object.
     /// </summary>
+    [Serializable]
     public class VectorRenderer
     {
         internal const float ExtremeValueLimit = 1E+8f;

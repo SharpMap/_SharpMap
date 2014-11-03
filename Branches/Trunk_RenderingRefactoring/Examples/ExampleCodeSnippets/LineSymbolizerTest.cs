@@ -1,188 +1,201 @@
-﻿namespace ExampleCodeSnippets
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
+using GeoAPI.Features;
+using NUnit.Framework;
+using SharpMap;
+using SharpMap.Data.Providers;
+using SharpMap.Layers;
+using SharpMap.Rendering.Symbolizer;
+using SharpMap.Rendering.Thematics;
+using SharpMap.Styles;
+
+namespace ExampleCodeSnippets
 {
     public class LineSymbolizerTest
     {
-        [NUnit.Framework.Test] 
+        [Test, Explicit("path to a file not provided")]
         public void TestBasicLineSymbolizer()
         {
-            var p = new SharpMap.Data.Providers.ShapeFile(@"d:\\daten\GeoFabrik\\roads.shp", false);
-            var l = new SharpMap.Layers.VectorLayer("roads", p);
+            ShapeFile p = new ShapeFile(@"d:\\daten\GeoFabrik\\roads.shp", false);
+            VectorLayer l = new VectorLayer("roads", p);
             //l.Style.Outline = new System.Drawing.Pen(System.Drawing.Color.Firebrick, 5);
-            l.Style.Line = new System.Drawing.Pen(System.Drawing.Color.Gold, 1);
+            l.Style.Line = new Pen(Color.Gold, 1);
             l.Style.EnableOutline = false;
-            var m = new SharpMap.Map(new System.Drawing.Size(1440,1080)) {BackColor = System.Drawing.Color.Cornsilk};
+            Map m = new Map(new Size(1440, 1080)) { BackColor = Color.Cornsilk };
             m.Layers.Add(l);
 
             m.ZoomToExtents();
 
-            var sw = new System.Diagnostics.Stopwatch();
+            Stopwatch sw = new Stopwatch();
             sw.Start();
             m.GetMap();
 
             sw.Stop();
-            System.Console.WriteLine(string.Format("Rendering old method: {0}ms", sw.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("Rendering old method: {0}ms", sw.ElapsedMilliseconds));
             sw.Reset();
             sw.Start();
-            var bmp = m.GetMap();
+            Image bmp = m.GetMap();
             sw.Stop();
-            System.Console.WriteLine(string.Format("Rendering old method: {0}ms", sw.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("Rendering old method: {0}ms", sw.ElapsedMilliseconds));
             bmp.Save("NDSRoads1.bmp");
 
 
-            var cls = new SharpMap.Rendering.Symbolizer.CachedLineSymbolizer();
+            CachedLineSymbolizer cls = new CachedLineSymbolizer();
             //cls.LineSymbolizeHandlers.Add(new SharpMap.Rendering.Symbolizer.PlainLineSymbolizeHandler { Line = new System.Drawing.Pen(System.Drawing.Color.Firebrick, 5) });
-            cls.LineSymbolizeHandlers.Add(new SharpMap.Rendering.Symbolizer.PlainLineSymbolizeHandler { Line = new System.Drawing.Pen(System.Drawing.Color.Gold, 1) });
+            cls.LineSymbolizeHandlers.Add(new PlainLineSymbolizeHandler { Line = new Pen(Color.Gold, 1) });
 
             l.Style.LineSymbolizer = cls;
             sw.Reset(); sw.Start();
             bmp = m.GetMap();
             sw.Stop();
-            System.Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
             bmp.Save("NDSRoads2.bmp");
 
         }
 
-        [NUnit.Framework.Test]
+        [Test, Explicit("path to a file not provided")]
         public void TestWarpedLineSymbolizer()
         {
-            var p = new SharpMap.Data.Providers.ShapeFile(@"d:\\daten\GeoFabrik\\Aurich\\roads.shp", false);
+            ShapeFile p = new ShapeFile(@"d:\\daten\GeoFabrik\\Aurich\\roads.shp", false);
 
-            var l = new SharpMap.Layers.VectorLayer("roads", p);
-            
-            var cls = new SharpMap.Rendering.Symbolizer.CachedLineSymbolizer();
-            cls.LineSymbolizeHandlers.Add(new SharpMap.Rendering.Symbolizer.PlainLineSymbolizeHandler
-                                              {Line = new System.Drawing.Pen(System.Drawing.Color.Gold, 2)});
+            VectorLayer l = new VectorLayer("roads", p);
 
-            var wls = new SharpMap.Rendering.Symbolizer.WarpedLineSymbolizeHander
+            CachedLineSymbolizer cls = new CachedLineSymbolizer();
+            cls.LineSymbolizeHandlers.Add(new PlainLineSymbolizeHandler { Line = new Pen(Color.Gold, 2) });
+
+            WarpedLineSymbolizeHander wls = new WarpedLineSymbolizeHander
                           {
                               Pattern =
-                                  SharpMap.Rendering.Symbolizer.WarpedLineSymbolizer.
+                                  WarpedLineSymbolizer.
                                   GetGreaterSeries(3, 3),
-                              Line = new System.Drawing.Pen(System.Drawing.Color.Firebrick, 1)
-                              , Interval = 20
+                              Line = new Pen(Color.Firebrick, 1)
+                              ,
+                              Interval = 20
                           };
             cls.LineSymbolizeHandlers.Add(wls);
             l.Style.LineSymbolizer = cls;
 
-            var m = new SharpMap.Map(new System.Drawing.Size(720, 540)) {BackColor = System.Drawing.Color.Cornsilk};
+            Map m = new Map(new Size(720, 540)) { BackColor = Color.Cornsilk };
             m.Layers.Add(l);
 
             m.ZoomToExtents();
 
-            var sw = new System.Diagnostics.Stopwatch();
+            Stopwatch sw = new Stopwatch();
 
             sw.Start();
-            var bmp = m.GetMap();
+            Image bmp = m.GetMap();
             sw.Stop();
-            System.Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
             bmp.Save("AurichRoads1.bmp");
 
-            cls.LineSymbolizeHandlers[1] = new SharpMap.Rendering.Symbolizer.WarpedLineSymbolizeHander
+            cls.LineSymbolizeHandlers[1] = new WarpedLineSymbolizeHander
                                                {
                                                    Pattern =
-                                                       SharpMap.Rendering.Symbolizer.WarpedLineSymbolizer.
+                                                       WarpedLineSymbolizer.
                                                        GetTriangle(4, 0),
-                                                   Line = new System.Drawing.Pen(System.Drawing.Color.Firebrick, 1),
-                                                   Fill = new System.Drawing.SolidBrush(System.Drawing.Color.Firebrick)
-                                                   ,Interval = 10
+                                                   Line = new Pen(Color.Firebrick, 1),
+                                                   Fill = new SolidBrush(Color.Firebrick)
+                                                   ,
+                                                   Interval = 10
                                                };
             sw.Reset(); sw.Start();
             bmp = m.GetMap();
             sw.Stop();
-            System.Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
             bmp.Save("AurichRoads2-0.bmp");
 
-            cls.LineSymbolizeHandlers[1] = new SharpMap.Rendering.Symbolizer.WarpedLineSymbolizeHander
+            cls.LineSymbolizeHandlers[1] = new WarpedLineSymbolizeHander
             {
                 Pattern =
-                    SharpMap.Rendering.Symbolizer.WarpedLineSymbolizer.
+                    WarpedLineSymbolizer.
                     GetTriangle(4, 1),
-                Line = new System.Drawing.Pen(System.Drawing.Color.Firebrick, 1),
-                Fill = new System.Drawing.SolidBrush(System.Drawing.Color.Firebrick)
+                Line = new Pen(Color.Firebrick, 1),
+                Fill = new SolidBrush(Color.Firebrick)
                 ,
                 Interval = 10
             };
             sw.Reset(); sw.Start();
             bmp = m.GetMap();
             sw.Stop();
-            System.Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
             bmp.Save("AurichRoads2-1.bmp");
-            cls.LineSymbolizeHandlers[1] = new SharpMap.Rendering.Symbolizer.WarpedLineSymbolizeHander
+            cls.LineSymbolizeHandlers[1] = new WarpedLineSymbolizeHander
             {
                 Pattern =
-                    SharpMap.Rendering.Symbolizer.WarpedLineSymbolizer.
+                    WarpedLineSymbolizer.
                     GetTriangle(4, 2),
-                Line = new System.Drawing.Pen(System.Drawing.Color.Firebrick, 1),
-                Fill = new System.Drawing.SolidBrush(System.Drawing.Color.Firebrick)
+                Line = new Pen(Color.Firebrick, 1),
+                Fill = new SolidBrush(Color.Firebrick)
                 ,
                 Interval = 10
             };
             sw.Reset(); sw.Start();
             bmp = m.GetMap();
             sw.Stop();
-            System.Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
             bmp.Save("AurichRoads2-2.bmp");
 
-            cls.LineSymbolizeHandlers[1] = new SharpMap.Rendering.Symbolizer.WarpedLineSymbolizeHander
+            cls.LineSymbolizeHandlers[1] = new WarpedLineSymbolizeHander
             {
                 Pattern =
-                    SharpMap.Rendering.Symbolizer.WarpedLineSymbolizer.
+                    WarpedLineSymbolizer.
                     GetTriangle(4, 3),
-                Line = new System.Drawing.Pen(System.Drawing.Color.Firebrick, 1),
-                Fill = new System.Drawing.SolidBrush(System.Drawing.Color.Firebrick)
+                Line = new Pen(Color.Firebrick, 1),
+                Fill = new SolidBrush(Color.Firebrick)
                 ,
                 Interval = 10
             };
             sw.Reset(); sw.Start();
             bmp = m.GetMap();
             sw.Stop();
-            System.Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
             bmp.Save("AurichRoads2-3.bmp");
 
 
             //cls.LineSymbolizeHandlers[0] = cls.LineSymbolizeHandlers[1];
-            cls.LineSymbolizeHandlers[1] = new SharpMap.Rendering.Symbolizer.WarpedLineSymbolizeHander
+            cls.LineSymbolizeHandlers[1] = new WarpedLineSymbolizeHander
                                                {
                                                    Pattern =
-                                                       SharpMap.Rendering.Symbolizer.WarpedLineSymbolizer.GetZigZag(4, 4),
-                                                   Line = new System.Drawing.Pen(System.Drawing.Color.Firebrick, 1),
+                                                       WarpedLineSymbolizer.GetZigZag(4, 4),
+                                                   Line = new Pen(Color.Firebrick, 1),
                                                    //Fill = new System.Drawing.SolidBrush(System.Drawing.Color.Firebrick)
                                                };
             sw.Reset(); sw.Start();
             bmp = m.GetMap();
             sw.Stop();
-            System.Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
             bmp.Save("AurichRoads3.bmp");
         }
 
-        [NUnit.Framework.Test]
+        [Test, Explicit("path to a file not provided")]
         public void TestCachedLineSymbolizerInTheme()
         {
-            var p = new SharpMap.Data.Providers.ShapeFile(@"d:\\daten\GeoFabrik\\Aurich\\roads.shp", false);
+            ShapeFile p = new ShapeFile(@"d:\\daten\GeoFabrik\\Aurich\\roads.shp", false);
 
-            var l = new SharpMap.Layers.VectorLayer("roads", p);
-            var theme = new ClsTheme(l.Style);
+            VectorLayer l = new VectorLayer("roads", p);
+            ClsTheme theme = new ClsTheme(l.Style);
             l.Theme = theme;
 
-            var m = new SharpMap.Map(new System.Drawing.Size(720, 540)) { BackColor = System.Drawing.Color.Cornsilk };
+            Map m = new Map(new Size(720, 540)) { BackColor = Color.Cornsilk };
             m.Layers.Add(l);
 
             m.ZoomToExtents();
 
-            var sw = new System.Diagnostics.Stopwatch();
+            Stopwatch sw = new Stopwatch();
 
             sw.Start();
-            var bmp = m.GetMap();
+            Image bmp = m.GetMap();
             sw.Stop();
-            System.Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("Rendering new method: {0}ms", sw.ElapsedMilliseconds));
             bmp.Save("AurichRoads1Theme.bmp");
         }
 
-        internal class ClsTheme : SharpMap.Rendering.Thematics.ITheme
+        internal class ClsTheme : ITheme
         {
-            private SharpMap.Styles.VectorStyle _style;
+            private readonly VectorStyle _style;
 
-            public ClsTheme(SharpMap.Styles.VectorStyle style)
+            public ClsTheme(VectorStyle style)
             {
                 _style = style;
             }
@@ -194,22 +207,22 @@
             /// </summary>
             /// <param name="attribute">Set of attribute values to calculate the <see cref="SharpMap.Styles.IStyle"/> from</param>
             /// <returns>The style</returns>
-            public SharpMap.Styles.IStyle GetStyle(GeoAPI.Features.IFeature attribute)
+            public IStyle GetStyle(IFeature attribute)
             {
-                var res = _style;
+                VectorStyle res = _style;
 
-                var cls = new SharpMap.Rendering.Symbolizer.CachedLineSymbolizer();
-                cls.LineSymbolizeHandlers.Add(new SharpMap.Rendering.Symbolizer.PlainLineSymbolizeHandler { Line = new System.Drawing.Pen(System.Drawing.Color.Gold, 2) });
+                CachedLineSymbolizer cls = new CachedLineSymbolizer();
+                cls.LineSymbolizeHandlers.Add(new PlainLineSymbolizeHandler { Line = new Pen(Color.Gold, 2) });
 
-                var wls = new SharpMap.Rendering.Symbolizer.WarpedLineSymbolizeHander
+                WarpedLineSymbolizeHander wls = new WarpedLineSymbolizeHander
                 {
                     Pattern =
-                        SharpMap.Rendering.Symbolizer.WarpedLineSymbolizer.
+                        WarpedLineSymbolizer.
                         GetGreaterSeries(3, 3),
-                    Line = new System.Drawing.Pen(System.Drawing.Color.Firebrick, 1)
+                    Line = new Pen(Color.Firebrick, 1)
                     ,
                     Interval = 20
-                    
+
                 };
                 cls.LineSymbolizeHandlers.Add(wls);
                 cls.ImmediateMode = true;

@@ -66,10 +66,10 @@ namespace SharpMap.Layers
             set { _g.PageScale = value; }
         }
 
-        public Region Clip
+        public RectangleF Clip
         {
-            get { return _g.Clip; }
-            set { _g.Clip = value; }
+            get { return _g.Clip.GetBounds(_g); }
+            set { _g.Clip = new Region(value); }
         }
 
         public RectangleF ClipBounds
@@ -122,11 +122,6 @@ namespace SharpMap.Layers
         public void Clear(Color color)
         {
             _g.Clear(color);
-        }
-
-        public void FillRegion(Brush brush, Region region)
-        {
-            _g.FillRegion(brush, region);
         }
 
         public void DrawImage(Image img, Rectangle rect)

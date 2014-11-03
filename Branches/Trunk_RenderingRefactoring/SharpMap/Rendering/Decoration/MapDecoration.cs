@@ -180,9 +180,10 @@ namespace SharpMap.Rendering.Decoration
             get { return Size.Add(_cachedSize, Size.Add(BorderMargin, BorderMargin)); }
         }
 
-        private Region GetClipRegion(Map map)
+        private RectangleF GetClipRegion(Map map)
         {
-            return new Region(new Rectangle(Point.Add(GetLocation(map), BorderMargin), _cachedSize));
+            Point location = Point.Add(GetLocation(map), BorderMargin);
+            return new RectangleF(location, _cachedSize);
         }
 
         private static GraphicsPath CreateRoundedRectangle(Rectangle rectangle, Size margin)
@@ -244,7 +245,7 @@ namespace SharpMap.Rendering.Decoration
             g.FillPath(new SolidBrush(OpacityColor(BackgroundColor)), gp);
 
             //Clip region
-            Region oldClip = g.Clip;
+            RectangleF oldClip = g.Clip;
             g.Clip = GetClipRegion(map);
 
             //Actually render the Decoration

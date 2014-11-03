@@ -1,11 +1,11 @@
 using System;
-using System.Drawing;
 using GeoAPI.Geometries;
 using SharpMap.Layers;
 using SharpMap.Styles;
 
 namespace SharpMap.Rendering
 {
+    [Serializable]
     public class VectorRendererAdapter : VectorRenderer, IRenderer
     {
         public void Draw(Map map, IGraphics g, Label label)
