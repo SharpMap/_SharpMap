@@ -17,7 +17,7 @@ namespace SharpMap.Layers
         GraphicsUnit PageUnit { get; set; }
         float PageScale { get; set; }
 
-        Region Clip { get; set; }
+        RectangleF Clip { get; set; }
         RectangleF ClipBounds { get; }
         RectangleF VisibleClipBounds { get; }
 
@@ -33,8 +33,6 @@ namespace SharpMap.Layers
         void TransformPoints(CoordinateSpace destSpace, CoordinateSpace srcSpace, PointF[] pts);
 
         void Clear(Color color);
-
-        void FillRegion(Brush brush, Region region);
 
         void DrawImage(Bitmap img, int x, int y);
         void DrawImage(Image img, int x, int y, int w, int h);
