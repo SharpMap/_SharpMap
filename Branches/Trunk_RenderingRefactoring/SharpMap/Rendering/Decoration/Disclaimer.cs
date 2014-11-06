@@ -113,7 +113,7 @@ namespace SharpMap.Rendering.Decoration
             if (Halo > 0)
             {
                 var gp = new GraphicsPath();
-                gp.AddString(Text, Font.FontFamily, (int)Font.Style, Utility.ScaleSizeToDeviceUnits(Font.SizeInPoints, GraphicsUnit.Point, g), layoutRectangle, Format);
+                gp.AddString(Text, Font.FontFamily, (int)Font.Style, Utility.ScaleSizeToDeviceUnits(Font.SizeInPoints, GraphicsUnitType.Point, g), layoutRectangle, Format);
                 g.DrawPath(_halo, gp);
                 g.FillPath(b, gp);
             }

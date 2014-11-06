@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using GeoAPI.Geometries;
-using SharpMap.Data;
 using SharpMap.Layers;
-using SharpMap.Rendering.Thematics;
 
 namespace SharpMap.Rendering.Symbolizer
 {
@@ -95,7 +92,7 @@ namespace SharpMap.Rendering.Symbolizer
                     return;
 
                 case OgcGeometryType.GeometryCollection:
-                    foreach (var g in ((IGeometryCollection)geometry))
+                    foreach (IGeometry g in ((IGeometryCollection)geometry))
                     {
                         Render(map, g, graphics);
                     }
@@ -146,7 +143,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <summary>
         /// Gets or sets a value indicating which <see cref="ISymbolizer.SmoothingMode"/> is to be used for rendering
         /// </summary>
-        public System.Drawing.Drawing2D.SmoothingMode SmoothingMode
+        public Smoothing SmoothingMode
         {
             get { return _pointSymbolizer.SmoothingMode; }
             set
@@ -160,7 +157,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <summary>
         /// Gets or sets a value indicating which <see cref="ISymbolizer.PixelOffsetMode"/> is to be used for rendering
         /// </summary>
-        public System.Drawing.Drawing2D.PixelOffsetMode PixelOffsetMode
+        public PixelOffset PixelOffsetMode
         {
             get { return _pointSymbolizer.PixelOffsetMode; }
             set

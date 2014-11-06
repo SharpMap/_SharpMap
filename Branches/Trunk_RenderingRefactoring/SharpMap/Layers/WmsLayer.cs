@@ -723,8 +723,8 @@ namespace SharpMap.Layers
                             {
                                 g.DrawImage(img, 
                                     0, 0, img.Width, img.Height, 
-                                    0, 0, img.Width, img.Height, 
-                                    GraphicsUnit.Pixel, _imageAttributes);
+                                    0, 0, img.Width, img.Height,
+                                    GraphicsUnitType.Pixel, _imageAttributes);
                             }
                             else
                             {

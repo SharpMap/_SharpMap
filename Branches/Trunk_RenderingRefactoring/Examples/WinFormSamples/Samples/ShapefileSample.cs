@@ -97,8 +97,8 @@ namespace WinFormSamples.Samples
                                        DataSource = layCities.DataSource,
                                        Enabled = true,
                                        LabelColumn = "Name",
-                                       TextRenderingHint = TextRenderingHint.AntiAlias,
-                                       SmoothingMode = SmoothingMode.AntiAlias,
+                                       TextRenderingHint = TextRendering.AntiAlias,
+                                       SmoothingMode = Smoothing.AntiAlias,
                                        SRID = 4326,
                                        LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection,
                                        Style =
@@ -121,8 +121,8 @@ namespace WinFormSamples.Samples
                                        DataSource = layRivers.DataSource,
                                        Enabled = true,
                                        LabelColumn = "Name",
-                                       TextRenderingHint = TextRenderingHint.AntiAlias,
-                                       SmoothingMode = SmoothingMode.AntiAlias,
+                                       TextRenderingHint = TextRendering.AntiAlias,
+                                       SmoothingMode = Smoothing.AntiAlias,
                                        SRID = 4326,
                                        LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection,
                                        MultipartGeometryBehaviour = LabelLayer.MultipartGeometryBehaviourEnum.All,
@@ -223,8 +223,8 @@ namespace WinFormSamples.Samples
             layCityLabel.Style.VerticalAlignment = LabelStyle.VerticalAlignmentEnum.Bottom;
             layCityLabel.Style.Offset = new PointF(3, 3);
             layCityLabel.Style.Halo = new Pen(Color.Yellow, 2);
-            layCityLabel.TextRenderingHint = TextRenderingHint.AntiAlias;
-            layCityLabel.SmoothingMode = SmoothingMode.AntiAlias;
+            layCityLabel.TextRenderingHint = TextRendering.AntiAlias;
+            layCityLabel.SmoothingMode = Smoothing.AntiAlias;
             layCityLabel.SRID = 4326;
             layCityLabel.LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection;
             layCityLabel.Style.CollisionDetection = true;

@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using GeoAPI.Geometries;
+using SharpMap;
+using SharpMap.Layers;
+using SharpMap.Rendering;
 #if !DotSpatialProjections
 using GeoAPI.CoordinateSystems.Transformations;
 
@@ -19,13 +24,13 @@ namespace WinFormSamples.Samples
 {
     public class CreateTilesSample : IDisposable
     {
-        private readonly SharpMap.Map _map;
+        private readonly Map _map;
         private int _typeImage = 0;
         //public System.Drawing.Imaging.ImageFormat ImageFormat { get; set; }
 
         private readonly string _rootTilesPath;
-        private Dictionary<SharpMap.Layers.ILayer, ICoordinateTransformation> _coordinateTransformations =
-            new Dictionary<SharpMap.Layers.ILayer, ICoordinateTransformation>();
+        private readonly Dictionary<ILayer, ICoordinateTransformation> _coordinateTransformations =
+            new Dictionary<ILayer, ICoordinateTransformation>();
 
         private float _opacity = 0.3f;
         public  float Opacity
@@ -39,12 +44,12 @@ namespace WinFormSamples.Samples
             }
         }
 
-        public CreateTilesSample(SharpMap.Map map, bool transformToMercator)
+        public CreateTilesSample(Map map, bool transformToMercator)
             : this(map, transformToMercator, Environment.CurrentDirectory)
         {
         }
 
-        public CreateTilesSample(SharpMap.Map map, bool transformToMercator, string rootTilesPath)
+        public CreateTilesSample(Map map, bool transformToMercator, string rootTilesPath)
         {
             _map = map.Clone();
             
@@ -65,9 +70,9 @@ namespace WinFormSamples.Samples
         
         private void TransformLayers(ICoordinateTransformation coorTransform)
         {
-            foreach (SharpMap.Layers.ILayer layer in _map.Layers)
+            foreach (ILayer layer in _map.Layers)
             {
-                SharpMap.Layers.VectorLayer vLayer = layer as SharpMap.Layers.VectorLayer;
+                VectorLayer vLayer = layer as VectorLayer;
                 if (vLayer != null)
                 {
                     if (vLayer.CoordinateTransformation != null)
@@ -76,7 +81,7 @@ namespace WinFormSamples.Samples
                 }
                 else
                 {
-                    SharpMap.Layers.LabelLayer lLayer = layer as SharpMap.Layers.LabelLayer;
+                    LabelLayer lLayer = layer as LabelLayer;
                     if (lLayer != null)
                     {
                         if (lLayer.CoordinateTransformation != null)
@@ -89,18 +94,18 @@ namespace WinFormSamples.Samples
 
         private void RestoreTransformations()
         {
-            foreach (var layer in  _map.Layers)
+            foreach (ILayer layer in  _map.Layers)
             {
                 ICoordinateTransformation ct;
                 _coordinateTransformations.TryGetValue(layer, out ct);
 
-                var vlayer = layer as SharpMap.Layers.VectorLayer;
+                VectorLayer vlayer = layer as VectorLayer;
                 if (vlayer != null)
                 {
                     vlayer.CoordinateTransformation = ct;
                     continue;
                 }
-                var llayer = layer as SharpMap.Layers.LabelLayer;
+                LabelLayer llayer = layer as LabelLayer;
                 if (llayer != null)
                     llayer.CoordinateTransformation = ct;
 
@@ -110,7 +115,7 @@ namespace WinFormSamples.Samples
         {
             try
             {
-                var path = string.Format(Path.Combine(_rootTilesPath, level.ToString()));
+                string path = string.Format(Path.Combine(_rootTilesPath, level.ToString()));
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);                    
@@ -120,49 +125,51 @@ namespace WinFormSamples.Samples
                 _map.ZoomToExtents();
                 
                 // number images of title on a line
-                var lineNumberImage = (int)(Math.Pow(2, level));
+                int lineNumberImage = (int)(Math.Pow(2, level));
                 _map.Zoom = _map.Zoom / lineNumberImage;
                 
                 // 1/2 length image in world
-                var delta = _map.Center.X - _map.Envelope.MinX;
+                double delta = _map.Center.X - _map.Envelope.MinX;
                 
                 // image size per tile ( in world )
-                var imageWidth = _map.Envelope.MaxX - _map.Envelope.MinX;
-                var imageHeight = imageWidth;
+                double imageWidth = _map.Envelope.MaxX - _map.Envelope.MinX;
+                double imageHeight = imageWidth;
 
                 // move center to left-up img ( left-bottom in pixel )          
-                var centerX0 = _map.Center.X - (lineNumberImage * imageWidth) / 2 + delta;
-                var centerY0 = _map.Center.Y + (lineNumberImage * imageHeight) / 2 - delta;
+                double centerX0 = _map.Center.X - (lineNumberImage * imageWidth) / 2 + delta;
+                double centerY0 = _map.Center.Y + (lineNumberImage * imageHeight) / 2 - delta;
 
-                var ia = new System.Drawing.Imaging.ImageAttributes();
-                var cm = new System.Drawing.Imaging.ColorMatrix {Matrix33 = _opacity};
-                ia.SetColorMatrix(cm, System.Drawing.Imaging.ColorMatrixFlag.Default, System.Drawing.Imaging.ColorAdjustType.Bitmap);
+                ImageAttributes ia = new ImageAttributes();
+                ColorMatrix cm = new ColorMatrix {Matrix33 = _opacity};
+                ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
                 // All tile columns
-                var centerX = centerX0;
-                for (var i = 0; i < lineNumberImage; i++, centerX = centerX + imageWidth)
+                double centerX = centerX0;
+                for (int i = 0; i < lineNumberImage; i++, centerX = centerX + imageWidth)
                 {
-                    var colPath = Path.Combine(path, i.ToString());
+                    string colPath = Path.Combine(path, i.ToString());
                     if (!Directory.Exists(colPath))
                         Directory.CreateDirectory(colPath);
 
-                    var centerY = centerY0;
-                    for (var j = 0; j < lineNumberImage; j++, centerY = centerY - imageHeight)
+                    double centerY = centerY0;
+                    for (int j = 0; j < lineNumberImage; j++, centerY = centerY - imageHeight)
                     {
-                        _map.Center = new GeoAPI.Geometries.Coordinate(centerX, centerY);
-                        using (var img = _map.GetMap())
+                        _map.Center = new Coordinate(centerX, centerY);
+                        using (Image img = _map.GetMap())
                         {
-                            using (var transImg = new System.Drawing.Bitmap(img.Width, img.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+                            using (Bitmap transImg = new Bitmap(img.Width, img.Height, PixelFormat.Format32bppArgb))
                             {
-                                using (var g = System.Drawing.Graphics.FromImage(transImg))
+                                using (IGraphics g = Graphics.FromImage(transImg).G())
                                 {
-                                    g.DrawImage(img, 
-                                        new[] { 
-                                            new Point(0, 0), 
-                                            new Point(transImg.Size.Width, 0), 
-                                            new Point(0, transImg.Size.Height), 
-                                            /*new Point(transImg.Size)*/ },
-                                            new Rectangle(new Point(0, 0), img.Size), GraphicsUnit.Pixel, ia);
+                                    Point[] points =
+                                    { 
+                                        new Point(0, 0), 
+                                        new Point(transImg.Size.Width, 0), 
+                                        new Point(0, transImg.Size.Height),                                             
+                                    };
+                                    g.DrawImage(img, points,
+                                        0, 0, img.Width, img.Height,
+                                        GraphicsUnitType.Pixel, ia);
                                 }
                                 SaveImage(transImg, colPath, j, _typeImage);
                             }
@@ -180,26 +187,26 @@ namespace WinFormSamples.Samples
             {
                 default:
                 //case 0:
-                    img.Save(Path.Combine(colPath, string.Format("{0}.png", imageId)), System.Drawing.Imaging.ImageFormat.Png);
+                    img.Save(Path.Combine(colPath, string.Format("{0}.png", imageId)), ImageFormat.Png);
                     break;
                 case 1:
-                    img.Save(Path.Combine(colPath, string.Format("{0}.jpg", imageId)), System.Drawing.Imaging.ImageFormat.Jpeg);
+                    img.Save(Path.Combine(colPath, string.Format("{0}.jpg", imageId)), ImageFormat.Jpeg);
                     break;
                 case 2:
-                    img.Save(Path.Combine(colPath, string.Format("{0}.gif", imageId)), System.Drawing.Imaging.ImageFormat.Gif);
+                    img.Save(Path.Combine(colPath, string.Format("{0}.gif", imageId)), ImageFormat.Gif);
                     break;
                 case 3:
-                    img.Save(Path.Combine(colPath, string.Format("{0}.bmp", imageId)), System.Drawing.Imaging.ImageFormat.Bmp);
+                    img.Save(Path.Combine(colPath, string.Format("{0}.bmp", imageId)), ImageFormat.Bmp);
                     break;
                 case 4:
-                    img.Save(Path.Combine(colPath, string.Format("{0}.tiff", imageId)), System.Drawing.Imaging.ImageFormat.Tiff);
+                    img.Save(Path.Combine(colPath, string.Format("{0}.tiff", imageId)), ImageFormat.Tiff);
                     break;
             }
         }
 
         public static void CreateHtmlSamplePage(string path, string googleMapsApiKey)
         {
-            using (var writer = new System.IO.StreamWriter(File.OpenWrite(path)))
+            using (StreamWriter writer = new StreamWriter(File.OpenWrite(path)))
             {
                 writer.Write(
 @"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Strict//EN""

@@ -7,6 +7,7 @@ using GeoAPI.Geometries;
 using NUnit.Framework;
 using SharpMap;
 using SharpMap.Layers;
+using SharpMap.Rendering;
 
 namespace UnitTests.Layers
 {
@@ -16,16 +17,10 @@ namespace UnitTests.Layers
         {
             var img = new Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb);
             var tmpFile = Path.ChangeExtension(Path.GetTempFileName(), ".png");
-
-            using (var g = Graphics.FromImage(img))
-            {
-                g.FillRectangle(Brushes.Red, new Rectangle(0, 0, size.Width, size.Height));
-            }
-
+            using (IGraphics g = Graphics.FromImage(img).G())
+                g.FillRectangle(Brushes.Red, 0, 0, size.Width, size.Height);
             img.Save(tmpFile, ImageFormat.Png);
-
             CreateWorldFile(tmpFile, size, origin);
-
             return tmpFile;
         }
 

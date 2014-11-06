@@ -72,8 +72,8 @@ namespace WinFormSamples.Samples
             layCityLabel.Style.VerticalAlignment = LabelStyle.VerticalAlignmentEnum.Bottom;
             layCityLabel.Style.Offset = new PointF(3, 3);
             layCityLabel.Style.Halo = new Pen(Color.Yellow, 2);
-            layCityLabel.TextRenderingHint = TextRenderingHint.AntiAlias;
-            layCityLabel.SmoothingMode = SmoothingMode.AntiAlias;
+            layCityLabel.TextRenderingHint = TextRendering.AntiAlias;
+            layCityLabel.SmoothingMode = Smoothing.AntiAlias;
             layCityLabel.SRID = 4326;
             layCityLabel.LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection;
             layCityLabel.Style.CollisionDetection = true;

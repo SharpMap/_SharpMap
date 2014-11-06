@@ -1321,13 +1321,9 @@ namespace SharpMap.Layers
         private Bitmap InitializeBitmap(Size bitmapSize, PixelFormat pixelFormat, out BitmapData bitmapData)
         {
             var res = new Bitmap(bitmapSize.Width, bitmapSize.Height, pixelFormat);
-            using (var g = Graphics.FromImage(res))
-            {
+            using (IGraphics g = Graphics.FromImage(res).G())
                 g.Clear(NoDataInitColor);
-            }
-
-            bitmapData = res.LockBits(new Rectangle(new Point(0, 0), bitmapSize), 
-                                      ImageLockMode.WriteOnly, pixelFormat);
+            bitmapData = res.LockBits(new Rectangle(new Point(0, 0), bitmapSize), ImageLockMode.WriteOnly, pixelFormat);
             return res;
         }
         #endregion
@@ -1587,7 +1583,9 @@ namespace SharpMap.Layers
             }
             if (TransparentColor != Color.Empty)
                 bitmap.MakeTransparent(TransparentColor);
-            g.DrawImage(bitmap, (int)Math.Round(dblLocX), (int)Math.Round(dblLocY));
+            g.DrawImage(bitmap, 
+                Convert.ToInt32(Math.Round(dblLocX)), 
+                Convert.ToInt32(Math.Round(dblLocY)));
         }
 
         /// <summary>

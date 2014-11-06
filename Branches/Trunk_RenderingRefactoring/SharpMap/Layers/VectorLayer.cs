@@ -48,7 +48,7 @@ namespace SharpMap.Layers
         private bool _clippingEnabled;
         private bool _isQueryEnabled = true;
         private IProvider _dataSource;
-        private SmoothingMode _smoothingMode;
+        private Smoothing _smoothingMode;
         private ITheme _theme;
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace SharpMap.Layers
             base(new VectorStyle(), new VectorRendererAdapter())
         {
             LayerName = layername;
-            SmoothingMode = SmoothingMode.AntiAlias;
+            SmoothingMode = Smoothing.AntiAlias;
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace SharpMap.Layers
         /// <summary>
         /// Render whether smoothing (antialiasing) is applied to lines and curves and the edges of filled areas
         /// </summary>
-        public SmoothingMode SmoothingMode
+        public Smoothing SmoothingMode
         {
             get { return _smoothingMode; }
             set { _smoothingMode = value; }

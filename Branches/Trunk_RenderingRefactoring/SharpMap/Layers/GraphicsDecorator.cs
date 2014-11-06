@@ -30,34 +30,40 @@ namespace SharpMap.Layers
                 _g.Dispose();
         }
 
-        public SmoothingMode SmoothingMode
+        public Smoothing SmoothingMode
         {
-            get { return _g.SmoothingMode; }
-            set { _g.SmoothingMode = value; }
+            get { return (Smoothing)_g.SmoothingMode; }
+            set { _g.SmoothingMode = (SmoothingMode)value; }
         }
 
-        public PixelOffsetMode PixelOffsetMode
+        public PixelOffset PixelOffsetMode
         {
-            get { return _g.PixelOffsetMode; }
-            set { _g.PixelOffsetMode = value; }
+            get { return (PixelOffset)_g.PixelOffsetMode; }
+            set { _g.PixelOffsetMode = (PixelOffsetMode)value; }
         }
 
-        public InterpolationMode InterpolationMode
+        public Interpolation InterpolationMode
         {
-            get { return _g.InterpolationMode; }
-            set { _g.InterpolationMode = value; }
+            get { return (Interpolation)_g.InterpolationMode; }
+            set { _g.InterpolationMode = (InterpolationMode)value; }
         }
 
-        public TextRenderingHint TextRenderingHint
+        public TextRendering TextRenderingHint
         {
-            get { return _g.TextRenderingHint; }
-            set { _g.TextRenderingHint = value; }
+            get { return (TextRendering)_g.TextRenderingHint; }
+            set { _g.TextRenderingHint = (TextRenderingHint)value; }
         }
 
-        public GraphicsUnit PageUnit
+        public Compositing CompositingMode
         {
-            get { return _g.PageUnit; }
-            set { _g.PageUnit = value; }
+            get { return (Compositing)_g.CompositingMode; }
+            set { _g.CompositingMode = (CompositingMode)value; }
+        }
+
+        public GraphicsUnitType PageUnit
+        {
+            get { return (GraphicsUnitType)_g.PageUnit; }
+            set { _g.PageUnit = (GraphicsUnit)value; }
         }
 
         public float PageScale
@@ -124,11 +130,6 @@ namespace SharpMap.Layers
             _g.Clear(color);
         }
 
-        public void DrawImage(Image img, Rectangle rect)
-        {
-            DrawImage(img, rect.X, rect.Y, rect.Width, rect.Height);
-        }
-
         public void DrawImage(Bitmap img, int x, int y)
         {
             _g.DrawImage(img, x, y);
@@ -139,23 +140,42 @@ namespace SharpMap.Layers
             _g.DrawImage(img, x, y, w, h);
         }
 
-        public void DrawImage(Image img, 
-            int dstX, int dstY, int dstW, int dstH, 
-            int srcX, int srcY, int srcW, int srcH, 
-            GraphicsUnit unit, ImageAttributes attribs)
+        public void DrawImage(Image img,
+            int dstX, int dstY, int dstW, int dstH,
+            int srcX, int srcY, int srcW, int srcH,
+            GraphicsUnitType unit)
         {
             Rectangle destRect = new Rectangle(dstX, dstY, dstW, dstH);
-            _g.DrawImage(img, destRect, srcX, srcY, srcW, srcH, unit, attribs);
+            _g.DrawImage(img,
+                destRect,
+                srcX, srcY, srcW, srcH,
+                (GraphicsUnit)unit);
+        }
+
+        public void DrawImage(Image img,
+            int dstX, int dstY, int dstW, int dstH,
+            int srcX, int srcY, int srcW, int srcH,
+            GraphicsUnitType unit, ImageAttributes ia)
+        {
+            Rectangle destRect = new Rectangle(dstX, dstY, dstW, dstH);
+            _g.DrawImage(img,
+                destRect,
+                srcX, srcY, srcW, srcH,
+                (GraphicsUnit)unit, ia);
+        }
+
+        public void DrawImage(Image img,
+            Point[] destPoints,
+            int srcX, int srcY, int srcW, int srcH,
+            GraphicsUnitType unit, ImageAttributes ia)
+        {
+            Rectangle srcRect = new Rectangle(srcX, srcY, srcW, srcH);
+            _g.DrawImage(img, destPoints, srcRect, (GraphicsUnit)unit, ia);
         }
 
         public void DrawImageUnscaled(Image img, int x, int y)
         {
             _g.DrawImageUnscaled(img, x, y);
-        }
-
-        public void DrawLine(Pen pen, int x1, int y1, int x2, int y2)
-        {
-            _g.DrawLine(pen, x1, y1, x2, y2);
         }
 
         public void DrawLines(Pen pen, PointF[] pts)
@@ -173,7 +193,7 @@ namespace SharpMap.Layers
             _g.FillPath(brush, path);
         }
 
-        public void DrawArc(Pen pen, RectangleF rect, int x, int y)
+        public void DrawArc(Pen pen, RectangleF rect, float x, float y)
         {
             _g.DrawArc(pen, rect, x, y);
         }
@@ -212,6 +232,17 @@ namespace SharpMap.Layers
         {
             _g.FillEllipse(brush, x, y, w, h);
         }
+
+        public void DrawPie(Pen pen, Rectangle rect, int startAngle, int sweepAngle)
+        {
+            _g.DrawPie(pen, rect, startAngle, sweepAngle);
+        }
+
+        public void FillPie(Brush brush, Rectangle rect, int startAngle, int sweepAngle)
+        {
+            _g.FillPie(brush, rect, startAngle, sweepAngle);
+        }
+
         public void DrawString(string text, Font font, Brush brush, int x, int y)
         {
             _g.DrawString(text, font, brush, x, y);
@@ -222,14 +253,14 @@ namespace SharpMap.Layers
             _g.DrawString(text, font, brush, x, y, format);
         }
 
-        public void DrawString(string text, Font font, Brush brush, PointF pt, StringFormat format)
-        {
-            _g.DrawString(text, font, brush, pt, format);
-        }
-
         public void DrawString(string text, Font font, Brush brush, RectangleF rect)
         {
             _g.DrawString(text, font, brush, rect);
+        }
+
+        public void DrawString(string text, Font font, Brush brush, RectangleF rect, StringFormat format)
+        {
+            _g.DrawString(text, font, brush, rect, format);
         }
 
         public SizeF MeasureString(string text, Font font)
@@ -256,6 +287,11 @@ namespace SharpMap.Layers
         public void ReleaseHdc(IntPtr hdc)
         {
             _g.ReleaseHdc(hdc);
-        }        
+        }
+
+        public void Flush()
+        {
+            _g.Flush();
+        }
     }
 }

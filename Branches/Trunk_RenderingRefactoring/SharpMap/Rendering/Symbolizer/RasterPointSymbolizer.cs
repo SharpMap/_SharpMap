@@ -130,45 +130,43 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         /// <param name="pt">The point</param>
         /// <param name="g">The graphics object</param>
-        internal override void OnRenderInternal(PointF pt, IGraphics g)
+        internal override void OnRenderInternal(PointF ptf, IGraphics g)
         {
+            Point pt = new Point(
+                Convert.ToInt32(ptf.X), 
+                Convert.ToInt32(ptf.Y));
             Image symbol = Symbol ?? DefaultSymbol;
-
+            int width = Convert.ToInt32(symbol.Width * Scale);
+            int height = Convert.ToInt32(symbol.Height * Scale);
             if (ImageAttributes == null)
             {
                 if (Scale == 1f)
                 {
                     lock (symbol)
                     {
-                        g.DrawImageUnscaled(symbol, (int)(pt.X), (int)(pt.Y));
+                        g.DrawImageUnscaled(symbol, pt.X, pt.Y);
                     }
                 }
                 else
                 {
-                    float width = symbol.Width * Scale;
-                    float height = symbol.Height * Scale;
                     lock (symbol)
                     {
                         g.DrawImage(
                             symbol,
-                            (int) pt.X,
-                            (int) pt.Y,
-                            (int) width,
-                            (int) height);
+                            pt.X,
+                            pt.Y,
+                            width,
+                            height);
                     }
                 }
             }
             else
             {
-                float width = symbol.Width * Scale;
-                float height = symbol.Height * Scale;
-                int x = (int)(pt.X);
-                int y = (int)(pt.Y);
                 g.DrawImage(
                     symbol,
-                    x, y, (int)width, (int)height,
+                    pt.X, pt.Y, width, height,
                     0, 0, symbol.Width, symbol.Height,
-                    GraphicsUnit.Pixel,
+                    GraphicsUnitType.Pixel,
                     ImageAttributes);
             }
         }

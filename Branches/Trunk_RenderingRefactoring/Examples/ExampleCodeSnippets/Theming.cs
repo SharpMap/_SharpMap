@@ -1,4 +1,6 @@
 using SharpMap.Features;
+using SharpMap.Layers;
+using SharpMap.Rendering;
 
 namespace ExampleCodeSnippets
 {
@@ -271,9 +273,9 @@ namespace ExampleCodeSnippets
             }
 
             System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(120, 60);
-            System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bmp);
+            IGraphics g = System.Drawing.Graphics.FromImage(bmp).G();
             System.Drawing.RectangleF size = new System.Drawing.RectangleF(0f, 0f, 120f, 60f);
-            g.FillRectangle(System.Drawing.Brushes.White, size);
+            g.FillRectangle(System.Drawing.Brushes.White, 0, 0, (int) size.Width, (int) size.Height);
             var sf = new System.Drawing.StringFormat(System.Drawing.StringFormatFlags.NoWrap)
                          {Alignment = System.Drawing.StringAlignment.Center};
 

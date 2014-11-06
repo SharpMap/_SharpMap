@@ -96,7 +96,7 @@ namespace UnitTests.WMS.Server
                 {
                     SRID = 4326,
                     Style = (VectorStyle)data.Style,
-                    SmoothingMode = SmoothingMode.AntiAlias
+                    SmoothingMode = Smoothing.AntiAlias
                 };
                 map.Layers.Add(item);
             }

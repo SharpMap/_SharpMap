@@ -54,7 +54,7 @@ namespace SharpMap.Layers.Symbolizer
         /// Gets or sets whether smoothing (antialiasing) is applied to lines and curves and the edges of filled areas
         /// </summary>
         [Obsolete("Use Symbolizer.SmoothingMode")]
-        public SmoothingMode SmoothingMode
+        public Smoothing SmoothingMode
         {
             get { return Symbolizer.SmoothingMode; }
             set { Symbolizer.SmoothingMode = value; }

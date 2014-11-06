@@ -56,7 +56,7 @@ namespace SharpMap.Layers
     /// map.ZoomToBox(new GeoAPI.Geometries.Envelope(-180.0, 180.0, -90.0, 90.0));
     /// </code>
     /// </example>
-    [Obsolete("use TileLayer instead") ]
+    [Obsolete("use TileLayer instead")]
 
     public class TiledWmsLayer : Layer, ILayer
     {
@@ -121,7 +121,7 @@ namespace SharpMap.Layers
         /// <param name="cachetime">Time for caching Service Description (ASP.NET only)</param>
         /// <param name="proxy">Proxy</param>
         public TiledWmsLayer(string layername, string url, TimeSpan cachetime, WebProxy proxy)
-            : base (new Style(), new NullRenderer())
+            : base(new Style(), new NullRenderer())
         {
             _Proxy = proxy;
             _TimeOut = 10000;
@@ -261,15 +261,15 @@ namespace SharpMap.Layers
                             PointF destMin = Transform.WorldtoMap(tileExtent.Min(), map);
                             PointF destMax = Transform.WorldtoMap(tileExtent.Max(), map);
 
-                            double minX = (int) Math.Round(destMin.X);
-                            double minY = (int) Math.Round(destMax.Y);
-                            double maxX = (int) Math.Round(destMax.X);
-                            double maxY = (int) Math.Round(destMin.Y);
+                            double minX = Math.Round(destMin.X);
+                            double minY = Math.Round(destMax.Y);
+                            double maxX = Math.Round(destMax.X);
+                            double maxY = Math.Round(destMin.Y);
 
                             g.DrawImage(bitmap,
-                                (int) minX, (int) minY, (int) (maxX - minX), (int) (maxY - minY),
+                                Convert.ToInt32(minX), Convert.ToInt32(minY), Convert.ToInt32(maxX - minX), Convert.ToInt32(maxY - minY),
                                 0, 0, tileSet.Width, tileSet.Height,
-                                GraphicsUnit.Pixel, _ImageAttributes);
+                                GraphicsUnitType.Pixel, _ImageAttributes);
                         }
                     }
                 }
@@ -289,7 +289,7 @@ namespace SharpMap.Layers
         /// <returns>Bounding box corresponding to the extent of the features in the layer</returns>
         public override Envelope Envelope
         {
-            get 
+            get
             {
                 return _WmsClient.Layer.LatLonBoundingBox; //TODO: no box is allowed in capabilities so check for it
             }
@@ -339,7 +339,7 @@ namespace SharpMap.Layers
                                 box.MinX, box.MinY, box.MaxX, box.MaxY);
             strReq.AppendFormat("&WIDTH={0}&Height={1}", tileSet.Width, tileSet.Height);
             strReq.Append("&LAYERS=");
-                // LAYERS is set in caps because the current version of tilecache.py does not accept mixed case (a little bug)
+            // LAYERS is set in caps because the current version of tilecache.py does not accept mixed case (a little bug)
             if (tileSet.Layers != null && tileSet.Layers.Count > 0)
             {
                 foreach (string layer in tileSet.Layers)
@@ -398,13 +398,13 @@ namespace SharpMap.Layers
 
             try
             {
-                webResponse = (HttpWebResponse) webRequest.GetResponse();
+                webResponse = (HttpWebResponse)webRequest.GetResponse();
 
                 if (webResponse.ContentType.StartsWith("image"))
                 {
                     responseStream = webResponse.GetResponseStream();
-                    bitmap = (Bitmap) Bitmap.FromStream(responseStream);
-                    return (Bitmap) bitmap;
+                    bitmap = (Bitmap)Bitmap.FromStream(responseStream);
+                    return (Bitmap)bitmap;
                 }
                 else
                 {
@@ -480,7 +480,7 @@ namespace SharpMap.Layers
             double minY = Math.Round(dest.Y);
             double maxX = Math.Round(dest.Right);
             double maxY = Math.Round(dest.Bottom);
-            return new Rectangle((int) minX, (int) minY, (int) (maxX - minX), (int) (maxY - minY));
+            return new Rectangle((int)minX, (int)minY, (int)(maxX - minX), (int)(maxY - minY));
         }
     }
 }

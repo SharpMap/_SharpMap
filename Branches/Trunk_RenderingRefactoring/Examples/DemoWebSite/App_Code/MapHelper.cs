@@ -1,16 +1,15 @@
 using System;
 using System.Configuration;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
+using System.IO;
 using System.Web;
+using GeoAPI.Features;
 using SharpMap;
 using SharpMap.Data.Providers;
 using SharpMap.Layers;
 using SharpMap.Rendering;
 using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
-using ColorBlend=SharpMap.Rendering.Thematics.ColorBlend;
 using Point=GeoAPI.Geometries.Coordinate;
 
 /// <summary>
@@ -83,8 +82,8 @@ public class MapHelper
         layCityLabel.Style.VerticalAlignment = LabelStyle.VerticalAlignmentEnum.Bottom;
 			layCityLabel.Style.Offset = new PointF(3, 3);
 			layCityLabel.Style.Halo = new Pen(Color.Yellow, 2);
-        layCityLabel.TextRenderingHint = TextRenderingHint.AntiAlias;
-			layCityLabel.SmoothingMode = SmoothingMode.AntiAlias;
+        layCityLabel.TextRenderingHint = TextRendering.AntiAlias;
+			layCityLabel.SmoothingMode = Smoothing.AntiAlias;
 			layCityLabel.SRID = 4326;
         layCityLabel.LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection;
 			layCityLabel.Style.CollisionDetection = true;
@@ -301,8 +300,8 @@ public class MapHelper
         layCityLabel.Style.VerticalAlignment = LabelStyle.VerticalAlignmentEnum.Bottom;
         layCityLabel.Style.Offset = new PointF(3, 3);
         layCityLabel.Style.Halo = new Pen(Color.Yellow, 2);
-        layCityLabel.TextRenderingHint = TextRenderingHint.AntiAlias;
-        layCityLabel.SmoothingMode = SmoothingMode.AntiAlias;
+        layCityLabel.TextRenderingHint = TextRendering.AntiAlias;
+        layCityLabel.SmoothingMode = Smoothing.AntiAlias;
         layCityLabel.SRID = 4326;
         layCityLabel.LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection;
         layCityLabel.Style.CollisionDetection = true;
@@ -397,8 +396,8 @@ public class MapHelper
         layCityLabel.Style.VerticalAlignment = LabelStyle.VerticalAlignmentEnum.Bottom;
         layCityLabel.Style.Offset = new PointF(3, 3);
         layCityLabel.Style.Halo = new Pen(Color.Yellow, 2);
-        layCityLabel.TextRenderingHint = TextRenderingHint.AntiAlias;
-        layCityLabel.SmoothingMode = SmoothingMode.AntiAlias;
+        layCityLabel.TextRenderingHint = TextRendering.AntiAlias;
+        layCityLabel.SmoothingMode = Smoothing.AntiAlias;
         layCityLabel.SRID = 4326;
         layCityLabel.LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection;
         layCityLabel.Style.CollisionDetection = true;
@@ -431,72 +430,72 @@ public class MapHelper
         string connectionString = ConfigurationManager.ConnectionStrings["postgis"].ConnectionString;
 
         //Initialize a new map of size 'imagesize'
-        SharpMap.Map map = new SharpMap.Map(size);
+        Map map = new Map(size);
 
         //Set up the countries layer
-        SharpMap.Layers.VectorLayer layCountries = new SharpMap.Layers.VectorLayer("Countries");
+        VectorLayer layCountries = new VectorLayer("Countries");
         //Set the datasource to a new MsSqlSpatialProvider
-        layCountries.DataSource = new SharpMap.Data.Providers.PostGIS(connectionString, "countries", "wkb_geometry", "ogc_fid");
+        layCountries.DataSource = new PostGIS(connectionString, "countries", "wkb_geometry", "ogc_fid");
 
         //Set fill-style to green
         layCountries.Style.Fill = new SolidBrush(Color.Green);
         //Set the polygons to have a black outline
-        layCountries.Style.Outline = System.Drawing.Pens.Black;
+        layCountries.Style.Outline = Pens.Black;
         layCountries.Style.EnableOutline = true;
 
         //Set up a river layer
-        SharpMap.Layers.VectorLayer layRivers = new SharpMap.Layers.VectorLayer("Rivers");
+        VectorLayer layRivers = new VectorLayer("Rivers");
         //Set the datasource to a new MsSqlSpatialProvider
-        layRivers.DataSource = new SharpMap.Data.Providers.PostGIS(connectionString, "rivers", "wkb_geometry", "ogc_fid");
+        layRivers.DataSource = new PostGIS(connectionString, "rivers", "wkb_geometry", "ogc_fid");
         //Define a blue 1px wide pen
         layRivers.Style.Line = new Pen(Color.Blue, 1);
 
         //Set up a river layer
-        SharpMap.Layers.VectorLayer layCities = new SharpMap.Layers.VectorLayer("Cities");
+        VectorLayer layCities = new VectorLayer("Cities");
         //Set the datasource to a new MsSqlSpatialProvider
-        layCities.DataSource = new SharpMap.Data.Providers.PostGIS(connectionString, "cities", "wkb_geometry", "ogc_fid"); ;
+        layCities.DataSource = new PostGIS(connectionString, "cities", "wkb_geometry", "ogc_fid"); ;
         //Define a blue 1px wide pen
         //layCities.Style.Symbol = new Bitmap(HttpContext.Current.Server.MapPath(@"~\App_data\icon.png"));
         layCities.Style.SymbolScale = 0.8f;
         layCities.MaxVisible = 40;
 
         //Set up a country label layer
-        SharpMap.Layers.LabelLayer layLabel = new SharpMap.Layers.LabelLayer("Country labels");
+        LabelLayer layLabel = new LabelLayer("Country labels");
         layLabel.DataSource = layCountries.DataSource;
         layLabel.Enabled = true;
         layLabel.LabelColumn = "Name";
         layLabel.MaxVisible = 90;
         layLabel.MinVisible = 30;
-        layLabel.MultipartGeometryBehaviour = SharpMap.Layers.LabelLayer.MultipartGeometryBehaviourEnum.Largest;
-        layLabel.LabelFilter = SharpMap.Rendering.LabelCollisionDetection.ThoroughCollisionDetection;
+        layLabel.MultipartGeometryBehaviour = LabelLayer.MultipartGeometryBehaviourEnum.Largest;
+        layLabel.LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection;
         layLabel.PriorityColumn = "popdens";
-        layLabel.Style = new SharpMap.Styles.LabelStyle();
+        layLabel.Style = new LabelStyle();
         layLabel.Style.ForeColor = Color.White;
         layLabel.Style.Font = new Font(FontFamily.GenericSerif, 12);
-        layLabel.Style.BackColor = new System.Drawing.SolidBrush(Color.FromArgb(128, 255, 0, 0));
-        layLabel.Style.HorizontalAlignment = SharpMap.Styles.LabelStyle.HorizontalAlignmentEnum.Center;
+        layLabel.Style.BackColor = new SolidBrush(Color.FromArgb(128, 255, 0, 0));
+        layLabel.Style.HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Center;
         layLabel.Style.CollisionDetection = true;
 
         //Set up a city label layer
-        SharpMap.Layers.LabelLayer layCityLabel = new SharpMap.Layers.LabelLayer("City labels");
+        LabelLayer layCityLabel = new LabelLayer("City labels");
         layCityLabel.DataSource = layCities.DataSource;
         layCityLabel.Enabled = true;
         layCityLabel.LabelColumn = "name";
         layCityLabel.PriorityColumn = "population";
-        layCityLabel.PriorityDelegate = delegate(GeoAPI.Features.IFeature fdr)
+        layCityLabel.PriorityDelegate = delegate(IFeature fdr)
         {
             Int32 retVal = 10000000 * (Int32)((String)fdr.Attributes["capital"] == "Y" ? 1 : 0);
             return retVal + Convert.ToInt32(fdr.Attributes["population"]);
         };
-        layCityLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-        layCityLabel.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-        layCityLabel.LabelFilter = SharpMap.Rendering.LabelCollisionDetection.ThoroughCollisionDetection;
-        layCityLabel.Style = new SharpMap.Styles.LabelStyle();
+        layCityLabel.TextRenderingHint = TextRendering.AntiAlias;
+        layCityLabel.SmoothingMode = Smoothing.AntiAlias;
+        layCityLabel.LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection;
+        layCityLabel.Style = new LabelStyle();
         layCityLabel.Style.ForeColor = Color.Black;
         layCityLabel.Style.Font = new Font(FontFamily.GenericSerif, 11);
         layCityLabel.Style.MaxVisible = layLabel.MinVisible;
-        layCityLabel.Style.HorizontalAlignment = SharpMap.Styles.LabelStyle.HorizontalAlignmentEnum.Left;
-        layCityLabel.Style.VerticalAlignment = SharpMap.Styles.LabelStyle.VerticalAlignmentEnum.Bottom;
+        layCityLabel.Style.HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Left;
+        layCityLabel.Style.VerticalAlignment = LabelStyle.VerticalAlignmentEnum.Bottom;
         layCityLabel.Style.Offset = new PointF(3, 3);
         layCityLabel.Style.Halo = new Pen(Color.Yellow, 2);
         layCityLabel.Style.CollisionDetection = true;
@@ -533,13 +532,13 @@ public class MapHelper
         LayerGroup g = new LayerGroup("OS");
         g.SRID = 27700;
         //D:\Raster\Ordnance Survey\OS Street View SM\data\sm
-        System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(HttpContext.Current.Server.MapPath(@"~\App_Data\Gdal"));
-        foreach (System.IO.FileInfo fi in di.GetFiles("*.tif"))
+        DirectoryInfo di = new DirectoryInfo(HttpContext.Current.Server.MapPath(@"~\App_Data\Gdal"));
+        foreach (FileInfo fi in di.GetFiles("*.tif"))
         {
             try
             {
-                SharpMap.Layers.GdalRasterLayer layer = 
-                    new SharpMap.Layers.GdalRasterLayer(
+                GdalRasterLayer layer = 
+                    new GdalRasterLayer(
                         fi.Name, HttpContext.Current.Server.MapPath(@"~\App_Data\Gdal\" + fi.Name));
                 //layer.SRID = 27700;
                 g.Layers.Add(layer);

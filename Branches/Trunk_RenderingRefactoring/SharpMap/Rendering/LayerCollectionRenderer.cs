@@ -41,7 +41,7 @@ namespace SharpMap.Rendering
         {
             _map = map;
             _transform = _map.MapTransform;
-            g.PageUnit = GraphicsUnit.Pixel;
+            g.PageUnit = GraphicsUnitType.Pixel;
             if (AllowParallel && ParallelHeuristic(map.Size, g.DpiX, _layers.Length))
             {
                 RenderParellel(g);
@@ -128,7 +128,7 @@ namespace SharpMap.Rendering
                     var image = _images[layerIndex] = new Bitmap(_map.Size.Width, _map.Size.Height, PixelFormat.Format32bppArgb);
                     using (IGraphics g = Graphics.FromImage(image).G())
                     {
-                        g.PageUnit = GraphicsUnit.Pixel;
+                        g.PageUnit = GraphicsUnitType.Pixel;
                         ApplyTransform(_transform, g);
 
                         g.Clear(Color.Transparent);

@@ -685,7 +685,7 @@ namespace SharpMap.Rendering
 
             //gr.SmoothingMode = SmoothingMode.HighQuality;
             //gr.CompositingQuality = CompositingQuality.HighQuality;
-            //gr.TextRenderingHint = TextRenderingHint.AntiAlias;
+            //gr.TextRenderingHint = TextRendering.AntiAlias;
             using (var graphicsPath = new GraphicsPath())
             {
                 var x = (int) pointCenter.X;

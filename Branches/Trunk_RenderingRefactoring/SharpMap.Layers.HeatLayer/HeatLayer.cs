@@ -381,7 +381,7 @@ namespace SharpMap.Layers
             for (var i = 0; i < 32; i++)
             {
                 var bmp = new Bitmap(size, size, PixelFormat.Format24bppRgb);
-                using (var g = Graphics.FromImage(bmp))
+                using (IGraphics g = Graphics.FromImage(bmp).G())
                 {
                     g.Clear(Color.White);
                     using (var path = new GraphicsPath())
@@ -412,7 +412,7 @@ namespace SharpMap.Layers
         {
             var tempImage = new Bitmap(image.Width, image.Height, PixelFormat.Format32bppArgb);
 
-            using (var g = Graphics.FromImage(tempImage))
+            using (IGraphics g = Graphics.FromImage(tempImage).G())
             {
                 //I want to make the color more intense (White/bright)
                 if (weight < 0.02f) weight = 0.02f;
@@ -428,9 +428,9 @@ namespace SharpMap.Layers
 
                 // Draw Image with the attributes
                 g.DrawImage(image,
-                            new Rectangle(0, 0, image.Width, image.Height),
-                            0, 0, image.Width, image.Height,
-                            GraphicsUnit.Pixel, ia);
+                    0, 0, image.Width, image.Height,
+                    0, 0, image.Width, image.Height,
+                    GraphicsUnitType.Pixel, ia);
             }
             //New dot with a different intensity
             return tempImage;

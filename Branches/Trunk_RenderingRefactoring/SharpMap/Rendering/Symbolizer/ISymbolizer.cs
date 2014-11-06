@@ -1,5 +1,4 @@
 using System;
-using System.Drawing.Drawing2D;
 using SharpMap.Layers;
 
 namespace SharpMap.Rendering.Symbolizer
@@ -12,12 +11,12 @@ namespace SharpMap.Rendering.Symbolizer
         /// <summary>
         /// Gets or sets a value indicating which <see cref="SmoothingMode"/> is to be used for rendering
         /// </summary>
-        SmoothingMode SmoothingMode { get; set; }
+        Smoothing SmoothingMode { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating which <see cref="PixelOffsetMode"/> is to be used for rendering
         /// </summary>
-        PixelOffsetMode PixelOffsetMode { get; set; }        
+        PixelOffset PixelOffsetMode { get; set; }        
 
         /// <summary>
         /// Method to indicate that the symbolizer has to be prepared.
