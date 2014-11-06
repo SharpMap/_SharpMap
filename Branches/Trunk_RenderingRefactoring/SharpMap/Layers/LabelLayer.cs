@@ -20,13 +20,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using System.Globalization;
 using GeoAPI.Features;
 using SharpMap.Features;
 #if !DotSpatialProjections
 using GeoAPI;
-using NetTopologySuite.Geometries;
 using GeoAPI.CoordinateSystems.Transformations;
 #else
 using DotSpatial.Projections;
@@ -148,7 +146,7 @@ namespace SharpMap.Layers
         /// </summary>
         private string _rotationColumn;
 
-        private TextRenderingHint _textRenderingHint;
+        private TextRendering _textRenderingHint;
 
         private ITheme _theme;
 
@@ -160,8 +158,8 @@ namespace SharpMap.Layers
         {
             //_Style = new LabelStyle();
             LayerName = layername;
-            SmoothingMode = SmoothingMode.AntiAlias;
-            TextRenderingHint = TextRenderingHint.AntiAlias;
+            SmoothingMode = Smoothing.AntiAlias;
+            TextRenderingHint = TextRendering.AntiAlias;
             MultipartGeometryBehaviour = MultipartGeometryBehaviourEnum.All;
             _labelFilter = LabelCollisionDetection.SimpleCollisionDetection;
         }
@@ -187,12 +185,12 @@ namespace SharpMap.Layers
         /// <summary>
         /// Render whether smoothing (antialiasing) is applied to lines and curves and the edges of filled areas
         /// </summary>
-        public SmoothingMode SmoothingMode { get; set; }
+        public Smoothing SmoothingMode { get; set; }
 
         /// <summary>
         /// Specifies the quality of text rendering
         /// </summary>
-        public TextRenderingHint TextRenderingHint
+        public TextRendering TextRenderingHint
         {
             get { return _textRenderingHint; }
             set { _textRenderingHint = value; }

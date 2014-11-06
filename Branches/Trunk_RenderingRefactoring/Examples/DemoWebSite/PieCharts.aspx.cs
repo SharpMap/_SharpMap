@@ -3,8 +3,8 @@ using System.Drawing;
 using System.Web;
 using System.Web.UI;
 using SharpMap;
-using SharpMap.Data;
 using SharpMap.Layers;
+using SharpMap.Rendering;
 using SharpMap.Rendering.Thematics;
 using SharpMap.Styles;
 using SharpMap.Web;
@@ -84,7 +84,7 @@ public partial class Bins : Page
         int angle2 = rand.Next(angle1 + 60, 300);
         Rectangle rect = new Rectangle(0, 0, size, size);
         Bitmap b = new Bitmap(size, size);
-        using (var g = Graphics.FromImage(b))
+        using (IGraphics g = Graphics.FromImage(b).G())
         {
             // Draw Pie 
             g.FillPie(Brushes.LightGreen, rect, 0, angle1);

@@ -58,7 +58,7 @@ namespace SharpMap.Layers
         /// </summary>
         protected readonly bool _showErrorInTile = true;
 
-        InterpolationMode _interpolationMode = InterpolationMode.HighQualityBicubic;
+        Interpolation _interpolationMode = Interpolation.HighQualityBicubic;
         protected Color _transparentColor;
         //System.Collections.Hashtable _cacheTiles = new System.Collections.Hashtable();
 
@@ -83,7 +83,7 @@ namespace SharpMap.Layers
         /// <summary>
         /// The algorithm used when images are scaled or rotated 
         /// </summary>
-        public InterpolationMode InterpolationMode
+        public Interpolation InterpolationMode
         {
             get { return _interpolationMode; }
             set { _interpolationMode = value; }
@@ -176,7 +176,7 @@ namespace SharpMap.Layers
             {
                 var bmp = new Bitmap(map.Size.Width, map.Size.Height, PixelFormat.Format32bppArgb);
                 
-                using (var g = Graphics.FromImage(bmp))
+                using (IGraphics g = Graphics.FromImage(bmp).G())
                 {
                     g.InterpolationMode = InterpolationMode;
                     g.Transform = graphics.Transform.Clone();
@@ -242,11 +242,9 @@ namespace SharpMap.Layers
                             try
                             {
                                 g.DrawImage(bitmap,
-                                            new Rectangle((int) min.X, (int) max.Y, (int) (max.X - min.X),
-                                                          (int) (min.Y - max.Y)),
-                                            0, 0, tileWidth, tileHeight,
-                                            GraphicsUnit.Pixel,
-                                            ia);
+                                    (int) min.X, (int) max.Y, (int) (max.X - min.X),
+                                    (int) (min.Y - max.Y), 0, 0, tileWidth, tileHeight,
+                                    GraphicsUnitType.Pixel, ia);
                             }
                             catch (Exception ee)
                             {
@@ -312,7 +310,7 @@ namespace SharpMap.Layers
                     //if the error is resolved. PDD.
                     var schema = (TileSchema) _source.Schema;
                     var bitmap = new Bitmap(schema.Width, schema.Height);
-                    using (var graphics = Graphics.FromImage(bitmap))
+                    using (IGraphics graphics = Graphics.FromImage(bitmap).G())
                     {
                         graphics.DrawString(ex.Message, new Font(FontFamily.GenericSansSerif, 12),
                                             new SolidBrush(Color.Black),

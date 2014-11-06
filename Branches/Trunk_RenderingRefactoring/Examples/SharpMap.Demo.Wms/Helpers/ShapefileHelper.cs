@@ -79,7 +79,7 @@ namespace SharpMap.Demo.Wms.Helpers
                     TargetSRID = 900913,
                     CoordinateTransformation = transformation,
                     Style = (VectorStyle)data.Style,
-                    SmoothingMode = SmoothingMode.AntiAlias
+                    SmoothingMode = Smoothing.AntiAlias
                 };
                 map.Layers.Add(item);
             }
@@ -106,7 +106,7 @@ namespace SharpMap.Demo.Wms.Helpers
                 {
                     SRID = 4326,
                     Style = (VectorStyle)data.Style,
-                    SmoothingMode = SmoothingMode.AntiAlias
+                    SmoothingMode = Smoothing.AntiAlias
                 };
                 map.Layers.Add(item);
             }

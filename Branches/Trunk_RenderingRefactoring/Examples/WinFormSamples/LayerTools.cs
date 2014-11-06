@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Text;
+using GeoAPI.Features;
+using SharpMap;
+using SharpMap.Data.Providers;
 using SharpMap.Layers;
-using System.Drawing;
+using SharpMap.Rendering;
 using SharpMap.Styles;
 #if DotSpatialProjections
 using DotSpatial.Projections;
@@ -41,7 +44,7 @@ namespace WinFormSamples
                                             Target = KnownCoordinateSystems.Projected.World.WebMercator
                                         };
 #else
-                    CoordinateSystemFactory csFac = new ProjNet.CoordinateSystems.CoordinateSystemFactory();
+                    CoordinateSystemFactory csFac = new CoordinateSystemFactory();
                     CoordinateTransformationFactory ctFac = new CoordinateTransformationFactory();
 
                     IGeographicCoordinateSystem wgs84 = csFac.CreateGeographicCoordinateSystem(
@@ -62,7 +65,7 @@ namespace WinFormSamples
                       "Google Mercator", wgs84, projection, LinearUnit.Metre, new AxisInfo("East", AxisOrientationEnum.East),
                       new AxisInfo("North", AxisOrientationEnum.North));
 
-                    ((CoordinateSystem)epsg900913).DefaultEnvelope = new [] { -20037508.342789, -20037508.342789, 20037508.342789, 20037508.342789 };
+                    ((CoordinateSystem)epsg900913).DefaultEnvelope = new[] { -20037508.342789, -20037508.342789, 20037508.342789, 20037508.342789 };
 
                     wgs84toGoogle = ctFac.CreateFromCoordinateSystems(wgs84, epsg900913);
 #endif
@@ -93,7 +96,7 @@ namespace WinFormSamples
                         Source = piSource
                     };
 #else
-                    CoordinateSystemFactory csFac = new ProjNet.CoordinateSystems.CoordinateSystemFactory();
+                    CoordinateSystemFactory csFac = new CoordinateSystemFactory();
                     CoordinateTransformationFactory ctFac = new CoordinateTransformationFactory();
 
                     IGeographicCoordinateSystem wgs84 = csFac.CreateGeographicCoordinateSystem(
@@ -139,7 +142,7 @@ namespace WinFormSamples
                                         };
 #else
 
-                    CoordinateSystemFactory csFac = new ProjNet.CoordinateSystems.CoordinateSystemFactory();
+                    CoordinateSystemFactory csFac = new CoordinateSystemFactory();
                     CoordinateTransformationFactory ctFac = new CoordinateTransformationFactory();
 
                     IGeographicCoordinateSystem wgs84 = csFac.CreateGeographicCoordinateSystem(
@@ -171,19 +174,19 @@ namespace WinFormSamples
 
         public static LabelLayer CreateLabelLayer(VectorLayer originalLayer, string labelColumnName)
         {
-            SharpMap.Layers.LabelLayer labelLayer = new SharpMap.Layers.LabelLayer(originalLayer.LayerName + ":Labels");
+            LabelLayer labelLayer = new LabelLayer(originalLayer.LayerName + ":Labels");
             labelLayer.DataSource = originalLayer.DataSource;
             labelLayer.LabelColumn = labelColumnName;
             labelLayer.Style.CollisionDetection = true;
             labelLayer.Style.CollisionBuffer = new SizeF(10F, 10F);
-            labelLayer.LabelFilter = SharpMap.Rendering.LabelCollisionDetection.ThoroughCollisionDetection;
+            labelLayer.LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection;
             labelLayer.Style.Offset = new PointF(0, -5F);
-            labelLayer.MultipartGeometryBehaviour = SharpMap.Layers.LabelLayer.MultipartGeometryBehaviourEnum.CommonCenter;
+            labelLayer.MultipartGeometryBehaviour = LabelLayer.MultipartGeometryBehaviourEnum.CommonCenter;
             labelLayer.Style.Font = new Font(FontFamily.GenericSansSerif, 12);
             labelLayer.MaxVisible = originalLayer.MaxVisible;
             labelLayer.MinVisible = originalLayer.MinVisible;
             labelLayer.Style.Halo = new Pen(Color.White, 2);
-            labelLayer.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            labelLayer.SmoothingMode = Smoothing.HighQuality;
             labelLayer.CoordinateTransformation = originalLayer.CoordinateTransformation;
             return labelLayer;
         }
@@ -191,7 +194,7 @@ namespace WinFormSamples
         private static readonly Random Rnd = new Random();
         public static Color GetRandomColor()
         {
-            return  Color.FromArgb(Rnd.Next(0, 127), Rnd.Next(0, 255), Rnd.Next(0,255), Rnd.Next(0,255));
+            return Color.FromArgb(Rnd.Next(0, 127), Rnd.Next(0, 255), Rnd.Next(0, 255), Rnd.Next(0, 255));
         }
 
         public static Boolean GetRandomBoolean()
@@ -215,23 +218,24 @@ namespace WinFormSamples
         /// <returns></returns>
         public static Bitmap GetRandomSymbol()
         {
-            var s = Rnd.Next(4, 12);
-            var f = new Font("WingDings", 2*s, GraphicsUnit.Pixel);
-            var bmp = new Bitmap(2*s + 2, 2*s + 2, PixelFormat.Format32bppArgb);
-            using (var g = Graphics.FromImage(bmp))
+            int s = Rnd.Next(4, 12);
+            Font f = new Font("WingDings", 2 * s, GraphicsUnit.Pixel);
+            Bitmap bmp = new Bitmap(2 * s + 2, 2 * s + 2, PixelFormat.Format32bppArgb);
+            using (IGraphics g = Graphics.FromImage(bmp).G())
             {
                 g.Clear(Color.Transparent);
-                g.DrawString(new string(Convert.ToChar((byte) Rnd.Next(15, 127)), 1), f, GetRandomBrush(), new PointF(s, s) ,
-                             new StringFormat
-                                 {Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center});
+                string text = new string(Convert.ToChar((byte)Rnd.Next(15, 127)), 1);
+                Brush brush = GetRandomBrush();
+                StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+                g.DrawString(text, f, brush, s, s,sf);
             }
 
             return bmp;
         }
 
-        public static SharpMap.Styles.VectorStyle GetRandomVectorStyle()
+        public static VectorStyle GetRandomVectorStyle()
         {
-            return new SharpMap.Styles.VectorStyle
+            return new VectorStyle
                        {
                            EnableOutline = GetRandomBoolean(),
                            Outline = GetRandomPen(3, 7),
@@ -244,33 +248,33 @@ namespace WinFormSamples
 
         private static Pen GetRandomPen(int min, int max)
         {
-            var p = new Pen(GetRandomColor(), Rnd.Next(min, max));
+            Pen p = new Pen(GetRandomColor(), Rnd.Next(min, max));
             p.LineJoin = LineJoin.MiterClipped;
             p.MiterLimit = 2f;
             return p;
         }
 
-        public static SharpMap.Map GetMapForProviders(IEnumerable<SharpMap.Data.Providers.IProvider> providers)
+        public static Map GetMapForProviders(IEnumerable<IProvider> providers)
         {
-            var m = new SharpMap.Map();
-            foreach (var provider in providers)
+            Map m = new Map();
+            foreach (IProvider provider in providers)
             {
-                var l = new VectorLayer(provider.ConnectionID, provider)
+                VectorLayer l = new VectorLayer(provider.ConnectionID, provider)
                             {
                                 Style = GetRandomVectorStyle()
                             };
                 m.Layers.Add(l);
-                var ll = new LabelLayer("Label " + provider.ConnectionID);
+                LabelLayer ll = new LabelLayer("Label " + provider.ConnectionID);
                 ll.DataSource = provider;
-                
+
                 provider.Open();
-                var f = provider.GetFeatureByOid(1);
+                IFeature f = provider.GetFeatureByOid(1);
                 provider.Close();
 
                 ll.LabelColumn = f.Factory.AttributesDefinition[1].AttributeName;
                 ll.Style.CollisionDetection = false;
                 ll.Style.IgnoreLength = true;
-                
+
                 m.Layers.Add(ll);
             }
             m.ZoomToExtents();

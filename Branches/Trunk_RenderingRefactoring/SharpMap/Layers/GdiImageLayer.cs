@@ -19,14 +19,12 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
 using GeoAPI.Geometries;
 using NetTopologySuite.Geometries;
-using RTools_NTS.Util;
 using SharpMap.Rendering;
 using SharpMap.Styles;
 using Point = System.Drawing.Point;
@@ -82,7 +80,7 @@ namespace SharpMap.Layers
         public GdiImageLayer(string layerName, Image image)
             : base (new Style(), new NullRenderer())
         {
-            InterpolationMode = InterpolationMode.HighQualityBicubic;
+            InterpolationMode = Interpolation.HighQualityBicubic;
 
             LayerName = layerName;
             _image = image;
@@ -147,7 +145,7 @@ namespace SharpMap.Layers
         /// <summary>
         /// Gets or sets the <see cref="T:System.Drawing.Drawing2D.InterpolationMode"/> to use
         /// </summary>
-        public InterpolationMode InterpolationMode { get; set; }
+        public Interpolation InterpolationMode { get; set; }
 
         protected override void ReleaseManagedResources()
         {
@@ -169,40 +167,40 @@ namespace SharpMap.Layers
                 throw new Exception("Image not set");
 
             // Style enabled?
-            var doRender = Style.Enabled;
+            bool doRender = Style.Enabled;
 
             // Valid for this zoom
             if (map.Zoom < Style.MinVisible || Style.MaxVisible < map.Zoom)
                 doRender = false;
 
             // View to render
-            var mapView = map.Envelope;
+            Envelope mapView = map.Envelope;
             
             // Layer view
-            var lyrView = _envelope;
+            Envelope lyrView = _envelope;
 
             // Get the view intersection
-            var vi = mapView.Intersection(lyrView);
+            Envelope vi = mapView.Intersection(lyrView);
             if (doRender && !vi.IsNull)
             {
                 // Image part
 // ReSharper disable InconsistentNaming
-                var imgLT = Clip(_worldFile.ToRaster(new Coordinate(vi.MinX, vi.MaxY)));
-                var imgRB = Clip(_worldFile.ToRaster(new Coordinate(vi.MaxX, vi.MinY)));
-                var imgRect = new Rectangle(imgLT, PointDiff(imgLT, imgRB, 1));
+                Point imgLT = Clip(_worldFile.ToRaster(new Coordinate(vi.MinX, vi.MaxY)));
+                Point imgRB = Clip(_worldFile.ToRaster(new Coordinate(vi.MaxX, vi.MinY)));
+                Rectangle imgRect = new Rectangle(imgLT, PointDiff(imgLT, imgRB, 1));
 
                 // Map Part
-                var mapLT = Point.Truncate(map.WorldToImage(new Coordinate(vi.MinX, vi.MaxY)));
-                var mapRB = Point.Ceiling(map.WorldToImage(new Coordinate(vi.MaxX, vi.MinY)));
-                var mapRect = new Rectangle(mapLT, PointDiff(mapLT, mapRB, 1));
+                Point mapLT = Point.Truncate(map.WorldToImage(new Coordinate(vi.MinX, vi.MaxY)));
+                Point mapRB = Point.Ceiling(map.WorldToImage(new Coordinate(vi.MaxX, vi.MinY)));
+                Rectangle mapRect = new Rectangle(mapLT, PointDiff(mapLT, mapRB, 1));
 // ReSharper restore InconsistentNaming
 
                 // Set the interpolation mode
-                var tmpInterpolationMode = g.InterpolationMode;
+                Interpolation tmpInterpolationMode = g.InterpolationMode;
                 g.InterpolationMode = InterpolationMode;
 
                 // Render the image
-                using (var ia = new ImageAttributes())
+                using (ImageAttributes ia = new ImageAttributes())
                 {
                     ia.SetColorMatrix(new ColorMatrix { Matrix44 = 1 - Transparency },
                         ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
@@ -210,7 +208,7 @@ namespace SharpMap.Layers
                     g.DrawImage(_image, 
                         mapRect.X, mapRect.Y, mapRect.Width, mapRect.Height,
                         imgRect.X, imgRect.Y, imgRect.Width, imgRect.Height,
-                        GraphicsUnit.Pixel, ia);
+                        GraphicsUnitType.Pixel, ia);
                 }
 
                 // reset the interpolation mode
@@ -228,11 +226,11 @@ namespace SharpMap.Layers
         /// <returns>The clipped point</returns>
         private Point Clip(Point pt)
         {
-            var x = pt.X;
+            int x = pt.X;
             if (x < 0) x = 0;
             if (x > _image.Width) x = Image.Width;
 
-            var y = pt.Y;
+            int y = pt.Y;
             if (y < 0) y = 0;
             if (y > _image.Height) y = Image.Height;
 
@@ -251,7 +249,7 @@ namespace SharpMap.Layers
         /// <param name="fileName">Filename to the image</param>
         private void SetEnvelope(string fileName)
         {
-            var wld = Path.ChangeExtension(fileName, ".wld");
+            string wld = Path.ChangeExtension(fileName, ".wld");
 
             if (File.Exists(wld))
             {
@@ -259,7 +257,7 @@ namespace SharpMap.Layers
             }
             else
             {
-                var ext = CreateWorldFileExtension(Path.GetExtension(fileName));
+                string ext = CreateWorldFileExtension(Path.GetExtension(fileName));
                 if (string.IsNullOrEmpty(ext)) return;
                 {
                     wld = Path.ChangeExtension(fileName, ext);
@@ -280,15 +278,15 @@ namespace SharpMap.Layers
         /// <returns>The <see cref="WorldFile"/></returns>
         private static WorldFile ReadWorldFile(string wld)
         {
-            var coefficients = new double[6];
+            double[] coefficients = new double[6];
 
             try
             {
-                using (var sr = new StreamReader(wld))
+                using (StreamReader sr = new StreamReader(wld))
                 {
-                    for (var i = 0; i < coefficients.Length; i++)
+                    for (int i = 0; i < coefficients.Length; i++)
                     {
-                        var line = sr.ReadLine();
+                        string line = sr.ReadLine();
                         while (string.IsNullOrEmpty(line))
                             line = sr.ReadLine();
                         coefficients[i] = double.Parse(line, NumberFormatInfo.InvariantInfo);
@@ -316,7 +314,7 @@ namespace SharpMap.Layers
             if (!ext.StartsWith(".")) ext = "." + ext;
             if (ext.Length != 4) return null;
 
-            var caExt = ext.ToCharArray();
+            char[] caExt = ext.ToCharArray();
             caExt[2] = caExt[3];
             caExt[3] = 'w';
             return new string(caExt);
@@ -392,7 +390,7 @@ namespace SharpMap.Layers
                 if (File.Exists(file))
                     throw new ArgumentException(string.Format("File '{0}' not found", file), "file");
 
-                using (var sr = new StreamReader(file))
+                using (StreamReader sr = new StreamReader(file))
                 {
 // ReSharper disable AssignNullToNotNullAttribute
                     _matrix.A11 = double.Parse(sr.ReadLine(), NumberStyles.Float, NumberFormatInfo.InvariantInfo);
@@ -416,7 +414,7 @@ namespace SharpMap.Layers
                 if (string.IsNullOrEmpty(file))
                     throw new ArgumentNullException("file");
 
-                using (var sw = new StreamWriter(file))
+                using (StreamWriter sw = new StreamWriter(file))
                 {
                     sw.WriteLine(A11.ToString("R", NumberFormatInfo.InvariantInfo));
                     sw.WriteLine(A21.ToString("R", NumberFormatInfo.InvariantInfo));
@@ -485,8 +483,8 @@ namespace SharpMap.Layers
             /// <returns>The ground coordinate</returns>
             public Coordinate ToGround(int x, int y)
             {
-                var resX = B1 + (A11*x + A21*y);
-                var resY = B2 + (A12*x + A22*y);
+                double resX = B1 + (A11*x + A21*y);
+                double resY = B2 + (A12*x + A22*y);
 
                 return new Coordinate(resX, resY);
             }
@@ -521,8 +519,8 @@ namespace SharpMap.Layers
             /// <returns>The ground coordinate</returns>
             public IPolygon ToGroundBounds(int width, int height)
             {
-                var ringCoordinates = new List<Coordinate>(5);
-                var leftTop = ToGround(0, 0);
+                List<Coordinate> ringCoordinates = new List<Coordinate>(5);
+                Coordinate leftTop = ToGround(0, 0);
                 ringCoordinates.AddRange(new[]
                 {
                     leftTop,
@@ -532,7 +530,7 @@ namespace SharpMap.Layers
                     leftTop
                 });
 
-                var ring = GeometryFactory.Default.CreateLinearRing(ringCoordinates.ToArray());
+                ILinearRing ring = GeometryFactory.Default.CreateLinearRing(ringCoordinates.ToArray());
                 return GeometryFactory.Default.CreatePolygon(ring, null);
             }
 
@@ -541,9 +539,9 @@ namespace SharpMap.Layers
                 point.X -= B1;
                 point.Y -= B2;
 
-                var x = (int) Math.Round(_inverse.A11*point.X + _inverse.A21*point.Y,
+                int x = (int) Math.Round(_inverse.A11*point.X + _inverse.A21*point.Y,
                     MidpointRounding.AwayFromZero);
-                var y = (int) Math.Round(_inverse.A12*point.X + _inverse.A22*point.Y,
+                int y = (int) Math.Round(_inverse.A12*point.X + _inverse.A22*point.Y,
                     MidpointRounding.AwayFromZero);
 
                 return new Point(x, y);
@@ -618,7 +616,7 @@ namespace SharpMap.Layers
                     if (!IsInvertible)
                         throw new Exception("Matrix not invertible");
 
-                    var det = Determinant;
+                    double det = Determinant;
 
                     return new Matrix2D
                     {

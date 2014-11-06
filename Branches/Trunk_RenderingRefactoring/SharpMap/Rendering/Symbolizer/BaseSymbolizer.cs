@@ -12,31 +12,31 @@ namespace SharpMap.Rendering.Symbolizer
     [Serializable]
     public abstract class BaseSymbolizer : DisposableObject, ISymbolizer
     {
-        private SmoothingMode _oldSmootingMode;
-        private PixelOffsetMode _oldPixelOffsetMode;
+        private Smoothing _oldSmootingMode;
+        private PixelOffset _oldPixelOffsetMode;
 
         /// <summary>
         /// Creates an instance of this class.
         /// </summary>
         /// <remarks>
-        /// Sets <see cref="SmoothingMode"/> to <see cref="System.Drawing.Drawing2D.SmoothingMode.AntiAlias"/> and 
+        /// Sets <see cref="Smoothing"/> to <see cref="Smoothing.AntiAlias"/> and 
         /// <see cref="PixelOffsetMode"/> to <see cref="System.Drawing.Drawing2D.PixelOffsetMode.Default"/>.
         /// </remarks>
         protected BaseSymbolizer()
         {
-            SmoothingMode = SmoothingMode.AntiAlias;
-            PixelOffsetMode = PixelOffsetMode.Default;
+            SmoothingMode = Smoothing.AntiAlias;
+            PixelOffsetMode = PixelOffset.Default;
         }
 
         /// <summary>
         /// Gets or sets a value indicating which <see cref="SmoothingMode"/> is to be used for rendering
         /// </summary>
-        public SmoothingMode SmoothingMode { get; set; }
+        public Smoothing SmoothingMode { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating which <see cref="PixelOffsetMode"/> is to be used for rendering
         /// </summary>
-        public PixelOffsetMode PixelOffsetMode { get; set; }
+        public PixelOffset PixelOffsetMode { get; set; }
 
         #region Implementation of ICloneable
 

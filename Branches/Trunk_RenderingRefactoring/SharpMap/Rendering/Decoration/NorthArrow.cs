@@ -18,24 +18,24 @@ namespace SharpMap.Rendering.Decoration
 
         static NorthArrow()
         {
-            lock(_lockObject)
+            lock (_lockObject)
             {
                 DefaultNorthArrowBitmap = new Bitmap(120, 120);
-                using (var g = Graphics.FromImage(DefaultNorthArrowBitmap))
+                using (IGraphics g = Graphics.FromImage(DefaultNorthArrowBitmap).G())
                 {
                     g.Clear(Color.Transparent);
                     var b = new SolidBrush(Color.Black);
-                    var p = new Pen(new SolidBrush(Color.Black), 10) {LineJoin = LineJoin.Miter};
-                    g.FillEllipse(b, new RectangleF(50, 50, 20, 20));
-                    g.DrawLine(p, 60, 110, 60, 40);
-                    var pts = new[] {new PointF(45, 40), new PointF(60, 10), new PointF(75, 40), new PointF(45, 40)};
+                    var p = new Pen(new SolidBrush(Color.Black), 10) { LineJoin = LineJoin.Miter };
+                    g.FillEllipse(b, 50, 50, 20, 20);
+                    g.DrawLines(p, new[] { new PointF(60, 110), new PointF(60, 40) });
+                    var pts = new[] { new PointF(45, 40), new PointF(60, 10), new PointF(75, 40), new PointF(45, 40) };
                     g.FillPolygon(b, pts);
                     g.DrawPolygon(p, pts);
 
                     b = new SolidBrush(Color.White);
-                    g.DrawString("N", new Font("Arial", 20, FontStyle.Bold, GraphicsUnit.Pixel), b, new RectangleF(50, 25, 20, 20),
-                                 new StringFormat
-                                     {LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center});
+                    var font = new Font("Arial", 20, FontStyle.Bold, GraphicsUnit.Pixel);
+                    StringFormat sf = new StringFormat { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center };
+                    g.DrawString("N", font, b, new RectangleF(50, 25, 20, 20), sf);
                 }
             }
         }
@@ -93,35 +93,38 @@ namespace SharpMap.Rendering.Decoration
             var mapSize = map.Size;
 
             //Get rotation
-            var ptTop = map.ImageToWorld(new PointF(mapSize.Width/2f, 0f),true);
+            var ptTop = map.ImageToWorld(new PointF(mapSize.Width / 2f, 0f), true);
             var ptBottom = map.ImageToWorld(new PointF(mapSize.Width / 2f, mapSize.Height * 0.5f), true);
 
             var dx = ptTop.X - ptBottom.X;
             var dy = ptBottom.Y - ptTop.Y;
-            var length = Math.Sqrt(dx*dx + dy*dy);
+            var length = Math.Sqrt(dx * dx + dy * dy);
 
-            var cos = dx/length;
+            var cos = dx / length;
 
             var rot = -90 + (dy > 0 ? -1 : 1) * Math.Acos(cos) / GeoSpatialMath.DegToRad;
-            var halfSize = new Size((int)(0.5f*Size.Width), (int)(0.5f*Size.Height));
+            var halfSize = new Size((int)(0.5f * Size.Width), (int)(0.5f * Size.Height));
             var oldTransform = g.Transform;
-            
+
             var clip = g.ClipBounds;
-            var newTransform = new Matrix(1f, 0f, 0f, 1f, 
+            var newTransform = new Matrix(1f, 0f, 0f, 1f,
                                           clip.Left + halfSize.Width,
                                           clip.Top + halfSize.Height);
             newTransform.Rotate((float)rot);
 
             // Setup image attributes
             var ia = new ImageAttributes();
-            var cmap = new [] { 
+            var cmap = new[] { 
                 new ColorMap { OldColor = Color.Transparent, NewColor = OpacityColor(BackgroundColor) },
                 new ColorMap { OldColor = Color.Black, NewColor = OpacityColor(ForeColor) }
             };
-            ia.SetRemapTable( cmap );
+            ia.SetRemapTable(cmap);
 
             g.Transform = newTransform;
-            g.DrawImage(image, -halfSize.Width, -halfSize.Height, Size.Width, Size.Height, 0, 0, image.Size.Width, image.Size.Height, GraphicsUnit.Pixel, ia);
+            g.DrawImage(image,
+                -halfSize.Width, -halfSize.Height, Size.Width, Size.Height,
+                0, 0, image.Size.Width, image.Size.Height,
+                GraphicsUnitType.Pixel, ia);
             g.Transform = oldTransform;
         }
 

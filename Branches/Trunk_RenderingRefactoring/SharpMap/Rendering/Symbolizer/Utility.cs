@@ -39,34 +39,34 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="unit"></param>
         /// <param name="g"></param>
         /// <returns></returns>
-        public static float ScaleSizeToDeviceUnits(float size, GraphicsUnit unit, IGraphics g)
+        public static float ScaleSizeToDeviceUnits(float size, GraphicsUnitType unit, IGraphics g)
         {
             if (unit == g.PageUnit)
                 return size;
 
             switch (unit)
             {
-                case GraphicsUnit.Point:
+                case GraphicsUnitType.Point:
                     size *= g.DpiY / 72f;
                     break;
-                case GraphicsUnit.Display:
+                case GraphicsUnitType.Display:
                     //Heuristic for printer or display needed!
                     size *= g.DpiY / (g.DpiY < 100 ? 72f : 100f) ;
                     break;
-                case GraphicsUnit.Document:
+                case GraphicsUnitType.Document:
                     size *= g.DpiY / 300;
                     break;
-                case GraphicsUnit.Inch:
+                case GraphicsUnitType.Inch:
                     size *= g.DpiY;
                     break;
-                case GraphicsUnit.Millimeter:
+                case GraphicsUnitType.Millimeter:
                     size *= g.DpiY / 25.4f;
                     break;
-                case GraphicsUnit.World:
+                case GraphicsUnitType.World:
                     size *= g.DpiY / g.PageScale;
                     break;
                     /*
-                case GraphicsUnit.Pixel:
+                case GraphicsUnitType.Pixel:
                 default:
                     //do nothing
                     break;

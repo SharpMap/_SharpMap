@@ -157,24 +157,8 @@ namespace SharpMap.Rendering.Symbolizer
         /// </summary>
         public override Size Size
         {
-            get
-            {
-                return Size.Empty;
-                /*
-                var bmp = new Bitmap(1,1);
-                using (var g = Graphics.FromImage(bmp))
-                {
-                    var sizef = Rendering.VectorRenderer.SizeOfString(g, _text, Font);
-                    //g.MeasureString(_text, Font, 1024, StringFormat);
-                    return sizef.ToSize();
-                }
-                 */
-
-            }
-            set
-            {
-                //throw new NotImplementedException();
-            }
+            get { return Size.Empty; }
+            set { }
         }
 
         /// <summary>
@@ -208,7 +192,7 @@ namespace SharpMap.Rendering.Symbolizer
             }
             else
             {
-                g.DrawString(_text, Font, Foreground, pt, StringFormat);
+                g.DrawString(_text, Font, Foreground, (int) pt.X, (int) pt.Y, StringFormat);
             }
         }
     }

@@ -427,7 +427,7 @@ namespace SharpMap
 
                     using (IGraphics metafileGraphics = Graphics.FromImage(metafile).G())
                     {
-                        metafileGraphics.PageUnit = GraphicsUnit.Pixel;
+                        metafileGraphics.PageUnit = GraphicsUnitType.Pixel;
                         metafileGraphics.TransformPoints(CoordinateSpace.Page, CoordinateSpace.Device,
                                                          new[] { new PointF(Size.Width, Size.Height) });
 
@@ -484,7 +484,7 @@ namespace SharpMap
                 g.Transform = MapTransform.Clone();
             }
             g.Clear(BackColor);
-            g.PageUnit = GraphicsUnit.Pixel;
+            g.PageUnit = GraphicsUnitType.Pixel;
 
 
             //int srid = (Layers.Count > 0 ? Layers[0].SRID : -1); //Get the SRID of the first layer
@@ -652,7 +652,7 @@ namespace SharpMap
             if (!drawTransparent)
                 g.Clear(BackColor);
 
-            g.PageUnit = GraphicsUnit.Pixel;
+            g.PageUnit = GraphicsUnitType.Pixel;
 
             LayerCollectionRenderer.AllowParallel = true;
             using (var lcr = new LayerCollectionRenderer(lc))

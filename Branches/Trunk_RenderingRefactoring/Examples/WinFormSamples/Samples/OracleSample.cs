@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using SharpMap;
 using SharpMap.Layers;
-using SharpMap.Data.Providers;
 using SharpMap.Styles;
 
 namespace WinFormSamples.Samples
@@ -76,8 +75,8 @@ namespace WinFormSamples.Samples
                     Int32 retVal = 10000000 * ((String)fdr.Attributes["capital"] == "Y" ? 1 : 0);
                     return retVal + Convert.ToInt32(fdr.Attributes["population"]);
                 },
-                TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias,
-                SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias,
+                TextRenderingHint = TextRendering.AntiAlias,
+                SmoothingMode = Smoothing.AntiAlias,
                 LabelFilter = SharpMap.Rendering.LabelCollisionDetection.ThoroughCollisionDetection,
                 Style = new LabelStyle()
                 {

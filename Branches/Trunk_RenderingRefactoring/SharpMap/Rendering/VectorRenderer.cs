@@ -24,7 +24,7 @@ using SharpMap.Layers;
 using SharpMap.Rendering.Symbolizer;
 using SharpMap.Styles;
 using SharpMap.Utilities;
-using Point=GeoAPI.Geometries.Coordinate;
+using Point = GeoAPI.Geometries.Coordinate;
 using System.Runtime.CompilerServices;
 
 namespace SharpMap.Rendering
@@ -54,9 +54,9 @@ namespace SharpMap.Rendering
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DrawMultiLineString(IGraphics g, IMultiLineString lines, Pen pen, Map map, float offset)
         {
-            for(var i = 0; i < lines.NumGeometries; i++)
+            for (var i = 0; i < lines.NumGeometries; i++)
             {
-                var line = (ILineString) lines[i];
+                var line = (ILineString)lines[i];
                 DrawLineString(g, line, pen, map, offset);
             }
         }
@@ -107,9 +107,9 @@ namespace SharpMap.Rendering
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DrawMultiPolygon(IGraphics g, IMultiPolygon pols, Brush brush, Pen pen, bool clip, Map map)
         {
-            for (var i = 0; i < pols.NumGeometries;i++ )
+            for (var i = 0; i < pols.NumGeometries; i++)
             {
-                var p = (IPolygon) pols[i];
+                var p = (IPolygon)pols[i];
                 DrawPolygon(g, p, brush, pen, clip, map);
             }
         }
@@ -155,7 +155,7 @@ namespace SharpMap.Rendering
                     }
                 }
 
-                
+
                 // Only render inside of polygon if the brush isn't null or isn't transparent
                 if (brush != null && brush != Brushes.Transparent)
                     g.FillPath(brush, gp);
@@ -221,7 +221,7 @@ namespace SharpMap.Rendering
         {
             return g.MeasureString(text, font);
         }
-        
+
         /// <summary>
         /// Function to get the <see cref="SizeF"/> of a string when rendered with the given font.
         /// </summary>
@@ -256,11 +256,10 @@ namespace SharpMap.Rendering
                                      Brush backcolor, Pen halo, float rotation, string text, Map map,
                                      LabelStyle.HorizontalAlignmentEnum alignment = LabelStyle.HorizontalAlignmentEnum.Left,
                                      PointF? rotationPoint = null)
-
         {
             //Calculate the size of the text
             var labelSize = RendererHelper.SizeOfString(g, text, font);
-            
+
             //Add label offset
             labelPoint.X += offset.X;
             labelPoint.Y += offset.Y;
@@ -285,8 +284,8 @@ namespace SharpMap.Rendering
                 rotationPoint = rotationPoint ?? labelPoint;
 
                 PointF pt = rotationPoint.Value;
-                g.FillEllipse(Brushes.LawnGreen, (int) (pt.X - 1), (int) (pt.Y - 1), 2, 2);
-                
+                g.FillEllipse(Brushes.LawnGreen, (int)(pt.X - 1), (int)(pt.Y - 1), 2, 2);
+
                 var t = g.Transform.Clone();
                 g.TranslateTransform(pt.X, pt.Y);
                 g.RotateTransform(rotation);
@@ -297,13 +296,13 @@ namespace SharpMap.Rendering
 
                 //labelSize = new SizeF(labelSize.Width*0.74f + 1f, labelSize.Height*0.74f);
                 if (backcolor != null && backcolor != Brushes.Transparent)
-                    g.FillRectangle(backcolor, 
-                        (int) labelPoint.X, (int) labelPoint.Y,
-                        (int) labelSize.Width, (int) labelSize.Height);
+                    g.FillRectangle(backcolor,
+                        (int)labelPoint.X, (int)labelPoint.Y,
+                        (int)labelSize.Width, (int)labelSize.Height);
 
                 var path = new GraphicsPath();
-                path.AddString(text, font.FontFamily, (int) font.Style, font.Size,
-                               new RectangleF(labelPoint, labelSize) /* labelPoint*/, 
+                path.AddString(text, font.FontFamily, (int)font.Style, font.Size,
+                               new RectangleF(labelPoint, labelSize) /* labelPoint*/,
                                new StringFormat { Alignment = salign } /*null*/);
                 if (halo != null)
                     g.DrawPath(halo, path);
@@ -315,12 +314,12 @@ namespace SharpMap.Rendering
             else
             {
                 if (backcolor != null && backcolor != Brushes.Transparent)
-                    g.FillRectangle(backcolor, 
-                        (int) labelPoint.X, (int) labelPoint.Y, 
-                        (int) labelSize.Width, (int) labelSize.Height);
+                    g.FillRectangle(backcolor,
+                        (int)labelPoint.X, (int)labelPoint.Y,
+                        (int)labelSize.Width, (int)labelSize.Height);
 
                 var path = new GraphicsPath();
-                path.AddString(text, font.FontFamily, (int) font.Style, font.Size, 
+                path.AddString(text, font.FontFamily, (int)font.Style, font.Size,
                                new RectangleF(labelPoint, labelSize) /* labelPoint*/,
                                new StringFormat { Alignment = salign } /*null*/);
                 if (halo != null)
@@ -374,9 +373,9 @@ namespace SharpMap.Rendering
             float width = size;
             float height = size;
 
-            g.FillEllipse(b, 
-                (int) (pp.X - width / 2 + offset.X), (int) (pp.Y - height / 2 + offset.Y), 
-                (int) width, (int) height);
+            g.FillEllipse(b,
+                (int)(pp.X - width / 2 + offset.X), (int)(pp.Y - height / 2 + offset.Y),
+                (int)width, (int)height);
         }
 
         /// <summary>
@@ -390,7 +389,7 @@ namespace SharpMap.Rendering
         public void DrawPoint(IPointSymbolizer symbolizer, IGraphics g, IPoint point, Map map)
         {
             if (point == null)
-                return; 
+                return;
 
             symbolizer.Render(map, point, g);
         }
@@ -411,42 +410,39 @@ namespace SharpMap.Rendering
         {
             if (point == null)
                 return;
-            
+
             if (symbol == null) //We have no point style - Use a default symbol
                 symbol = Defaultsymbol;
 
 
-            var pp = Transform.WorldtoMap(point.Coordinate, map);
-
+            PointF pp = Transform.WorldtoMap(point.Coordinate, map);
+            double width = symbol.Width * symbolscale;
+            double height = symbol.Height * symbolscale;
+            double x = pp.X - width / 2 + offset.X * symbolscale;
+            double y = pp.Y - height / 2 + offset.Y * symbolscale;
             lock (symbol)
             {
                 if (rotation != 0 && !Single.IsNaN(rotation))
                 {
                     var startingTransform = g.Transform.Clone();
-
                     var transform = g.Transform;
                     var rotationCenter = pp;
                     transform.RotateAt(rotation, rotationCenter);
                     g.Transform = transform;
-
-                    var width = symbol.Width * symbolscale;
-                    var height = symbol.Height * symbolscale;
-                    g.DrawImage(symbol, 
-                        (int) (pp.X - width / 2 + offset.X * symbolscale),
-                        (int) (pp.Y - height / 2 + offset.Y * symbolscale), 
-                        (int) width, 
-                        (int) height);
+                    g.DrawImage(symbol,
+                        Convert.ToInt32(x),
+                        Convert.ToInt32(y),
+                        Convert.ToInt32(width),
+                        Convert.ToInt32(height));
                     g.Transform = startingTransform;
                 }
                 else
                 {
-                    var width = symbol.Width * symbolscale;
-                    var height = symbol.Height * symbolscale;
-                    g.DrawImage(symbol, 
-                        (int) (pp.X - width / 2 + offset.X * symbolscale),
-                        (int) (pp.Y - height / 2 + offset.Y * symbolscale), 
-                        (int) width, 
-                        (int) height);
+                    g.DrawImage(symbol,
+                        Convert.ToInt32(x),
+                        Convert.ToInt32(y),
+                        Convert.ToInt32(width),
+                        Convert.ToInt32(height));
                 }
             }
         }
@@ -467,7 +463,7 @@ namespace SharpMap.Rendering
         {
             for (var i = 0; i < points.NumGeometries; i++)
             {
-                var point = (IPoint) points[i];
+                var point = (IPoint)points[i];
                 DrawPoint(g, point, symbol, symbolscale, offset, rotation, map);
             }
         }
@@ -499,7 +495,7 @@ namespace SharpMap.Rendering
         {
             for (var i = 0; i < points.NumGeometries; i++)
             {
-                var point = (IPoint) points[i];
+                var point = (IPoint)points[i];
                 DrawPoint(g, point, brush, size, offset, map);
             }
         }
@@ -513,6 +509,6 @@ namespace SharpMap.Rendering
             Intersecting
         } ;
 
-        #endregion        
+        #endregion
     }
 }

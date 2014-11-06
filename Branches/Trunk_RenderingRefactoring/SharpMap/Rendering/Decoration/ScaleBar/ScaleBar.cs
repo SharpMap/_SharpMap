@@ -259,7 +259,13 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
             int y = yOrigin;
             for (int i = 0; i < nNumTics; i++)
             {
-                g.DrawLine(i % 2 != 0 ? pen2 : pen1, x, y, x + nTicLength, y);
+                Pen pen = i % 2 != 0 ? pen2 : pen1;
+                PointF[] pts = new []
+                {
+                    new PointF(x, y), 
+                    new PointF(x + nTicLength, y)
+                };
+                g.DrawLines(pen, pts);
                 x += nTicLength;
             }
         }
@@ -532,7 +538,7 @@ namespace SharpMap.Rendering.Decoration.ScaleBar
             }
 
             //Output the text.
-            g.DrawString(text, _font, new SolidBrush(OpacityColor(_foreColor)), new Point(x, y), format);
+            g.DrawString(text, _font, new SolidBrush(OpacityColor(_foreColor)), x, y, format);
 
             //Keep track of latest x position.
             switch (format.Alignment)

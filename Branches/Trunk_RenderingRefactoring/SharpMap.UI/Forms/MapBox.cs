@@ -809,15 +809,13 @@ namespace SharpMap.Forms
                     if (IsDisposed == false && _isDisposed == false)
                     {
 
-                        using (var g = Graphics.FromImage(_imageBackground))
+                        using (IGraphics g = Graphics.FromImage(_imageBackground).G())
                         {
 
                             g.DrawImage(bm,
-                                        new Rectangle(min.X, max.Y, (max.X - min.X), (min.Y - max.Y)),
-                                        0, 0,
-                                        sourceWidth, sourceHeight,
-                                        GraphicsUnit.Pixel,
-                                        imageAttributes);
+                                min.X, max.Y, (max.X - min.X), (min.Y - max.Y),
+                                0, 0, sourceWidth, sourceHeight,
+                                GraphicsUnitType.Pixel, imageAttributes);
 
                         }
 
@@ -950,7 +948,7 @@ namespace SharpMap.Forms
                         var bmp = new Bitmap(Width, Height);
 
 
-                        using (var g = Graphics.FromImage(bmp))
+                        using (IGraphics g = Graphics.FromImage(bmp).G())
                         {
                             g.Clear(_map.BackColor);
                             lock (_backgroundImagesLocker)
@@ -1465,89 +1463,6 @@ namespace SharpMap.Forms
         {
             UpdateImage(true);
         }
-
-        /*
-        private void RegenerateZoomingImage()
-        {
-            var c = Cursor;
-            Cursor = Cursors.WaitCursor;
-            _map.Zoom /= _scaling;
-            lock (_mapLocker)
-            {
-                _image = _map.GetMap();
-            }
-            _scaling = 1;
-            _dragImage = GenerateDragImage(PreviewModes.Best);
-            _dragStartPoint = _dragEndPoint;
-            Cursor = c;
-        }
-
-        private Bitmap GenerateDragImage(PreviewModes mode)
-        {
-            if (mode == PreviewModes.Best)
-            {
-                Cursor c = Cursor;
-                Cursor = Cursors.WaitCursor;
-
-                Coordinate realCenter = _map.Center;
-                Bitmap bmp = new Bitmap(_map.Size.Width*3, _map.Size.Height*3);
-                Graphics g = Graphics.FromImage(bmp);
-
-                for (int i = -1; i <= 1; i++)
-                {
-                    for (int j = -1; j <= 1; j++)
-                    {
-                        if (i == 0 && j == 0)
-                        {
-                            var clone = _image.Clone() as Image;
-                            if (clone != null)
-                                g.DrawImageUnscaled(clone, _map.Size.Width, _map.Size.Height);
-                        }
-                        else
-                            g.DrawImageUnscaled(GeneratePartialBitmap(realCenter, (XPosition) i, (YPosition) j),
-                                                (i + 1)*_map.Size.Width, (j + 1)*_map.Size.Height);
-                    }
-                }
-                g.Dispose();
-                _map.Center = realCenter;
-
-                Cursor = c;
-
-                return bmp;
-            }
-            if (_image.PixelFormat != PixelFormat.Undefined)
-                return _image.Clone() as Bitmap;
-            return null;
-        }
-
-        private Bitmap GeneratePartialBitmap(Coordinate center, XPosition xPos, YPosition yPos)
-        {
-            double x = center.X, y = center.Y;
-
-            switch (xPos)
-            {
-                case XPosition.Right:
-                    x += _map.Envelope.Width;
-                    break;
-                case XPosition.Left:
-                    x -= _map.Envelope.Width;
-                    break;
-            }
-
-            switch (yPos)
-            {
-                case YPosition.Top:
-                    y += _map.Envelope.Height;
-                    break;
-                case YPosition.Bottom:
-                    y -= _map.Envelope.Height;
-                    break;
-            }
-
-            _map.Center = new Coordinate(x, y);
-            return _map.GetMap() as Bitmap;
-        }
-                 */
 
         private Point ClipPoint(Point p)
         {

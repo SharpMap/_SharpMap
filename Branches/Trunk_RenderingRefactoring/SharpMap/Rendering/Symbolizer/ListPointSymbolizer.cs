@@ -136,12 +136,12 @@ namespace SharpMap.Rendering.Symbolizer
         /// <summary>
         /// Gets or sets a value indicating which <see cref="ISymbolizer.SmoothingMode"/> is to be used for rendering
         /// </summary>
-        public SmoothingMode SmoothingMode { get; set; }
+        public Smoothing SmoothingMode { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating which <see cref="ISymbolizer.PixelOffsetMode"/> is to be used for rendering
         /// </summary>
-        public PixelOffsetMode PixelOffsetMode { get; set; }
+        public PixelOffset PixelOffsetMode { get; set; }
 
         /// <summary>
         /// Method to indicate that the symbolizer has to be prepared.

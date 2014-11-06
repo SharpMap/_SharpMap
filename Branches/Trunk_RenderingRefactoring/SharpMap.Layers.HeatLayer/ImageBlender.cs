@@ -35,6 +35,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using SharpMap.Rendering;
 
 namespace SharpMap.Layers
 {
@@ -153,12 +154,14 @@ namespace SharpMap.Layers
 
         public static void ApplyColorMatrix(Image img, ColorMatrix colMatrix)
         {
-            using (var gr = Graphics.FromImage(img))
+            using (IGraphics gr = Graphics.FromImage(img).G())
             {
                 var attrs = new ImageAttributes();
                 attrs.SetColorMatrix(colMatrix);
-                gr.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height),
-                             0, 0, img.Width, img.Height, GraphicsUnit.Pixel, attrs);
+                gr.DrawImage(img, 
+                    0, 0, img.Width, img.Height,
+                    0, 0, img.Width, img.Height, 
+                    GraphicsUnitType.Pixel, attrs);
             }
         }
 
@@ -188,15 +191,17 @@ namespace SharpMap.Layers
                 throw new Exception("Source image is smaller than requested dimentions");
 
             Bitmap tempBmp = null;
-            using (var gr = Graphics.FromImage(destImage))
+            using (IGraphics gr = Graphics.FromImage(destImage).G())
             {
-                gr.CompositingMode = CompositingMode.SourceCopy;
+                gr.CompositingMode = Compositing.SourceCopy;
 
                 switch (blendOp)
                 {
                     case BlendOperation.SourceCopy:
-                        gr.DrawImage(srcImage, new Rectangle(destX, destY, destWidth, destHeight),
-                                     srcX, srcY, destWidth, destHeight, GraphicsUnit.Pixel);
+                        gr.DrawImage(srcImage,
+                            destX, destY, destWidth, destHeight,
+                            srcX, srcY, destWidth, destHeight, 
+                            GraphicsUnitType.Pixel);
                         break;
 
                     case BlendOperation.RopMergePaint:

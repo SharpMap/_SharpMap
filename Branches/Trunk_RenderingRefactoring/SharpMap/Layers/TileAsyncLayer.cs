@@ -11,6 +11,7 @@ using System.Net;
 using GeoAPI.Geometries;
 using System.ComponentModel;
 using Common.Logging;
+using SharpMap.Rendering;
 
 namespace SharpMap.Layers
 {
@@ -214,16 +215,23 @@ namespace SharpMap.Layers
 
             try
             {
-                var min = map.WorldToImage(box.Min());
-                var max = map.WorldToImage(box.Max());
+                PointF min_f = map.WorldToImage(box.Min());
+                PointF max_f = map.WorldToImage(box.Max());
 
-                min = new PointF((float)Math.Round(min.X), (float)Math.Round(min.Y));
-                max = new PointF((float)Math.Round(max.X), (float)Math.Round(max.Y));
-
+                double minx = Math.Round(min_f.X);
+                double miny = Math.Round(min_f.Y);
+                double maxx = Math.Round(max_f.X);
+                double maxy = Math.Round(max_f.Y);
+                Point min = new Point(
+                    Convert.ToInt32(minx), 
+                    Convert.ToInt32(miny));                
+                Point max = new Point(
+                    Convert.ToInt32(maxx), 
+                    Convert.ToInt32(maxy));
                 g.DrawImage(bm,
-                    (int)min.X, (int)max.Y, (int)(max.X - min.X), (int)(min.Y - max.Y),
+                    min.X, max.Y, max.X - min.X, min.Y - max.Y,
                     0, 0, sourceWidth, sourceHeight,
-                    GraphicsUnit.Pixel,
+                    GraphicsUnitType.Pixel,
                     imageAttributes);
 
                 // g.Dispose();
@@ -302,7 +310,7 @@ namespace SharpMap.Layers
                         //an issue with this method is that one an error tile is in the memory cache it will stay even
                         //if the error is resolved. PDD.
                         var bitmap = new Bitmap(tileWidth, tileHeight);
-                        using (var graphics = Graphics.FromImage(bitmap))
+                        using (IGraphics graphics = Graphics.FromImage(bitmap).G())
                         {
                             graphics.DrawString(ex.Message, new Font(FontFamily.GenericSansSerif, 12), new SolidBrush(Color.Black),
                                 new RectangleF(0, 0, tileWidth, tileHeight));

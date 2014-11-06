@@ -1,56 +1,66 @@
 using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
+using GeoAPI.Features;
+using GeoAPI.Geometries;
+using SharpMap;
+using SharpMap.Data.Providers;
+using SharpMap.Layers;
+using SharpMap.Rendering;
+using SharpMap.Styles;
+using WinFormSamples.Properties;
 
 namespace WinFormSamples.Samples
 {
     public static class PostGisSample
     {
-        public static SharpMap.Map InitializeMap(float angle)
+        public static Map InitializeMap(float angle)
         {
             //Initialize a new map of size 'imagesize'
-            SharpMap.Map map = new SharpMap.Map();
+            Map map = new Map();
 
             //Set up the countries layer
-            SharpMap.Layers.VectorLayer layCountries = new SharpMap.Layers.VectorLayer("Countries");
+            VectorLayer layCountries = new VectorLayer("Countries");
 
             //Set the datasource to a shapefile in the App_data folder
-            layCountries.DataSource = new SharpMap.Data.Providers.PostGIS(Properties.Settings.Default.PostGisConnectionString, "countries", "ogc_fid");
+            layCountries.DataSource = new PostGIS(Settings.Default.PostGisConnectionString, "countries", "ogc_fid");
 
             //Set fill-style to green
-            layCountries.Style.Fill = new System.Drawing.SolidBrush(System.Drawing.Color.Green);
+            layCountries.Style.Fill = new SolidBrush(Color.Green);
             //Set the polygons to have a black outline
-            layCountries.Style.Outline = System.Drawing.Pens.Black;
+            layCountries.Style.Outline = Pens.Black;
             layCountries.Style.EnableOutline = true;
 
             //Set up a river layer
-            SharpMap.Layers.VectorLayer layRivers = new SharpMap.Layers.VectorLayer("Rivers");
+            VectorLayer layRivers = new VectorLayer("Rivers");
             //Set the datasource to a shapefile in the App_data folder
-            layRivers.DataSource = new SharpMap.Data.Providers.PostGIS(Properties.Settings.Default.PostGisConnectionString, "rivers", "ogc_fid");
+            layRivers.DataSource = new PostGIS(Settings.Default.PostGisConnectionString, "rivers", "ogc_fid");
             //Define a blue 1px wide pen
-            layRivers.Style.Line = new System.Drawing.Pen(System.Drawing.Color.Blue, 1);
+            layRivers.Style.Line = new Pen(Color.Blue, 1);
 
             //Set up a river layer
-            SharpMap.Layers.VectorLayer layCities = new SharpMap.Layers.VectorLayer("Cities");
+            VectorLayer layCities = new VectorLayer("Cities");
             //Set the datasource to a shapefile in the App_data folder
-            layCities.DataSource = new SharpMap.Data.Providers.PostGIS(Properties.Settings.Default.PostGisConnectionString, "cities", "ogc_fid");
+            layCities.DataSource = new PostGIS(Settings.Default.PostGisConnectionString, "cities", "ogc_fid");
             layCities.Style.SymbolScale = 0.8f;
             layCities.MaxVisible = 40;
 
             //Set up a country label layer
-            SharpMap.Layers.LabelLayer layLabel = new SharpMap.Layers.LabelLayer("Country labels") 
+            LabelLayer layLabel = new LabelLayer("Country labels") 
             {
                 DataSource = layCountries.DataSource,
                 Enabled = true,
                 LabelColumn = "Name",
-                MultipartGeometryBehaviour = SharpMap.Layers.LabelLayer.MultipartGeometryBehaviourEnum.Largest,
-                LabelFilter = SharpMap.Rendering.LabelCollisionDetection.ThoroughCollisionDetection,
+                MultipartGeometryBehaviour = LabelLayer.MultipartGeometryBehaviourEnum.Largest,
+                LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection,
                 PriorityColumn = "popdens",
-                Style = new SharpMap.Styles.LabelStyle()
+                Style = new LabelStyle()
                 {
-                    ForeColor = System.Drawing.Color.White,
-                    Font = new System.Drawing.Font(System.Drawing.FontFamily.GenericSerif, 12),
-                    BackColor = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(128, 255, 0, 0)),
-                    HorizontalAlignment = SharpMap.Styles.LabelStyle.HorizontalAlignmentEnum.Center,
+                    ForeColor = Color.White,
+                    Font = new Font(FontFamily.GenericSerif, 12),
+                    BackColor = new SolidBrush(Color.FromArgb(128, 255, 0, 0)),
+                    HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Center,
                     CollisionDetection = true,
                     MaxVisible = 90,
                     MinVisible = 30
@@ -58,29 +68,29 @@ namespace WinFormSamples.Samples
             };
 
             //Set up a city label layer
-            SharpMap.Layers.LabelLayer layCityLabel = new SharpMap.Layers.LabelLayer("City labels")
+            LabelLayer layCityLabel = new LabelLayer("City labels")
             {
                 DataSource = layCities.DataSource,
                 Enabled = true,
                 LabelColumn = "name",
                 PriorityColumn = "population",
-                PriorityDelegate = delegate(GeoAPI.Features.IFeature fdr) 
+                PriorityDelegate = delegate(IFeature fdr) 
                 { 
                     Int32 retVal = 10000000 * (Int32)( (String)fdr.Attributes["capital"] == "Y" ? 1 : 0 );
                     return  retVal + Convert.ToInt32(fdr.Attributes["population"]);
                 },
-                TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias,
-                SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias,
-                LabelFilter = SharpMap.Rendering.LabelCollisionDetection.ThoroughCollisionDetection,
-                Style = new SharpMap.Styles.LabelStyle()
+                TextRenderingHint = TextRendering.AntiAlias,
+                SmoothingMode = Smoothing.AntiAlias,
+                LabelFilter = LabelCollisionDetection.ThoroughCollisionDetection,
+                Style = new LabelStyle()
                 {
-                    ForeColor = System.Drawing.Color.White,
-                    Font = new System.Drawing.Font(System.Drawing.FontFamily.GenericSerif, 11),
+                    ForeColor = Color.White,
+                    Font = new Font(FontFamily.GenericSerif, 11),
                     MaxVisible = layLabel.MinVisible,
-                    HorizontalAlignment = SharpMap.Styles.LabelStyle.HorizontalAlignmentEnum.Left,
-                    VerticalAlignment = SharpMap.Styles.LabelStyle.VerticalAlignmentEnum.Bottom,
-                    Offset = new System.Drawing.PointF(3, 3),
-                    Halo = new System.Drawing.Pen(System.Drawing.Color.Black, 2),
+                    HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Left,
+                    VerticalAlignment = LabelStyle.VerticalAlignmentEnum.Bottom,
+                    Offset = new PointF(3, 3),
+                    Halo = new Pen(Color.Black, 2),
                     CollisionDetection = true
                 }
             };
@@ -95,10 +105,10 @@ namespace WinFormSamples.Samples
 
             //limit the zoom to 360 degrees width
             map.MaximumZoom = 360;
-            map.BackColor = System.Drawing.Color.LightBlue;
+            map.BackColor = Color.LightBlue;
 
             map.ZoomToExtents(); // = 360;
-            map.Center = new GeoAPI.Geometries.Coordinate(0, 0);
+            map.Center = new Coordinate(0, 0);
 
             Matrix mat = new Matrix();
             mat.RotateAt(angle, map.WorldToImage(map.Center));
