@@ -21,7 +21,7 @@ namespace SharpMap.Layers
         RectangleF ClipBounds { get; }
         RectangleF VisibleClipBounds { get; }
 
-        Point RenderingOrigin { get; set; }
+        PointStruct RenderingOrigin { get; set; }
 
         float DpiX { get; }
         float DpiY { get; }
@@ -31,7 +31,7 @@ namespace SharpMap.Layers
         void TranslateTransform(float dx, float dy);
         void RotateTransform(float angle);
 
-        void TransformPoints(CoordinateSpace destSpace, CoordinateSpace srcSpace, PointF[] pts);
+        void TransformPoints(CoordinateSpaceType destSpace, CoordinateSpaceType srcSpace, PointF[] pts);
 
         void Clear(Color color);
 
@@ -46,7 +46,7 @@ namespace SharpMap.Layers
             int srcX, int srcY, int srcW, int srcH,
             GraphicsUnitType unit, ImageAttributes ia);
         void DrawImage(Image img,
-            Point[] destPoints,
+            PointF[] destPoints,
             int srcX, int srcY, int srcW, int srcH,
             GraphicsUnitType unit, ImageAttributes ia);
         void DrawImageUnscaled(Image img, int x, int y);
@@ -68,8 +68,8 @@ namespace SharpMap.Layers
         void DrawEllipse(Pen pen, int x, int y, int w, int h);
         void FillEllipse(Brush brush, int x, int y, int w, int h);
 
-        void DrawPie(Pen pen, Rectangle rect, int startAngle, int sweepAngle);
-        void FillPie(Brush brush, Rectangle rect, int startAngle, int sweepAngle);
+        void DrawPie(Pen pen, RectangleF rect, int startAngle, int sweepAngle);
+        void FillPie(Brush brush, RectangleF rect, int startAngle, int sweepAngle);
 
         void DrawString(string text, Font font, Brush brush, int x, int y);
         void DrawString(string text, Font font, Brush brush, int x, int y, StringFormat format);        

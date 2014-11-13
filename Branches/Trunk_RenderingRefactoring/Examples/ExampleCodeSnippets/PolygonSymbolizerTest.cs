@@ -18,7 +18,7 @@ namespace ExampleCodeSnippets
     {
         private class ModifiedBasicPolygonSymbolizer : BasicPolygonSymbolizer
         {
-            private Point _oldRenderOrigin;
+            private PointStruct _oldRenderOrigin;
 
             public override void Begin(IGraphics g, Map map, int aproximateNumberOfGeometries)
             {
@@ -28,8 +28,8 @@ namespace ExampleCodeSnippets
             protected override void OnRenderInternal(Map map, IPolygon polygon, IGraphics g)
             {
                 IPoint pt = polygon.Centroid;
-                g.RenderingOrigin = 
-                    Point.Truncate(Transform.WorldtoMap(pt.Coordinate, map));
+                Point renderingOrigin = Point.Truncate(Transform.WorldtoMap(pt.Coordinate, map));
+                g.RenderingOrigin = new PointStruct(renderingOrigin.X, renderingOrigin.Y);
                 base.OnRenderInternal(map, polygon, g);
             }
             public override void End(IGraphics g, Map map)

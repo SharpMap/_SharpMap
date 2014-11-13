@@ -82,7 +82,7 @@ public partial class Bins : Page
         int size = rand.Next(20, 35);
         int angle1 = rand.Next(60, 180);
         int angle2 = rand.Next(angle1 + 60, 300);
-        Rectangle rect = new Rectangle(0, 0, size, size);
+        RectangleF rect = new RectangleF(0, 0, size, size);
         Bitmap b = new Bitmap(size, size);
         using (IGraphics g = Graphics.FromImage(b).G())
         {

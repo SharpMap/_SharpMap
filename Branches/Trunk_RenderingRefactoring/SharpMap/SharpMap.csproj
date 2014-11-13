@@ -149,6 +149,7 @@
     <Compile Include="Features\FeatureFactory.cs" />
     <Compile Include="Geometries\GeoAPIEx.cs" />
     <Compile Include="Layers\Compositing.cs" />
+    <Compile Include="Layers\CoordinateSpaceType.cs" />
     <Compile Include="Layers\DuplicateLayerException.cs" />
     <Compile Include="Layers\GdiImageLayer.cs" />
     <Compile Include="Layers\GdiImageLayerProxy.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Layers\LayerCollection.cs" />
     <Compile Include="Layers\LayerGroup.cs" />
     <Compile Include="Layers\PixelOffset.cs" />
+    <Compile Include="Layers\PointStruct.cs" />
     <Compile Include="Layers\Smoothing.cs" />
     <Compile Include="Layers\Symbolizer\AnyGeometryVectorLayer.cs" />
     <Compile Include="Layers\Symbolizer\BaseVectorLayer.cs" />
