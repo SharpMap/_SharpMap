@@ -43,7 +43,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <summary>
         /// The render origin for brushes (Texture, Gradient, ...)
         /// </summary>
-        public Point RenderOrigin { get; set; }
+        public PointStruct RenderOrigin { get; set; }
 
         /// <summary>
         /// Gets or sets if polygons should be clipped or not.
@@ -79,7 +79,7 @@ namespace SharpMap.Rendering.Symbolizer
         /// <param name="g">The graphics object to use</param>
         protected abstract void OnRenderInternal(Map map, IPolygon polygon, IGraphics g);
 
-        private Point _renderOrigin;
+        private PointStruct _renderOrigin;
 
         /// <summary>
         /// Method to perform preparatory work for symbilizing.

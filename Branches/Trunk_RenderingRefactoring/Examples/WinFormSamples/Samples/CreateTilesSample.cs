@@ -161,11 +161,11 @@ namespace WinFormSamples.Samples
                             {
                                 using (IGraphics g = Graphics.FromImage(transImg).G())
                                 {
-                                    Point[] points =
+                                    PointF[] points =
                                     { 
-                                        new Point(0, 0), 
-                                        new Point(transImg.Size.Width, 0), 
-                                        new Point(0, transImg.Size.Height),                                             
+                                        new PointF(0, 0), 
+                                        new PointF(transImg.Size.Width, 0), 
+                                        new PointF(0, transImg.Size.Height),                                             
                                     };
                                     g.DrawImage(img, points,
                                         0, 0, img.Width, img.Height,

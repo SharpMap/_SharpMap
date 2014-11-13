@@ -88,10 +88,19 @@ namespace SharpMap.Layers
             get { return _g.VisibleClipBounds; }
         }
 
-        public Point RenderingOrigin
+        public PointStruct RenderingOrigin
         {
-            get { return _g.RenderingOrigin; }
-            set { _g.RenderingOrigin = value; }
+            get
+            {
+                Point p = _g.RenderingOrigin;
+                return new PointStruct(p.X, p.Y);
+            }
+            set
+            {
+                int x = Convert.ToInt32(value.X);
+                int y = Convert.ToInt32(value.Y);
+                _g.RenderingOrigin = new Point(x, y);
+            }
         }
 
         public float DpiX
@@ -120,9 +129,9 @@ namespace SharpMap.Layers
             _g.RotateTransform(angle);
         }
 
-        public void TransformPoints(CoordinateSpace destSpace, CoordinateSpace srcSpace, PointF[] pts)
+        public void TransformPoints(CoordinateSpaceType destSpace, CoordinateSpaceType srcSpace, PointF[] pts)
         {
-            _g.TransformPoints(destSpace, srcSpace, pts);
+            _g.TransformPoints((CoordinateSpace) destSpace, (CoordinateSpace) srcSpace, pts);
         }
 
         public void Clear(Color color)
@@ -165,7 +174,7 @@ namespace SharpMap.Layers
         }
 
         public void DrawImage(Image img,
-            Point[] destPoints,
+            PointF[] destPoints,
             int srcX, int srcY, int srcW, int srcH,
             GraphicsUnitType unit, ImageAttributes ia)
         {
@@ -233,14 +242,14 @@ namespace SharpMap.Layers
             _g.FillEllipse(brush, x, y, w, h);
         }
 
-        public void DrawPie(Pen pen, Rectangle rect, int startAngle, int sweepAngle)
+        public void DrawPie(Pen pen, RectangleF rect, int startAngle, int sweepAngle)
         {
-            _g.DrawPie(pen, rect, startAngle, sweepAngle);
+            _g.DrawPie(pen, rect.X, rect.Y, rect.Width, rect.Height, startAngle, sweepAngle);
         }
 
-        public void FillPie(Brush brush, Rectangle rect, int startAngle, int sweepAngle)
+        public void FillPie(Brush brush, RectangleF rect, int startAngle, int sweepAngle)
         {
-            _g.FillPie(brush, rect, startAngle, sweepAngle);
+            _g.FillPie(brush, rect.X, rect.Y, rect.Width, rect.Height, startAngle, sweepAngle);
         }
 
         public void DrawString(string text, Font font, Brush brush, int x, int y)

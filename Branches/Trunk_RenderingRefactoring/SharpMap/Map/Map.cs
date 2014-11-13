@@ -428,8 +428,8 @@ namespace SharpMap
                     using (IGraphics metafileGraphics = Graphics.FromImage(metafile).G())
                     {
                         metafileGraphics.PageUnit = GraphicsUnitType.Pixel;
-                        metafileGraphics.TransformPoints(CoordinateSpace.Page, CoordinateSpace.Device,
-                                                         new[] { new PointF(Size.Width, Size.Height) });
+                        PointF[] pts = new[] { new PointF(Size.Width, Size.Height) };
+                        metafileGraphics.TransformPoints(CoordinateSpaceType.Page, CoordinateSpaceType.Device, pts);
 
                         //Render map to metafile
                         RenderMap(metafileGraphics);
